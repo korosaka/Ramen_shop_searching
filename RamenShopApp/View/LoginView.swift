@@ -15,7 +15,6 @@ struct LoginView: View {
     
     var body: some View {
         VStack {
-            Text("Hello, \(loginVM.userName)")
             Text("Ramen Search")
                 .foregroundColor(Color.white)
                 .font(.largeTitle)
