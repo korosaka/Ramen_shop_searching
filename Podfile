@@ -7,4 +7,5 @@ target 'RamenShopApp' do
   # Pods for RamenShopApp
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
+  pod 'Firebase/Analytics'
 end
