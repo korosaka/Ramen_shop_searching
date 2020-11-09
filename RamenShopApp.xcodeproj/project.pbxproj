@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,7 @@
 		886B353D2557B70B0056AB86 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B353C2557B70B0056AB86 /* LoginViewModel.swift */; };
 		886B35402557CAD30056AB86 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B353F2557CAD30056AB86 /* Authentication.swift */; };
 		886B35422557D8BE0056AB86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 886B35412557D8BE0056AB86 /* GoogleService-Info.plist */; };
+		88AFA7A02559B9C1001D151C /* MapSearchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapSearchingView.swift */; };
 		9D33E53A05060B66C56760E7 /* Pods_RamenShopApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 257556D638399B742D1568DC /* Pods_RamenShopApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		886B353C2557B70B0056AB86 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		886B353F2557CAD30056AB86 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		886B35412557D8BE0056AB86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		88AFA79F2559B9C1001D151C /* MapSearchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchingView.swift; sourceTree = "<group>"; };
 		A5D6C3FBE114337FC41E58D1 /* Pods-RamenShopApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RamenShopApp.debug.xcconfig"; path = "Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				886B35392556A11C0056AB86 /* LoginView.swift */,
+				88AFA79F2559B9C1001D151C /* MapSearchingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -132,7 +135,6 @@
 				A5D6C3FBE114337FC41E58D1 /* Pods-RamenShopApp.debug.xcconfig */,
 				1088270E322016859E4E4F7E /* Pods-RamenShopApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -257,6 +259,7 @@
 				886B353A2556A11C0056AB86 /* LoginView.swift in Sources */,
 				886B353D2557B70B0056AB86 /* LoginViewModel.swift in Sources */,
 				886B3503255026550056AB86 /* ContentView.swift in Sources */,
+				88AFA7A02559B9C1001D151C /* MapSearchingView.swift in Sources */,
 				886B35402557CAD30056AB86 /* Authentication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,12 +7,34 @@
 //
 
 import Foundation
-class LoginViewModel: ObservableObject {
+class LoginViewModel: ObservableObject, AuthenticationDelegate {
     
-    @Published var userName = ""
+    
+    var authentication: Authentication
+    
+    @Published var email = ""
     @Published var password = ""
+    @Published var logined = false
     
     func login() {
-        print("login (user: \(userName), pass: \(password))")
+        authentication.login(email: email, password: password)
     }
+    
+    func createAccount() {
+        authentication.createAccount(email: email, password: password)
+    }
+    
+    init() {
+        authentication = .init()
+        authentication.delegate = self
+    }
+    
+    func afterLogin() {
+//        print("afterLogin")
+        self.logined = true
+    }
+    
+    func loginError() {}
+    func afterLogout() {}
+    
 }
