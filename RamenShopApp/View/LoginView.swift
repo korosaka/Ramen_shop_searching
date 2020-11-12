@@ -22,6 +22,12 @@ struct SignupView: View {
             }) {
                 Text("Create account")
             }
+            .alert(isPresented: $loginVM.signUpError) {
+                Alert(title: Text("Signup Error"),
+                      message: Text(loginVM.errorMesaage),
+                      dismissButton: .default(Text("OK"),
+                                              action: { self.loginVM.reset() }))
+            }
         }
     }
 }
@@ -34,18 +40,43 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("Hello,\(loginVM.email)")
+                if(loginVM.logined) {
+                    Text("Hello,\(loginVM.email)")
+                }
                 Text("Ramen Search")
                     .foregroundColor(Color.white)
                     .font(.largeTitle)
                     .background(Color.red)
-                TextField("email", text: $loginVM.email)
-                TextField("passsword", text: $loginVM.password)
-                Button(action: {
-                    self.loginVM.login()
-                }) {
-                    Text("Login")
+                if(loginVM.logined) {
+                    Button(action: {
+                        self.loginVM.logout()
+                    }) {
+                        Text("Logout")
+                    }
+                    .alert(isPresented: $loginVM.loginError) {
+                        Alert(title: Text("Logout Error"),
+                              message: Text(loginVM.errorMesaage),
+                              dismissButton: .default(Text("OK"),
+                                                      action: { self.loginVM.reset() }))
+                    }
+                } else {
+                    VStack {
+                        TextField("email", text: $loginVM.email)
+                        TextField("passsword", text: $loginVM.password)
+                        Button(action: {
+                            self.loginVM.login()
+                        }) {
+                            Text("Login")
+                        }
+                        .alert(isPresented: $loginVM.loginError) {
+                            Alert(title: Text("Login Error"),
+                                  message: Text(loginVM.errorMesaage),
+                                  dismissButton: .default(Text("OK"),
+                                                          action: { self.loginVM.reset() }))
+                        }
+                    }.onAppear() { self.loginVM.reset() }
                 }
+                
                 Spacer()
                 if(loginVM.logined) {
                     NavigationLink(destination: MapSearchingView()) {
@@ -54,9 +85,14 @@ struct LoginView: View {
                     }
                 }
                 Spacer()
-                NavigationLink(destination: SignupView(loginVM: loginVM)) {
-                    Text("Create new account")
-                        .foregroundColor(Color.blue)
+                
+                if(!loginVM.logined) {
+                    NavigationLink(destination: SignupView(loginVM: loginVM)) {
+                        Text("Create new account")
+                            .foregroundColor(Color.blue)
+                    }.simultaneousGesture(TapGesture().onEnded{
+                        self.loginVM.reset()
+                    })
                 }
             }
         }

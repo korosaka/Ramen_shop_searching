@@ -15,23 +15,19 @@ class Authentication {
     
     func createAccount(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            //            print(authResult)
-            //            print(error)
-            //            print("signup!")
+            if error != nil {
+                self.delegate?.signUpError(error: error)
+            }
         }
     }
     
     func login(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             guard let strongSelf = self else { return }
-            //            print("email:\(email), pass:\(password)")
-            //            print(authResult)
-            //            print(error)
             if error == nil {
-                //                print("success!")
                 strongSelf.delegate?.afterLogin()
             } else {
-                strongSelf.delegate?.loginError()
+                strongSelf.delegate?.loginError(error: error)
             }
         }
     }
@@ -39,8 +35,11 @@ class Authentication {
     func logout() {
         do {
             try Auth.auth().signOut()
-        } catch {
-            print("error happened")
+            self.delegate?.afterLogout()
+            
+        // MARK: how to happen "logout error" ??
+        } catch let signOutError as NSError {
+            self.delegate?.logoutError(error: signOutError)
         }
     }
 }
@@ -49,6 +48,8 @@ class Authentication {
 // MARK: to notice ViewModel
 protocol AuthenticationDelegate {
     func afterLogin()
-    func loginError()
+    func loginError(error: Error?)
+    func signUpError(error: Error?)
+    func logoutError(error: NSError?)
     func afterLogout()
 }
