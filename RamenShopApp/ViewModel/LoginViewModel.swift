@@ -21,6 +21,19 @@ class LoginViewModel: ObservableObject, AuthenticationDelegate {
     @Published var logoutError = false
     var errorMesaage = ""
     
+    init() {
+        authentication = .init()
+        authentication.delegate = self
+        checkCurrentUser()
+    }
+    
+    func setUserInfo(email: String?) {
+        if email != nil { self.email = email! }
+    }
+    func checkCurrentUser() {
+        authentication.checkCurrentUser()
+    }
+    
     func login() {
         authentication.login(email: email, password: password)
     }
@@ -42,13 +55,12 @@ class LoginViewModel: ObservableObject, AuthenticationDelegate {
         errorMesaage = ""
     }
     
-    init() {
-        authentication = .init()
-        authentication.delegate = self
-    }
-    
     func afterLogin() {
         self.logined = true
+    }
+    
+    func afterSignUp() {
+        checkCurrentUser()
     }
     
     func loginError(error: Error?) {

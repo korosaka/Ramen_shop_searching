@@ -13,10 +13,20 @@ class Authentication {
     
     var delegate: AuthenticationDelegate?
     
+    func checkCurrentUser() {
+        if Auth.auth().currentUser != nil {
+            delegate?.afterLogin()
+            let user = Auth.auth().currentUser
+            delegate?.setUserInfo(email: user?.email)
+        }
+    }
+    
     func createAccount(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
                 self.delegate?.signUpError(error: error)
+            } else {
+                self.delegate?.afterSignUp()
             }
         }
     }
@@ -37,7 +47,7 @@ class Authentication {
             try Auth.auth().signOut()
             self.delegate?.afterLogout()
             
-        // MARK: how to happen "logout error" ??
+            // MARK: how to happen "logout error" ??
         } catch let signOutError as NSError {
             self.delegate?.logoutError(error: signOutError)
         }
@@ -52,4 +62,6 @@ protocol AuthenticationDelegate {
     func signUpError(error: Error?)
     func logoutError(error: NSError?)
     func afterLogout()
+    func setUserInfo(email: String?)
+    func afterSignUp()
 }
