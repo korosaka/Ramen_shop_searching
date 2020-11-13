@@ -3,19 +3,29 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		88603700255DF18100C5ED1C /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886036FF255DF18100C5ED1C /* Modifiers.swift */; };
 		886B34FF255026550056AB86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B34FE255026550056AB86 /* AppDelegate.swift */; };
 		886B3501255026550056AB86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B3500255026550056AB86 /* SceneDelegate.swift */; };
 		886B3503255026550056AB86 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B3502255026550056AB86 /* ContentView.swift */; };
 		886B3505255026560056AB86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 886B3504255026560056AB86 /* Assets.xcassets */; };
 		886B3508255026560056AB86 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 886B3507255026560056AB86 /* Preview Assets.xcassets */; };
 		886B350B255026560056AB86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 886B3509255026560056AB86 /* LaunchScreen.storyboard */; };
+		886B353A2556A11C0056AB86 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B35392556A11C0056AB86 /* LoginView.swift */; };
+		886B353D2557B70B0056AB86 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B353C2557B70B0056AB86 /* LoginViewModel.swift */; };
+		886B35402557CAD30056AB86 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B353F2557CAD30056AB86 /* Authentication.swift */; };
+		886B35422557D8BE0056AB86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 886B35412557D8BE0056AB86 /* GoogleService-Info.plist */; };
+		88AFA7A02559B9C1001D151C /* MapSearchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapSearchingView.swift */; };
+		9D33E53A05060B66C56760E7 /* Pods_RamenShopApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 257556D638399B742D1568DC /* Pods_RamenShopApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1088270E322016859E4E4F7E /* Pods-RamenShopApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RamenShopApp.release.xcconfig"; path = "Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp.release.xcconfig"; sourceTree = "<group>"; };
+		257556D638399B742D1568DC /* Pods_RamenShopApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RamenShopApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		886036FF255DF18100C5ED1C /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		886B34FB255026550056AB86 /* RamenShopApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RamenShopApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		886B34FE255026550056AB86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		886B3500255026550056AB86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +34,12 @@
 		886B3507255026560056AB86 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		886B350A255026560056AB86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		886B350C255026560056AB86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		886B35392556A11C0056AB86 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		886B353C2557B70B0056AB86 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		886B353F2557CAD30056AB86 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		886B35412557D8BE0056AB86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		88AFA79F2559B9C1001D151C /* MapSearchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchingView.swift; sourceTree = "<group>"; };
+		A5D6C3FBE114337FC41E58D1 /* Pods-RamenShopApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RamenShopApp.debug.xcconfig"; path = "Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +47,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D33E53A05060B66C56760E7 /* Pods_RamenShopApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		34262BC62B73D5005EA9F7BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				257556D638399B742D1568DC /* Pods_RamenShopApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		886B34F2255026550056AB86 = {
 			isa = PBXGroup;
 			children = (
 				886B34FD255026550056AB86 /* RamenShopApp */,
 				886B34FC255026550056AB86 /* Products */,
+				E2A6500A9AB1936EE94C2293 /* Pods */,
+				34262BC62B73D5005EA9F7BD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,12 +83,16 @@
 		886B34FD255026550056AB86 /* RamenShopApp */ = {
 			isa = PBXGroup;
 			children = (
+				886B353E2557CA890056AB86 /* Model */,
+				886B353B2557B6E30056AB86 /* ViewModel */,
+				886B35382556A0C40056AB86 /* View */,
 				886B34FE255026550056AB86 /* AppDelegate.swift */,
 				886B3500255026550056AB86 /* SceneDelegate.swift */,
 				886B3502255026550056AB86 /* ContentView.swift */,
 				886B3504255026560056AB86 /* Assets.xcassets */,
 				886B3509255026560056AB86 /* LaunchScreen.storyboard */,
 				886B350C255026560056AB86 /* Info.plist */,
+				886B35412557D8BE0056AB86 /* GoogleService-Info.plist */,
 				886B3506255026560056AB86 /* Preview Content */,
 			);
 			path = RamenShopApp;
@@ -75,6 +106,41 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		886B35382556A0C40056AB86 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				886B35392556A11C0056AB86 /* LoginView.swift */,
+				88AFA79F2559B9C1001D151C /* MapSearchingView.swift */,
+				886036FF255DF18100C5ED1C /* Modifiers.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		886B353B2557B6E30056AB86 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				886B353C2557B70B0056AB86 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		886B353E2557CA890056AB86 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				886B353F2557CAD30056AB86 /* Authentication.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E2A6500A9AB1936EE94C2293 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A5D6C3FBE114337FC41E58D1 /* Pods-RamenShopApp.debug.xcconfig */,
+				1088270E322016859E4E4F7E /* Pods-RamenShopApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -82,9 +148,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 886B350F255026560056AB86 /* Build configuration list for PBXNativeTarget "RamenShopApp" */;
 			buildPhases = (
+				9402BEE870DB02E164A69B0B /* [CP] Check Pods Manifest.lock */,
 				886B34F7255026550056AB86 /* Sources */,
 				886B34F8255026550056AB86 /* Frameworks */,
 				886B34F9255026550056AB86 /* Resources */,
+				D25AD514C55401404E1695F7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -134,12 +202,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				886B350B255026560056AB86 /* LaunchScreen.storyboard in Resources */,
+				886B35422557D8BE0056AB86 /* GoogleService-Info.plist in Resources */,
 				886B3508255026560056AB86 /* Preview Assets.xcassets in Resources */,
 				886B3505255026560056AB86 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9402BEE870DB02E164A69B0B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RamenShopApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D25AD514C55401404E1695F7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		886B34F7255026550056AB86 /* Sources */ = {
@@ -148,7 +259,12 @@
 			files = (
 				886B34FF255026550056AB86 /* AppDelegate.swift in Sources */,
 				886B3501255026550056AB86 /* SceneDelegate.swift in Sources */,
+				886B353A2556A11C0056AB86 /* LoginView.swift in Sources */,
+				886B353D2557B70B0056AB86 /* LoginViewModel.swift in Sources */,
+				88603700255DF18100C5ED1C /* Modifiers.swift in Sources */,
 				886B3503255026550056AB86 /* ContentView.swift in Sources */,
+				88AFA7A02559B9C1001D151C /* MapSearchingView.swift in Sources */,
+				886B35402557CAD30056AB86 /* Authentication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +398,7 @@
 		};
 		886B3510255026560056AB86 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5D6C3FBE114337FC41E58D1 /* Pods-RamenShopApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -301,6 +418,7 @@
 		};
 		886B3511255026560056AB86 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1088270E322016859E4E4F7E /* Pods-RamenShopApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
