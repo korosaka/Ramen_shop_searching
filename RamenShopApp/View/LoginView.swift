@@ -17,32 +17,19 @@ struct SignupView: View {
             Color.green
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                
                 TextField("email", text: $loginVM.email)
-                    .frame(maxWidth: .infinity)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.init(top: 10, leading: 20, bottom: 10, trailing: 20))
+                    .basicStyle()
                 TextField("passsword", text: $loginVM.password)
-                    .frame(maxWidth: .infinity)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.init(top: 10, leading: 20, bottom: 30, trailing: 20))
+                    .basicStyle()
+                    .padding(.init(top: 0,
+                                   leading: 0,
+                                   bottom: 20,
+                                   trailing: 0))
                 Button(action: {
                     self.loginVM.createAccount()
                 }) {
                     Text("Create account")
-                        .font(.title)
-                        .bold()
-                        .foregroundColor(Color.white).padding(.init(top: 10,
-                                                                    leading: 0,
-                                                                    bottom: 10,
-                                                                    trailing: 0))
-                        .frame(maxWidth: .infinity)
-                        .border(Color.black, width: 2)
-                        .background(Color.yellow)
-                        .padding(.init(top: 0,
-                                       leading: 20,
-                                       bottom: 0,
-                                       trailing: 20))
+                        .basicButtonTextStyle(Color.white, Color.yellow)
                 }
                 .alert(isPresented: $loginVM.signUpError) {
                     Alert(title: Text("Signup Error"),
@@ -88,21 +75,12 @@ struct LoginView: View {
                             self.loginVM.logout()
                         }) {
                             Text("Logout")
-                                .foregroundColor(Color.white)
-                                .font(.title)
-                                .bold()
+                                .basicButtonTextStyle(Color.white, Color.purple)
                                 .padding(.init(top: 10,
                                                leading: 0,
-                                               bottom: 10,
+                                               bottom: 0,
                                                trailing: 0))
                         }
-                        .frame(maxWidth: .infinity)
-                        .border(Color.black, width: 2)
-                        .background(Color.gray)
-                        .padding(.init(top: 20,
-                                       leading: 20,
-                                       bottom: 0,
-                                       trailing: 20))
                         .alert(isPresented: $loginVM.logoutError) {
                             Alert(title: Text("Logout Error"),
                                   message: Text(loginVM.errorMesaage),
@@ -112,37 +90,24 @@ struct LoginView: View {
                     } else {
                         VStack {
                             TextField("email", text: $loginVM.email)
-                                .frame(maxWidth: .infinity)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .padding(.init(top: 10, leading: 20, bottom: 10, trailing: 20))
+                                .basicStyle()
                             TextField("passsword", text: $loginVM.password)
-                                .frame(maxWidth: .infinity)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .padding(.init(top: 10, leading: 20, bottom: 30, trailing: 20))
+                                .basicStyle()
+                                .padding(.init(top: 0,
+                                               leading: 0,
+                                               bottom: 20,
+                                               trailing: 0))
                             Button(action: {
                                 self.loginVM.login()
                             }) {
                                 Text("Login")
-                                    .foregroundColor(Color.white)
-                                    .font(.title)
-                                    .bold()
-                                    .padding(.init(top: 10,
-                                                   leading: 0,
-                                                   bottom: 10,
-                                                   trailing: 0))
+                                    .basicButtonTextStyle(Color.white, Color.blue)
                             }
-                            .frame(maxWidth: .infinity)
-                            .border(Color.black, width: 2)
-                            .background(Color.blue)
-                            .padding(.init(top: 0,
-                                           leading: 20,
-                                           bottom: 0,
-                                           trailing: 20))
-                                .alert(isPresented: $loginVM.loginError) {
-                                    Alert(title: Text("Login Error"),
-                                          message: Text(loginVM.errorMesaage),
-                                          dismissButton: .default(Text("OK"),
-                                                                  action: { self.loginVM.reset() }))
+                            .alert(isPresented: $loginVM.loginError) {
+                                Alert(title: Text("Login Error"),
+                                      message: Text(loginVM.errorMesaage),
+                                      dismissButton: .default(Text("OK"),
+                                                              action: { self.loginVM.reset() }))
                             }
                         }.onAppear() { self.loginVM.reset() }
                     }
@@ -150,41 +115,19 @@ struct LoginView: View {
                     Spacer()
                     if(loginVM.logined) {
                         NavigationLink(destination: MapSearchingView()) {
-                            Text("Go to Ramen Search !")
-                                .foregroundColor(Color.white)
-                                .font(.title)
-                                .bold()
-                                .padding(.init(top: 10,
-                                               leading: 0,
-                                               bottom: 10,
-                                               trailing: 0))
+                            Text("Go to Ramen Search !").basicButtonTextStyle(Color.white, Color.red)
                         }
-                        .frame(maxWidth: .infinity)
-                        .border(Color.black, width: 2)
-                        .background(Color.red)
-                        .padding(.init(top: 0,
-                                       leading: 20,
-                                       bottom: 0,
-                                       trailing: 20))
                     }
                     Spacer()
                     
                     if(!loginVM.logined) {
                         NavigationLink(destination: SignupView(loginVM: loginVM)) {
                             Text("Create new account")
-                                .font(.title)
-                                .bold()
-                                .foregroundColor(Color.white).padding(.init(top: 10,
-                                                                            leading: 0,
-                                                                            bottom: 10,
-                                                                            trailing: 0))
-                                .frame(maxWidth: .infinity)
-                                .border(Color.black, width: 2)
-                                .background(Color.yellow)
+                                .basicButtonTextStyle(Color.white, Color.yellow)
                                 .padding(.init(top: 0,
-                                               leading: 20,
-                                               bottom: 20,
-                                               trailing: 20))
+                                               leading: 0,
+                                               bottom: 10,
+                                               trailing: 0))
                         }
                         .simultaneousGesture(TapGesture().onEnded{
                             self.loginVM.reset()
