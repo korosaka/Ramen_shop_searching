@@ -11,7 +11,7 @@ import Firebase
 
 class Authentication {
     
-    var delegate: AuthenticationDelegate?
+    weak var delegate: AuthenticationDelegate?
     
     func checkCurrentUser() {
         if Auth.auth().currentUser != nil {
@@ -56,7 +56,7 @@ class Authentication {
 
 
 // MARK: to notice ViewModel
-protocol AuthenticationDelegate {
+protocol AuthenticationDelegate: class {
     func afterLogin()
     func loginError(error: Error?)
     func signUpError(error: Error?)
