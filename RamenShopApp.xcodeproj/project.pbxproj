@@ -153,6 +153,7 @@
 				886B34F8255026550056AB86 /* Frameworks */,
 				886B34F9255026550056AB86 /* Resources */,
 				D25AD514C55401404E1695F7 /* [CP] Embed Pods Frameworks */,
+				65DF57054B009D57FA30051E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -211,6 +212,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		65DF57054B009D57FA30051E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9402BEE870DB02E164A69B0B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
