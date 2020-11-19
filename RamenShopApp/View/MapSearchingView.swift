@@ -11,6 +11,7 @@ import SwiftUI
 struct MapSearchingView: View {
     var body: some View {
         Text("Map Searching View")
+        GoogleMapView()
     }
 }
 
