@@ -12,7 +12,8 @@ import GoogleMaps
 
 struct GoogleMapView: UIViewRepresentable {
     
-    let marker : GMSMarker = GMSMarker()
+    let marker1 : GMSMarker = GMSMarker()
+    let marker2 : GMSMarker = GMSMarker()
     
     func makeUIView(context: Self.Context) -> GMSMapView {
         // Create a GMSCameraPosition that tells the map to display the
@@ -26,10 +27,15 @@ struct GoogleMapView: UIViewRepresentable {
     
     func updateUIView(_ mapView: GMSMapView, context: Self.Context) {
         // Creates a marker in the center of the map.
-        marker.position = CLLocationCoordinate2D(latitude: 49.284832194, longitude: -123.106999572)
-        marker.title = "Waterfront"
-        marker.snippet = "Vancouver"
-        marker.map = mapView
+        marker1.position = CLLocationCoordinate2D(latitude: 49.284832194, longitude: -123.106999572)
+        marker1.title = "Waterfront"
+        marker1.snippet = "Vancouver"
+        marker1.map = mapView
+        
+        marker2.position = CLLocationCoordinate2D(latitude: 49.2255, longitude: -123.0032)
+        marker2.title = "Metrotown"
+        marker2.snippet = "Vancouver"
+        marker2.map = mapView
     }
 }
 
