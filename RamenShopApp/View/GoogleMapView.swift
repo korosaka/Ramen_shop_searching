@@ -17,7 +17,7 @@ struct GoogleMapView: UIViewRepresentable {
     func makeUIView(context: Self.Context) -> GMSMapView {
         // Create a GMSCameraPosition that tells the map to display the
         // coordinate -33.86,151.20 at zoom level 6.
-        let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 12.0)
+        let camera = GMSCameraPosition.camera(withLatitude: 49.284832194, longitude: -123.106999572, zoom: 10.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         mapView.isMyLocationEnabled = true
         
@@ -26,9 +26,9 @@ struct GoogleMapView: UIViewRepresentable {
     
     func updateUIView(_ mapView: GMSMapView, context: Self.Context) {
         // Creates a marker in the center of the map.
-        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
+        marker.position = CLLocationCoordinate2D(latitude: 49.284832194, longitude: -123.106999572)
+        marker.title = "Waterfront"
+        marker.snippet = "Vancouver"
         marker.map = mapView
     }
 }
