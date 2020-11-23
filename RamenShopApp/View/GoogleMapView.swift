@@ -20,6 +20,8 @@ struct GoogleMapView: UIViewRepresentable {
         // coordinate -33.86,151.20 at zoom level 6.
         let camera = GMSCameraPosition.camera(withLatitude: 49.284832194, longitude: -123.106999572, zoom: 10.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        
+        // MARK: is it enough ?? https://developers.google.com/maps/documentation/ios-sdk/current-place-tutorial
         mapView.isMyLocationEnabled = true
         
         return mapView
