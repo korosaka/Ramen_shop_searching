@@ -9,14 +9,15 @@
 import SwiftUI
 
 struct MapSearchingView: View {
+    var viewModel: MapSearchingViewModel
     var body: some View {
         Text("Map Searching View")
         GoogleMapView()
     }
 }
 
-struct MapSearchingView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapSearchingView()
-    }
-}
+//struct MapSearchingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MapSearchingView()
+//    }
+//}

@@ -10,32 +10,32 @@ import SwiftUI
 
 struct SignupView: View {
     
-    @ObservedObject var loginVM: LoginViewModel
+    @ObservedObject var viewModel: LoginViewModel
     
     var body: some View {
         ZStack {
             Color.green
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                TextField("email", text: $loginVM.email)
+                TextField("email", text: $viewModel.email)
                     .basicStyle()
-                TextField("passsword", text: $loginVM.password)
+                TextField("passsword", text: $viewModel.password)
                     .basicStyle()
                     .padding(.init(top: 0,
                                    leading: 0,
                                    bottom: 20,
                                    trailing: 0))
                 Button(action: {
-                    self.loginVM.createAccount()
+                    self.viewModel.createAccount()
                 }) {
                     Text("Create account")
                         .basicButtonTextStyle(Color.white, Color.yellow)
                 }
-                .alert(isPresented: $loginVM.signUpError) {
+                .alert(isPresented: $viewModel.signUpError) {
                     Alert(title: Text("Signup Error"),
-                          message: Text(loginVM.errorMesaage),
+                          message: Text(viewModel.errorMesaage),
                           dismissButton: .default(Text("OK"),
-                                                  action: { self.loginVM.reset() }))
+                                                  action: { self.viewModel.reset() }))
                 }
             }
         }
@@ -114,14 +114,14 @@ struct LoginView: View {
                     
                     Spacer()
                     if(loginVM.logined) {
-                        NavigationLink(destination: MapSearchingView()) {
+                        NavigationLink(destination: MapSearchingView(viewModel: .init())) {
                             Text("Go to Ramen Search !").basicButtonTextStyle(Color.white, Color.red)
                         }
                     }
                     Spacer()
                     
                     if(!loginVM.logined) {
-                        NavigationLink(destination: SignupView(loginVM: loginVM)) {
+                        NavigationLink(destination: SignupView(viewModel: loginVM)) {
                             Text("Create new account")
                                 .basicButtonTextStyle(Color.white, Color.yellow)
                                 .padding(.init(top: 0,
@@ -148,6 +148,6 @@ struct LoginView_Previews: PreviewProvider {
 
 struct Signup_Previews: PreviewProvider {
     static var previews: some View {
-        SignupView(loginVM: .init())
+        SignupView(viewModel: .init())
     }
 }
