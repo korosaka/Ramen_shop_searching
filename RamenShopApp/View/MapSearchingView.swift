@@ -11,14 +11,19 @@ import SwiftUI
 struct MapSearchingView: View {
     @ObservedObject var viewModel: MapSearchingViewModel
     var body: some View {
-        Button(action: {
-            self.viewModel.loadShops()
-        }) {
-            Text("Reload")
-        }
-        Text("Map Searching View")
-        GoogleMapView(shops: viewModel.shops).onAppear {
-            self.viewModel.loadShops()
+        TabView {
+            VStack {
+                Button(action: {
+                    self.viewModel.loadShops()
+                }) {
+                    Text("Reload")
+                }
+                GoogleMapView(shops: viewModel.shops).onAppear {
+                    self.viewModel.loadShops()
+                }
+            }.tabItem { Text("Searching") }
+            Text("Adding mode")
+                .tabItem { Text("Add") }
         }
     }
 }
