@@ -53,13 +53,6 @@ struct LoginView: View {
                 Color.green
                     .edgesIgnoringSafeArea(.all)
                 VStack {
-                    if(loginVM.logined) {
-                        Text("Hello, \(loginVM.email)")
-                            .font(.title)
-                            .foregroundColor(Color.white)
-                            .underline()
-                            .padding()
-                    }
                     Text("Ramen Search")
                         .foregroundColor(Color.white)
                         .font(.largeTitle)
@@ -70,7 +63,18 @@ struct LoginView: View {
                                        bottom: 30,
                                        trailing: 0))
                         .background(Color.red)
+                        .padding(.init(top: 20,
+                                       leading: 0,
+                                       bottom: 0,
+                                       trailing: 0))
+                        .navigationBarHidden(true)
                     if(loginVM.logined) {
+                        Text("Hello, \(loginVM.email)")
+                            .font(.title)
+                            .foregroundColor(Color.white)
+                            .underline()
+                            .padding()
+                        
                         Button(action: {
                             self.loginVM.logout()
                         }) {
