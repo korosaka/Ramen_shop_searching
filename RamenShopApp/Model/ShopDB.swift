@@ -10,8 +10,10 @@ import Firebase
 import FirebaseFirestore
 
 class CloudFirestore {
-    let db: Firestore!
-    var shops: [Shop]!
+    let db: Firestore
+    var shops: [Shop]
+    
+    weak var delegate: CloudFirestoreDelegate?
     
     init() {
         db = Firestore.firestore()
@@ -23,6 +25,7 @@ class CloudFirestore {
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
+                self.shops.removeAll()
                 for document in querySnapshot!.documents {
                     let data = document.data()
                     let name = data["name"] as! String
@@ -30,9 +33,14 @@ class CloudFirestore {
                     self.shops.append(Shop(name: name,
                                            location: location))
                 }
+                self.delegate?.completedGettingShop()
             }
         }
     }
+}
+
+protocol CloudFirestoreDelegate: class {
+    func completedGettingShop()
 }
 
 struct Shop {

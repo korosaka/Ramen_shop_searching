@@ -7,15 +7,23 @@
 //
 
 import Foundation
-class MapSearchingViewModel {
+class MapSearchingViewModel: ObservableObject {
     var shopDB: CloudFirestore
+    @Published var shops: [Shop]
     
     init() {
         shopDB = .init()
-//        shopDB.getShops()
+        shops = [Shop]()
+        shopDB.delegate = self
     }
     
-    func getShops() {
+    func loadShops() {
         shopDB.getShops()
+    }
+}
+
+extension MapSearchingViewModel: CloudFirestoreDelegate {
+    func completedGettingShop() {
+        shops = shopDB.shops
     }
 }

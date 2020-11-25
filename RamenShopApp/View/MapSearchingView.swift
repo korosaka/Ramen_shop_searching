@@ -9,10 +9,17 @@
 import SwiftUI
 
 struct MapSearchingView: View {
-    var viewModel: MapSearchingViewModel
+    @ObservedObject var viewModel: MapSearchingViewModel
     var body: some View {
+        Button(action: {
+            self.viewModel.loadShops()
+        }) {
+            Text("Reload")
+        }
         Text("Map Searching View")
-        GoogleMapView()
+        GoogleMapView(shops: viewModel.shops).onAppear {
+            self.viewModel.loadShops()
+        }
     }
 }
 
