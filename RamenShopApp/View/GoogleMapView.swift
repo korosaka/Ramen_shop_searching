@@ -7,9 +7,9 @@
 //
 
 import SwiftUI
-import UIKit
 import GoogleMaps
 
+// MARK: to use UIKit's View(GMSMapView) in SwiftUI
 struct GoogleMapView: UIViewRepresentable {
     
     var shops: [Shop]
@@ -19,35 +19,10 @@ struct GoogleMapView: UIViewRepresentable {
     }
     
     func makeUIView(context: Self.Context) -> GMSMapView {
-        // Create a GMSCameraPosition that tells the map to display the
-        // coordinate -33.86,151.20 at zoom level 6.
-        let camera = GMSCameraPosition.camera(withLatitude: 49.284832194, longitude: -123.106999572, zoom: 10.0)
-        let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-        
-        // MARK: is it enough ?? https://developers.google.com/maps/documentation/ios-sdk/current-place-tutorial
-        mapView.isMyLocationEnabled = true
-        
-        return mapView
+        return GoogleMap().makeMapView()
     }
     
     func updateUIView(_ mapView: GMSMapView, context: Self.Context) {
-        mapView.clear()
-        for shop in shops {
-            let marker = GMSMarker()
-            let location = shop.location
-            marker.icon = UIImage(named: "shop_icon")!.resized(withPercentage: 0.1)
-            marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            marker.title = shop.name
-            // MARK: test data
-            marker.snippet = "★4.2"
-            
-            marker.map = mapView
-        }
+        GoogleMap().updateMapView(mapView, shops)
     }
 }
-
-//struct GoogleMapView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GoogleMapView()
-//    }
-//}

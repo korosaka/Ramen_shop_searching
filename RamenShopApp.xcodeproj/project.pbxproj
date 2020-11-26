@@ -10,6 +10,7 @@
 		883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883AA0DA256649C7002AC14A /* GoogleMapView.swift */; };
 		884CEB92256CD8960020C932 /* ShopDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB91256CD8960020C932 /* ShopDB.swift */; };
 		884CEB95256CDCD40020C932 /* MapSearchingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB94256CDCD40020C932 /* MapSearchingViewModel.swift */; };
+		884CEB98256F66A70020C932 /* GoogleMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB97256F66A70020C932 /* GoogleMap.swift */; };
 		88603700255DF18100C5ED1C /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886036FF255DF18100C5ED1C /* Modifiers.swift */; };
 		886B34FF255026550056AB86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B34FE255026550056AB86 /* AppDelegate.swift */; };
 		886B3501255026550056AB86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B3500255026550056AB86 /* SceneDelegate.swift */; };
@@ -31,6 +32,7 @@
 		883AA0DA256649C7002AC14A /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		884CEB91256CD8960020C932 /* ShopDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDB.swift; sourceTree = "<group>"; };
 		884CEB94256CDCD40020C932 /* MapSearchingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchingViewModel.swift; sourceTree = "<group>"; };
+		884CEB97256F66A70020C932 /* GoogleMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMap.swift; sourceTree = "<group>"; };
 		886036FF255DF18100C5ED1C /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		886B34FB255026550056AB86 /* RamenShopApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RamenShopApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		886B34FE255026550056AB86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				88AFA79F2559B9C1001D151C /* MapSearchingView.swift */,
 				886036FF255DF18100C5ED1C /* Modifiers.swift */,
 				883AA0DA256649C7002AC14A /* GoogleMapView.swift */,
+				884CEB97256F66A70020C932 /* GoogleMap.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */,
+				884CEB98256F66A70020C932 /* GoogleMap.swift in Sources */,
 				886B34FF255026550056AB86 /* AppDelegate.swift in Sources */,
 				886B3501255026550056AB86 /* SceneDelegate.swift in Sources */,
 				886B353A2556A11C0056AB86 /* LoginView.swift in Sources */,
