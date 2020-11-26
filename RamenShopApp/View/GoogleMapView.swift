@@ -13,16 +13,19 @@ import GoogleMaps
 struct GoogleMapView: UIViewRepresentable {
     
     var shops: [Shop]
+    let gMap: GoogleMap
     
     init(shops: [Shop]) {
         self.shops = shops
+        gMap = GoogleMap()
     }
     
+    // MARK: called only once
     func makeUIView(context: Self.Context) -> GMSMapView {
-        return GoogleMap().makeMapView()
+        return gMap.makeMapView()
     }
     
     func updateUIView(_ mapView: GMSMapView, context: Self.Context) {
-        GoogleMap().updateMapView(mapView, shops)
+        gMap.updateMapView(mapView, shops)
     }
 }
