@@ -35,9 +35,12 @@ struct GoogleMapView: UIViewRepresentable {
         for shop in shops {
             let marker = GMSMarker()
             let location = shop.location
+            marker.icon = UIImage(named: "shop_icon")!.resized(withPercentage: 0.1)
             marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             marker.title = shop.name
-            marker.snippet = "Vancouver"
+            // MARK: test data
+            marker.snippet = "★4.2"
+            
             marker.map = mapView
         }
     }
