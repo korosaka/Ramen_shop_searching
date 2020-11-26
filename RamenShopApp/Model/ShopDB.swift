@@ -30,7 +30,8 @@ class CloudFirestore {
                     let data = document.data()
                     let name = data["name"] as! String
                     let location = data["location"] as! GeoPoint
-                    self.shops.append(Shop(name: name,
+                    self.shops.append(Shop(shopID: document.documentID,
+                                           name: name,
                                            location: location))
                 }
                 self.delegate?.completedGettingShop()
@@ -44,6 +45,7 @@ protocol CloudFirestoreDelegate: class {
 }
 
 struct Shop {
-    var name: String
-    var location: GeoPoint
+    let shopID: String
+    let name: String
+    let location: GeoPoint
 }

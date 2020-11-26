@@ -29,6 +29,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
             marker.icon = UIImage(named: "shop_icon")!.resized(withPercentage: 0.1)
             marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             marker.title = shop.name
+            marker.userData = shop.shopID
             // MARK: test data
             marker.snippet = "★4.2"
             
@@ -37,8 +38,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
-        // MARK: should get unique ID ??
-        print(marker.title!)
+        print(marker.userData!)
     }
 
 }
