@@ -10,6 +10,9 @@ import Foundation
 class MapSearchingViewModel: ObservableObject {
     var shopDB: CloudFirestore
     @Published var shops: [Shop]
+    @Published var isShopSelected = false
+    var selectedShopID = ""
+    var selectedShopName = ""
     
     init() {
         shopDB = .init()
@@ -19,6 +22,12 @@ class MapSearchingViewModel: ObservableObject {
     
     func loadShops() {
         shopDB.getShops()
+    }
+    
+    func selectShop(id: String, name: String) {
+        isShopSelected = true
+        selectedShopID = id
+        selectedShopName = name
     }
 }
 

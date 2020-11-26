@@ -15,9 +15,10 @@ struct GoogleMapView: UIViewRepresentable {
     var shops: [Shop]
     let gMap: GoogleMap
     
-    init(shops: [Shop]) {
+    init(shops: [Shop], vm: MapSearchingViewModel) {
         self.shops = shops
         gMap = GoogleMap()
+        gMap.viewModel = vm
     }
     
     // MARK: called only once

@@ -11,6 +11,8 @@ import GoogleMaps
 // MARK: GMSMapViewDelegate cannot be implemented by struct, so This class was created
 class GoogleMap: NSObject, GMSMapViewDelegate {
     
+    var viewModel: MapSearchingViewModel?
+    
     func makeMapView() -> GMSMapView {
         let camera = GMSCameraPosition.camera(withLatitude: 49.284832194, longitude: -123.106999572, zoom: 10.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
@@ -38,7 +40,6 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
-        print(marker.userData!)
+        viewModel?.selectShop(id: marker.userData as! String, name: marker.title!)
     }
-
 }
