@@ -28,15 +28,27 @@ class CloudFirestore {
                 self.shops.removeAll()
                 for document in querySnapshot!.documents {
                     let data = document.data()
-                    let name = data["name"] as! String
+                    let name = data["name"] as? String ?? ""
                     let location = data["location"] as! GeoPoint
+                    let reviewInfo = data["review_info"] as! [String: Any]
                     self.shops.append(Shop(shopID: document.documentID,
                                            name: name,
-                                           location: location))
+                                           location: location,
+                                           aveEvaluation: self.calcAveEvaluation(reviewInfo)))
                 }
                 self.delegate?.completedGettingShop()
             }
         }
+    }
+    
+    func calcAveEvaluation(_ reviewInfo: [String: Any]) -> Float {
+        let totalEvaluation = reviewInfo["total_point"] as? Int ?? 0
+        let reviewCount = reviewInfo["count"] as? Int ?? 0
+        
+        if totalEvaluation == 0 || reviewCount == 0 {
+            return Float(0.0)
+        }
+        return Float(totalEvaluation) / Float(reviewCount)
     }
 }
 
@@ -48,4 +60,5 @@ struct Shop {
     let shopID: String
     let name: String
     let location: GeoPoint
+    let aveEvaluation: Float
 }

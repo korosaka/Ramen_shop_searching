@@ -32,11 +32,17 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
             marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             marker.title = shop.name
             marker.userData = shop.shopID
-            // MARK: test data
-            marker.snippet = "★4.2"
+            marker.snippet = createStar(shop.aveEvaluation)
             
             marker.map = mapView
         }
+    }
+    
+    func createStar(_ evaluation: Float) -> String {
+        if evaluation == Float(0.0) {
+            return "★---"
+        }
+        return String(format: "★%.1f", evaluation)
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
