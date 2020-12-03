@@ -9,34 +9,60 @@
 import Firebase
 import FirebaseFirestore
 
-class CloudFirestore {
+// MARK: this class name should be changed,,,,?
+struct CloudFirestore {
     let db: Firestore
-    var shops: [Shop]
     
     weak var delegate: CloudFirestoreDelegate?
     
     init() {
         db = Firestore.firestore()
-        shops = [Shop]()
     }
     
-    func getShops() {
+    func fetchShops() {
+        var shops = [Shop]()
         db.collection("shop").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
-                self.shops.removeAll()
                 for document in querySnapshot!.documents {
                     let data = document.data()
                     let name = data["name"] as? String ?? ""
                     let location = data["location"] as! GeoPoint
                     let reviewInfo = data["review_info"] as! [String: Any]
-                    self.shops.append(Shop(shopID: document.documentID,
-                                           name: name,
-                                           location: location,
-                                           aveEvaluation: self.calcAveEvaluation(reviewInfo)))
+                    shops.append(Shop(shopID: document.documentID,
+                                      name: name,
+                                      location: location,
+                                      aveEvaluation: self.calcAveEvaluation(reviewInfo)))
                 }
-                self.delegate?.completedGettingShop()
+                self.delegate?.completedFetchingShop(shops: shops)
+            }
+        }
+    }
+    
+    func fetchLatestReviews(shopID: String) {
+        let numOfReview = 2
+        var reviews = [Review]()
+        
+        let reviewRef =
+            db.collection("shop")
+            .document(shopID)
+            .collection("review")
+        reviewRef.order(by: "created_at", descending: true).limit(to: numOfReview).getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let images = data["picture"] as? [String] ?? [String]()
+                    let review = Review(reviewID: document.documentID,
+                                        userID: data["user_id"] as? String ?? "",
+                                        evaluation: data["evaluation"] as? Int ?? 0,
+                                        comment: data["comment"] as? String ?? "",
+                                        imageCount: images.count)
+                    reviews.append(review)
+                }
+                self.delegate?.completedFetchingLatestReviews(reviews: reviews)
             }
         }
     }
@@ -53,7 +79,17 @@ class CloudFirestore {
 }
 
 protocol CloudFirestoreDelegate: class {
-    func completedGettingShop()
+    func completedFetchingShop(shops: [Shop])
+    func completedFetchingLatestReviews(reviews: [Review])
+}
+
+extension CloudFirestoreDelegate {
+    func completedFetchingShop(shops: [Shop]) {
+        print("default implemented completedGettingShop")
+    }
+    func completedFetchingLatestReviews(reviews: [Review]) {
+        print("default implemented completedGettingLatestReviews")
+    }
 }
 
 struct Shop {
@@ -61,4 +97,12 @@ struct Shop {
     let name: String
     let location: GeoPoint
     let aveEvaluation: Float
+}
+
+struct Review {
+    let reviewID: String
+    let userID: String
+    let evaluation: Int
+    let comment: String
+    let imageCount: Int
 }

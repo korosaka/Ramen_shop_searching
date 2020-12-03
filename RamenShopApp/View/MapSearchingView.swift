@@ -35,8 +35,7 @@ struct MapSearchingView: View {
                     }
                 }
                 
-                NavigationLink(destination: ShopDetailView(shopName: viewModel.selectedShopName,
-                                                           shopID: viewModel.selectedShopID),
+                NavigationLink(destination: ShopDetailView(viewModel: .init(mapVM: self.viewModel)),
                                isActive: $viewModel.isShopSelected) {
                     EmptyView()
                 }

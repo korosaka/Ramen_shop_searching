@@ -10,8 +10,7 @@ import SwiftUI
 
 struct ShopDetailView: View {
     
-    var shopName: String
-    var shopID: String
+    @ObservedObject var viewModel: ShopDetailViewModel
     
     var body: some View {
         ZStack {
@@ -20,7 +19,7 @@ struct ShopDetailView: View {
                 .padding(5)
                 .background(Color.black)
             VStack {
-                Text(shopName)
+                Text(viewModel.shop?.name ?? "no-name")
                     .foregroundColor(Color.red)
                     .font(.largeTitle)
                     .bold()
@@ -36,9 +35,11 @@ struct ShopDetailView: View {
                                    bottom: 0,
                                    trailing: 15))
                 Spacer()
-                Text("Shop ID: \(shopID)")
+                Text(viewModel.shop?.shopID ?? "no-id")
                     .padding(10)
             }
+        }.onAppear() {
+            self.viewModel.fetchLatestReview()
         }
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		882E43852577B6FC00E941D7 /* ShopDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882E43842577B6FC00E941D7 /* ShopDetailViewModel.swift */; };
 		883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883AA0DA256649C7002AC14A /* GoogleMapView.swift */; };
 		884CEB92256CD8960020C932 /* ShopDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB91256CD8960020C932 /* ShopDB.swift */; };
 		884CEB95256CDCD40020C932 /* MapSearchingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB94256CDCD40020C932 /* MapSearchingViewModel.swift */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		1088270E322016859E4E4F7E /* Pods-RamenShopApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RamenShopApp.release.xcconfig"; path = "Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp.release.xcconfig"; sourceTree = "<group>"; };
 		257556D638399B742D1568DC /* Pods_RamenShopApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RamenShopApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		882E43842577B6FC00E941D7 /* ShopDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailViewModel.swift; sourceTree = "<group>"; };
 		883AA0DA256649C7002AC14A /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		884CEB91256CD8960020C932 /* ShopDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDB.swift; sourceTree = "<group>"; };
 		884CEB94256CDCD40020C932 /* MapSearchingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchingViewModel.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			children = (
 				886B353C2557B70B0056AB86 /* LoginViewModel.swift */,
 				884CEB94256CDCD40020C932 /* MapSearchingViewModel.swift */,
+				882E43842577B6FC00E941D7 /* ShopDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */,
 				884CEB98256F66A70020C932 /* GoogleMap.swift in Sources */,
 				886B34FF255026550056AB86 /* AppDelegate.swift in Sources */,
+				882E43852577B6FC00E941D7 /* ShopDetailViewModel.swift in Sources */,
 				886B3501255026550056AB86 /* SceneDelegate.swift in Sources */,
 				886B353A2556A11C0056AB86 /* LoginView.swift in Sources */,
 				886B353D2557B70B0056AB86 /* LoginViewModel.swift in Sources */,
