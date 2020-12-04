@@ -10,7 +10,7 @@ import Foundation
 class ShopDetailViewModel: ObservableObject {
 
     var db: CloudFirestore
-    var latestReviews: [Review]
+    @Published var latestReviews: [Review]
     var shop: Shop?
     
     init(mapVM: MapSearchingViewModel) {

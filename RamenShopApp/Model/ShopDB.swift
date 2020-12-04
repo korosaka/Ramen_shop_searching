@@ -41,7 +41,8 @@ struct CloudFirestore {
     }
     
     func fetchLatestReviews(shopID: String) {
-        let numOfReview = 2
+        // MARK: to judge to show "more" in LatestReviews in ShopDetailView (only 2reviews will be shown in ShopDetail)
+        let numOfReview = 3
         var reviews = [Review]()
         
         let reviewRef =
@@ -97,6 +98,13 @@ struct Shop {
     let name: String
     let location: GeoPoint
     let aveEvaluation: Float
+    
+    func roundEvaluatione() -> String {
+        if aveEvaluation == Float(0.0) {
+            return "---"
+        }
+        return String(format: "%.1f", aveEvaluation)
+    }
 }
 
 struct Review {

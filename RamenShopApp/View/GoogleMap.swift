@@ -32,7 +32,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
             marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             marker.title = shop.name
             marker.userData = shop.shopID
-            marker.snippet = createStar(shop.aveEvaluation)
+            marker.snippet = "★" + shop.roundEvaluatione()
             
             marker.map = mapView
         }
