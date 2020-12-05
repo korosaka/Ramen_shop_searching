@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import SwiftUI
 class ShopDetailViewModel: ObservableObject {
-
-    var db: CloudFirestore
+    
+    var db: FirebaseHelper
     @Published var latestReviews: [Review]
+    @Published var pictures: [UIImage]
     var shop: Shop?
     
     init(mapVM: MapSearchingViewModel) {
@@ -18,19 +20,24 @@ class ShopDetailViewModel: ObservableObject {
             shop = mapVM.selectedShop!
         }
         self.db = .init()
-        latestReviews = [Review]()
+        latestReviews = .init()
+        pictures = .init()
         
         db.delegate = self
     }
     
-    func fetchLatestReview() {
+    func fetchDataFromDB() {
         if shop == nil { return }
         db.fetchLatestReviews(shopID: shop!.shopID)
+        db.fetchPictureReviews(shopID: shop!.shopID)
     }
 }
 
 extension ShopDetailViewModel: CloudFirestoreDelegate {
     func completedFetchingLatestReviews(reviews: [Review]) {
         latestReviews = reviews
+    }
+    func completedFetchingPictures(pictures: [UIImage]) {
+        self.pictures = pictures
     }
 }

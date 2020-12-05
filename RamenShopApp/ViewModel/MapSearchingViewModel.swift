@@ -8,7 +8,7 @@
 
 import Foundation
 class MapSearchingViewModel: ObservableObject {
-    var shopDB: CloudFirestore
+    var shopDB: FirebaseHelper
     @Published var shops: [Shop]
     @Published var isShopSelected = false
     var selectedShop: Shop?

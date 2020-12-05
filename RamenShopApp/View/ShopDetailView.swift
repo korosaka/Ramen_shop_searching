@@ -15,9 +15,6 @@ struct ShopDetailView: View {
     var body: some View {
         ZStack {
             Color.blue
-                .cornerRadius(10)
-                .padding(5)
-                .background(Color.black)
             ScrollView(.vertical) {
                 VStack {
                     ShopName(shopName: viewModel.shop?.name)
@@ -34,8 +31,11 @@ struct ShopDetailView: View {
                     
                     LatestReviews(latestReviews: viewModel.latestReviews)
                     
-                    Pictures()
-                        .padding(20)
+                    Pictures(pictures: viewModel.pictures)
+                        .padding(.init(top: 20,
+                                       leading: 10,
+                                       bottom: 0,
+                                       trailing: 10))
                 }
             }
             .padding(.init(top: 5,
@@ -43,7 +43,7 @@ struct ShopDetailView: View {
                            bottom: 5,
                            trailing: 0))
         }.onAppear() {
-            self.viewModel.fetchLatestReview()
+            self.viewModel.fetchDataFromDB()
         }
     }
 }
@@ -152,18 +152,35 @@ struct ReviewHeadline: View {
     }
 }
 
-// MARK: TODO
 struct Pictures: View {
+    let pictures: [UIImage]
+    
     var body: some View {
-        HStack {
-            Spacer()
-            Text("Pictures")
-            Spacer()
+        GeometryReader { bodyView in
+            HStack {
+                Spacer()
+                ForEach(0...2, id: \.self) { index in
+                    let imageSize = bodyView.size.width / 3.5
+                    if pictures.count > index {
+                        Image(uiImage: pictures[index])
+                            .resizable()
+                            .frame(width: imageSize,
+                                   height: imageSize)
+                    } else {
+                        Image(systemName: "camera.fill")
+                            .frame(width: imageSize,
+                                   height: imageSize)
+                            .background(Color.gray)
+                    }
+                    Spacer()
+                }
+            }
+            .padding(.init(top: 10,
+                           leading: 0,
+                           bottom: 10,
+                           trailing: 0))
+            .background(Color.white)
+            .cornerRadius(10)
         }
-        .padding(.init(top: 50,
-                       leading: 0,
-                       bottom: 50,
-                       trailing: 0))
-        .background(Color.white)
     }
 }

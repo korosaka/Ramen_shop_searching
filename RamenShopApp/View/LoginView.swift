@@ -50,7 +50,7 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.green
+                Color.pink
                     .edgesIgnoringSafeArea(.all)
                 VStack {
                     Text("Ramen Search App")
@@ -116,9 +116,9 @@ struct LoginView: View {
                             }
                         }
                         .padding(.init(top: 100,
-                                        leading: 0,
-                                        bottom: 0,
-                                        trailing: 0))
+                                       leading: 0,
+                                       bottom: 0,
+                                       trailing: 0))
                         .onAppear() { self.loginVM.reset() }
                     }
                     
