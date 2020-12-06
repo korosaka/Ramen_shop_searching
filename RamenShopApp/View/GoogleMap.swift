@@ -38,13 +38,6 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
         }
     }
     
-    func createStar(_ evaluation: Float) -> String {
-        if evaluation == Float(0.0) {
-            return "★---"
-        }
-        return String(format: "★%.1f", evaluation)
-    }
-    
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
         viewModel?.selectShop(id: marker.userData as! String, name: marker.title!)
     }
