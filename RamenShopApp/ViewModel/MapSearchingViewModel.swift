@@ -27,7 +27,7 @@ class MapSearchingViewModel: ObservableObject {
         for shop in shops {
             if shop.shopID == id {
                 selectedShop = shop
-                // MARK: this Bool should not become false again??
+                // MARK: this Bool will be false when back to MapSearchingView by NavigationLink
                 isShopSelected = true
                 break
             }
