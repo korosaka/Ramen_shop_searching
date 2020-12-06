@@ -27,6 +27,7 @@ class MapSearchingViewModel: ObservableObject {
         for shop in shops {
             if shop.shopID == id {
                 selectedShop = shop
+                // MARK: this Bool should not become false again??
                 isShopSelected = true
                 break
             }
