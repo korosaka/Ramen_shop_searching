@@ -8,11 +8,10 @@
 
 import Foundation
 class MapSearchingViewModel: ObservableObject {
-    var shopDB: CloudFirestore
+    var shopDB: FirebaseHelper
     @Published var shops: [Shop]
     @Published var isShopSelected = false
-    var selectedShopID = ""
-    var selectedShopName = ""
+    var selectedShop: Shop?
     
     init() {
         shopDB = .init()
@@ -21,18 +20,23 @@ class MapSearchingViewModel: ObservableObject {
     }
     
     func loadShops() {
-        shopDB.getShops()
+        shopDB.fetchShops()
     }
     
     func selectShop(id: String, name: String) {
-        isShopSelected = true
-        selectedShopID = id
-        selectedShopName = name
+        for shop in shops {
+            if shop.shopID == id {
+                selectedShop = shop
+                // MARK: this Bool will be false when back to MapSearchingView by NavigationLink
+                isShopSelected = true
+                break
+            }
+        }
     }
 }
 
 extension MapSearchingViewModel: CloudFirestoreDelegate {
-    func completedGettingShop() {
-        shops = shopDB.shops
+    func completedFetchingShop(shops: [Shop]) {
+        self.shops = shops
     }
 }

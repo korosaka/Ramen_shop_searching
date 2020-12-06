@@ -50,23 +50,24 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.green
+                Color.pink
                     .edgesIgnoringSafeArea(.all)
                 VStack {
-                    Text("Ramen Search")
+                    Text("Ramen Search App")
                         .foregroundColor(Color.white)
                         .font(.largeTitle)
                         .bold()
                         .frame(maxWidth: .infinity)
-                        .padding(.init(top: 30,
+                        .padding(.init(top: 40,
                                        leading: 0,
-                                       bottom: 30,
+                                       bottom: 40,
                                        trailing: 0))
                         .background(Color.red)
-                        .padding(.init(top: 20,
-                                       leading: 0,
+                        .cornerRadius(20)
+                        .padding(.init(top: 100,
+                                       leading: 5,
                                        bottom: 0,
-                                       trailing: 0))
+                                       trailing: 5))
                         .navigationBarHidden(true)
                     if(loginVM.logined) {
                         Text("Hello, \(loginVM.email)")
@@ -113,7 +114,12 @@ struct LoginView: View {
                                       dismissButton: .default(Text("OK"),
                                                               action: { self.loginVM.reset() }))
                             }
-                        }.onAppear() { self.loginVM.reset() }
+                        }
+                        .padding(.init(top: 100,
+                                       leading: 0,
+                                       bottom: 0,
+                                       trailing: 0))
+                        .onAppear() { self.loginVM.reset() }
                     }
                     
                     Spacer()

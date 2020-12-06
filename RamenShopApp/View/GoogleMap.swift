@@ -14,7 +14,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
     var viewModel: MapSearchingViewModel?
     
     func makeMapView() -> GMSMapView {
-        let camera = GMSCameraPosition.camera(withLatitude: 49.284832194, longitude: -123.106999572, zoom: 10.0)
+        let camera = GMSCameraPosition.camera(withLatitude: 49.284832194, longitude: -123.106999572, zoom: 11.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         // MARK: is it enough ?? https://developers.google.com/maps/documentation/ios-sdk/current-place-tutorial
         mapView.isMyLocationEnabled = true
@@ -32,8 +32,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
             marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             marker.title = shop.name
             marker.userData = shop.shopID
-            // MARK: test data
-            marker.snippet = "★4.2"
+            marker.snippet = "★" + shop.roundEvaluatione()
             
             marker.map = mapView
         }

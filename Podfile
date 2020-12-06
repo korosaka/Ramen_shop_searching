@@ -12,4 +12,5 @@ target 'RamenShopApp' do
   pod 'Firebase/Analytics'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+  pod 'Firebase/Storage'
 end
