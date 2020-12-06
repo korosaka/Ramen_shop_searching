@@ -72,9 +72,6 @@ struct FirebaseHelper {
     
     func fetchPictureReviews(shopID: String) {
         let limitReviewCount = 3
-        var pictures = [UIImage]()
-        let storage = Storage.storage()
-        
         let reviewStoreRef =
             db.collection("shop")
             .document(shopID)
@@ -88,70 +85,46 @@ struct FirebaseHelper {
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
-                    let totalReviewCount = querySnapshot!.documents.count
-                    var readReviewCount = 0
-                    for document in querySnapshot!.documents {
-                        let reviewStorageRef = storage.reference().child("review_picture/\(document.documentID)")
-                        reviewStorageRef.listAll { (result, error) in
-                            if let error = error {
-                                print("Error getting data: \(error)")
-                            }
-                            let totalImageCount = result.items.count
-                            var readImageCount = 0
-                            for item in result.items {
-                                item.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                                    readImageCount += 1
-                                    if let error = error {
-                                        print("Error getting data: \(error)")
-                                    } else {
-                                        let image = UIImage(data: data!)
-                                        pictures.append(image!)
-                                    }
-                                    if readImageCount == totalImageCount {
-                                        readReviewCount += 1
-                                        if readReviewCount == totalReviewCount {
-                                            delegate?.completedFetchingPictures(pictures: pictures)
-                                        }
-                                    }
-                                }
+                    self.fetchReviewImages(imageReviews: querySnapshot!)
+                }
+            }
+    }
+    
+    func fetchReviewImages(imageReviews: QuerySnapshot) {
+        
+        let storage = Storage.storage()
+        var pictures = [UIImage]()
+        let totalImageReviewCount = imageReviews.documents.count
+        var readImageReviewCount = 0
+        
+        for document in imageReviews.documents {
+            let reviewStorageRef = storage.reference().child("review_picture/\(document.documentID)")
+            reviewStorageRef.listAll { (result, error) in
+                if let error = error {
+                    print("Error getting data: \(error)")
+                }
+                let totalImageCount = result.items.count
+                var readImageCount = 0
+                for item in result.items {
+                    item.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                        if let error = error {
+                            print("Error getting data: \(error)")
+                        } else {
+                            let image = UIImage(data: data!)
+                            pictures.append(image!)
+                        }
+                        readImageCount += 1
+                        if readImageCount == totalImageCount {
+                            readImageReviewCount += 1
+                            if readImageReviewCount == totalImageReviewCount {
+                                self.delegate?.completedFetchingPictures(pictures: pictures)
                             }
                         }
                     }
                 }
             }
+        }
     }
-    
-    // MARK: TODO
-    //    func fetchReviewImages(reviewID: String, totalReviewCount: Int, readReviewCount: inout Int) {
-    //        let storage = Storage.storage()
-    //        var pictures = [UIImage]()
-    //
-    //        let reviewStorageRef = storage.reference().child("review_picture/\(reviewID)")
-    //        reviewStorageRef.listAll { (result, error) in
-    //            if let error = error {
-    //                print("Error getting data: \(error)")
-    //            }
-    //            let totalImageCount = result.items.count
-    //            var readImageCount = 0
-    //            for item in result.items {
-    //                item.getData(maxSize: 1 * 1024 * 1024) { data, error in
-    //                    readImageCount += 1
-    //                    if let error = error {
-    //                        print("Error getting data: \(error)")
-    //                    } else {
-    //                        let image = UIImage(data: data!)
-    //                        pictures.append(image!)
-    //                    }
-    //                    if readImageCount == totalImageCount {
-    //                        readReviewCount += 1
-    //                        if readReviewCount == totalReviewCount {
-    //                            delegate?.completedFetchingPictures(pictures: pictures)
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
     
     func calcAveEvaluation(_ reviewInfo: [String: Any]) -> Float {
         let totalEvaluation = reviewInfo["total_point"] as? Int ?? 0
