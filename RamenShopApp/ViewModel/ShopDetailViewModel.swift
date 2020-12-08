@@ -34,7 +34,7 @@ class ShopDetailViewModel: ObservableObject {
 }
 
 extension ShopDetailViewModel: CloudFirestoreDelegate {
-    func completedFetchingLatestReviews(reviews: [Review]) {
+    func completedFetchingReviews(reviews: [Review]) {
         latestReviews = reviews
     }
     func completedFetchingPictures(pictures: [UIImage]) {

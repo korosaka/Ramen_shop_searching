@@ -93,13 +93,17 @@ struct LatestReviews: View {
             .padding(3)
         if latestReviews.count > 0 {
             ReviewHeadline(review: latestReviews[0])
+                .padding(.init(top: 0,
+                               leading: 0,
+                               bottom: 0,
+                               trailing: 15))
         }
         if latestReviews.count > 1 {
             ReviewHeadline(review: latestReviews[1])
                 .padding(.init(top: 10,
                                leading: 0,
                                bottom: 0,
-                               trailing: 0))
+                               trailing: 15))
         }
         if latestReviews.count > 2 {
             NavigationLink(destination: AllReviewView(viewModel: .init(shop: shop))) {
@@ -110,7 +114,7 @@ struct LatestReviews: View {
                 .padding(.init(top: 5,
                                leading: 0,
                                bottom: 0,
-                               trailing: 20))
+                               trailing: 15))
             }
         }
     }
@@ -146,10 +150,6 @@ struct ReviewHeadline: View {
                             trailing: 10))
             .background(Color.white)
             .cornerRadius(15)
-            .padding(.init(top: 0,
-                           leading: 0,
-                           bottom: 0,
-                           trailing: 20))
         }
     }
 }

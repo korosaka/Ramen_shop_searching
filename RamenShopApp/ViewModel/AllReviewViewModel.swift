@@ -26,9 +26,16 @@ class AllReviewViewModel: ObservableObject {
         db = .init()
         self.shop = shop
         reviews = .init()
+        db.delegate = self
     }
     
     func fetchAllReview() {
-        
+        db.fetchAllReview(shopID: shop.shopID)
+    }
+}
+
+extension AllReviewViewModel: CloudFirestoreDelegate {
+    func completedFetchingReviews(reviews: [Review]) {
+        self.reviews = reviews
     }
 }

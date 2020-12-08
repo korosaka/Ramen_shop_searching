@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AllReviewView: View {
     
-    var viewModel: AllReviewViewModel
+    @ObservedObject var viewModel: AllReviewViewModel
     
     var body: some View {
         
@@ -21,14 +21,18 @@ struct AllReviewView: View {
                     .font(.headline)
                     .foregroundColor(.yellow)
                     .padding(5)
-                List(0..<viewModel.testData.count) { i in
-                    ReviewHeadline(review: viewModel.testData[i])
+                List {
+                    ForEach(viewModel.reviews, id: \.reviewID) { review in
+                        ReviewHeadline(review: review)
+                    }
                 }
                 .padding(.init(top: 0,
                                leading: 5,
                                bottom: 5,
                                trailing: 5))
             }
+        }.onAppear() {
+            self.viewModel.fetchAllReview()
         }
         
     }
