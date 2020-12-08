@@ -9,20 +9,11 @@
 import Foundation
 class AllReviewViewModel: ObservableObject {
     
-    var db: FirebaseHelper
     @Published var reviews: [Review]
+    var db: FirebaseHelper
     var shop: Shop
-    
-    
-    let testReview = Review(reviewID: "test_id",
-                            userID: "test_user",
-                            evaluation: 4,
-                            comment: "hfhkafhbkafsl ljafnlnanljkvlakjn lknflknlknarsn,afj, rk,najb.fajfajbnjdjkduihkfb mahjm kjnanskdnkjrbnakjf kjbjkfasdmnm,famn afmc nm,daf,m , mnnnnn nkjfna,jn,jarhjkn.knmdfkkgUYTRJA,J jsbjslbjbj,afj,nb,a",
-                            imageCount: 2)
-    
-    let testData: [Review]
+
     init(shop: Shop) {
-        testData = [testReview, testReview, testReview]
         db = .init()
         self.shop = shop
         reviews = .init()
