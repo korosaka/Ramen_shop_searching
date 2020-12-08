@@ -29,7 +29,8 @@ struct ShopDetailView: View {
                                        bottom: 20,
                                        trailing: 0))
                     
-                    LatestReviews(latestReviews: viewModel.latestReviews)
+                    LatestReviews(latestReviews: viewModel.latestReviews,
+                                  shop: viewModel.shop!)
                     
                     Pictures(pictures: viewModel.pictures)
                         .padding(.init(top: 20,
@@ -83,6 +84,7 @@ struct ShopEvaluation: View {
 
 struct LatestReviews: View {
     let latestReviews: [Review]
+    let shop: Shop
     
     var body: some View {
         Text("Latest reviews")
@@ -100,7 +102,7 @@ struct LatestReviews: View {
                                trailing: 0))
         }
         if latestReviews.count > 2 {
-            NavigationLink(destination: AllReviewView()) {
+            NavigationLink(destination: AllReviewView(viewModel: .init(shop: shop))) {
                 HStack {
                     Spacer()
                     Text("more...").foregroundColor(.white)
