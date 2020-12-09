@@ -9,7 +9,39 @@
 import SwiftUI
 
 struct AllReviewView: View {
+    
+    @ObservedObject var viewModel: AllReviewViewModel
+    
     var body: some View {
-        Text("AllReviewView")
+        
+        ZStack {
+            Color.blue
+            VStack {
+                Text("All Review")
+                    .font(.headline)
+                    .foregroundColor(.yellow)
+                    .padding(5)
+                List {
+                    ForEach(viewModel.reviews, id: \.reviewID) { review in
+                        Button(action: {
+                            viewModel.switchShowDetail(reviewID: review.reviewID)
+                        }) {
+                            if viewModel.showDetailDic[review.reviewID] ?? false {
+                                ReviewDetailView()
+                            } else {
+                                ReviewHeadline(review: review)
+                            }
+                        }
+                    }
+                }
+                .padding(.init(top: 0,
+                               leading: 5,
+                               bottom: 5,
+                               trailing: 5))
+            }
+        }.onAppear() {
+            self.viewModel.fetchAllReview()
+        }
+        
     }
 }

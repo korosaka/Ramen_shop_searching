@@ -42,32 +42,56 @@ struct FirebaseHelper {
     func fetchLatestReviews(shopID: String) {
         // MARK: to judge to show "more" in LatestReviews in ShopDetailView (only 2reviews will be shown in ShopDetail)
         let numOfReview = 3
-        var reviews = [Review]()
+        fetchShopReviews(shopID: shopID, limitNum: numOfReview)
+    }
+    
+    func fetchAllReview(shopID: String) {
+        fetchShopReviews(shopID: shopID, limitNum: nil)
+    }
+    
+    func fetchShopReviews(shopID: String, limitNum: Int?) {
+        let reviewRef = createReviewRef(shopID: shopID)
         
-        let reviewRef =
-            db.collection("shop")
+        let completionClosure = { (querySnapshot: QuerySnapshot?, err: Error?) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                let reviews = extractReviews(reviewQuery: querySnapshot!)
+                self.delegate?.completedFetchingReviews(reviews: reviews)
+            }
+        }
+        
+        if limitNum != nil {
+            reviewRef
+                .order(by: "created_at", descending: true)
+                .limit(to: limitNum!)
+                .getDocuments(completion: completionClosure)
+        } else {
+            reviewRef
+                .order(by: "created_at", descending: true)
+                .getDocuments(completion: completionClosure)
+        }
+    }
+    
+    func createReviewRef(shopID: String) -> CollectionReference {
+        return db.collection("shop")
             .document(shopID)
             .collection("review")
-        reviewRef
-            .order(by: "created_at", descending: true)
-            .limit(to: numOfReview)
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        let data = document.data()
-                        let images = data["picture"] as? [String] ?? [String]()
-                        let review = Review(reviewID: document.documentID,
-                                            userID: data["user_id"] as? String ?? "",
-                                            evaluation: data["evaluation"] as? Int ?? 0,
-                                            comment: data["comment"] as? String ?? "",
-                                            imageCount: images.count)
-                        reviews.append(review)
-                    }
-                    self.delegate?.completedFetchingLatestReviews(reviews: reviews)
-                }
-            }
+    }
+    
+    func extractReviews(reviewQuery: QuerySnapshot) -> [Review] {
+        var reviews = [Review]()
+        for document in reviewQuery.documents {
+            let data = document.data()
+            let images = data["picture"] as? [String] ?? [String]()
+            let review = Review(reviewID: document.documentID,
+                                userID: data["user_id"] as? String ?? "",
+                                evaluation: data["evaluation"] as? Int ?? 0,
+                                comment: data["comment"] as? String ?? "",
+                                imageCount: images.count)
+            reviews.append(review)
+        }
+        return reviews
     }
     
     func fetchPictureReviews(shopID: String) {
@@ -139,17 +163,17 @@ struct FirebaseHelper {
 
 protocol CloudFirestoreDelegate: class {
     func completedFetchingShop(shops: [Shop])
-    func completedFetchingLatestReviews(reviews: [Review])
+    func completedFetchingReviews(reviews: [Review])
     func completedFetchingPictures(pictures: [UIImage])
 }
 
 // MARK: default implements
 extension CloudFirestoreDelegate {
     func completedFetchingShop(shops: [Shop]) {
-        print("default implemented completedGettingShop")
+        print("default implemented completedFetchingShop")
     }
-    func completedFetchingLatestReviews(reviews: [Review]) {
-        print("default implemented completedGettingLatestReviews")
+    func completedFetchingReviews(reviews: [Review]) {
+        print("default implemented completedFetchingReviews")
     }
     func completedFetchingPictures(pictures: [UIImage]) {
         print("default implemented completedFetchingPictures")
