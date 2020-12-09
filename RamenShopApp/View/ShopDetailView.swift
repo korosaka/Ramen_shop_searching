@@ -143,7 +143,7 @@ struct ReviewHeadline: View {
                             .foregroundColor(.purple)
                     }
                 }
-                Text(review.comment).lineLimit(3)
+                Text(review.comment).lineLimit(2)
             }.padding(.init(top: 0,
                             leading: 10,
                             bottom: 0,

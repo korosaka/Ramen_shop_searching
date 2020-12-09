@@ -23,7 +23,15 @@ struct AllReviewView: View {
                     .padding(5)
                 List {
                     ForEach(viewModel.reviews, id: \.reviewID) { review in
-                        ReviewHeadline(review: review)
+                        Button(action: {
+                            viewModel.switchShowDetail(reviewID: review.reviewID)
+                        }) {
+                            if viewModel.showDetailDic[review.reviewID] ?? false {
+                                ReviewDetailView()
+                            } else {
+                                ReviewHeadline(review: review)
+                            }
+                        }
                     }
                 }
                 .padding(.init(top: 0,
