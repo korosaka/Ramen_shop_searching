@@ -26,6 +26,7 @@
 		886B35422557D8BE0056AB86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 886B35412557D8BE0056AB86 /* GoogleService-Info.plist */; };
 		887D9FFE257FAD48003E237E /* AllReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */; };
 		887DA0012580FC06003E237E /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887DA0002580FC06003E237E /* ReviewDetailView.swift */; };
+		887DA00625817426003E237E /* ReviewDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887DA00525817426003E237E /* ReviewDetailViewModel.swift */; };
 		88A42235257A001C003CC75D /* AllReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A42234257A001C003CC75D /* AllReviewView.swift */; };
 		88AFA7A02559B9C1001D151C /* MapSearchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapSearchingView.swift */; };
 		9D33E53A05060B66C56760E7 /* Pods_RamenShopApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 257556D638399B742D1568DC /* Pods_RamenShopApp.framework */; };
@@ -55,6 +56,7 @@
 		886B35412557D8BE0056AB86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewViewModel.swift; sourceTree = "<group>"; };
 		887DA0002580FC06003E237E /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
+		887DA00525817426003E237E /* ReviewDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewModel.swift; sourceTree = "<group>"; };
 		88A42234257A001C003CC75D /* AllReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewView.swift; sourceTree = "<group>"; };
 		88AFA79F2559B9C1001D151C /* MapSearchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchingView.swift; sourceTree = "<group>"; };
 		A5D6C3FBE114337FC41E58D1 /* Pods-RamenShopApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RamenShopApp.debug.xcconfig"; path = "Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				884CEB94256CDCD40020C932 /* MapSearchingViewModel.swift */,
 				882E43842577B6FC00E941D7 /* ShopDetailViewModel.swift */,
 				887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */,
+				887DA00525817426003E237E /* ReviewDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				884CEB95256CDCD40020C932 /* MapSearchingViewModel.swift in Sources */,
 				886B35402557CAD30056AB86 /* Authentication.swift in Sources */,
 				884CEB92256CD8960020C932 /* ShopDB.swift in Sources */,
+				887DA00625817426003E237E /* ReviewDetailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
