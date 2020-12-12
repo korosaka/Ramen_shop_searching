@@ -27,7 +27,8 @@ struct AllReviewView: View {
                             viewModel.switchShowDetail(reviewID: review.reviewID)
                         }) {
                             if viewModel.showDetailDic[review.reviewID] ?? false {
-                                ReviewDetailView(viewModel: .init(review: review))
+                                ReviewDetailView(viewModel: .init(review: review),
+                                                 screenWidth: UIScreen.main.bounds.size.width)
                             } else {
                                 ReviewHeadline(review: review)
                             }

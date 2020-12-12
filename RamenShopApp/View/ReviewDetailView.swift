@@ -11,7 +11,7 @@ import QGrid
 
 struct ReviewDetailView: View {
     @ObservedObject var viewModel: ReviewDetailViewModel
-    
+    let screenWidth: CGFloat
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -34,7 +34,8 @@ struct ReviewDetailView: View {
                             bottom: 5,
                             trailing: 0))
             Text(viewModel.review.comment).padding(.bottom)
-            PictureCollectionView(ramenImages: viewModel.reviewImages)
+            PictureCollectionView(ramenImages: viewModel.reviewImages,
+                                  pictureSize: (screenWidth / 2.4))
             
         }.onAppear() {
             viewModel.fetchImages()
@@ -44,17 +45,16 @@ struct ReviewDetailView: View {
 
 struct PictureCollectionView: View {
     let ramenImages: [RamenImage]
-    // MARK: it should be variable by the screen size.......
-    let pictureFrame: CGFloat = 160.0
-    let spaceHeight: CGFloat = 5.0
-    let paddingHeight: CGFloat = 5.0
+    let pictureSize: CGFloat
+    let space: CGFloat = 5.0
+    let padding: CGFloat = 5.0
     var row: Int {
         return (ramenImages.count + 1) / 2
     }
     var frameHieght: CGFloat {
-        return pictureFrame * CGFloat(row)
-            + spaceHeight * CGFloat(row - 1)
-            + paddingHeight * 2
+        return pictureSize * CGFloat(row)
+            + space * CGFloat(row - 1)
+            + padding * 2
     }
     
     var body: some View {
@@ -65,15 +65,17 @@ struct PictureCollectionView: View {
         } else {
             QGrid(self.ramenImages,
                   columns: 2,
-                  vSpacing: spaceHeight,
-                  hSpacing: 5,
-                  vPadding: paddingHeight,
-                  hPadding: 0,
+                  vSpacing: space,
+                  hSpacing: space,
+                  vPadding: padding,
+                  hPadding: padding,
                   isScrollable: false,
                   showScrollIndicators: false
             ) { ramenImage in
-                PictureCell(ramenImage: ramenImage, size: pictureFrame)
-            }.frame(height: frameHieght).background(Color.blue)
+                PictureCell(ramenImage: ramenImage, size: pictureSize)
+            }
+            .frame(height: frameHieght)
+            .background(Color.blue)
         }
         
     }

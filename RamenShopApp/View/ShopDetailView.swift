@@ -166,6 +166,7 @@ struct Pictures: View {
                     if pictures.count > index {
                         Image(uiImage: pictures[index])
                             .resizable()
+                            .scaledToFit()
                             .frame(width: imageSize,
                                    height: imageSize)
                     } else {
