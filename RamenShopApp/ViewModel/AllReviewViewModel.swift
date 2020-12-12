@@ -31,7 +31,7 @@ class AllReviewViewModel: ObservableObject {
     }
 }
 
-extension AllReviewViewModel: CloudFirestoreDelegate {
+extension AllReviewViewModel: FirebaseHelperDelegate {
     func completedFetchingReviews(reviews: [Review]) {
         reviews.forEach {
             showDetailDic[$0.reviewID] = false

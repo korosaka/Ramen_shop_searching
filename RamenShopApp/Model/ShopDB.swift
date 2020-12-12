@@ -10,17 +10,19 @@ import Firebase
 import FirebaseFirestore
 
 struct FirebaseHelper {
-    let db: Firestore
+    let firestore: Firestore
+    let storage: Storage
     
-    weak var delegate: CloudFirestoreDelegate?
+    weak var delegate: FirebaseHelperDelegate?
     
     init() {
-        db = Firestore.firestore()
+        firestore = Firestore.firestore()
+        storage = Storage.storage()
     }
     
     func fetchShops() {
         var shops = [Shop]()
-        db.collection("shop").getDocuments() { (querySnapshot, err) in
+        firestore.collection("shop").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -74,7 +76,7 @@ struct FirebaseHelper {
     }
     
     func createReviewRef(shopID: String) -> CollectionReference {
-        return db.collection("shop")
+        return firestore.collection("shop")
             .document(shopID)
             .collection("review")
     }
@@ -97,7 +99,7 @@ struct FirebaseHelper {
     func fetchPictureReviews(shopID: String) {
         let limitReviewCount = 3
         let reviewStoreRef =
-            db.collection("shop")
+            firestore.collection("shop")
             .document(shopID)
             .collection("review")
         reviewStoreRef
@@ -109,41 +111,62 @@ struct FirebaseHelper {
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
-                    self.fetchReviewImages(imageReviews: querySnapshot!)
+                    self.fetchImageFromReviewDocs(imageReviewsQS: querySnapshot!)
                 }
             }
     }
     
-    func fetchReviewImages(imageReviews: QuerySnapshot) {
-        
-        let storage = Storage.storage()
-        var pictures = [UIImage]()
-        let totalImageReviewCount = imageReviews.documents.count
+    // MARK: to get images of a shop (used for ShopDetail)
+    func fetchImageFromReviewDocs(imageReviewsQS: QuerySnapshot) {
+        var totalPictures = [UIImage]()
+        let totalImageReviewCount = imageReviewsQS.documents.count
         var readImageReviewCount = 0
         
-        for document in imageReviews.documents {
-            let reviewStorageRef = storage.reference().child("review_picture/\(document.documentID)")
-            reviewStorageRef.listAll { (result, error) in
-                if let error = error {
-                    print("Error getting data: \(error)")
-                }
-                let totalImageCount = result.items.count
-                var readImageCount = 0
-                for item in result.items {
-                    item.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                        if let error = error {
-                            print("Error getting data: \(error)")
-                        } else {
-                            let image = UIImage(data: data!)
-                            pictures.append(image!)
-                        }
-                        readImageCount += 1
-                        if readImageCount == totalImageCount {
-                            readImageReviewCount += 1
-                            if readImageReviewCount == totalImageReviewCount {
-                                self.delegate?.completedFetchingPictures(pictures: pictures)
-                            }
-                        }
+        let completionClosure = { (pictures: [UIImage]) -> Void in
+            totalPictures += pictures
+            readImageReviewCount += 1
+            // MARK: completed getting images of every review?
+            if readImageReviewCount == totalImageReviewCount {
+                self.delegate?.completedFetchingPictures(pictures: totalPictures)
+            }
+        }
+        
+        for reviewDoc in imageReviewsQS.documents {
+            fetchReviewImage(id: reviewDoc.documentID, completion: completionClosure)
+        }
+    }
+    
+    // MARK: to get images of a review (used for ReviewDetail)
+    func fetchImageFromReview(review: Review) {
+        let completionClosure = { (pictures: [UIImage]) -> Void in
+            self.delegate?.completedFetchingPictures(pictures: pictures)
+        }
+        fetchReviewImage(id: review.reviewID, completion: completionClosure)
+    }
+    
+    private func fetchReviewImage(id reviewID: String, completion: @escaping ([UIImage]) -> Void) {
+        var reviewImages = [UIImage]()
+        let reviewStorageRef = storage.reference().child("review_picture/\(reviewID)")
+        reviewStorageRef.listAll { (result, error) in
+            // MARK: asynchronous
+            if let error = error {
+                print("Error getting data: \(error)")
+            }
+            let totalImageCount = result.items.count
+            var readImageCount = 0
+            for item in result.items {
+                item.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                    // MARK: asynchronous
+                    if let error = error {
+                        print("Error getting data: \(error)")
+                    } else {
+                        let image = UIImage(data: data!)
+                        reviewImages.append(image!)
+                    }
+                    readImageCount += 1
+                    // MARK: completed getting images of 1 review?
+                    if readImageCount == totalImageCount {
+                        completion(reviewImages)
                     }
                 }
             }
@@ -161,14 +184,14 @@ struct FirebaseHelper {
     }
 }
 
-protocol CloudFirestoreDelegate: class {
+protocol FirebaseHelperDelegate: class {
     func completedFetchingShop(shops: [Shop])
     func completedFetchingReviews(reviews: [Review])
     func completedFetchingPictures(pictures: [UIImage])
 }
 
 // MARK: default implements
-extension CloudFirestoreDelegate {
+extension FirebaseHelperDelegate {
     func completedFetchingShop(shops: [Shop]) {
         print("default implemented completedFetchingShop")
     }

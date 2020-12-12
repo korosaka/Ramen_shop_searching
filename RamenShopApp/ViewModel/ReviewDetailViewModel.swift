@@ -11,16 +11,26 @@ class ReviewDetailViewModel: ObservableObject {
     
     var review: Review
     var db: FirebaseHelper
-    @Published var pictures: [UIImage]?
+    @Published var reviewImages: [RamenImage]
     
     
     init(review: Review) {
         self.review = review
-        pictures = .init()
+        reviewImages = .init()
         db = .init()
+        db.delegate = self
     }
     
     func fetchImages() {
-        // MARK: fetch images with review.id
+        db.fetchImageFromReview(review: review)
+    }
+}
+
+extension ReviewDetailViewModel: FirebaseHelperDelegate {
+    func completedFetchingPictures(pictures: [UIImage]) {
+        pictures.forEach { picture in
+            let ramenImage = RamenImage(picture: Image(uiImage: picture))
+            reviewImages.append(ramenImage)
+        }
     }
 }
