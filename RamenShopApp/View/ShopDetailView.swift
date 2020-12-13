@@ -138,11 +138,20 @@ struct ReviewHeadline: View {
                         .font(.subheadline)
                     Text(String(review.evaluation))
                     Spacer()
+                    Text(review.displayDate())
+                        .foregroundColor(.gray)
                     if review.imageCount > 0 {
                         Image(systemName: "camera.fill")
                             .foregroundColor(.purple)
+                    } else {
+                        Image(systemName: "camera")
+                            .foregroundColor(.gray)
                     }
                 }
+                .padding(.init(top: 0,
+                               leading: 0,
+                               bottom: 2,
+                               trailing: 0))
                 Text(review.comment).lineLimit(2)
             }.padding(.init(top: 0,
                             leading: 10,
@@ -166,6 +175,7 @@ struct Pictures: View {
                     if pictures.count > index {
                         Image(uiImage: pictures[index])
                             .resizable()
+                            .scaledToFit()
                             .frame(width: imageSize,
                                    height: imageSize)
                     } else {

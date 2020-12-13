@@ -33,7 +33,7 @@ class ShopDetailViewModel: ObservableObject {
     }
 }
 
-extension ShopDetailViewModel: CloudFirestoreDelegate {
+extension ShopDetailViewModel: FirebaseHelperDelegate {
     func completedFetchingReviews(reviews: [Review]) {
         latestReviews = reviews
     }

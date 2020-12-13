@@ -27,7 +27,7 @@ struct AllReviewView: View {
                             viewModel.switchShowDetail(reviewID: review.reviewID)
                         }) {
                             if viewModel.showDetailDic[review.reviewID] ?? false {
-                                ReviewDetailView()
+                                ReviewDetailView(viewModel: .init(review: review))
                             } else {
                                 ReviewHeadline(review: review)
                             }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -26,6 +26,8 @@
 		886B35422557D8BE0056AB86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 886B35412557D8BE0056AB86 /* GoogleService-Info.plist */; };
 		887D9FFE257FAD48003E237E /* AllReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */; };
 		887DA0012580FC06003E237E /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887DA0002580FC06003E237E /* ReviewDetailView.swift */; };
+		887DA00625817426003E237E /* ReviewDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887DA00525817426003E237E /* ReviewDetailViewModel.swift */; };
+		887DA00A2582A60D003E237E /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 887DA0092582A60D003E237E /* QGrid */; };
 		88A42235257A001C003CC75D /* AllReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A42234257A001C003CC75D /* AllReviewView.swift */; };
 		88AFA7A02559B9C1001D151C /* MapSearchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapSearchingView.swift */; };
 		9D33E53A05060B66C56760E7 /* Pods_RamenShopApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 257556D638399B742D1568DC /* Pods_RamenShopApp.framework */; };
@@ -55,6 +57,7 @@
 		886B35412557D8BE0056AB86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewViewModel.swift; sourceTree = "<group>"; };
 		887DA0002580FC06003E237E /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
+		887DA00525817426003E237E /* ReviewDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewModel.swift; sourceTree = "<group>"; };
 		88A42234257A001C003CC75D /* AllReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewView.swift; sourceTree = "<group>"; };
 		88AFA79F2559B9C1001D151C /* MapSearchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchingView.swift; sourceTree = "<group>"; };
 		A5D6C3FBE114337FC41E58D1 /* Pods-RamenShopApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RamenShopApp.debug.xcconfig"; path = "Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -65,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				887DA00A2582A60D003E237E /* QGrid in Frameworks */,
 				9D33E53A05060B66C56760E7 /* Pods_RamenShopApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,6 +150,7 @@
 				884CEB94256CDCD40020C932 /* MapSearchingViewModel.swift */,
 				882E43842577B6FC00E941D7 /* ShopDetailViewModel.swift */,
 				887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */,
+				887DA00525817426003E237E /* ReviewDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -187,6 +192,9 @@
 			dependencies = (
 			);
 			name = RamenShopApp;
+			packageProductDependencies = (
+				887DA0092582A60D003E237E /* QGrid */,
+			);
 			productName = RamenShopApp;
 			productReference = 886B34FB255026550056AB86 /* RamenShopApp.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +223,9 @@
 				Base,
 			);
 			mainGroup = 886B34F2255026550056AB86;
+			packageReferences = (
+				887DA0082582A60D003E237E /* XCRemoteSwiftPackageReference "QGrid" */,
+			);
 			productRefGroup = 886B34FC255026550056AB86 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -319,6 +330,7 @@
 				884CEB95256CDCD40020C932 /* MapSearchingViewModel.swift in Sources */,
 				886B35402557CAD30056AB86 /* Authentication.swift in Sources */,
 				884CEB92256CD8960020C932 /* ShopDB.swift in Sources */,
+				887DA00625817426003E237E /* ReviewDetailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,6 +526,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		887DA0082582A60D003E237E /* XCRemoteSwiftPackageReference "QGrid" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Q-Mobile/QGrid.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		887DA0092582A60D003E237E /* QGrid */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 887DA0082582A60D003E237E /* XCRemoteSwiftPackageReference "QGrid" */;
+			productName = QGrid;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 886B34F3255026550056AB86 /* Project object */;
 }
