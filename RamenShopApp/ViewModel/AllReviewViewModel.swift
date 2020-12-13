@@ -11,6 +11,7 @@ class AllReviewViewModel: ObservableObject {
     
     @Published var reviews: [Review]
     @Published var showDetailDic: [String: Bool]
+    var currentDetail: String?
     var db: FirebaseHelper
     var shop: Shop
 
@@ -26,8 +27,19 @@ class AllReviewViewModel: ObservableObject {
         db.fetchAllReview(shopID: shop.shopID)
     }
     
-    func switchShowDetail(reviewID: String) {
-        showDetailDic[reviewID]?.toggle()
+    func switchShowDetail(reviewID selctedReview: String) {
+        showDetailDic[selctedReview]?.toggle()
+        if currentDetail == nil {
+            // MARK: a review is tapped when every review are closed
+            currentDetail = selctedReview
+        } else if currentDetail == selctedReview {
+            // MARK: the review showing detail is tapped
+            currentDetail = nil
+        } else {
+            // MARK: a review is tapped when another review is showing detail
+            showDetailDic[currentDetail!]?.toggle()
+            currentDetail = selctedReview
+        }
     }
 }
 
