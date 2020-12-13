@@ -86,11 +86,13 @@ struct FirebaseHelper {
         for document in reviewQuery.documents {
             let data = document.data()
             let images = data["picture"] as? [String] ?? [String]()
+            let createdTimestamp = data["created_at"] as? Timestamp
             let review = Review(reviewID: document.documentID,
                                 userID: data["user_id"] as? String ?? "",
                                 evaluation: data["evaluation"] as? Int ?? 0,
                                 comment: data["comment"] as? String ?? "",
-                                imageCount: images.count)
+                                imageCount: images.count,
+                                createdDate: createdTimestamp!.dateValue())
             reviews.append(review)
         }
         return reviews
@@ -223,4 +225,11 @@ struct Review {
     let evaluation: Int
     let comment: String
     let imageCount: Int
+    let createdDate: Date
+    
+    func displayDate() -> String {
+        let dateFormater = DateFormatter()
+        dateFormater.dateFormat = "yyyy/MM/dd"
+        return dateFormater.string(from: createdDate)
+    }
 }

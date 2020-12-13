@@ -27,7 +27,8 @@ struct ReviewDetailView: View {
                     .foregroundColor(.black)
                     .font(.headline)
                 Spacer()
-                Text("2020/10/08").font(.headline)
+                Text(viewModel.review.displayDate())
+                    .font(.headline)
             }.padding(.init(top: 5,
                             leading: 0,
                             bottom: 5,
