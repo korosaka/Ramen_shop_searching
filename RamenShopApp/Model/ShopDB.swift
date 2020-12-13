@@ -85,13 +85,12 @@ struct FirebaseHelper {
         var reviews = [Review]()
         for document in reviewQuery.documents {
             let data = document.data()
-            let images = data["picture"] as? [String] ?? [String]()
             let createdTimestamp = data["created_at"] as? Timestamp
             let review = Review(reviewID: document.documentID,
                                 userID: data["user_id"] as? String ?? "",
                                 evaluation: data["evaluation"] as? Int ?? 0,
                                 comment: data["comment"] as? String ?? "",
-                                imageCount: images.count,
+                                imageCount: data["image_number"] as? Int ?? 0,
                                 createdDate: createdTimestamp!.dateValue())
             reviews.append(review)
         }
@@ -105,7 +104,7 @@ struct FirebaseHelper {
             .document(shopID)
             .collection("review")
         reviewStoreRef
-            .whereField("picture", isNotEqualTo: [String]())
+            .whereField("image_number", isGreaterThan: 0)
             // MARK: TODO
             //            .order(by: "created_at", descending: true)
             .limit(to: limitReviewCount)
