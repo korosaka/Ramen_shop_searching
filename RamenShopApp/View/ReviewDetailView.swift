@@ -11,7 +11,6 @@ import QGrid
 
 struct ReviewDetailView: View {
     @ObservedObject var viewModel: ReviewDetailViewModel
-    let screenWidth: CGFloat
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -34,9 +33,7 @@ struct ReviewDetailView: View {
                             bottom: 5,
                             trailing: 0))
             Text(viewModel.review.comment).padding(.bottom)
-            PictureCollectionView(ramenImages: viewModel.reviewImages,
-                                  pictureSize: (screenWidth / 2.4))
-            
+            PictureCollectionView(ramenImages: viewModel.reviewImages)
         }.onAppear() {
             viewModel.fetchImages()
         }
@@ -45,7 +42,7 @@ struct ReviewDetailView: View {
 
 struct PictureCollectionView: View {
     let ramenImages: [RamenImage]
-    let pictureSize: CGFloat
+    let pictureSize: CGFloat = UIScreen.main.bounds.size.width / 2.4
     let space: CGFloat = 5.0
     let padding: CGFloat = 5.0
     var row: Int {
