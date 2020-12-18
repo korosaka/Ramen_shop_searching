@@ -32,7 +32,7 @@ struct ShopDetailView: View {
                     LatestReviews(latestReviews: viewModel.latestReviews,
                                   shop: viewModel.shop!)
                     
-                    Pictures(pictures: viewModel.pictures)
+                    Pictures(pictures: viewModel.pictures, shopID: viewModel.shop?.shopID)
                         .padding(.init(top: 20,
                                        leading: 10,
                                        bottom: 0,
@@ -165,6 +165,7 @@ struct ReviewHeadline: View {
 
 struct Pictures: View {
     let pictures: [UIImage]
+    let shopID: String?
     
     var body: some View {
         GeometryReader { bodyView in
@@ -195,7 +196,7 @@ struct Pictures: View {
                 .background(Color.white)
                 .cornerRadius(10)
                 
-                NavigationLink(destination: AllPictureView()) {
+                NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
                     HStack {
                         Spacer()
                         Text("more...").foregroundColor(.white)

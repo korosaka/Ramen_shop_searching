@@ -30,6 +30,7 @@
 		887DA00A2582A60D003E237E /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 887DA0092582A60D003E237E /* QGrid */; };
 		88A42235257A001C003CC75D /* AllReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A42234257A001C003CC75D /* AllReviewView.swift */; };
 		88AFA7A02559B9C1001D151C /* MapSearchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapSearchingView.swift */; };
+		88C8D22A258C44B500E43583 /* AllPictureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C8D229258C44B500E43583 /* AllPictureViewModel.swift */; };
 		88FFE9C8258C239800F4E892 /* AllPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FFE9C7258C239800F4E892 /* AllPictureView.swift */; };
 		9D33E53A05060B66C56760E7 /* Pods_RamenShopApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 257556D638399B742D1568DC /* Pods_RamenShopApp.framework */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		887DA00525817426003E237E /* ReviewDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewModel.swift; sourceTree = "<group>"; };
 		88A42234257A001C003CC75D /* AllReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewView.swift; sourceTree = "<group>"; };
 		88AFA79F2559B9C1001D151C /* MapSearchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchingView.swift; sourceTree = "<group>"; };
+		88C8D229258C44B500E43583 /* AllPictureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPictureViewModel.swift; sourceTree = "<group>"; };
 		88FFE9C7258C239800F4E892 /* AllPictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPictureView.swift; sourceTree = "<group>"; };
 		A5D6C3FBE114337FC41E58D1 /* Pods-RamenShopApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RamenShopApp.debug.xcconfig"; path = "Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +156,7 @@
 				882E43842577B6FC00E941D7 /* ShopDetailViewModel.swift */,
 				887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */,
 				887DA00525817426003E237E /* ReviewDetailViewModel.swift */,
+				88C8D229258C44B500E43583 /* AllPictureViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				88A42235257A001C003CC75D /* AllReviewView.swift in Sources */,
 				886B353A2556A11C0056AB86 /* LoginView.swift in Sources */,
 				886B353D2557B70B0056AB86 /* LoginViewModel.swift in Sources */,
+				88C8D22A258C44B500E43583 /* AllPictureViewModel.swift in Sources */,
 				884CEB9B256FBE1F0020C932 /* ShopDetailView.swift in Sources */,
 				88603700255DF18100C5ED1C /* Modifiers.swift in Sources */,
 				887D9FFE257FAD48003E237E /* AllReviewViewModel.swift in Sources */,
