@@ -103,6 +103,7 @@ struct FirebaseHelper {
             .document(shopID)
             .collection("review")
         var pictureReviewRef = reviewStoreRef.whereField("image_number", isGreaterThan: 0)
+        // MARK: TODO .order(by: "created_at", descending: true)
         if let _limit = limit {
             pictureReviewRef = pictureReviewRef.limit(to: _limit)
         }
