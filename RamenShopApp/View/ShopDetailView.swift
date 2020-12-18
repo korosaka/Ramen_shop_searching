@@ -32,7 +32,7 @@ struct ShopDetailView: View {
                     LatestReviews(latestReviews: viewModel.latestReviews,
                                   shop: viewModel.shop!)
                     
-                    Pictures(pictures: viewModel.pictures)
+                    Pictures(pictures: viewModel.pictures, shopID: viewModel.shop?.shopID)
                         .padding(.init(top: 20,
                                        leading: 10,
                                        bottom: 0,
@@ -165,34 +165,48 @@ struct ReviewHeadline: View {
 
 struct Pictures: View {
     let pictures: [UIImage]
+    let shopID: String?
     
     var body: some View {
         GeometryReader { bodyView in
-            HStack {
-                Spacer()
-                ForEach(0...2, id: \.self) { index in
-                    let imageSize = bodyView.size.width / 3.5
-                    if pictures.count > index {
-                        Image(uiImage: pictures[index])
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: imageSize,
-                                   height: imageSize)
-                    } else {
-                        Image(systemName: "camera.fill")
-                            .frame(width: imageSize,
-                                   height: imageSize)
-                            .background(Color.gray)
-                    }
+            VStack {
+                HStack {
                     Spacer()
+                    ForEach(0...2, id: \.self) { index in
+                        let imageSize = bodyView.size.width / 3.5
+                        if pictures.count > index {
+                            Image(uiImage: pictures[index])
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: imageSize,
+                                       height: imageSize)
+                        } else {
+                            Image(systemName: "camera.fill")
+                                .frame(width: imageSize,
+                                       height: imageSize)
+                                .background(Color.gray)
+                        }
+                        Spacer()
+                    }
+                }
+                .padding(.init(top: 10,
+                               leading: 0,
+                               bottom: 10,
+                               trailing: 0))
+                .background(Color.white)
+                .cornerRadius(10)
+                
+                NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
+                    HStack {
+                        Spacer()
+                        Text("more...").foregroundColor(.white)
+                    }
+                    .padding(.init(top: 5,
+                                   leading: 0,
+                                   bottom: 0,
+                                   trailing: 15))
                 }
             }
-            .padding(.init(top: 10,
-                           leading: 0,
-                           bottom: 10,
-                           trailing: 0))
-            .background(Color.white)
-            .cornerRadius(10)
         }
     }
 }
