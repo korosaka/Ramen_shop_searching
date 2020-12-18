@@ -13,9 +13,16 @@ struct AllPictureView: View {
     @ObservedObject var viewModel: AllPictureViewModel
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            .onAppear() {
-                self.viewModel.fetchAllImage()
-            }
+        VStack {
+            Text("All picture")
+                .padding()
+            Spacer()
+            PictureCollectionView(scrollable: true,
+                                  ramenImages: viewModel.allImages)
+            Spacer()
+        }
+        .onAppear() {
+            self.viewModel.fetchAllImage()
+        }
     }
 }

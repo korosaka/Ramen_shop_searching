@@ -34,7 +34,8 @@ struct ReviewDetailView: View {
                             bottom: 5,
                             trailing: 0))
             Text(viewModel.review.comment).padding(.bottom)
-            PictureCollectionView(ramenImages: viewModel.reviewImages)
+            PictureCollectionView(scrollable: false,
+                                  ramenImages: viewModel.reviewImages)
         }.onAppear() {
             viewModel.fetchImages()
         }
@@ -42,6 +43,7 @@ struct ReviewDetailView: View {
 }
 
 struct PictureCollectionView: View {
+    let scrollable: Bool
     let ramenImages: [RamenImage]
     let pictureSize: CGFloat = UIScreen.main.bounds.size.width / 2.4
     let space: CGFloat = 5.0
@@ -49,10 +51,14 @@ struct PictureCollectionView: View {
     var row: Int {
         return (ramenImages.count + 1) / 2
     }
-    var frameHieght: CGFloat {
-        return pictureSize * CGFloat(row)
-            + space * CGFloat(row - 1)
-            + padding * 2
+    var frameHieght: CGFloat? {
+        if scrollable {
+            return .none
+        } else {
+            return pictureSize * CGFloat(row)
+                + space * CGFloat(row - 1)
+                + padding * 2
+        }
     }
     
     var body: some View {
@@ -67,8 +73,8 @@ struct PictureCollectionView: View {
                   hSpacing: space,
                   vPadding: padding,
                   hPadding: padding,
-                  isScrollable: false,
-                  showScrollIndicators: false
+                  isScrollable: scrollable,
+                  showScrollIndicators: scrollable
             ) { ramenImage in
                 PictureCell(ramenImage: ramenImage, size: pictureSize)
             }

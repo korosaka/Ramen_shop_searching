@@ -14,7 +14,7 @@ class AllReviewViewModel: ObservableObject {
     var currentDetail: String?
     var db: FirebaseHelper
     var shop: Shop
-
+    
     init(shop: Shop) {
         db = .init()
         self.shop = shop
