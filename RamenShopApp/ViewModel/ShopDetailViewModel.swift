@@ -29,7 +29,8 @@ class ShopDetailViewModel: ObservableObject {
     func fetchDataFromDB() {
         if shop == nil { return }
         db.fetchLatestReviews(shopID: shop!.shopID)
-        db.fetchPictureReviews(shopID: shop!.shopID)
+        let maxReviewCount = 3
+        db.fetchPictureReviews(shopID: shop!.shopID, limit: maxReviewCount)
     }
 }
 

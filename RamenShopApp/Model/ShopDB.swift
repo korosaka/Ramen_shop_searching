@@ -97,24 +97,22 @@ struct FirebaseHelper {
         return reviews
     }
     
-    func fetchPictureReviews(shopID: String) {
-        let limitReviewCount = 3
+    func fetchPictureReviews(shopID: String, limit: Int?) {
         let reviewStoreRef =
             firestore.collection("shop")
             .document(shopID)
             .collection("review")
-        reviewStoreRef
-            .whereField("image_number", isGreaterThan: 0)
-            // MARK: TODO
-            //            .order(by: "created_at", descending: true)
-            .limit(to: limitReviewCount)
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    self.fetchImageFromReviewDocs(imageReviewsQS: querySnapshot!)
-                }
+        var pictureReviewRef = reviewStoreRef.whereField("image_number", isGreaterThan: 0)
+        if let _limit = limit {
+            pictureReviewRef = pictureReviewRef.limit(to: _limit)
+        }
+        pictureReviewRef.getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                self.fetchImageFromReviewDocs(imageReviewsQS: querySnapshot!)
             }
+        }
     }
     
     // MARK: to get images of a shop (used for ShopDetail)
