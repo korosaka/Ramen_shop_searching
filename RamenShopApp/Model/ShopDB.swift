@@ -110,7 +110,7 @@ struct FirebaseHelper {
                 profile.userName = data["user_name"] as? String ?? "unnamed"
                 let hasIcon = data["has_icon"] as? Bool ?? false
                 if hasIcon {
-                    fetchUserIcon(userID: userID, profile: profile)
+                    fetchUserIcon(userID, profile)
                 } else {
                     delegate?.completedFetchingProfile(profile: profile)
                 }
@@ -121,11 +121,12 @@ struct FirebaseHelper {
         }
     }
     
-    func fetchUserIcon(userID: String, profile: Profile) {
+    fileprivate func fetchUserIcon(_ userID: String, _ profile: Profile) {
         let iconStorageRef = storage.reference().child("user_icon/\(userID)")
         let completionHandler = { (result: StorageListResult, error: Error?) -> Void in
             // MARK: asynchronous
             if error != nil {
+                delegate?.completedFetchingProfile(profile: profile)
                 return print("error happened in fetchUserIcon !!")
             }
             let iconRef: StorageReference? = result.items[0]
