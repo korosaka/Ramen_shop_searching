@@ -50,3 +50,29 @@ extension UIImage {
         }
     }
 }
+
+extension Image {
+    func symbolIconStyle() -> some View {
+        self.resizable()
+            .frame(width: 41, height: 41)
+    }
+    
+    func iconStyle() -> some View {
+        self.resizable()
+            .scaledToFit()
+            .frame(width: 40, height: 40)
+            .clipShape(Circle())
+            .padding(1)
+            .background(Color.black)
+            .clipShape(Circle())
+    }
+}
+
+extension View {
+    func sidePadding(side: CGFloat) -> some View {
+        self.padding(.init(top: 0,
+                           leading: side,
+                           bottom: 0,
+                           trailing: side))
+    }
+}

@@ -43,8 +43,6 @@ struct ShopDetailView: View {
                            leading: 0,
                            bottom: 5,
                            trailing: 0))
-        }.onAppear() {
-            self.viewModel.fetchDataFromDB()
         }
     }
 }
@@ -87,29 +85,38 @@ struct LatestReviews: View {
     let shop: Shop
     
     var body: some View {
-        Text("Latest reviews")
-            .foregroundColor(.white)
-            .underline()
-            .padding(3)
         if latestReviews.count > 0 {
-            ReviewHeadline(review: latestReviews[0])
+            Text("Latest reviews")
+                .foregroundColor(.white)
+                .underline()
+                .padding(3)
+        } else {
+            Text("There is no review")
+                .foregroundColor(.white)
+                .padding(3)
+        }
+        
+        if latestReviews.count > 0 {
+            ReviewHeadline(viewModel: .init(review: latestReviews[0]))
                 .padding(.init(top: 0,
                                leading: 0,
                                bottom: 0,
                                trailing: 15))
         }
         if latestReviews.count > 1 {
-            ReviewHeadline(review: latestReviews[1])
+            ReviewHeadline(viewModel: .init(review: latestReviews[1]))
                 .padding(.init(top: 10,
                                leading: 0,
                                bottom: 0,
                                trailing: 15))
         }
-        if latestReviews.count > 2 {
+        if latestReviews.count > 0 {
             NavigationLink(destination: AllReviewView(viewModel: .init(shop: shop))) {
                 HStack {
                     Spacer()
-                    Text("more...").foregroundColor(.white)
+                    Text("All review...")
+                        .foregroundColor(.white)
+                        .underline()
                 }
                 .padding(.init(top: 5,
                                leading: 0,
@@ -121,26 +128,30 @@ struct LatestReviews: View {
 }
 
 struct ReviewHeadline: View {
-    let review: Review
+    @ObservedObject var viewModel: ReviewHeadlineViewModel
     
     var body: some View {
         HStack() {
-            Image(systemName: "person.crop.circle.fill")
-                .font(.largeTitle)
-                .padding(.init(top: 0,
-                               leading: 5,
-                               bottom: 0,
-                               trailing: 5))
+            if viewModel.userProfile.icon == nil {
+                Image(systemName: "person.crop.circle.fill")
+                    .symbolIconStyle()
+                    .sidePadding(side: 5)
+            } else {
+                Image(uiImage: viewModel.userProfile.icon!)
+                    .iconStyle()
+                    .sidePadding(side: 5)
+            }
+            
             VStack(alignment: .leading) {
                 HStack {
                     Image(systemName: "star.fill")
                         .foregroundColor(.yellow)
                         .font(.subheadline)
-                    Text(String(review.evaluation))
+                    Text(String(viewModel.review.evaluation))
                     Spacer()
-                    Text(review.displayDate())
+                    Text(viewModel.review.displayDate())
                         .foregroundColor(.gray)
-                    if review.imageCount > 0 {
+                    if viewModel.review.imageCount > 0 {
                         Image(systemName: "camera.fill")
                             .foregroundColor(.purple)
                     } else {
@@ -152,7 +163,7 @@ struct ReviewHeadline: View {
                                leading: 0,
                                bottom: 2,
                                trailing: 0))
-                Text(review.comment).lineLimit(2)
+                Text(viewModel.review.comment).lineLimit(2)
             }.padding(.init(top: 0,
                             leading: 10,
                             bottom: 0,
@@ -169,43 +180,51 @@ struct Pictures: View {
     
     var body: some View {
         GeometryReader { bodyView in
-            VStack {
-                HStack {
-                    Spacer()
-                    ForEach(0...2, id: \.self) { index in
-                        let imageSize = bodyView.size.width / 3.5
-                        if pictures.count > index {
-                            Image(uiImage: pictures[index])
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: imageSize,
-                                       height: imageSize)
-                        } else {
-                            Image(systemName: "camera.fill")
-                                .frame(width: imageSize,
-                                       height: imageSize)
-                                .background(Color.gray)
-                        }
-                        Spacer()
-                    }
-                }
-                .padding(.init(top: 10,
-                               leading: 0,
-                               bottom: 10,
-                               trailing: 0))
-                .background(Color.white)
-                .cornerRadius(10)
-                
-                NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
+            if pictures.count > 0 {
+                VStack {
                     HStack {
                         Spacer()
-                        Text("more...").foregroundColor(.white)
+                        ForEach(0...2, id: \.self) { index in
+                            let imageSize = bodyView.size.width / 3.5
+                            if pictures.count > index {
+                                Image(uiImage: pictures[index])
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: imageSize,
+                                           height: imageSize)
+                            } else {
+                                Image(systemName: "camera.fill")
+                                    .frame(width: imageSize,
+                                           height: imageSize)
+                                    .background(Color.gray)
+                            }
+                            Spacer()
+                        }
                     }
-                    .padding(.init(top: 5,
+                    .padding(.init(top: 10,
                                    leading: 0,
-                                   bottom: 0,
-                                   trailing: 15))
+                                   bottom: 10,
+                                   trailing: 0))
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    
+                    NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
+                        HStack {
+                            Spacer()
+                            Text("All picture...")
+                                .foregroundColor(.white)
+                                .underline()
+                        }
+                        .padding(.init(top: 5,
+                                       leading: 0,
+                                       bottom: 0,
+                                       trailing: 15))
+                    }
                 }
+            } else {
+                Text("There is no picture")
+                    .foregroundColor(.white)
+                    .padding(3)
             }
         }
     }

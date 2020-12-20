@@ -14,9 +14,16 @@ struct ReviewDetailView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "person.crop.circle.fill")
-                    .font(.largeTitle)
-                Text(viewModel.review.userID)
+                if viewModel.userProfile.icon == nil {
+                    Image(systemName: "person.crop.circle.fill")
+                        .symbolIconStyle()
+                        .sidePadding(side: 5)
+                } else {
+                    Image(uiImage: viewModel.userProfile.icon!)
+                        .iconStyle()
+                        .sidePadding(side: 5)
+                }
+                Text(viewModel.userProfile.userName)
                 Spacer()
             }
             HStack {
@@ -36,8 +43,6 @@ struct ReviewDetailView: View {
             Text(viewModel.review.comment).padding(.bottom)
             PictureCollectionView(scrollable: false,
                                   ramenImages: viewModel.reviewImages)
-        }.onAppear() {
-            viewModel.fetchImages()
         }
     }
 }

@@ -29,7 +29,7 @@ struct AllReviewView: View {
                             if viewModel.showDetailDic[review.reviewID] ?? false {
                                 ReviewDetailView(viewModel: .init(review: review))
                             } else {
-                                ReviewHeadline(review: review)
+                                ReviewHeadline(viewModel: .init(review: review))
                             }
                         }
                     }
@@ -39,8 +39,6 @@ struct AllReviewView: View {
                                bottom: 5,
                                trailing: 5))
             }
-        }.onAppear() {
-            self.viewModel.fetchAllReview()
         }
         
     }
