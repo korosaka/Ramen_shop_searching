@@ -134,25 +134,12 @@ struct ReviewHeadline: View {
         HStack() {
             if viewModel.userProfile.icon == nil {
                 Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .frame(width: 41, height: 41)
-                    .padding(.init(top: 0,
-                                   leading: 5,
-                                   bottom: 0,
-                                   trailing: 5))
+                    .symbolIconStyle()
+                    .sidePadding(side: 5)
             } else {
                 Image(uiImage: viewModel.userProfile.icon!)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
-                    .padding(1)
-                    .background(Color.black)
-                    .clipShape(Circle())
-                    .padding(.init(top: 0,
-                                   leading: 5,
-                                   bottom: 0,
-                                   trailing: 5))
+                    .iconStyle()
+                    .sidePadding(side: 5)
             }
             
             VStack(alignment: .leading) {
