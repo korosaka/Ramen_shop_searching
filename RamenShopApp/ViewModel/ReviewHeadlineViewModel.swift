@@ -27,6 +27,5 @@ class ReviewHeadlineViewModel: ObservableObject {
 extension ReviewHeadlineViewModel: FirebaseHelperDelegate {
     func completedFetchingProfile(profile: Profile) {
         userProfile = profile
-        print("got profile data: \(userProfile)")
     }
 }

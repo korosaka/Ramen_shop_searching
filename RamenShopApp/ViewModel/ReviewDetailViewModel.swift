@@ -12,17 +12,23 @@ class ReviewDetailViewModel: ObservableObject {
     var review: Review
     var db: FirebaseHelper
     @Published var reviewImages: [RamenImage]
+    @Published var userProfile: Profile
     
     
     init(review: Review) {
         self.review = review
         reviewImages = .init()
         db = .init()
+        userProfile = Profile(userName: "unnamed")
         db.delegate = self
     }
     
     func fetchImages() {
         db.fetchImageFromReview(review: review)
+    }
+    
+    func fetchProfile() {
+        db.fetchUserProfile(userID: review.userID)
     }
 }
 
@@ -33,5 +39,9 @@ extension ReviewDetailViewModel: FirebaseHelperDelegate {
             let ramenImage = RamenImage(picture: Image(uiImage: picture))
             reviewImages.append(ramenImage)
         }
+    }
+    
+    func completedFetchingProfile(profile: Profile) {
+        userProfile = profile
     }
 }
