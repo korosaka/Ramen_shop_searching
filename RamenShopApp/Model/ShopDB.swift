@@ -54,7 +54,7 @@ struct FirebaseHelper {
     func fetchShopReviews(shopID: String, limitNum: Int?) {
         let reviewRef = createReviewRef(shopID: shopID)
         
-        let completionClosure = { (querySnapshot: QuerySnapshot?, err: Error?) in
+        let completionHandler = { (querySnapshot: QuerySnapshot?, err: Error?) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -67,11 +67,11 @@ struct FirebaseHelper {
             reviewRef
                 .order(by: "created_at", descending: true)
                 .limit(to: limitNum!)
-                .getDocuments(completion: completionClosure)
+                .getDocuments(completion: completionHandler)
         } else {
             reviewRef
                 .order(by: "created_at", descending: true)
-                .getDocuments(completion: completionClosure)
+                .getDocuments(completion: completionHandler)
         }
     }
     
@@ -95,6 +95,58 @@ struct FirebaseHelper {
             reviews.append(review)
         }
         return reviews
+    }
+    
+    func fetchUserProfile(userID: String) {
+        let userRef = firestore.collection("user")
+            .document(userID)
+        
+        userRef.getDocument { (document, error) in
+            if error != nil {
+                return print("error happened in fetchUserProfile !!")
+            }
+            var profile = Profile(userName: "unnamed", icon: nil)
+            if let data = document?.data() {
+                profile.userName = data["user_name"] as? String ?? "unnamed"
+                let hasIcon = data["has_icon"] as? Bool ?? false
+                if hasIcon {
+                    fetchUserIcon(userID: userID, profile: profile)
+                } else {
+                    delegate?.completedFetchingProfile(profile: profile)
+                }
+            } else {
+                delegate?.completedFetchingProfile(profile: profile)
+                return
+            }
+        }
+    }
+    
+    func fetchUserIcon(userID: String, profile: Profile) {
+        let iconStorageRef = storage.reference().child("user_icon/\(userID)")
+        let completionHandler = { (result: StorageListResult, error: Error?) -> Void in
+            // MARK: asynchronous
+            if error != nil {
+                return print("error happened in fetchUserIcon !!")
+            }
+            let iconRef: StorageReference? = result.items[0]
+            if iconRef != nil {
+                iconRef!.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                    // MARK: asynchronous
+                    if let error = error {
+                        print("Error getting data: \(error)")
+                        delegate?.completedFetchingProfile(profile: profile)
+                    } else {
+                        let iconProfile = Profile(userName: profile.userName, icon: UIImage(data: data!))
+                        delegate?.completedFetchingProfile(profile: iconProfile)
+                    }
+                }
+            } else {
+                delegate?.completedFetchingProfile(profile: profile)
+                return
+            }
+        }
+        
+        iconStorageRef.list(withMaxResults: 1, completion: completionHandler)
     }
     
     func fetchPictureReviews(shopID: String, limit: Int?) {
@@ -122,7 +174,7 @@ struct FirebaseHelper {
         let totalImageReviewCount = imageReviewsQS.documents.count
         var readImageReviewCount = 0
         
-        let completionClosure = { (pictures: [UIImage]) -> Void in
+        let completionHandler = { (pictures: [UIImage]) -> Void in
             totalPictures += pictures
             readImageReviewCount += 1
             // MARK: completed getting images of every review?
@@ -132,16 +184,16 @@ struct FirebaseHelper {
         }
         
         for reviewDoc in imageReviewsQS.documents {
-            fetchReviewImage(id: reviewDoc.documentID, completion: completionClosure)
+            fetchReviewImage(id: reviewDoc.documentID, completion: completionHandler)
         }
     }
     
     // MARK: to get images of a review (used for ReviewDetail)
     func fetchImageFromReview(review: Review) {
-        let completionClosure = { (pictures: [UIImage]) -> Void in
+        let completionHandler = { (pictures: [UIImage]) -> Void in
             self.delegate?.completedFetchingPictures(pictures: pictures)
         }
-        fetchReviewImage(id: review.reviewID, completion: completionClosure)
+        fetchReviewImage(id: review.reviewID, completion: completionHandler)
     }
     
     private func fetchReviewImage(id reviewID: String, completion: @escaping ([UIImage]) -> Void) {
@@ -188,6 +240,7 @@ protocol FirebaseHelperDelegate: class {
     func completedFetchingShop(shops: [Shop])
     func completedFetchingReviews(reviews: [Review])
     func completedFetchingPictures(pictures: [UIImage])
+    func completedFetchingProfile(profile: Profile)
 }
 
 // MARK: default implements
@@ -200,6 +253,9 @@ extension FirebaseHelperDelegate {
     }
     func completedFetchingPictures(pictures: [UIImage]) {
         print("default implemented completedFetchingPictures")
+    }
+    func completedFetchingProfile(profile: Profile) {
+        print("default implemented completedFetchingProfile")
     }
 }
 
@@ -230,4 +286,9 @@ struct Review {
         dateFormater.dateFormat = "yyyy/MM/dd"
         return dateFormater.string(from: createdDate)
     }
+}
+
+struct Profile {
+    var userName: String
+    var icon: UIImage?
 }

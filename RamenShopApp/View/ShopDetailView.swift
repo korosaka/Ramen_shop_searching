@@ -99,14 +99,14 @@ struct LatestReviews: View {
         }
         
         if latestReviews.count > 0 {
-            ReviewHeadline(review: latestReviews[0])
+            ReviewHeadline(viewModel: .init(review: latestReviews[0]))
                 .padding(.init(top: 0,
                                leading: 0,
                                bottom: 0,
                                trailing: 15))
         }
         if latestReviews.count > 1 {
-            ReviewHeadline(review: latestReviews[1])
+            ReviewHeadline(viewModel: .init(review: latestReviews[1]))
                 .padding(.init(top: 10,
                                leading: 0,
                                bottom: 0,
@@ -130,26 +130,43 @@ struct LatestReviews: View {
 }
 
 struct ReviewHeadline: View {
-    let review: Review
+    @ObservedObject var viewModel: ReviewHeadlineViewModel
     
     var body: some View {
         HStack() {
-            Image(systemName: "person.crop.circle.fill")
-                .font(.largeTitle)
-                .padding(.init(top: 0,
-                               leading: 5,
-                               bottom: 0,
-                               trailing: 5))
+            if viewModel.userProfile.icon == nil {
+                Image(systemName: "person.crop.circle.fill")
+                    .resizable()
+                    .frame(width: 41, height: 41)
+                    .padding(.init(top: 0,
+                                   leading: 5,
+                                   bottom: 0,
+                                   trailing: 5))
+            } else {
+                Image(uiImage: viewModel.userProfile.icon!)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
+                    .padding(1)
+                    .background(Color.black)
+                    .clipShape(Circle())
+                    .padding(.init(top: 0,
+                                   leading: 5,
+                                   bottom: 0,
+                                   trailing: 5))
+            }
+            
             VStack(alignment: .leading) {
                 HStack {
                     Image(systemName: "star.fill")
                         .foregroundColor(.yellow)
                         .font(.subheadline)
-                    Text(String(review.evaluation))
+                    Text(String(viewModel.review.evaluation))
                     Spacer()
-                    Text(review.displayDate())
+                    Text(viewModel.review.displayDate())
                         .foregroundColor(.gray)
-                    if review.imageCount > 0 {
+                    if viewModel.review.imageCount > 0 {
                         Image(systemName: "camera.fill")
                             .foregroundColor(.purple)
                     } else {
@@ -161,13 +178,15 @@ struct ReviewHeadline: View {
                                leading: 0,
                                bottom: 2,
                                trailing: 0))
-                Text(review.comment).lineLimit(2)
+                Text(viewModel.review.comment).lineLimit(2)
             }.padding(.init(top: 0,
                             leading: 10,
                             bottom: 0,
                             trailing: 10))
             .background(Color.white)
             .cornerRadius(15)
+        }.onAppear() {
+            viewModel.fetchProfile()
         }
     }
 }
