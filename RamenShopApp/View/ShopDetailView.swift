@@ -185,8 +185,6 @@ struct ReviewHeadline: View {
                             trailing: 10))
             .background(Color.white)
             .cornerRadius(15)
-        }.onAppear() {
-            viewModel.fetchProfile()
         }
     }
 }

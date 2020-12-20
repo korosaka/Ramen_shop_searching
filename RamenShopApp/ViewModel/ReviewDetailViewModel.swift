@@ -21,6 +21,8 @@ class ReviewDetailViewModel: ObservableObject {
         db = .init()
         userProfile = Profile(userName: "unnamed")
         db.delegate = self
+        fetchImages()
+        fetchProfile()
     }
     
     func fetchImages() {

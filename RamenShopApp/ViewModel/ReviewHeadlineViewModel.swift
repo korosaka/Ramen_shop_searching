@@ -17,6 +17,7 @@ class ReviewHeadlineViewModel: ObservableObject {
         userProfile = Profile(userName: "unnamed")
         db = .init()
         db.delegate = self
+        fetchProfile()
     }
     
     func fetchProfile() {

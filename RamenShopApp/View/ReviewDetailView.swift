@@ -56,9 +56,6 @@ struct ReviewDetailView: View {
             Text(viewModel.review.comment).padding(.bottom)
             PictureCollectionView(scrollable: false,
                                   ramenImages: viewModel.reviewImages)
-        }.onAppear() {
-            viewModel.fetchImages()
-            viewModel.fetchProfile()
         }
     }
 }
