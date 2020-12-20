@@ -22,8 +22,8 @@ class ShopDetailViewModel: ObservableObject {
         self.db = .init()
         latestReviews = .init()
         pictures = .init()
-        
         db.delegate = self
+        fetchDataFromDB()
     }
     
     func fetchDataFromDB() {

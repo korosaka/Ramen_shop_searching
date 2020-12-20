@@ -43,8 +43,6 @@ struct ShopDetailView: View {
                            leading: 0,
                            bottom: 5,
                            trailing: 0))
-        }.onAppear() {
-            self.viewModel.fetchDataFromDB()
         }
     }
 }

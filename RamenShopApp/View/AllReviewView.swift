@@ -39,8 +39,6 @@ struct AllReviewView: View {
                                bottom: 5,
                                trailing: 5))
             }
-        }.onAppear() {
-            self.viewModel.fetchAllReview()
         }
         
     }

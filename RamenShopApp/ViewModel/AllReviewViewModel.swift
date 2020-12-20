@@ -21,6 +21,7 @@ class AllReviewViewModel: ObservableObject {
         reviews = .init()
         showDetailDic = .init()
         db.delegate = self
+        fetchAllReview()
     }
     
     func fetchAllReview() {
