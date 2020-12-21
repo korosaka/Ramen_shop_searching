@@ -17,32 +17,18 @@ struct ShopDetailView: View {
             Color.blue
             ScrollView(.vertical) {
                 VStack {
-                    ShopName(shopName: viewModel.shop?.name)
-                        .padding(.init(top: 15,
-                                       leading: 15,
-                                       bottom: 0,
-                                       trailing: 15))
-                    
+                    Spacer().frame(height: 10)
+                    ShopName(shopName: viewModel.shop?.name).sidePadding(size: 15)
                     ShopEvaluation(aveEvaluation: viewModel.shop?.roundEvaluatione())
-                        .padding(.init(top: 0,
-                                       leading: 0,
-                                       bottom: 20,
-                                       trailing: 0))
-                    
+                    Spacer().frame(height: 20)
                     LatestReviews(latestReviews: viewModel.latestReviews,
                                   shop: viewModel.shop!)
-                    
+                    Spacer().frame(height: 20)
                     Pictures(pictures: viewModel.pictures, shopID: viewModel.shop?.shopID)
-                        .padding(.init(top: 20,
-                                       leading: 10,
-                                       bottom: 0,
-                                       trailing: 10))
+                        .sidePadding(size: 10)
+                    Spacer().frame(height: 10)
                 }
             }
-            .padding(.init(top: 5,
-                           leading: 0,
-                           bottom: 5,
-                           trailing: 0))
         }
     }
 }
@@ -56,10 +42,7 @@ struct ShopName: View {
             .font(.largeTitle)
             .bold()
             .frame(maxWidth: .infinity)
-            .padding(.init(top: 30,
-                           leading: 0,
-                           bottom: 30,
-                           trailing: 0))
+            .upDownPadding(size: 30)
             .background(Color.white)
             .cornerRadius(20)
     }
@@ -118,7 +101,7 @@ struct LatestReviews: View {
                         .foregroundColor(.white)
                         .underline()
                 }
-                .padding(.init(top: 5,
+                .padding(.init(top: 3,
                                leading: 0,
                                bottom: 0,
                                trailing: 15))
@@ -135,11 +118,11 @@ struct ReviewHeadline: View {
             if viewModel.userProfile.icon == nil {
                 Image(systemName: "person.crop.circle.fill")
                     .symbolIconStyle()
-                    .sidePadding(side: 5)
+                    .sidePadding(size: 5)
             } else {
                 Image(uiImage: viewModel.userProfile.icon!)
                     .iconStyle()
-                    .sidePadding(side: 5)
+                    .sidePadding(size: 5)
             }
             
             VStack(alignment: .leading) {
@@ -164,10 +147,8 @@ struct ReviewHeadline: View {
                                bottom: 2,
                                trailing: 0))
                 Text(viewModel.review.comment).lineLimit(2)
-            }.padding(.init(top: 0,
-                            leading: 10,
-                            bottom: 0,
-                            trailing: 10))
+            }
+            .sidePadding(size: 10)
             .background(Color.white)
             .cornerRadius(15)
         }
@@ -201,10 +182,7 @@ struct Pictures: View {
                             Spacer()
                         }
                     }
-                    .padding(.init(top: 10,
-                                   leading: 0,
-                                   bottom: 10,
-                                   trailing: 0))
+                    .upDownPadding(size: 10)
                     .background(Color.white)
                     .cornerRadius(10)
                     
@@ -215,10 +193,10 @@ struct Pictures: View {
                                 .foregroundColor(.white)
                                 .underline()
                         }
-                        .padding(.init(top: 5,
+                        .padding(.init(top: 3,
                                        leading: 0,
                                        bottom: 0,
-                                       trailing: 15))
+                                       trailing: 0))
                     }
                 }
             } else {

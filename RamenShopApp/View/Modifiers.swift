@@ -69,10 +69,17 @@ extension Image {
 }
 
 extension View {
-    func sidePadding(side: CGFloat) -> some View {
+    func sidePadding(size: CGFloat) -> some View {
         self.padding(.init(top: 0,
-                           leading: side,
+                           leading: size,
                            bottom: 0,
-                           trailing: side))
+                           trailing: size))
+    }
+    
+    func upDownPadding(size: CGFloat) -> some View {
+        self.padding(.init(top: size,
+                           leading: 0,
+                           bottom: size,
+                           trailing: 0))
     }
 }
