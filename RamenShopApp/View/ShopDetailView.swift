@@ -13,7 +13,7 @@ struct ShopDetailView: View {
     @ObservedObject var viewModel: ShopDetailViewModel
     
     var body: some View {
-        TabView {
+        VStack(spacing: 0) {
             ScrollView(.vertical) {
                 VStack {
                     Spacer().frame(height: 10)
@@ -24,16 +24,23 @@ struct ShopDetailView: View {
                                   shop: viewModel.shop!)
                     Spacer().frame(height: 20)
                     Pictures(pictures: viewModel.pictures, shopID: viewModel.shop?.shopID)
+                        .frame(height: 200)
                         .sidePadding(size: 10)
-                    // MARK: without this, scroll cant't be done fine at least in 6s
-                    Spacer().frame(height: 300)
                 }
             }
-            .background(Color.blue).edgesIgnoringSafeArea(.bottom)
-            .tabItem { Text("Shop") }
+            .background(Color.blue)
             
-            Text("review")
-                .tabItem { Text("Review") }
+            HStack {
+                Spacer()
+                NavigationLink(destination: ReviewingView()) {
+                    Text("Review this shop").font(.largeTitle)
+                        .foregroundColor(.white)
+                        .underline()
+                        .upDownPadding(size: 5)
+                }
+                Spacer()
+            }
+            .background(Color.red)
         }
         
     }
