@@ -13,23 +13,29 @@ struct ShopDetailView: View {
     @ObservedObject var viewModel: ShopDetailViewModel
     
     var body: some View {
-        ZStack {
-            Color.blue
+        TabView {
             ScrollView(.vertical) {
                 VStack {
                     Spacer().frame(height: 10)
                     ShopName(shopName: viewModel.shop?.name).sidePadding(size: 15)
                     ShopEvaluation(aveEvaluation: viewModel.shop?.roundEvaluatione())
-                    Spacer().frame(height: 20)
+                    Spacer().frame(height: 30)
                     LatestReviews(latestReviews: viewModel.latestReviews,
                                   shop: viewModel.shop!)
                     Spacer().frame(height: 20)
                     Pictures(pictures: viewModel.pictures, shopID: viewModel.shop?.shopID)
                         .sidePadding(size: 10)
-                    Spacer().frame(height: 10)
+                    // MARK: without this, scroll cant't be done fine at least in 6s
+                    Spacer().frame(height: 300)
                 }
             }
+            .background(Color.blue).edgesIgnoringSafeArea(.bottom)
+            .tabItem { Text("Shop") }
+            
+            Text("review")
+                .tabItem { Text("Review") }
         }
+        
     }
 }
 
