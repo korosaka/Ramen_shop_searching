@@ -24,8 +24,8 @@ struct ShopDetailView: View {
                                   shop: viewModel.shop!)
                     Spacer().frame(height: 20)
                     Pictures(pictures: viewModel.pictures, shopID: viewModel.shop?.shopID)
-                        .frame(height: 200)
                         .sidePadding(size: 10)
+                    Spacer().frame(height: 30)
                 }
             }
             .background(Color.blue)
@@ -173,50 +173,48 @@ struct Pictures: View {
     let shopID: String?
     
     var body: some View {
-        GeometryReader { bodyView in
-            if pictures.count > 0 {
-                VStack {
-                    HStack {
+        if pictures.count > 0 {
+            VStack {
+                HStack {
+                    Spacer()
+                    ForEach(0...2, id: \.self) { index in
+                        let imageSize = UIScreen.main.bounds.width / 4
+                        if pictures.count > index {
+                            Image(uiImage: pictures[index])
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: imageSize,
+                                       height: imageSize)
+                        } else {
+                            Image(systemName: "camera.fill")
+                                .frame(width: imageSize,
+                                       height: imageSize)
+                                .background(Color.gray)
+                        }
                         Spacer()
-                        ForEach(0...2, id: \.self) { index in
-                            let imageSize = bodyView.size.width / 3.5
-                            if pictures.count > index {
-                                Image(uiImage: pictures[index])
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: imageSize,
-                                           height: imageSize)
-                            } else {
-                                Image(systemName: "camera.fill")
-                                    .frame(width: imageSize,
-                                           height: imageSize)
-                                    .background(Color.gray)
-                            }
-                            Spacer()
-                        }
-                    }
-                    .upDownPadding(size: 10)
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    
-                    NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
-                        HStack {
-                            Spacer()
-                            Text("All picture...")
-                                .foregroundColor(.white)
-                                .underline()
-                        }
-                        .padding(.init(top: 3,
-                                       leading: 0,
-                                       bottom: 0,
-                                       trailing: 0))
                     }
                 }
-            } else {
-                Text("There is no picture")
-                    .foregroundColor(.white)
-                    .padding(3)
+                .upDownPadding(size: 10)
+                .background(Color.white)
+                .cornerRadius(10)
+                
+                NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
+                    HStack {
+                        Spacer()
+                        Text("All picture...")
+                            .foregroundColor(.white)
+                            .underline()
+                    }
+                    .padding(.init(top: 3,
+                                   leading: 0,
+                                   bottom: 0,
+                                   trailing: 0))
+                }
             }
+        } else {
+            Text("There is no picture")
+                .foregroundColor(.white)
+                .padding(3)
         }
     }
 }

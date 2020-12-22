@@ -149,15 +149,3 @@ struct LoginView: View {
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView(loginVM: .init())
-    }
-}
-
-
-struct Signup_Previews: PreviewProvider {
-    static var previews: some View {
-        SignupView(viewModel: .init())
-    }
-}
