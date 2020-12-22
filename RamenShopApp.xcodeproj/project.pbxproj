@@ -15,6 +15,7 @@
 		884CEB98256F66A70020C932 /* GoogleMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB97256F66A70020C932 /* GoogleMap.swift */; };
 		884CEB9B256FBE1F0020C932 /* ShopDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB9A256FBE1F0020C932 /* ShopDetailView.swift */; };
 		88603700255DF18100C5ED1C /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886036FF255DF18100C5ED1C /* Modifiers.swift */; };
+		8866042D25917BF400FF2D98 /* ReviewingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866042C25917BF400FF2D98 /* ReviewingViewModel.swift */; };
 		886B34FF255026550056AB86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B34FE255026550056AB86 /* AppDelegate.swift */; };
 		886B3501255026550056AB86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B3500255026550056AB86 /* SceneDelegate.swift */; };
 		886B3503255026550056AB86 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B3502255026550056AB86 /* ContentView.swift */; };
@@ -48,6 +49,7 @@
 		884CEB97256F66A70020C932 /* GoogleMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMap.swift; sourceTree = "<group>"; };
 		884CEB9A256FBE1F0020C932 /* ShopDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailView.swift; sourceTree = "<group>"; };
 		886036FF255DF18100C5ED1C /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
+		8866042C25917BF400FF2D98 /* ReviewingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewingViewModel.swift; sourceTree = "<group>"; };
 		886B34FB255026550056AB86 /* RamenShopApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RamenShopApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		886B34FE255026550056AB86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		886B3500255026550056AB86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				887DA00525817426003E237E /* ReviewDetailViewModel.swift */,
 				88C8D229258C44B500E43583 /* AllPictureViewModel.swift */,
 				88C8D22E258ECC2000E43583 /* ReviewHeadlineViewModel.swift */,
+				8866042C25917BF400FF2D98 /* ReviewingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				884CEB98256F66A70020C932 /* GoogleMap.swift in Sources */,
 				886B34FF255026550056AB86 /* AppDelegate.swift in Sources */,
 				882E43852577B6FC00E941D7 /* ShopDetailViewModel.swift in Sources */,
+				8866042D25917BF400FF2D98 /* ReviewingViewModel.swift in Sources */,
 				886B3501255026550056AB86 /* SceneDelegate.swift in Sources */,
 				88A42235257A001C003CC75D /* AllReviewView.swift in Sources */,
 				886B353A2556A11C0056AB86 /* LoginView.swift in Sources */,

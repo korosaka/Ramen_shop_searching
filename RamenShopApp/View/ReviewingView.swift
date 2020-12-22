@@ -13,13 +13,16 @@ struct ReviewingView: View {
         
         ScrollView(.vertical) {
             Spacer().frame(height: 10)
-            ShopName(shopName: "shop?.name").sidePadding(size: 15)
+            ShopName(shopName: "shop?.name")
+                .sidePadding(size: 15)
             Spacer().frame(height: 10)
-            StarSelectView().sidePadding(size: 20)
+            StarSelectView()
+                .sidePadding(size: 20)
             Spacer().frame(height: 20)
             EditingCommentView(comment: "enter comment")
             Spacer().frame(height: 30)
-            UploadingPicture().sidePadding(size: 15)
+            UploadingPicture()
+                .sidePadding(size: 15)
             Spacer().frame(height: 40)
             DoneButton()
         }
@@ -48,11 +51,14 @@ struct StarSelectView: View {
 
 struct CustomStarButton: View {
     let starNumber: Int
+    @EnvironmentObject var viewModel: ReviewingViewModel
     var body: some View {
         HStack {
             Spacer()
-            Button(action: {}) {
-                Image(systemName: "star")
+            Button(action: {
+                viewModel.setEvaluation(num: starNumber)
+            }) {
+                viewModel.getStarImage(num: starNumber)
                     .font(.largeTitle)
                     .foregroundColor(.yellow)
             }
