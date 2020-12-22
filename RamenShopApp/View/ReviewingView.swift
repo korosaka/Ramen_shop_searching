@@ -19,7 +19,7 @@ struct ReviewingView: View {
             StarSelectView()
                 .sidePadding(size: 20)
             Spacer().frame(height: 20)
-            EditingCommentView(comment: "enter comment")
+            EditingCommentView()
             Spacer().frame(height: 30)
             UploadingPicture()
                 .sidePadding(size: 15)
@@ -68,24 +68,19 @@ struct CustomStarButton: View {
 }
 
 struct EditingCommentView: View {
-    private let placeHoler = "enter comment"
-    @State var comment: String
-    
+    @EnvironmentObject var viewModel: ReviewingViewModel
     var body: some View {
         VStack {
-            TextEditor(text: $comment)
+            TextEditor(text: $viewModel.comment)
                 .frame(width: UIScreen.main.bounds.width * 0.9,
                        height: 250)
-                .foregroundColor(comment == placeHoler ? .gray : .black)
-                .onTapGesture {
-                    if comment == placeHoler {
-                        comment = ""
-                    }
-                }
+                .foregroundColor(viewModel.getCommentFontColor())
+                .onTapGesture { viewModel.onTapComment() }
             HStack {
                 Spacer()
                 Button(action: {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    viewModel.stopEditingComment()
                 }) {
                     Text("Stop editing comment")
                         .font(.headline)
