@@ -50,4 +50,12 @@ class ReviewingViewModel: ObservableObject {
             comment = placeHoler
         }
     }
+    
+    func getUploadedImage(_ index: Int) -> Image {
+        if pictures.count > index {
+            return pictures[index].resizable()
+        } else {
+            return Image(systemName: "camera.fill")
+        }
+    }
 }

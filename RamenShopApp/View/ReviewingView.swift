@@ -98,6 +98,8 @@ struct EditingCommentView: View {
 }
 
 struct UploadingPicture: View {
+    @EnvironmentObject var viewModel: ReviewingViewModel
+    @State private var isShowPhotoLibrary = false
     
     var body: some View {
         VStack {
@@ -105,8 +107,8 @@ struct UploadingPicture: View {
                 Spacer()
                 ForEach(0...2, id: \.self) { index in
                     let imageSize = UIScreen.main.bounds.width / 4
-                    
-                    Image(systemName: "camera.fill")
+                    viewModel.getUploadedImage(index)
+                        .scaledToFit()
                         .frame(width: imageSize,
                                height: imageSize)
                         .background(Color.gray)
@@ -119,7 +121,9 @@ struct UploadingPicture: View {
             
             HStack {
                 Spacer()
-                Button(action: {}) {
+                Button(action: {
+                    isShowPhotoLibrary = true
+                }) {
                     Text("Upload picture")
                         .font(.headline)
                         .bold()
@@ -131,6 +135,9 @@ struct UploadingPicture: View {
                 Spacer()
             }
         }
+        .sheet(isPresented: $isShowPhotoLibrary,
+               content: { ImagePicker(sourceType: .photoLibrary,
+                                      selectedImages: $viewModel.pictures) })
     }
 }
 
