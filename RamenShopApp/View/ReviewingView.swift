@@ -137,6 +137,21 @@ struct UploadingPicture: View {
         .sheet(isPresented: $viewModel.isShowPhotoLibrary,
                content: { ImagePicker(sourceType: .photoLibrary,
                                       selectedImages: $viewModel.pictures) })
+        .alert(isPresented: $viewModel.isShowPhotoPermissionDenied) {
+            Alert(title: Text("This app has no permission"),
+                  message: Text("You need to change setting"),
+                  primaryButton: .default(Text("go to setting")) {
+                    goToSetting()
+                  },
+                  secondaryButton: .cancel(Text("cancel")))
+        }
+    }
+    
+    func goToSetting() {
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString ) else {
+            return
+        }
+        UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
     }
 }
 
