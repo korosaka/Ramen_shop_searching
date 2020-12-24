@@ -235,6 +235,29 @@ struct FirebaseHelper {
         }
         return Float(totalEvaluation) / Float(reviewCount)
     }
+    
+    
+    func uploadReview(shopID: String, review: Review) {
+        let timeStamp: Timestamp = .init(date: review.createdDate)
+        let reviewRef = firestore
+            .collection("shop")
+            .document(shopID)
+            .collection("review")
+            .document(review.reviewID)
+        reviewRef.setData([
+            "user_id": review.userID,
+            "evaluation": review.evaluation,
+            "comment": review.comment,
+            "image_number": review.imageCount,
+            "created_at": timeStamp
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+            }
+        }
+    }
 }
 
 protocol FirebaseHelperDelegate: class {

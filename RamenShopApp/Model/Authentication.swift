@@ -9,15 +9,15 @@
 import Foundation
 import Firebase
 
+// MARK: this class shoud be refactored,,,,,
 class Authentication {
     
     weak var delegate: AuthenticationDelegate?
     
     func checkCurrentUser() {
-        if Auth.auth().currentUser != nil {
+        if let user = Auth.auth().currentUser {
             delegate?.afterLogin()
-            let user = Auth.auth().currentUser
-            delegate?.setUserInfo(email: user?.email)
+            delegate?.setUserInfo(user: user)
         }
     }
     
@@ -62,6 +62,30 @@ protocol AuthenticationDelegate: class {
     func signUpError(error: Error?)
     func logoutError(error: NSError?)
     func afterLogout()
-    func setUserInfo(email: String?)
+    func setUserInfo(user: User)
     func afterSignUp()
+}
+
+extension AuthenticationDelegate {
+    func afterLogin() {
+        print("default implemented afterLogin")
+    }
+    func loginError(error: Error?) {
+        print("default implemented loginError")
+    }
+    func signUpError(error: Error?) {
+        print("default implemented signUpError")
+    }
+    func logoutError(error: NSError?) {
+        print("default implemented logoutError")
+    }
+    func afterLogout() {
+        print("default implemented afterLogout")
+    }
+    func setUserInfo(user: User) {
+        print("default implemented setUserInfo")
+    }
+    func afterSignUp() {
+        print("default implemented afterSignUp")
+    }
 }

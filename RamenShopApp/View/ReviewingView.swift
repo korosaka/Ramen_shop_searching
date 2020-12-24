@@ -9,11 +9,12 @@
 import SwiftUI
 
 struct ReviewingView: View {
+    @EnvironmentObject var viewModel: ReviewingViewModel
     var body: some View {
         
         ScrollView(.vertical) {
             Spacer().frame(height: 10)
-            ShopName(shopName: "shop?.name")
+            ShopName(shopName: viewModel.shop?.name)
                 .sidePadding(size: 15)
             Spacer().frame(height: 10)
             StarSelectView()
@@ -157,11 +158,15 @@ struct UploadingPicture: View {
 
 
 struct DoneButton: View {
+    @EnvironmentObject var viewModel: ReviewingViewModel
+    @State var isShowConfirmation = false
     
     var body: some View {
         HStack {
             Spacer()
-            Button(action: {}) {
+            Button(action: {
+                isShowConfirmation = true
+            }) {
                 Text("Send Review!")
                     .font(.largeTitle)
                     .bold()
@@ -173,6 +178,14 @@ struct DoneButton: View {
         .background(Color.red)
         .cornerRadius(20)
         .padding(10)
+        .alert(isPresented: $isShowConfirmation) {
+            Alert(title: Text("Final confirmation"),
+                  message: Text("Will you send this review?"),
+                  primaryButton: .default(Text("Yes")) {
+                    viewModel.sendReview()
+                  },
+                  secondaryButton: .cancel(Text("cancel")))
+        }
     }
     
 }

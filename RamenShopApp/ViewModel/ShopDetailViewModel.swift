@@ -13,6 +13,7 @@ class ShopDetailViewModel: ObservableObject {
     var db: FirebaseHelper
     @Published var latestReviews: [Review]
     @Published var pictures: [UIImage]
+    // MARK: shop should not be optional??
     var shop: Shop?
     
     init(mapVM: MapSearchingViewModel) {

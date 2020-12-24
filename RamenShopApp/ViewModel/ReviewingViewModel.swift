@@ -9,8 +9,11 @@
 import Foundation
 import SwiftUI
 import Photos
+import Firebase
 class ReviewingViewModel: ObservableObject {
-    var shopID: String?
+    var db: FirebaseHelper
+    var authentication: Authentication
+    var shop: Shop?
     var userID: String?
     var createdDate: Date?
     @Published var evaluation: Int
@@ -20,10 +23,15 @@ class ReviewingViewModel: ObservableObject {
     @Published var isShowPhotoPermissionDenied = false
     private let placeHoler = "enter comment"
     
-    init() {
+    init(shop: Shop?) {
+        db = .init()
+        authentication = .init()
         evaluation = 0
         comment = placeHoler
         pictures = .init()
+        self.shop = shop
+        authentication.delegate = self
+        authentication.checkCurrentUser()
     }
     
     func setEvaluation(num: Int) {
@@ -77,5 +85,24 @@ class ReviewingViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    // MARK: TODO check if there is already same user's review. and if so, it should be overwritten
+    func sendReview() {
+        let reviewID = UUID().uuidString
+        
+        let review = Review(reviewID: reviewID,
+                            userID: userID ?? "",
+                            evaluation: evaluation,
+                            comment: comment,
+                            imageCount: pictures.count,
+                            createdDate: Date())
+        db.uploadReview(shopID: shop!.shopID, review: review)
+    }
+}
+
+extension ReviewingViewModel: AuthenticationDelegate {
+    func setUserInfo(user: User) {
+        userID = user.uid
     }
 }
