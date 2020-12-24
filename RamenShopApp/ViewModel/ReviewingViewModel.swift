@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import Photos
 class ReviewingViewModel: ObservableObject {
     var shopID: String?
     var userID: String?
@@ -15,6 +16,7 @@ class ReviewingViewModel: ObservableObject {
     @Published var evaluation: Int
     @Published var comment: String
     @Published var pictures: [Image]
+    @Published var isShowPhotoLibrary = false
     private let placeHoler = "enter comment"
     
     init() {
@@ -56,6 +58,21 @@ class ReviewingViewModel: ObservableObject {
             return pictures[index].resizable()
         } else {
             return Image(systemName: "camera.fill")
+        }
+    }
+    
+    func checkPhotoPermission() {
+        let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        if status == .authorized || status == .limited {
+            isShowPhotoLibrary = true
+        } else {
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+                if status == .authorized || status == .limited {
+                    self.isShowPhotoLibrary = true
+                } else if status == .denied {
+                    print("PHPhotoLibrary can not be used")
+                }
+            }
         }
     }
 }

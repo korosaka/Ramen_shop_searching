@@ -99,7 +99,6 @@ struct EditingCommentView: View {
 
 struct UploadingPicture: View {
     @EnvironmentObject var viewModel: ReviewingViewModel
-    @State private var isShowPhotoLibrary = false
     
     var body: some View {
         VStack {
@@ -122,7 +121,7 @@ struct UploadingPicture: View {
             HStack {
                 Spacer()
                 Button(action: {
-                    isShowPhotoLibrary = true
+                    viewModel.checkPhotoPermission()
                 }) {
                     Text("Upload picture")
                         .font(.headline)
@@ -135,7 +134,7 @@ struct UploadingPicture: View {
                 Spacer()
             }
         }
-        .sheet(isPresented: $isShowPhotoLibrary,
+        .sheet(isPresented: $viewModel.isShowPhotoLibrary,
                content: { ImagePicker(sourceType: .photoLibrary,
                                       selectedImages: $viewModel.pictures) })
     }
