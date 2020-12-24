@@ -75,6 +75,21 @@ struct FirebaseHelper {
         }
     }
     
+    func fetchUserReview(shopID: String, userID: String) {
+        let userReviewRef = createReviewRef(shopID: shopID)
+            .whereField("user_id", isEqualTo: userID)
+        
+        userReviewRef.getDocuments { (querySnapshot, error) in
+            if error != nil {
+                return print("error happened in fetchUserReview !!")
+            }
+            for doc in querySnapshot!.documents {
+                delegate?.completedFetchingUserReview(reviewID: doc.documentID)
+                return
+            }
+        }
+    }
+    
     func createReviewRef(shopID: String) -> CollectionReference {
         return firestore.collection("shop")
             .document(shopID)
@@ -151,6 +166,7 @@ struct FirebaseHelper {
     }
     
     func fetchPictureReviews(shopID: String, limit: Int?) {
+        // MARK: TODO use createReviewRef(shopID: String)
         let reviewStoreRef =
             firestore.collection("shop")
             .document(shopID)
@@ -265,6 +281,7 @@ protocol FirebaseHelperDelegate: class {
     func completedFetchingReviews(reviews: [Review])
     func completedFetchingPictures(pictures: [UIImage])
     func completedFetchingProfile(profile: Profile)
+    func completedFetchingUserReview(reviewID: String)
 }
 
 // MARK: default implements
@@ -280,6 +297,9 @@ extension FirebaseHelperDelegate {
     }
     func completedFetchingProfile(profile: Profile) {
         print("default implemented completedFetchingProfile")
+    }
+    func completedFetchingUserReview(reviewID: String) {
+        print("default implemented completedFetchingUserReview")
     }
 }
 

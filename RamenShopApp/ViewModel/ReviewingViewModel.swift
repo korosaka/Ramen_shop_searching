@@ -14,6 +14,7 @@ class ReviewingViewModel: ObservableObject {
     var db: FirebaseHelper
     var authentication: Authentication
     var shop: Shop?
+    var reviewID: String?
     var userID: String?
     var createdDate: Date?
     @Published var evaluation: Int
@@ -30,6 +31,7 @@ class ReviewingViewModel: ObservableObject {
         comment = placeHoler
         pictures = .init()
         self.shop = shop
+        db.delegate = self
         authentication.delegate = self
         authentication.checkCurrentUser()
     }
@@ -87,11 +89,8 @@ class ReviewingViewModel: ObservableObject {
         }
     }
     
-    // MARK: TODO check if there is already same user's review. and if so, it should be overwritten
     func sendReview() {
-        let reviewID = UUID().uuidString
-        
-        let review = Review(reviewID: reviewID,
+        let review = Review(reviewID: reviewID ?? UUID().uuidString,
                             userID: userID ?? "",
                             evaluation: evaluation,
                             comment: comment,
@@ -99,10 +98,24 @@ class ReviewingViewModel: ObservableObject {
                             createdDate: Date())
         db.uploadReview(shopID: shop!.shopID, review: review)
     }
+    
+    func checkAlreadySentReview() {
+        guard let shopID = shop?.shopID,
+              let _userID = userID
+        else { return }
+        db.fetchUserReview(shopID: shopID, userID: _userID)
+    }
 }
 
 extension ReviewingViewModel: AuthenticationDelegate {
     func setUserInfo(user: User) {
         userID = user.uid
+        checkAlreadySentReview()
+    }
+}
+
+extension ReviewingViewModel: FirebaseHelperDelegate {
+    func completedFetchingUserReview(reviewID: String) {
+        self.reviewID = reviewID
     }
 }
