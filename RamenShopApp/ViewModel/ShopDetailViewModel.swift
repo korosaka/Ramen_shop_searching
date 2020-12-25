@@ -43,3 +43,9 @@ extension ShopDetailViewModel: FirebaseHelperDelegate {
         self.pictures = pictures
     }
 }
+
+extension ShopDetailViewModel: ReviewingVMDelegate {
+    func completedReviewing() {
+        fetchDataFromDB()
+    }
+}

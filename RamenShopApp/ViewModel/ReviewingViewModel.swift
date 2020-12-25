@@ -22,15 +22,20 @@ class ReviewingViewModel: ObservableObject {
     @Published var pictures: [Image]
     @Published var isShowPhotoLibrary = false
     @Published var isShowPhotoPermissionDenied = false
+    @Published var isShowAlert = false
+    @Published var activeAlert: ActiveAlert = .confirmation
     private let placeHoler = "enter comment"
     
-    init(shop: Shop?) {
+    var delegate: ReviewingVMDelegate
+    
+    init(shop: Shop?, delegate: ReviewingVMDelegate) {
         db = .init()
         authentication = .init()
         evaluation = 0
         comment = placeHoler
         pictures = .init()
         self.shop = shop
+        self.delegate = delegate
         db.delegate = self
         authentication.delegate = self
         authentication.checkCurrentUser()
@@ -118,4 +123,22 @@ extension ReviewingViewModel: FirebaseHelperDelegate {
     func completedFetchingUserReview(reviewID: String) {
         self.reviewID = reviewID
     }
+    
+    func completedUploadingReview(isSuccess: Bool) {
+        if isSuccess {
+            delegate.completedReviewing() //MARK: reload on ShopDetail
+            activeAlert = .completion
+        } else {
+            activeAlert = .error
+        }
+        isShowAlert = true
+    }
+}
+
+protocol ReviewingVMDelegate {
+    func completedReviewing()
+}
+
+enum ActiveAlert {
+    case confirmation, completion, error
 }

@@ -33,7 +33,7 @@ struct ShopDetailView: View {
             HStack {
                 Spacer()
                 NavigationLink(destination: ReviewingView()
-                                .environmentObject(ReviewingViewModel(shop: viewModel.shop))) {
+                                .environmentObject(ReviewingViewModel(shop: viewModel.shop, delegate: viewModel))) {
                     Text("Review this shop").font(.largeTitle)
                         .foregroundColor(.white)
                         .underline()

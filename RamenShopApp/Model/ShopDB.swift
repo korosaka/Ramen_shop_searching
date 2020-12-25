@@ -267,11 +267,8 @@ struct FirebaseHelper {
             "image_number": review.imageCount,
             "created_at": timeStamp
         ]) { err in
-            if let err = err {
-                print("Error writing document: \(err)")
-            } else {
-                print("Document successfully written!")
-            }
+            //MARK: without network, this call back never happen, but data is changed only on local db,,,,,,,
+            delegate?.completedUploadingReview(isSuccess: (err == nil))
         }
     }
 }
@@ -282,6 +279,7 @@ protocol FirebaseHelperDelegate: class {
     func completedFetchingPictures(pictures: [UIImage])
     func completedFetchingProfile(profile: Profile)
     func completedFetchingUserReview(reviewID: String)
+    func completedUploadingReview(isSuccess: Bool)
 }
 
 // MARK: default implements
@@ -300,6 +298,9 @@ extension FirebaseHelperDelegate {
     }
     func completedFetchingUserReview(reviewID: String) {
         print("default implemented completedFetchingUserReview")
+    }
+    func completedUploadingReview(isSuccess: Bool) {
+        print("default implemented completedUploadingReview")
     }
 }
 

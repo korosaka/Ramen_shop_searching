@@ -11,7 +11,6 @@ import SwiftUI
 struct ReviewingView: View {
     @EnvironmentObject var viewModel: ReviewingViewModel
     var body: some View {
-        
         ScrollView(.vertical) {
             Spacer().frame(height: 10)
             ShopName(shopName: viewModel.shop?.name)
@@ -159,13 +158,14 @@ struct UploadingPicture: View {
 
 struct DoneButton: View {
     @EnvironmentObject var viewModel: ReviewingViewModel
-    @State var isShowConfirmation = false
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         HStack {
             Spacer()
             Button(action: {
-                isShowConfirmation = true
+                viewModel.activeAlert = .confirmation
+                viewModel.isShowAlert = true
             }) {
                 Text("Send Review!")
                     .font(.largeTitle)
@@ -178,13 +178,28 @@ struct DoneButton: View {
         .background(Color.red)
         .cornerRadius(20)
         .padding(10)
-        .alert(isPresented: $isShowConfirmation) {
-            Alert(title: Text("Final confirmation"),
-                  message: Text("Will you send this review?"),
-                  primaryButton: .default(Text("Yes")) {
-                    viewModel.sendReview()
-                  },
-                  secondaryButton: .cancel(Text("cancel")))
+        .alert(isPresented: $viewModel.isShowAlert) {
+            switch viewModel.activeAlert {
+            case .confirmation:
+                return Alert(title: Text("Final confirmation"),
+                             message: Text("Will you send this review?"),
+                             primaryButton: .default(Text("Yes")) {
+                                viewModel.sendReview()
+                             },
+                             secondaryButton: .cancel(Text("cancel")))
+            case .completion:
+                return Alert(title: Text("Success"),
+                             message: Text("Your review has been done"),
+                             dismissButton: .default(Text("OK")) {
+                                presentationMode.wrappedValue.dismiss()
+                             })
+            case .error:
+                return Alert(title: Text("Failed"),
+                             message: Text("Uploading this review was failed"),
+                             dismissButton: .default(Text("OK")) {
+                                presentationMode.wrappedValue.dismiss()
+                             })
+            }
         }
     }
     
