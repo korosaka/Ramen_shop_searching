@@ -23,7 +23,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePicker>) {}
     
     // MARK: - Using Coordinator to Adopt the UIImagePickerControllerDelegate Protocol
-    @Binding var selectedImages: [Image]
+    @Binding var selectedImages: [UIImage]
     @Environment(\.presentationMode) private var presentationMode
     
     func makeCoordinator() -> Coordinator {
@@ -40,7 +40,7 @@ struct ImagePicker: UIViewControllerRepresentable {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             
             if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-                parent.selectedImages.append(Image(uiImage: image))
+                parent.selectedImages.append(image)
             }
             parent.presentationMode.wrappedValue.dismiss()
         }

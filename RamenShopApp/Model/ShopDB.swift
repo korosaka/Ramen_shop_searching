@@ -252,9 +252,20 @@ struct FirebaseHelper {
         return Float(totalEvaluation) / Float(reviewCount)
     }
     
+    // MARK: don't forget to delete existing pictures
+    func uploadPictures(pics: [UIImage], review: Review) {
+        for index in 0..<pics.count {
+            let fileName = "review_image_\(index).jpeg"
+            let storageRef = storage.reference().child("review_picture/\(review.reviewID)/\(fileName)")
+            guard let data: Data = pics[index].jpegData(compressionQuality: 0.5) else { continue }
+            
+            storageRef.putData(data, metadata: nil)
+        }
+    }
     
     func uploadReview(shopID: String, review: Review) {
         let timeStamp: Timestamp = .init(date: review.createdDate)
+        // MARK: TODO use createReviewRef(shopID: String)?
         let reviewRef = firestore
             .collection("shop")
             .document(shopID)

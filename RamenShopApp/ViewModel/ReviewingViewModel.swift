@@ -19,7 +19,7 @@ class ReviewingViewModel: ObservableObject {
     var createdDate: Date?
     @Published var evaluation: Int
     @Published var comment: String
-    @Published var pictures: [Image]
+    @Published var pictures: [UIImage]
     @Published var isShowPhotoLibrary = false
     @Published var isShowPhotoPermissionDenied = false
     @Published var isShowAlert = false
@@ -71,7 +71,7 @@ class ReviewingViewModel: ObservableObject {
     
     func getUploadedImage(_ index: Int) -> Image {
         if pictures.count > index {
-            return pictures[index].resizable()
+            return Image(uiImage: pictures[index]).resizable()
         } else {
             return Image(systemName: "camera.fill")
         }
@@ -101,6 +101,7 @@ class ReviewingViewModel: ObservableObject {
                             comment: comment,
                             imageCount: pictures.count,
                             createdDate: Date())
+        db.uploadPictures(pics: pictures, review: review)
         db.uploadReview(shopID: shop!.shopID, review: review)
     }
     
