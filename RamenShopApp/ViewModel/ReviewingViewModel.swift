@@ -15,6 +15,7 @@ class ReviewingViewModel: ObservableObject {
     var authentication: Authentication
     var shop: Shop?
     var reviewID: String?
+    var previousImageCount = 0
     var userID: String?
     var createdDate: Date?
     @Published var evaluation: Int
@@ -101,7 +102,7 @@ class ReviewingViewModel: ObservableObject {
                             comment: comment,
                             imageCount: pictures.count,
                             createdDate: Date())
-        db.uploadPictures(pics: pictures, review: review)
+        db.uploadPictures(pics: pictures, reviewID: review.reviewID, prePicCount: previousImageCount)
         db.uploadReview(shopID: shop!.shopID, review: review)
     }
     
@@ -121,8 +122,9 @@ extension ReviewingViewModel: AuthenticationDelegate {
 }
 
 extension ReviewingViewModel: FirebaseHelperDelegate {
-    func completedFetchingUserReview(reviewID: String) {
+    func completedFetchingUserReview(reviewID: String, imageCount: Int) {
         self.reviewID = reviewID
+        previousImageCount = imageCount
     }
     
     func completedUploadingReview(isSuccess: Bool) {

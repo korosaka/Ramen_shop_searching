@@ -84,7 +84,8 @@ struct FirebaseHelper {
                 return print("error happened in fetchUserReview !!")
             }
             for doc in querySnapshot!.documents {
-                delegate?.completedFetchingUserReview(reviewID: doc.documentID)
+                delegate?.completedFetchingUserReview(reviewID: doc.documentID,
+                                                      imageCount: doc.data()["image_number"] as? Int ?? 0)
                 return
             }
         }
@@ -252,17 +253,38 @@ struct FirebaseHelper {
         return Float(totalEvaluation) / Float(reviewCount)
     }
     
-    // MARK: don't forget to delete existing pictures
-    func uploadPictures(pics: [UIImage], review: Review) {
-        for index in 0..<pics.count {
-            let fileName = "review_image_\(index).jpeg"
-            let storageRef = storage.reference().child("review_picture/\(review.reviewID)/\(fileName)")
-            guard let data: Data = pics[index].jpegData(compressionQuality: 0.5) else { continue }
-            
-            storageRef.putData(data, metadata: nil)
+    /**
+     if there have been files which name is same already, putData() will overwrite the file.
+     This is because these old files don't have to be deleted except when old pictures' count is learger than new pictures' one
+     */
+    func uploadPictures(pics: [UIImage], reviewID: String, prePicCount: Int) {
+        for picIndex in 0..<pics.count {
+            guard let data: Data = pics[picIndex].jpegData(compressionQuality: 0.1) else { continue }
+            createReviewPicRef(reviewID, picIndex)
+                .putData(data, metadata: nil)
+        }
+        deletePreviousPics(pics.count, prePicCount, reviewID)
+    }
+    
+    fileprivate func deletePreviousPics(_ newPicCount: Int, _ prePicCount: Int, _ reviewID: String) {
+        if newPicCount >= prePicCount { return }
+        for picIndex in newPicCount..<prePicCount {
+            createReviewPicRef(reviewID, picIndex)
+                .delete { error in
+                    if let error = error {
+                        print("Error on deleting: \(error)")
+                    }
+                }
         }
     }
     
+    fileprivate func createReviewPicRef(_ reviewID: String, _ index: Int) -> StorageReference {
+        return storage.reference().child("review_picture/\(reviewID)/review_image_\(index).jpeg")
+    }
+    
+    /**
+     setData() will overwrite self previous review contents
+     */
     func uploadReview(shopID: String, review: Review) {
         let timeStamp: Timestamp = .init(date: review.createdDate)
         // MARK: TODO use createReviewRef(shopID: String)?
@@ -279,6 +301,8 @@ struct FirebaseHelper {
             "created_at": timeStamp
         ]) { err in
             //MARK: without network, this call back never happen, but data is changed only on local db,,,,,,,
+            
+            // MARK: TODO this should happlen even after uploading pictures,,,,,
             delegate?.completedUploadingReview(isSuccess: (err == nil))
         }
     }
@@ -289,7 +313,7 @@ protocol FirebaseHelperDelegate: class {
     func completedFetchingReviews(reviews: [Review])
     func completedFetchingPictures(pictures: [UIImage])
     func completedFetchingProfile(profile: Profile)
-    func completedFetchingUserReview(reviewID: String)
+    func completedFetchingUserReview(reviewID: String, imageCount: Int)
     func completedUploadingReview(isSuccess: Bool)
 }
 
@@ -307,7 +331,7 @@ extension FirebaseHelperDelegate {
     func completedFetchingProfile(profile: Profile) {
         print("default implemented completedFetchingProfile")
     }
-    func completedFetchingUserReview(reviewID: String) {
+    func completedFetchingUserReview(reviewID: String, imageCount: Int) {
         print("default implemented completedFetchingUserReview")
     }
     func completedUploadingReview(isSuccess: Bool) {
