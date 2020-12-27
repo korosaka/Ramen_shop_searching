@@ -31,12 +31,15 @@ struct FirebaseHelper {
                     let name = data["name"] as? String ?? ""
                     let location = data["location"] as! GeoPoint
                     let reviewInfo = data["review_info"] as! [String: Any]
+                    let totalPoint = reviewInfo["total_point"] as? Int ?? 0
+                    let count = reviewInfo["count"] as? Int ?? 0
                     shops.append(Shop(shopID: document.documentID,
                                       name: name,
                                       location: location,
-                                      aveEvaluation: self.calcAveEvaluation(reviewInfo)))
+                                      totalReview: totalPoint,
+                                      reviewCount: count))
                 }
-                self.delegate?.completedFetchingShop(shops: shops)
+                self.delegate?.completedFetchingShops(shops: shops)
             }
         }
     }
@@ -85,7 +88,8 @@ struct FirebaseHelper {
             }
             for doc in querySnapshot!.documents {
                 delegate?.completedFetchingUserReview(reviewID: doc.documentID,
-                                                      imageCount: doc.data()["image_number"] as? Int ?? 0)
+                                                      imageCount: doc.data()["image_number"] as? Int ?? 0,
+                                                      evaluation: doc.data()["evaluation"] as? Int ?? nil)
                 return
             }
         }
@@ -243,16 +247,6 @@ struct FirebaseHelper {
         }
     }
     
-    func calcAveEvaluation(_ reviewInfo: [String: Any]) -> Float {
-        let totalEvaluation = reviewInfo["total_point"] as? Int ?? 0
-        let reviewCount = reviewInfo["count"] as? Int ?? 0
-        
-        if totalEvaluation == 0 || reviewCount == 0 {
-            return Float(0.0)
-        }
-        return Float(totalEvaluation) / Float(reviewCount)
-    }
-    
     /**
      if there have been files which name is same already, putData() will overwrite the file.
      This is because these old files don't have to be deleted except when old pictures' count is learger than new pictures' one
@@ -338,22 +332,66 @@ struct FirebaseHelper {
             delegate?.completedUpdatingReview(isSuccess: (err == nil))
         }
     }
+    
+    func updateShopEvaluation(shopID: String, newEva: Int, preEva: Int?, totalPoint: Int, reviewCount: Int) {
+        let isFirstReview = preEva == nil
+        let pulsEvaForTotal = isFirstReview ? newEva : (newEva - preEva!)
+        let newTotalPoint = totalPoint + pulsEvaForTotal
+        let newReviewCount = isFirstReview ? (reviewCount + 1) : reviewCount
+        
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.updateData([
+            "review_info": [ "total_point": newTotalPoint,
+                             "count": newReviewCount ]
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            }
+            delegate?.completedUpdatingShopEvaluation()
+        }
+    }
+    
+    func fetchShop(shopID: String) {
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.getDocument { (document, error) in
+            if let _error = error {
+                print("Error happen :\(_error)")
+                return
+            }
+            guard let shopData = document?.data(),
+                  let name = shopData["name"] as? String,
+                  let location = shopData["location"] as? GeoPoint,
+                  let reviewInfo =  shopData["review_info"] as? [String: Any],
+                  let totalEvaluation = reviewInfo["total_point"] as? Int,
+                  let reviewCount = reviewInfo["count"] as? Int
+            else { return }
+            
+            let shop = Shop(shopID: shopID,
+                            name: name,
+                            location: location,
+                            totalReview: totalEvaluation,
+                            reviewCount: reviewCount)
+            delegate?.completedFetchingShop(fetchedShopData: shop)
+        }
+    }
 }
 
 protocol FirebaseHelperDelegate: class {
-    func completedFetchingShop(shops: [Shop])
+    func completedFetchingShops(shops: [Shop])
     func completedFetchingReviews(reviews: [Review])
     func completedFetchingPictures(pictures: [UIImage])
     func completedFetchingProfile(profile: Profile)
-    func completedFetchingUserReview(reviewID: String, imageCount: Int)
+    func completedFetchingUserReview(reviewID: String, imageCount: Int, evaluation: Int?)
     func completedUpdatingReview(isSuccess: Bool)
     func completedUploadingReviewPics()
     func completedDeletingReviewPics()
+    func completedFetchingShop(fetchedShopData: Shop)
+    func completedUpdatingShopEvaluation()
 }
 
 // MARK: default implements
 extension FirebaseHelperDelegate {
-    func completedFetchingShop(shops: [Shop]) {
+    func completedFetchingShops(shops: [Shop]) {
         print("default implemented completedFetchingShop")
     }
     func completedFetchingReviews(reviews: [Review]) {
@@ -365,7 +403,8 @@ extension FirebaseHelperDelegate {
     func completedFetchingProfile(profile: Profile) {
         print("default implemented completedFetchingProfile")
     }
-    func completedFetchingUserReview(reviewID: String, imageCount: Int) {
+    //MARK: TODO the arg should be Review ?
+    func completedFetchingUserReview(reviewID: String, imageCount: Int, evaluation: Int?) {
         print("default implemented completedFetchingUserReview")
     }
     func completedUpdatingReview(isSuccess: Bool) {
@@ -377,19 +416,36 @@ extension FirebaseHelperDelegate {
     func completedDeletingReviewPics() {
         print("default implemented completedDeletingReviewPics")
     }
+    func completedFetchingShop(fetchedShopData: Shop) {
+        print("default implemented completedFetchingShopEvaluation")
+    }
+    func completedUpdatingShopEvaluation() {
+        print("default implemented completedUpdatingShopEvaluation")
+    }
 }
 
 struct Shop {
     let shopID: String
     let name: String
     let location: GeoPoint
-    let aveEvaluation: Float
+    let totalReview: Int
+    let reviewCount: Int
+    var aveEvaluation: Float {
+        return calcAveEvaluation(totalReview, reviewCount)
+    }
     
     func roundEvaluatione() -> String {
         if aveEvaluation == Float(0.0) {
             return "---"
         }
         return String(format: "%.1f", aveEvaluation)
+    }
+    
+    func calcAveEvaluation(_ totalPoint: Int, _ reviewCount: Int) -> Float {
+        if totalPoint == 0 || reviewCount == 0 {
+            return Float(0.0)
+        }
+        return Float(totalPoint) / Float(reviewCount)
     }
 }
 

@@ -15,7 +15,9 @@ class ReviewingViewModel: ObservableObject {
     var authentication: Authentication
     var shop: Shop?
     var reviewID: String?
+    var review: Review?
     var previousImageCount = 0
+    var previousEvaluation: Int?
     var userID: String?
     var createdDate: Date?
     @Published var evaluation: Int
@@ -27,7 +29,7 @@ class ReviewingViewModel: ObservableObject {
     @Published var activeAlert: ActiveAlert = .confirmation
     private let placeHoler = "enter comment"
     var updateReviewPicsState = (uploaded: false, deleted: false)
-    var updateReviewState = (review: false, pictures: false)
+    var updateReviewState = (review: false, pictures: false, shopEva: false)
     
     var delegate: ReviewingVMDelegate
     
@@ -98,14 +100,18 @@ class ReviewingViewModel: ObservableObject {
     }
     
     func sendReview() {
-        let review = Review(reviewID: reviewID ?? UUID().uuidString,
-                            userID: userID ?? "",
-                            evaluation: evaluation,
-                            comment: comment,
-                            imageCount: pictures.count,
-                            createdDate: Date())
-        db.updateReviewPics(pics: pictures, reviewID: review.reviewID, prePicCount: previousImageCount)
-        db.updateReview(shopID: shop!.shopID, review: review)
+        review = Review(reviewID: reviewID ?? UUID().uuidString,
+                        userID: userID ?? "",
+                        evaluation: evaluation,
+                        comment: comment,
+                        imageCount: pictures.count,
+                        createdDate: Date())
+        db.fetchShop(shopID: shop!.shopID) //MARK: to update shop evaluation
+        db.updateReviewPics(pics: pictures,
+                            reviewID: review!.reviewID,
+                            prePicCount: previousImageCount)
+        db.updateReview(shopID: shop!.shopID,
+                        review: review!)
     }
     
     func checkAlreadySentReview() {
@@ -123,7 +129,7 @@ class ReviewingViewModel: ObservableObject {
     }
     
     func checkReviewStatus() {
-        if updateReviewState.review && updateReviewState.pictures {
+        if updateReviewState.review && updateReviewState.pictures && updateReviewState.shopEva {
             delegate.completedReviewing() //MARK: reload on ShopDetail
             isShowAlert = true
         }
@@ -138,9 +144,10 @@ extension ReviewingViewModel: AuthenticationDelegate {
 }
 
 extension ReviewingViewModel: FirebaseHelperDelegate {
-    func completedFetchingUserReview(reviewID: String, imageCount: Int) {
+    func completedFetchingUserReview(reviewID: String, imageCount: Int, evaluation: Int?) {
         self.reviewID = reviewID
         previousImageCount = imageCount
+        previousEvaluation = evaluation
     }
     
     func completedUpdatingReview(isSuccess: Bool) {
@@ -159,6 +166,20 @@ extension ReviewingViewModel: FirebaseHelperDelegate {
     }
     func completedDeletingReviewPics() {
         updateReviewPicsState.deleted = true
+        checkReviewPicsStatus()
+    }
+    
+    func completedFetchingShop(fetchedShopData: Shop) {
+        shop = fetchedShopData
+        db.updateShopEvaluation(shopID: shop!.shopID,
+                                newEva: review!.evaluation,
+                                preEva: previousEvaluation,
+                                totalPoint: shop!.totalReview,
+                                reviewCount: shop!.reviewCount)
+    }
+    
+    func completedUpdatingShopEvaluation() {
+        updateReviewState.shopEva = true
         checkReviewPicsStatus()
     }
 }

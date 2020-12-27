@@ -13,8 +13,7 @@ class ShopDetailViewModel: ObservableObject {
     var db: FirebaseHelper
     @Published var latestReviews: [Review]
     @Published var pictures: [UIImage]
-    // MARK: shop should not be optional??
-    var shop: Shop?
+    @Published var shop: Shop?
     
     init(mapVM: MapSearchingViewModel) {
         if mapVM.isShopSelected {
@@ -33,6 +32,11 @@ class ShopDetailViewModel: ObservableObject {
         let maxReviewCount = 3
         db.fetchPictureReviews(shopID: shop!.shopID, limit: maxReviewCount)
     }
+    
+    func reloadShop() {
+        guard let shopID = shop?.shopID else { return }
+        db.fetchShop(shopID: shopID)
+    }
 }
 
 extension ShopDetailViewModel: FirebaseHelperDelegate {
@@ -42,10 +46,15 @@ extension ShopDetailViewModel: FirebaseHelperDelegate {
     func completedFetchingPictures(pictures: [UIImage]) {
         self.pictures = pictures
     }
+    
+    func completedFetchingShop(fetchedShopData: Shop) {
+        shop = fetchedShopData
+    }
 }
 
 extension ShopDetailViewModel: ReviewingVMDelegate {
     func completedReviewing() {
         fetchDataFromDB()
+        reloadShop()
     }
 }
