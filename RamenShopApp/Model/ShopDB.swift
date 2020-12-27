@@ -257,22 +257,55 @@ struct FirebaseHelper {
      if there have been files which name is same already, putData() will overwrite the file.
      This is because these old files don't have to be deleted except when old pictures' count is learger than new pictures' one
      */
-    func uploadPictures(pics: [UIImage], reviewID: String, prePicCount: Int) {
+    func updateReviewPics(pics: [UIImage],
+                          reviewID: String,
+                          prePicCount: Int) {
+        uploadReviewPics(pics, reviewID)
+        deletePreviousReviewPics(pics.count, prePicCount, reviewID)
+    }
+    
+    fileprivate func uploadReviewPics(_ pics: [UIImage],
+                                      _ reviewID: String) {
+        if pics.count == 0 {
+            delegate?.completedUploadingReviewPics()
+            return
+        }
+        
+        var uploadCount = 0
         for picIndex in 0..<pics.count {
             guard let data: Data = pics[picIndex].jpegData(compressionQuality: 0.1) else { continue }
             createReviewPicRef(reviewID, picIndex)
-                .putData(data, metadata: nil)
+                .putData(data, metadata: nil) { (metadata, error) in
+                    if let _error = error {
+                        print("Error uploadPictures: \(_error)")
+                    }
+                    uploadCount += 1
+                    if uploadCount == pics.count {
+                        delegate?.completedUploadingReviewPics()
+                    }
+                }
         }
-        deletePreviousPics(pics.count, prePicCount, reviewID)
     }
     
-    fileprivate func deletePreviousPics(_ newPicCount: Int, _ prePicCount: Int, _ reviewID: String) {
-        if newPicCount >= prePicCount { return }
+    fileprivate func deletePreviousReviewPics(_ newPicCount: Int,
+                                              _ prePicCount: Int,
+                                              _ reviewID: String) {
+        if newPicCount >= prePicCount {
+            delegate?.completedDeletingReviewPics()
+            return
+        }
+        
+        var deleteCount = 0
+        let countToDelete = prePicCount - newPicCount
         for picIndex in newPicCount..<prePicCount {
             createReviewPicRef(reviewID, picIndex)
                 .delete { error in
                     if let error = error {
                         print("Error on deleting: \(error)")
+                    }
+                    deleteCount += 1
+                    if deleteCount == countToDelete {
+                        delegate?.completedDeletingReviewPics()
                     }
                 }
         }
@@ -283,9 +316,10 @@ struct FirebaseHelper {
     }
     
     /**
-     setData() will overwrite self previous review contents
+     setData() will overwrite self previous review contents when it exists.
+     when it doesn't, it will create a new document
      */
-    func uploadReview(shopID: String, review: Review) {
+    func updateReview(shopID: String, review: Review) {
         let timeStamp: Timestamp = .init(date: review.createdDate)
         // MARK: TODO use createReviewRef(shopID: String)?
         let reviewRef = firestore
@@ -301,9 +335,7 @@ struct FirebaseHelper {
             "created_at": timeStamp
         ]) { err in
             //MARK: without network, this call back never happen, but data is changed only on local db,,,,,,,
-            
-            // MARK: TODO this should happlen even after uploading pictures,,,,,
-            delegate?.completedUploadingReview(isSuccess: (err == nil))
+            delegate?.completedUpdatingReview(isSuccess: (err == nil))
         }
     }
 }
@@ -314,7 +346,9 @@ protocol FirebaseHelperDelegate: class {
     func completedFetchingPictures(pictures: [UIImage])
     func completedFetchingProfile(profile: Profile)
     func completedFetchingUserReview(reviewID: String, imageCount: Int)
-    func completedUploadingReview(isSuccess: Bool)
+    func completedUpdatingReview(isSuccess: Bool)
+    func completedUploadingReviewPics()
+    func completedDeletingReviewPics()
 }
 
 // MARK: default implements
@@ -334,8 +368,14 @@ extension FirebaseHelperDelegate {
     func completedFetchingUserReview(reviewID: String, imageCount: Int) {
         print("default implemented completedFetchingUserReview")
     }
-    func completedUploadingReview(isSuccess: Bool) {
+    func completedUpdatingReview(isSuccess: Bool) {
         print("default implemented completedUploadingReview")
+    }
+    func completedUploadingReviewPics() {
+        print("default implemented completedUploadingReviewPics")
+    }
+    func completedDeletingReviewPics() {
+        print("default implemented completedDeletingReviewPics")
     }
 }
 

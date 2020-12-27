@@ -26,6 +26,8 @@ class ReviewingViewModel: ObservableObject {
     @Published var isShowAlert = false
     @Published var activeAlert: ActiveAlert = .confirmation
     private let placeHoler = "enter comment"
+    var updateReviewPicsState = (uploaded: false, deleted: false)
+    var updateReviewState = (review: false, pictures: false)
     
     var delegate: ReviewingVMDelegate
     
@@ -102,8 +104,8 @@ class ReviewingViewModel: ObservableObject {
                             comment: comment,
                             imageCount: pictures.count,
                             createdDate: Date())
-        db.uploadPictures(pics: pictures, reviewID: review.reviewID, prePicCount: previousImageCount)
-        db.uploadReview(shopID: shop!.shopID, review: review)
+        db.updateReviewPics(pics: pictures, reviewID: review.reviewID, prePicCount: previousImageCount)
+        db.updateReview(shopID: shop!.shopID, review: review)
     }
     
     func checkAlreadySentReview() {
@@ -111,6 +113,20 @@ class ReviewingViewModel: ObservableObject {
               let _userID = userID
         else { return }
         db.fetchUserReview(shopID: shopID, userID: _userID)
+    }
+    
+    func checkReviewPicsStatus() {
+        if updateReviewPicsState.uploaded && updateReviewPicsState.deleted {
+            updateReviewState.pictures = true
+            checkReviewStatus()
+        }
+    }
+    
+    func checkReviewStatus() {
+        if updateReviewState.review && updateReviewState.pictures {
+            delegate.completedReviewing() //MARK: reload on ShopDetail
+            isShowAlert = true
+        }
     }
 }
 
@@ -127,14 +143,23 @@ extension ReviewingViewModel: FirebaseHelperDelegate {
         previousImageCount = imageCount
     }
     
-    func completedUploadingReview(isSuccess: Bool) {
+    func completedUpdatingReview(isSuccess: Bool) {
         if isSuccess {
-            delegate.completedReviewing() //MARK: reload on ShopDetail
             activeAlert = .completion
         } else {
             activeAlert = .error
         }
-        isShowAlert = true
+        updateReviewState.review = true
+        checkReviewStatus()
+    }
+    
+    func completedUploadingReviewPics() {
+        updateReviewPicsState.uploaded = true
+        checkReviewPicsStatus()
+    }
+    func completedDeletingReviewPics() {
+        updateReviewPicsState.deleted = true
+        checkReviewPicsStatus()
     }
 }
 
