@@ -30,6 +30,8 @@ class ReviewingViewModel: ObservableObject {
     private let placeHoler = "enter comment"
     var updateReviewPicsState = (uploaded: false, deleted: false)
     var updateReviewState = (review: false, pictures: false, shopEva: false)
+    var isPicUploadEnabled: Bool { pictures.count < 3 }
+    var isPicCancelEnabled: Bool { pictures.count > 0 }
     
     var delegate: ReviewingVMDelegate
     

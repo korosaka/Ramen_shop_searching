@@ -110,6 +110,12 @@ struct UploadingPicture: View {
         VStack {
             HStack {
                 Spacer()
+                Text("You can upload by 3 pictures")
+                    .foregroundColor(.white)
+                Spacer()
+            }
+            HStack {
+                Spacer()
                 ForEach(0...2, id: \.self) { index in
                     let imageSize = UIScreen.main.bounds.width / 4
                     viewModel.getUploadedImage(index)
@@ -132,11 +138,11 @@ struct UploadingPicture: View {
                     Text("Upload picture")
                         .font(.headline)
                         .bold()
-                        .foregroundColor(.white)
                 }
-                .padding(12)
-                .background(Color.green)
-                .cornerRadius(10)
+                .setEnabled(enabled: viewModel.isPicUploadEnabled,
+                            defaultColor: .green,
+                            padding: 12,
+                            radius: 10)
                 .sheet(isPresented: $viewModel.isShowPhotoLibrary,
                        content: { ImagePicker(sourceType: .photoLibrary,
                                               selectedImages: $viewModel.pictures) })
@@ -155,11 +161,10 @@ struct UploadingPicture: View {
                     Text("Cancel upload")
                         .font(.headline)
                         .bold()
-                        .foregroundColor(.white)
-                }
-                .padding(12)
-                .background(Color.gray)
-                .cornerRadius(10)
+                }.setEnabled(enabled: viewModel.isPicCancelEnabled,
+                             defaultColor: .orange,
+                             padding: 12,
+                             radius: 10)
                 .alert(isPresented: $isShowCancelConfirmation) {
                     Alert(title: Text("Cencel uploading"),
                           message: Text("Do you remove pictures?"),

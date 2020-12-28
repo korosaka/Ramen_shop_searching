@@ -83,3 +83,20 @@ extension View {
                            trailing: 0))
     }
 }
+
+extension Button {
+    func setEnabled(enabled: Bool, defaultColor: Color, padding: CGFloat, radius: CGFloat) -> some View {
+        if enabled {
+            return AnyView(self.padding(padding)
+                            .foregroundColor(.white)
+                            .background(defaultColor)
+                            .cornerRadius(radius))
+        } else {
+            return AnyView(self.disabled(true)
+                            .padding(padding)
+                            .foregroundColor(.gray)
+                            .background(Color.black)
+                            .cornerRadius(radius))
+        }
+    }
+}
