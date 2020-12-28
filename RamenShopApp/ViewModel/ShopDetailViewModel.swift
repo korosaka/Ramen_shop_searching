@@ -53,7 +53,7 @@ extension ShopDetailViewModel: FirebaseHelperDelegate {
 }
 
 extension ShopDetailViewModel: ReviewingVMDelegate {
-    func completedReviewing() {
+    func stopReviewing() {
         fetchDataFromDB()
         reloadShop()
     }

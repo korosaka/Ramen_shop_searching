@@ -130,9 +130,13 @@ class ReviewingViewModel: ObservableObject {
     
     func checkReviewStatus() {
         if updateReviewState.review && updateReviewState.pictures && updateReviewState.shopEva {
-            delegate.completedReviewing() //MARK: reload on ShopDetail
+            leaveReviewing()
             isShowAlert = true
         }
+    }
+    
+    func leaveReviewing() {
+        delegate.stopReviewing()
     }
 }
 
@@ -185,7 +189,7 @@ extension ReviewingViewModel: FirebaseHelperDelegate {
 }
 
 protocol ReviewingVMDelegate {
-    func completedReviewing()
+    func stopReviewing()
 }
 
 enum ActiveAlert {

@@ -14,6 +14,7 @@ struct ShopDetailView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            CustomNavigationBar(additionalAction: nil)
             ScrollView(.vertical) {
                 VStack {
                     Spacer().frame(height: 10)
@@ -43,7 +44,7 @@ struct ShopDetailView: View {
             }
             .background(Color.red)
         }
-        
+        .navigationBarHidden(true)
     }
 }
 
