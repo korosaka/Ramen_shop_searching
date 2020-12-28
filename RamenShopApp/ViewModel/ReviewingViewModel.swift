@@ -99,6 +99,10 @@ class ReviewingViewModel: ObservableObject {
         }
     }
     
+    func removePictures() {
+        pictures.removeAll()
+    }
+    
     func sendReview() {
         review = Review(reviewID: reviewID ?? UUID().uuidString,
                         userID: userID ?? "",

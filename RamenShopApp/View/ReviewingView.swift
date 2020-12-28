@@ -105,7 +105,7 @@ struct EditingCommentView: View {
 
 struct UploadingPicture: View {
     @EnvironmentObject var viewModel: ReviewingViewModel
-    
+    @State var isShowCancelConfirmation = false
     var body: some View {
         VStack {
             HStack {
@@ -137,19 +137,39 @@ struct UploadingPicture: View {
                 .padding(12)
                 .background(Color.green)
                 .cornerRadius(10)
+                .sheet(isPresented: $viewModel.isShowPhotoLibrary,
+                       content: { ImagePicker(sourceType: .photoLibrary,
+                                              selectedImages: $viewModel.pictures) })
+                .alert(isPresented: $viewModel.isShowPhotoPermissionDenied) {
+                    Alert(title: Text("This app has no permission"),
+                          message: Text("You need to change setting"),
+                          primaryButton: .default(Text("go to setting")) {
+                            goToSetting()
+                          },
+                          secondaryButton: .cancel(Text("cancel")))
+                }
+                Spacer()
+                Button(action: {
+                    isShowCancelConfirmation.toggle()
+                }) {
+                    Text("Cancel upload")
+                        .font(.headline)
+                        .bold()
+                        .foregroundColor(.white)
+                }
+                .padding(12)
+                .background(Color.gray)
+                .cornerRadius(10)
+                .alert(isPresented: $isShowCancelConfirmation) {
+                    Alert(title: Text("Cencel uploading"),
+                          message: Text("Do you remove pictures?"),
+                          primaryButton: .default(Text("Yes")) {
+                            viewModel.removePictures()
+                          },
+                          secondaryButton: .cancel(Text("No")))
+                }
                 Spacer()
             }
-        }
-        .sheet(isPresented: $viewModel.isShowPhotoLibrary,
-               content: { ImagePicker(sourceType: .photoLibrary,
-                                      selectedImages: $viewModel.pictures) })
-        .alert(isPresented: $viewModel.isShowPhotoPermissionDenied) {
-            Alert(title: Text("This app has no permission"),
-                  message: Text("You need to change setting"),
-                  primaryButton: .default(Text("go to setting")) {
-                    goToSetting()
-                  },
-                  secondaryButton: .cancel(Text("cancel")))
         }
     }
     
