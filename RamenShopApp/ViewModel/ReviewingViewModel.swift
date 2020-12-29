@@ -11,6 +11,7 @@ import SwiftUI
 import Photos
 import Firebase
 class ReviewingViewModel: ObservableObject {
+    //MARK: TODO too messy
     var db: FirebaseHelper
     var authentication: Authentication
     var shop: Shop?

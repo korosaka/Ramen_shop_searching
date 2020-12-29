@@ -143,6 +143,7 @@ struct UploadingPicture: View {
                             defaultColor: .green,
                             padding: 12,
                             radius: 10)
+                //MARK: TODO is sourceType not needed?
                 .sheet(isPresented: $viewModel.isShowPhotoLibrary,
                        content: { ImagePicker(sourceType: .photoLibrary,
                                               selectedImages: $viewModel.pictures) })
