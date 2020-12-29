@@ -201,13 +201,13 @@ struct DoneButton: View {
                 Text("Send Review!")
                     .font(.largeTitle)
                     .bold()
-                    .foregroundColor(.white)
-                    .padding(10)
             }
+            .setEnabled(enabled: viewModel.isEnoughInfo,
+                        defaultColor: .red,
+                        padding: 10,
+                        radius: 20)
             Spacer()
         }
-        .background(Color.red)
-        .cornerRadius(20)
         .padding(10)
         .alert(isPresented: $viewModel.isShowAlert) {
             switch viewModel.activeAlert {

@@ -33,6 +33,11 @@ class ReviewingViewModel: ObservableObject {
     var updateReviewState = (review: false, pictures: false, shopEva: false)
     var isPicUploadEnabled: Bool { pictures.count < 3 }
     var isPicCancelEnabled: Bool { pictures.count > 0 }
+    var isEnoughInfo: Bool {
+        evaluation > 0
+            && comment != ""
+            && comment != placeHoler
+    }
     
     var delegate: ReviewingVMDelegate
     
