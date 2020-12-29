@@ -9,18 +9,22 @@
 import SwiftUI
 
 struct ProfileSettingView: View {
+    @ObservedObject var viewModel: ProfileSettingViewModel
+    
     var body: some View {
         VStack(spacing: 0) {
             CustomNavigationBar(additionalAction: nil)
             Spacer().frame(height: 30)
-            Image(systemName: "person.crop.circle.fill")
-                .symbolIconLargeStyle()
+            viewModel.getIconImage()
             Spacer().frame(height: 10)
             Button(action: {}) {
                 Text("change icon image")
             }
             Spacer().frame(height: 30)
-            Text("no name").font(.title).bold().foregroundColor(.white)
+            Text(viewModel.getUserName())
+                .font(.title)
+                .bold()
+                .foregroundColor(.white)
             Spacer().frame(height: 10)
             HStack {
                 Spacer()

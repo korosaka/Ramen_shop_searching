@@ -16,7 +16,6 @@ class Authentication {
     
     func checkCurrentUser() {
         if let user = Auth.auth().currentUser {
-            delegate?.afterLogin()
             delegate?.setUserInfo(user: user)
         }
     }
@@ -54,8 +53,6 @@ class Authentication {
     }
 }
 
-
-// MARK: to notice ViewModel
 protocol AuthenticationDelegate: class {
     func afterLogin()
     func loginError(error: Error?)

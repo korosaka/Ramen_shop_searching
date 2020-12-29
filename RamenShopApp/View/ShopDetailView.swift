@@ -125,6 +125,7 @@ struct LatestReviews: View {
     }
 }
 
+//MARK: TODO "if" should be done within VM
 struct ReviewHeadline: View {
     @ObservedObject var viewModel: ReviewHeadlineViewModel
     
