@@ -91,11 +91,11 @@ struct EditingCommentView: View {
                     Text("Stop editing comment")
                         .font(.headline)
                         .bold()
-                        .foregroundColor(.white)
                 }
-                .padding(12)
-                .background(Color.yellow)
-                .cornerRadius(10)
+                .setEnabled(enabled: viewModel.isEditingComment,
+                            defaultColor: .yellow,
+                            padding: 12,
+                            radius: 10)
                 Spacer()
             }
         }

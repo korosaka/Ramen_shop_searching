@@ -27,6 +27,7 @@ class ReviewingViewModel: ObservableObject {
     @Published var isShowPhotoPermissionDenied = false
     @Published var isShowAlert = false
     @Published var activeAlert: ActiveAlert = .confirmation
+    @Published var isEditingComment = false
     private let placeHoler = "enter comment"
     var updateReviewPicsState = (uploaded: false, deleted: false)
     var updateReviewState = (review: false, pictures: false, shopEva: false)
@@ -68,12 +69,14 @@ class ReviewingViewModel: ObservableObject {
         if comment == placeHoler {
             comment = ""
         }
+        isEditingComment = true
     }
     
     func stopEditingComment() {
         if comment == "" {
             comment = placeHoler
         }
+        isEditingComment = false
     }
     
     func getUploadedImage(_ index: Int) -> Image {
