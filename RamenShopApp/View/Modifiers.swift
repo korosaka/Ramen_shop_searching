@@ -69,10 +69,34 @@ extension Image {
 }
 
 extension View {
-    func sidePadding(side: CGFloat) -> some View {
+    func sidePadding(size: CGFloat) -> some View {
         self.padding(.init(top: 0,
-                           leading: side,
+                           leading: size,
                            bottom: 0,
-                           trailing: side))
+                           trailing: size))
+    }
+    
+    func upDownPadding(size: CGFloat) -> some View {
+        self.padding(.init(top: size,
+                           leading: 0,
+                           bottom: size,
+                           trailing: 0))
+    }
+}
+
+extension Button {
+    func setEnabled(enabled: Bool, defaultColor: Color, padding: CGFloat, radius: CGFloat) -> some View {
+        if enabled {
+            return AnyView(self.padding(padding)
+                            .foregroundColor(.white)
+                            .background(defaultColor)
+                            .cornerRadius(radius))
+        } else {
+            return AnyView(self.disabled(true)
+                            .padding(padding)
+                            .foregroundColor(.gray)
+                            .background(Color.black)
+                            .cornerRadius(radius))
+        }
     }
 }

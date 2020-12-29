@@ -17,11 +17,11 @@ struct ReviewDetailView: View {
                 if viewModel.userProfile.icon == nil {
                     Image(systemName: "person.crop.circle.fill")
                         .symbolIconStyle()
-                        .sidePadding(side: 5)
+                        .sidePadding(size: 5)
                 } else {
                     Image(uiImage: viewModel.userProfile.icon!)
                         .iconStyle()
-                        .sidePadding(side: 5)
+                        .sidePadding(size: 5)
                 }
                 Text(viewModel.userProfile.userName)
                 Spacer()

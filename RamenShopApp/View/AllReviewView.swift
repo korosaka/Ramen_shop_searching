@@ -13,33 +13,30 @@ struct AllReviewView: View {
     @ObservedObject var viewModel: AllReviewViewModel
     
     var body: some View {
-        
-        ZStack {
-            Color.blue
-            VStack {
-                Text("All Review")
-                    .font(.headline)
-                    .foregroundColor(.yellow)
-                    .padding(5)
-                List {
-                    ForEach(viewModel.reviews, id: \.reviewID) { review in
-                        Button(action: {
-                            viewModel.switchShowDetail(reviewID: review.reviewID)
-                        }) {
-                            if viewModel.showDetailDic[review.reviewID] ?? false {
-                                ReviewDetailView(viewModel: .init(review: review))
-                            } else {
-                                ReviewHeadline(viewModel: .init(review: review))
-                            }
+        VStack(spacing: 0) {
+            CustomNavigationBar(additionalAction: nil)
+            Text("All Review")
+                .font(.title)
+                .foregroundColor(.yellow)
+                .padding(5)
+            List {
+                ForEach(viewModel.reviews, id: \.reviewID) { review in
+                    Button(action: {
+                        viewModel.switchShowDetail(reviewID: review.reviewID)
+                    }) {
+                        if viewModel.showDetailDic[review.reviewID] ?? false {
+                            ReviewDetailView(viewModel: .init(review: review))
+                        } else {
+                            ReviewHeadline(viewModel: .init(review: review))
                         }
                     }
                 }
-                .padding(.init(top: 0,
-                               leading: 5,
-                               bottom: 5,
-                               trailing: 5))
             }
+            .background(Color.white)
+            .padding(5)
         }
+        .background(Color.blue)
+        .navigationBarHidden(true)
         
     }
 }

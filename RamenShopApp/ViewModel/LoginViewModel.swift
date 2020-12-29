@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import Firebase
+
+// MARK: TODO separate extention AuthenticationDelegate
 class LoginViewModel: ObservableObject, AuthenticationDelegate {
     
     
@@ -27,8 +30,10 @@ class LoginViewModel: ObservableObject, AuthenticationDelegate {
         checkCurrentUser()
     }
     
-    func setUserInfo(email: String?) {
-        if email != nil { self.email = email! }
+    func setUserInfo(user: User) {
+        if let userEmail = user.email {
+            self.email = userEmail
+        }
     }
     func checkCurrentUser() {
         authentication.checkCurrentUser()

@@ -31,12 +31,15 @@ struct FirebaseHelper {
                     let name = data["name"] as? String ?? ""
                     let location = data["location"] as! GeoPoint
                     let reviewInfo = data["review_info"] as! [String: Any]
+                    let totalPoint = reviewInfo["total_point"] as? Int ?? 0
+                    let count = reviewInfo["count"] as? Int ?? 0
                     shops.append(Shop(shopID: document.documentID,
                                       name: name,
                                       location: location,
-                                      aveEvaluation: self.calcAveEvaluation(reviewInfo)))
+                                      totalReview: totalPoint,
+                                      reviewCount: count))
                 }
-                self.delegate?.completedFetchingShop(shops: shops)
+                self.delegate?.completedFetchingShops(shops: shops)
             }
         }
     }
@@ -72,6 +75,23 @@ struct FirebaseHelper {
             reviewRef
                 .order(by: "created_at", descending: true)
                 .getDocuments(completion: completionHandler)
+        }
+    }
+    
+    func fetchUserReview(shopID: String, userID: String) {
+        let userReviewRef = createReviewRef(shopID: shopID)
+            .whereField("user_id", isEqualTo: userID)
+        
+        userReviewRef.getDocuments { (querySnapshot, error) in
+            if error != nil {
+                return print("error happened in fetchUserReview !!")
+            }
+            for doc in querySnapshot!.documents {
+                delegate?.completedFetchingUserReview(reviewID: doc.documentID,
+                                                      imageCount: doc.data()["image_number"] as? Int ?? 0,
+                                                      evaluation: doc.data()["evaluation"] as? Int ?? nil)
+                return
+            }
         }
     }
     
@@ -151,6 +171,7 @@ struct FirebaseHelper {
     }
     
     func fetchPictureReviews(shopID: String, limit: Int?) {
+        // MARK: TODO use createReviewRef(shopID: String)
         let reviewStoreRef =
             firestore.collection("shop")
             .document(shopID)
@@ -226,27 +247,151 @@ struct FirebaseHelper {
         }
     }
     
-    func calcAveEvaluation(_ reviewInfo: [String: Any]) -> Float {
-        let totalEvaluation = reviewInfo["total_point"] as? Int ?? 0
-        let reviewCount = reviewInfo["count"] as? Int ?? 0
-        
-        if totalEvaluation == 0 || reviewCount == 0 {
-            return Float(0.0)
+    /**
+     if there have been files which name is same already, putData() will overwrite the file.
+     This is because these old files don't have to be deleted except when old pictures' count is learger than new pictures' one
+     */
+    func updateReviewPics(pics: [UIImage],
+                          reviewID: String,
+                          prePicCount: Int) {
+        uploadReviewPics(pics, reviewID)
+        deletePreviousReviewPics(pics.count, prePicCount, reviewID)
+    }
+    
+    fileprivate func uploadReviewPics(_ pics: [UIImage],
+                                      _ reviewID: String) {
+        if pics.count == 0 {
+            delegate?.completedUploadingReviewPics()
+            return
         }
-        return Float(totalEvaluation) / Float(reviewCount)
+        
+        var uploadCount = 0
+        for picIndex in 0..<pics.count {
+            guard let data: Data = pics[picIndex].jpegData(compressionQuality: 0.1) else { continue }
+            createReviewPicRef(reviewID, picIndex)
+                .putData(data, metadata: nil) { (metadata, error) in
+                    if let _error = error {
+                        print("Error uploadPictures: \(_error)")
+                    }
+                    uploadCount += 1
+                    if uploadCount == pics.count {
+                        delegate?.completedUploadingReviewPics()
+                    }
+                }
+        }
+    }
+    
+    fileprivate func deletePreviousReviewPics(_ newPicCount: Int,
+                                              _ prePicCount: Int,
+                                              _ reviewID: String) {
+        if newPicCount >= prePicCount {
+            delegate?.completedDeletingReviewPics()
+            return
+        }
+        
+        var deleteCount = 0
+        let countToDelete = prePicCount - newPicCount
+        for picIndex in newPicCount..<prePicCount {
+            createReviewPicRef(reviewID, picIndex)
+                .delete { error in
+                    if let error = error {
+                        print("Error on deleting: \(error)")
+                    }
+                    deleteCount += 1
+                    if deleteCount == countToDelete {
+                        delegate?.completedDeletingReviewPics()
+                    }
+                }
+        }
+    }
+    
+    fileprivate func createReviewPicRef(_ reviewID: String, _ index: Int) -> StorageReference {
+        return storage.reference().child("review_picture/\(reviewID)/review_image_\(index).jpeg")
+    }
+    
+    /**
+     setData() will overwrite self previous review contents when it exists.
+     when it doesn't, it will create a new document
+     */
+    func updateReview(shopID: String, review: Review) {
+        let timeStamp: Timestamp = .init(date: review.createdDate)
+        // MARK: TODO use createReviewRef(shopID: String)?
+        let reviewRef = firestore
+            .collection("shop")
+            .document(shopID)
+            .collection("review")
+            .document(review.reviewID)
+        reviewRef.setData([
+            "user_id": review.userID,
+            "evaluation": review.evaluation,
+            "comment": review.comment,
+            "image_number": review.imageCount,
+            "created_at": timeStamp
+        ]) { err in
+            //MARK: without network, this call back never happen, but data is changed only on local db,,,,,,,
+            delegate?.completedUpdatingReview(isSuccess: (err == nil))
+        }
+    }
+    
+    func updateShopEvaluation(shopID: String, newEva: Int, preEva: Int?, totalPoint: Int, reviewCount: Int) {
+        let isFirstReview = preEva == nil
+        let pulsEvaForTotal = isFirstReview ? newEva : (newEva - preEva!)
+        let newTotalPoint = totalPoint + pulsEvaForTotal
+        let newReviewCount = isFirstReview ? (reviewCount + 1) : reviewCount
+        
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.updateData([
+            "review_info": [ "total_point": newTotalPoint,
+                             "count": newReviewCount ]
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            }
+            delegate?.completedUpdatingShopEvaluation()
+        }
+    }
+    
+    func fetchShop(shopID: String) {
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.getDocument { (document, error) in
+            if let _error = error {
+                print("Error happen :\(_error)")
+                return
+            }
+            guard let shopData = document?.data(),
+                  let name = shopData["name"] as? String,
+                  let location = shopData["location"] as? GeoPoint,
+                  let reviewInfo =  shopData["review_info"] as? [String: Any],
+                  let totalEvaluation = reviewInfo["total_point"] as? Int,
+                  let reviewCount = reviewInfo["count"] as? Int
+            else { return }
+            
+            let shop = Shop(shopID: shopID,
+                            name: name,
+                            location: location,
+                            totalReview: totalEvaluation,
+                            reviewCount: reviewCount)
+            delegate?.completedFetchingShop(fetchedShopData: shop)
+        }
     }
 }
 
 protocol FirebaseHelperDelegate: class {
-    func completedFetchingShop(shops: [Shop])
+    func completedFetchingShops(shops: [Shop])
     func completedFetchingReviews(reviews: [Review])
     func completedFetchingPictures(pictures: [UIImage])
     func completedFetchingProfile(profile: Profile)
+    func completedFetchingUserReview(reviewID: String, imageCount: Int, evaluation: Int?)
+    func completedUpdatingReview(isSuccess: Bool)
+    func completedUploadingReviewPics()
+    func completedDeletingReviewPics()
+    func completedFetchingShop(fetchedShopData: Shop)
+    func completedUpdatingShopEvaluation()
 }
 
 // MARK: default implements
 extension FirebaseHelperDelegate {
-    func completedFetchingShop(shops: [Shop]) {
+    func completedFetchingShops(shops: [Shop]) {
         print("default implemented completedFetchingShop")
     }
     func completedFetchingReviews(reviews: [Review]) {
@@ -258,19 +403,49 @@ extension FirebaseHelperDelegate {
     func completedFetchingProfile(profile: Profile) {
         print("default implemented completedFetchingProfile")
     }
+    //MARK: TODO the arg should be Review ?
+    func completedFetchingUserReview(reviewID: String, imageCount: Int, evaluation: Int?) {
+        print("default implemented completedFetchingUserReview")
+    }
+    func completedUpdatingReview(isSuccess: Bool) {
+        print("default implemented completedUploadingReview")
+    }
+    func completedUploadingReviewPics() {
+        print("default implemented completedUploadingReviewPics")
+    }
+    func completedDeletingReviewPics() {
+        print("default implemented completedDeletingReviewPics")
+    }
+    func completedFetchingShop(fetchedShopData: Shop) {
+        print("default implemented completedFetchingShopEvaluation")
+    }
+    func completedUpdatingShopEvaluation() {
+        print("default implemented completedUpdatingShopEvaluation")
+    }
 }
 
 struct Shop {
     let shopID: String
     let name: String
     let location: GeoPoint
-    let aveEvaluation: Float
+    let totalReview: Int
+    let reviewCount: Int
+    var aveEvaluation: Float {
+        return calcAveEvaluation(totalReview, reviewCount)
+    }
     
     func roundEvaluatione() -> String {
         if aveEvaluation == Float(0.0) {
             return "---"
         }
         return String(format: "%.1f", aveEvaluation)
+    }
+    
+    func calcAveEvaluation(_ totalPoint: Int, _ reviewCount: Int) -> Float {
+        if totalPoint == 0 || reviewCount == 0 {
+            return Float(0.0)
+        }
+        return Float(totalPoint) / Float(reviewCount)
     }
 }
 

@@ -24,6 +24,8 @@
 	<string>always permit using location data </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>permit using location data</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>permit using photo library</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

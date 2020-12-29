@@ -13,32 +13,33 @@ struct SignupView: View {
     @ObservedObject var viewModel: LoginViewModel
     
     var body: some View {
-        ZStack {
-            Color.green
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                TextField("email", text: $viewModel.email)
-                    .basicStyle()
-                TextField("passsword", text: $viewModel.password)
-                    .basicStyle()
-                    .padding(.init(top: 0,
-                                   leading: 0,
-                                   bottom: 20,
-                                   trailing: 0))
-                Button(action: {
-                    self.viewModel.createAccount()
-                }) {
-                    Text("Create account")
-                        .basicButtonTextStyle(Color.white, Color.yellow)
-                }
-                .alert(isPresented: $viewModel.signUpError) {
-                    Alert(title: Text("Signup Error"),
-                          message: Text(viewModel.errorMesaage),
-                          dismissButton: .default(Text("OK"),
-                                                  action: { self.viewModel.reset() }))
-                }
+        VStack(spacing: 0) {
+            CustomNavigationBar(additionalAction: nil)
+            Spacer()
+            TextField("email", text: $viewModel.email)
+                .basicStyle()
+            TextField("passsword", text: $viewModel.password)
+                .basicStyle()
+                .padding(.init(top: 0,
+                               leading: 0,
+                               bottom: 20,
+                               trailing: 0))
+            Button(action: {
+                self.viewModel.createAccount()
+            }) {
+                Text("Create account")
+                    .basicButtonTextStyle(Color.white, Color.yellow)
             }
+            .alert(isPresented: $viewModel.signUpError) {
+                Alert(title: Text("Signup Error"),
+                      message: Text(viewModel.errorMesaage),
+                      dismissButton: .default(Text("OK"),
+                                              action: { self.viewModel.reset() }))
+            }
+            Spacer()
         }
+        .background(Color.green)
+        .navigationBarHidden(true)
     }
 }
 
@@ -149,15 +150,3 @@ struct LoginView: View {
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView(loginVM: .init())
-    }
-}
-
-
-struct Signup_Previews: PreviewProvider {
-    static var previews: some View {
-        SignupView(viewModel: .init())
-    }
-}

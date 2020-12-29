@@ -36,7 +36,7 @@ class MapSearchingViewModel: ObservableObject {
 }
 
 extension MapSearchingViewModel: FirebaseHelperDelegate {
-    func completedFetchingShop(shops: [Shop]) {
+    func completedFetchingShops(shops: [Shop]) {
         self.shops = shops
     }
 }
