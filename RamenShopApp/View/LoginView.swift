@@ -128,6 +128,10 @@ struct LoginView: View {
                         NavigationLink(destination: MapSearchingView(viewModel: .init())) {
                             Text("Go to Ramen Search !").basicButtonTextStyle(Color.white, Color.red)
                         }
+                        Spacer().frame(height: 30)
+                        NavigationLink(destination: ProfileSettingView()) {
+                            Text("Profile").basicButtonTextStyle(Color.white, Color.orange)
+                        }
                     }
                     Spacer()
                     
