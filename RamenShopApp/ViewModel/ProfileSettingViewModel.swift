@@ -11,8 +11,11 @@ import SwiftUI
 import Firebase
 class ProfileSettingViewModel: ObservableObject {
     @Published var userProfile: Profile
+    @Published var isEditingName = false
+    @Published var newName = ""
     var db: FirebaseHelper
     var authentication: Authentication
+    var userID: String?
     
     init() {
         db = .init()
@@ -35,10 +38,18 @@ class ProfileSettingViewModel: ObservableObject {
         return userProfile.userName
     }
     
+    func updateUserName() {
+        guard let _userID = userID else { return }
+        db.updateUserName(userID: _userID, newName: newName)
+        newName = ""
+        isEditingName = false
+    }
+    
 }
 
 extension ProfileSettingViewModel: AuthenticationDelegate {
     func setUserInfo(user: User) {
+        userID = user.uid
         db.fetchUserProfile(userID: user.uid)
     }
 }
@@ -46,5 +57,11 @@ extension ProfileSettingViewModel: AuthenticationDelegate {
 extension ProfileSettingViewModel: FirebaseHelperDelegate {
     func completedFetchingProfile(profile: Profile) {
         userProfile = profile
+    }
+    
+    func completedUpdatingUserName(isSuccess: Bool) {
+        //MARK: TODO Error handling
+        guard let _userID = userID else { return }
+        db.fetchUserProfile(userID: _userID)
     }
 }

@@ -170,6 +170,17 @@ struct FirebaseHelper {
         iconStorageRef.list(withMaxResults: 1, completion: completionHandler)
     }
     
+    func updateUserName(userID: String, newName: String) {
+        let userRef = firestore.collection("user")
+            .document(userID)
+        
+        userRef.updateData([
+            "user_name": newName
+        ]) { err in
+            delegate?.completedUpdatingUserName(isSuccess: (err == nil))
+        }
+    }
+    
     func fetchPictureReviews(shopID: String, limit: Int?) {
         // MARK: TODO use createReviewRef(shopID: String)
         let reviewStoreRef =
@@ -387,6 +398,7 @@ protocol FirebaseHelperDelegate: class {
     func completedDeletingReviewPics()
     func completedFetchingShop(fetchedShopData: Shop)
     func completedUpdatingShopEvaluation()
+    func completedUpdatingUserName(isSuccess: Bool)
 }
 
 // MARK: default implements
@@ -421,6 +433,9 @@ extension FirebaseHelperDelegate {
     }
     func completedUpdatingShopEvaluation() {
         print("default implemented completedUpdatingShopEvaluation")
+    }
+    func completedUpdatingUserName(isSuccess: Bool) {
+        print("default implemented completedUpdatingUserName")
     }
 }
 

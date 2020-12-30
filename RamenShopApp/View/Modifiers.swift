@@ -100,6 +100,7 @@ extension View {
     }
 }
 
+// MARK: TODO refactoring
 extension Button {
     func setEnabled(enabled: Bool, defaultColor: Color, padding: CGFloat, radius: CGFloat) -> some View {
         if enabled {
@@ -114,5 +115,12 @@ extension Button {
                             .background(Color.black)
                             .cornerRadius(radius))
         }
+    }
+    
+    func basicStyle(foreColor: Color, backColor: Color, padding: CGFloat, radius: CGFloat) -> some View {
+        return AnyView(self.padding(padding)
+                        .foregroundColor(foreColor)
+                        .background(backColor)
+                        .cornerRadius(radius))
     }
 }

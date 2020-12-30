@@ -43,6 +43,8 @@ struct SignupView: View {
     }
 }
 
+
+//MARK: TODO separate View
 struct LoginView: View {
     
     @ObservedObject var loginVM: LoginViewModel
@@ -129,7 +131,8 @@ struct LoginView: View {
                             Text("Go to Ramen Search !").basicButtonTextStyle(Color.white, Color.red)
                         }
                         Spacer().frame(height: 30)
-                        NavigationLink(destination: ProfileSettingView(viewModel: .init())) {
+                        NavigationLink(destination: ProfileSettingView()
+                                        .environmentObject(ProfileSettingViewModel())) {
                             Text("Profile").basicButtonTextStyle(Color.white, Color.orange)
                         }
                     }
