@@ -13,14 +13,13 @@ struct ImagePicker: UIViewControllerRepresentable {
     
     init(reviewImages: Binding<[UIImage]?>) {
         self._reviewImages = reviewImages
-        self._profileIconImage = Binding.constant(nil)
         role = .reviewPicture
     }
     
-    init(iconImage: Binding<UIImage?>) {
-        self._profileIconImage = iconImage
+    init(delegate: ImagePickerDelegate?) {
         self._reviewImages = Binding.constant(nil)
         role = .userIcon
+        self.delegate = delegate
     }
     
     var sourceType: UIImagePickerController.SourceType = .photoLibrary
@@ -38,8 +37,8 @@ struct ImagePicker: UIViewControllerRepresentable {
     
     // MARK: - Using Coordinator to Adopt the UIImagePickerControllerDelegate Protocol
     @Binding var reviewImages: [UIImage]?
-    @Binding var profileIconImage: UIImage?
     @Environment(\.presentationMode) private var presentationMode
+    weak var delegate: ImagePickerDelegate?
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -52,6 +51,7 @@ struct ImagePicker: UIViewControllerRepresentable {
             self.parent = parent
         }
         
+        //MARK: TODO create function when couldn't get Pic even after selected it in Picker (this bug is sometimes happening)
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             
             if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
@@ -62,11 +62,21 @@ struct ImagePicker: UIViewControllerRepresentable {
                     }
                     parent.reviewImages!.append(image)
                 case .userIcon:
-                    parent.profileIconImage = image
+                    parent.delegate?.pickedPicture(image: image)
                 }
             }
             parent.presentationMode.wrappedValue.dismiss()
         }
+    }
+}
+
+protocol ImagePickerDelegate: class {
+    func pickedPicture(image: UIImage)
+}
+
+extension ImagePickerDelegate {
+    func pickedPicture(image: UIImage) {
+        print("default implemented pickedPicture")
     }
 }
 

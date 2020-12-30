@@ -23,7 +23,6 @@ class ProfileSettingViewModel: ObservableObject {
     var activeAlertForName: ActiveAlert = .confirmation
     var isNameEdited: Bool { isEditingName && newName != "" }
     var hasProfileAlready = false
-    var pictureToUpload: UIImage?
     
     init() {
         db = .init()
@@ -100,5 +99,11 @@ extension ProfileSettingViewModel: FirebaseHelperDelegate {
         isShowAlertForName = true
         guard let _userID = userID else { return }
         db.fetchUserProfile(userID: _userID)
+    }
+}
+
+extension ProfileSettingViewModel: ImagePickerDelegate {
+    func pickedPicture(image: UIImage) {
+        //MARK: TODO upload image
     }
 }

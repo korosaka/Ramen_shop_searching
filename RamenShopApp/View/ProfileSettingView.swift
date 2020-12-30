@@ -35,7 +35,7 @@ struct IconProfile: View {
             Text("change icon image")
         }
         .sheet(isPresented: $viewModel.isShowPhotoLibrary,
-               content: { ImagePicker(iconImage: $viewModel.pictureToUpload) })
+               content: { ImagePicker(delegate: viewModel) })
     }
 }
 
