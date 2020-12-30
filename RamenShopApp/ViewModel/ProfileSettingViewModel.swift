@@ -16,6 +16,8 @@ class ProfileSettingViewModel: ObservableObject {
     var db: FirebaseHelper
     var authentication: Authentication
     var userID: String?
+    @Published var isShowAlertForName = false
+    var activeAlertForName: ActiveAlert = .confirmation
     
     init() {
         db = .init()
@@ -45,6 +47,9 @@ class ProfileSettingViewModel: ObservableObject {
         isEditingName = false
     }
     
+    func resetAlertData() {
+        activeAlertForName = .confirmation
+    }
 }
 
 extension ProfileSettingViewModel: AuthenticationDelegate {
@@ -60,7 +65,12 @@ extension ProfileSettingViewModel: FirebaseHelperDelegate {
     }
     
     func completedUpdatingUserName(isSuccess: Bool) {
-        //MARK: TODO Error handling
+        if isSuccess {
+            activeAlertForName = .completion
+        } else {
+            activeAlertForName = .error
+        }
+        isShowAlertForName = true
         guard let _userID = userID else { return }
         db.fetchUserProfile(userID: _userID)
     }

@@ -37,7 +37,7 @@ struct IconProfile: View {
 
 struct NameProfile: View {
     @EnvironmentObject var viewModel: ProfileSettingViewModel
-    @State var isShowConfirmation = false
+    
     var body: some View {
         Text(viewModel.getUserName())
             .font(.title)
@@ -71,7 +71,7 @@ struct NameProfile: View {
             //MARK: TODO set disabled
             Button(action: {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                isShowConfirmation = true
+                viewModel.isShowAlertForName = true
             }) {
                 Text("done")
             }
@@ -79,13 +79,28 @@ struct NameProfile: View {
                         backColor: .red,
                         padding: 10,
                         radius: 10)
-            .alert(isPresented: $isShowConfirmation) {
-                Alert(title: Text("Confirmation"),
-                      message: Text("Change name?"),
-                      primaryButton: .default(Text("Yes")) {
-                        viewModel.updateUserName()
-                      },
-                      secondaryButton: .cancel(Text("No")))
+            .alert(isPresented: $viewModel.isShowAlertForName) {
+                switch viewModel.activeAlertForName {
+                case .confirmation:
+                    return Alert(title: Text("Confirmation"),
+                                 message: Text("Change name?"),
+                                 primaryButton: .default(Text("Yes")) {
+                                    viewModel.updateUserName()
+                                 },
+                                 secondaryButton: .cancel(Text("cancel")))
+                case .completion:
+                    return Alert(title: Text("Success"),
+                                 message: Text("User name has been updated!"),
+                                 dismissButton: .default(Text("OK")) {
+                                    viewModel.resetAlertData()
+                                 })
+                case .error:
+                    return Alert(title: Text("Failed"),
+                                 message: Text("Updating user name was failed"),
+                                 dismissButton: .default(Text("OK")){
+                                    viewModel.resetAlertData()
+                                 })
+                }
             }
             Spacer()
         }
