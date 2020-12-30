@@ -125,17 +125,16 @@ struct FirebaseHelper {
             if error != nil {
                 return print("error happened in fetchUserProfile !!")
             }
-            var profile = Profile(userName: "unnamed", icon: nil)
             if let data = document?.data() {
-                profile.userName = data["user_name"] as? String ?? "unnamed"
-                let hasIcon = data["has_icon"] as? Bool ?? false
-                if hasIcon {
+                let userName = data["user_name"] as? String ?? "unnamed"
+                let profile = Profile(userName: userName, icon: nil)
+                if data["has_icon"] as? Bool ?? false {
                     fetchUserIcon(userID, profile)
                 } else {
                     delegate?.completedFetchingProfile(profile: profile)
                 }
             } else {
-                delegate?.completedFetchingProfile(profile: profile)
+                delegate?.completedFetchingProfile(profile: nil)
                 return
             }
         }
@@ -170,15 +169,26 @@ struct FirebaseHelper {
         iconStorageRef.list(withMaxResults: 1, completion: completionHandler)
     }
     
-    func updateUserName(userID: String, newName: String) {
+    func updateUserName(userID: String, name: String, _ hasProfileAlready: Bool) {
         let userRef = firestore.collection("user")
             .document(userID)
         
-        userRef.updateData([
-            "user_name": newName
-        ]) { err in
-            delegate?.completedUpdatingUserName(isSuccess: (err == nil))
+        if hasProfileAlready {
+            userRef.updateData([
+                "user_name": name
+            ]) { err in
+                delegate?.completedUpdatingUserName(isSuccess: (err == nil))
+            }
+        } else {
+            userRef.setData([
+                "user_name": name,
+                "has_icon" : false
+            ]) { err in
+                delegate?.completedUpdatingUserName(isSuccess: (err == nil))
+            }
         }
+        
+        
     }
     
     func fetchPictureReviews(shopID: String, limit: Int?) {
@@ -391,7 +401,7 @@ protocol FirebaseHelperDelegate: class {
     func completedFetchingShops(shops: [Shop])
     func completedFetchingReviews(reviews: [Review])
     func completedFetchingPictures(pictures: [UIImage])
-    func completedFetchingProfile(profile: Profile)
+    func completedFetchingProfile(profile: Profile?)
     func completedFetchingUserReview(reviewID: String, imageCount: Int, evaluation: Int?)
     func completedUpdatingReview(isSuccess: Bool)
     func completedUploadingReviewPics()
@@ -412,7 +422,7 @@ extension FirebaseHelperDelegate {
     func completedFetchingPictures(pictures: [UIImage]) {
         print("default implemented completedFetchingPictures")
     }
-    func completedFetchingProfile(profile: Profile) {
+    func completedFetchingProfile(profile: Profile?) {
         print("default implemented completedFetchingProfile")
     }
     //MARK: TODO the arg should be Review ?

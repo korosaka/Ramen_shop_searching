@@ -19,10 +19,12 @@ class ProfileSettingViewModel: ObservableObject {
     @Published var isShowAlertForName = false
     var activeAlertForName: ActiveAlert = .confirmation
     var isNameEdited: Bool { isEditingName && newName != "" }
+    var hasProfileAlready = false
     
     init() {
         db = .init()
         authentication = .init()
+        //MARK: TODO refactoring (profile init)
         userProfile = Profile(userName: "unnamed")
         db.delegate = self
         authentication.delegate = self
@@ -43,7 +45,7 @@ class ProfileSettingViewModel: ObservableObject {
     
     func updateUserName() {
         guard let _userID = userID else { return }
-        db.updateUserName(userID: _userID, newName: newName)
+        db.updateUserName(userID: _userID, name: newName, hasProfileAlready)
         newName = ""
         isEditingName = false
     }
@@ -61,12 +63,15 @@ extension ProfileSettingViewModel: AuthenticationDelegate {
 }
 
 extension ProfileSettingViewModel: FirebaseHelperDelegate {
-    func completedFetchingProfile(profile: Profile) {
-        userProfile = profile
+    func completedFetchingProfile(profile: Profile?) {
+        guard let _profile = profile else { return }
+        userProfile = _profile
+        hasProfileAlready = true
     }
     
     func completedUpdatingUserName(isSuccess: Bool) {
         if isSuccess {
+            if !hasProfileAlready { hasProfileAlready = true }
             activeAlertForName = .completion
         } else {
             activeAlertForName = .error

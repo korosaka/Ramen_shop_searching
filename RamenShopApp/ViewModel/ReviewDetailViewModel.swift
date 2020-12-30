@@ -19,6 +19,7 @@ class ReviewDetailViewModel: ObservableObject {
         self.review = review
         reviewImages = .init()
         db = .init()
+        //MARK: TODO refactoring (profile init)
         userProfile = Profile(userName: "unnamed")
         db.delegate = self
         fetchImages()
@@ -43,7 +44,8 @@ extension ReviewDetailViewModel: FirebaseHelperDelegate {
         }
     }
     
-    func completedFetchingProfile(profile: Profile) {
-        userProfile = profile
+    func completedFetchingProfile(profile: Profile?) {
+        guard let _profile = profile else { return }
+        userProfile = _profile
     }
 }
