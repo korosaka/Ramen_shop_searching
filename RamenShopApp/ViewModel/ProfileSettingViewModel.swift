@@ -9,10 +9,13 @@
 import Foundation
 import SwiftUI
 import Firebase
+import Photos
 class ProfileSettingViewModel: ObservableObject {
     @Published var userProfile: Profile
     @Published var isEditingName = false
     @Published var newName = ""
+    @Published var isShowPhotoLibrary = false
+    @Published var isShowPhotoPermissionDenied = false
     var db: FirebaseHelper
     var authentication: Authentication
     var userID: String?
@@ -20,6 +23,7 @@ class ProfileSettingViewModel: ObservableObject {
     var activeAlertForName: ActiveAlert = .confirmation
     var isNameEdited: Bool { isEditingName && newName != "" }
     var hasProfileAlready = false
+    var pictureToUpload: UIImage?
     
     init() {
         db = .init()
@@ -48,6 +52,23 @@ class ProfileSettingViewModel: ObservableObject {
         db.updateUserName(userID: _userID, name: newName, hasProfileAlready)
         newName = ""
         isEditingName = false
+    }
+    
+    func checkPhotoPermission() {
+        let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        if status == .authorized || status == .limited {
+            isShowPhotoLibrary = true
+        } else {
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+                DispatchQueue.main.async {
+                    if status == .authorized || status == .limited {
+                        self.isShowPhotoLibrary = true
+                    } else if status == .denied {
+                        self.isShowPhotoPermissionDenied = true
+                    }
+                }
+            }
+        }
     }
     
     func resetAlertData() {

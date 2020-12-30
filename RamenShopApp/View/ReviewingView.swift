@@ -145,8 +145,7 @@ struct UploadingPicture: View {
                             radius: 10)
                 //MARK: TODO is sourceType not needed?
                 .sheet(isPresented: $viewModel.isShowPhotoLibrary,
-                       content: { ImagePicker(sourceType: .photoLibrary,
-                                              selectedImages: $viewModel.pictures) })
+                       content: { ImagePicker(reviewImages: $viewModel.pictures) })
                 .alert(isPresented: $viewModel.isShowPhotoPermissionDenied) {
                     Alert(title: Text("This app has no permission"),
                           message: Text("You need to change setting"),

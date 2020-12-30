@@ -29,9 +29,13 @@ struct IconProfile: View {
     var body: some View {
         viewModel.getIconImage()
         Spacer().frame(height: 10)
-        Button(action: {}) {
+        Button(action: {
+            viewModel.checkPhotoPermission()
+        }) {
             Text("change icon image")
         }
+        .sheet(isPresented: $viewModel.isShowPhotoLibrary,
+               content: { ImagePicker(iconImage: $viewModel.pictureToUpload) })
     }
 }
 
