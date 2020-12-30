@@ -143,7 +143,6 @@ struct UploadingPicture: View {
                             defaultColor: .green,
                             padding: 12,
                             radius: 10)
-                //MARK: TODO is sourceType not needed?
                 .sheet(isPresented: $viewModel.isShowPhotoLibrary,
                        content: { ImagePicker(reviewImages: $viewModel.pictures) })
                 .alert(isPresented: $viewModel.isShowPhotoPermissionDenied) {
@@ -176,13 +175,6 @@ struct UploadingPicture: View {
                 Spacer()
             }
         }
-    }
-    
-    func goToSetting() {
-        guard let settingsURL = URL(string: UIApplication.openSettingsURLString ) else {
-            return
-        }
-        UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
     }
 }
 

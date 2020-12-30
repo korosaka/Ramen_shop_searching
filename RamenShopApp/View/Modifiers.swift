@@ -98,6 +98,13 @@ extension View {
                            bottom: size,
                            trailing: 0))
     }
+    
+    func goToSetting() {
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString ) else {
+            return
+        }
+        UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+    }
 }
 
 // MARK: TODO refactoring
