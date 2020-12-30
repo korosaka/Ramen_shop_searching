@@ -75,8 +75,8 @@ struct NameProfile: View {
             }) {
                 Text("done")
             }
-            .basicStyle(foreColor: .white,
-                        backColor: .red,
+            .setEnabled(enabled: viewModel.isNameEdited,
+                        defaultColor: .red,
                         padding: 10,
                         radius: 10)
             .alert(isPresented: $viewModel.isShowAlertForName) {

@@ -18,6 +18,7 @@ class ProfileSettingViewModel: ObservableObject {
     var userID: String?
     @Published var isShowAlertForName = false
     var activeAlertForName: ActiveAlert = .confirmation
+    var isNameEdited: Bool { isEditingName && newName != "" }
     
     init() {
         db = .init()
