@@ -140,6 +140,7 @@ struct FirebaseHelper {
         }
     }
     
+    //MARK: TODO refactoring (the file name will be fixed, so get the image file directly)
     fileprivate func fetchUserIcon(_ userID: String, _ profile: Profile) {
         let iconStorageRef = storage.reference().child("user_icon/\(userID)")
         let completionHandler = { (result: StorageListResult, error: Error?) -> Void in
@@ -169,6 +170,40 @@ struct FirebaseHelper {
         iconStorageRef.list(withMaxResults: 1, completion: completionHandler)
     }
     
+    func updateUserIcon(_ userID: String, _ iconImage: UIImage, _ hasProfileAlready: Bool) {
+        guard let data: Data = iconImage.jpegData(compressionQuality: 0.1) else { return }
+        createUserIconRef(userID).putData(data, metadata: nil) { (metadata, error) in
+            if error != nil {
+                delegate?.completedUpdatingUserProfile(isSuccess: false)
+                return
+            }
+            updateUserIconInfo(userID, hasProfileAlready)
+        }
+    }
+    
+    func createUserIconRef(_ userID: String) -> StorageReference {
+        return storage.reference().child("user_icon/\(userID)/icon_image.jpeg")
+    }
+    
+    func updateUserIconInfo(_ userID: String, _ hasProfileAlready: Bool) {
+        let userRef = firestore.collection("user")
+            .document(userID)
+        if hasProfileAlready {
+            userRef.updateData([
+                "has_icon": true
+            ]) { err in
+                delegate?.completedUpdatingUserProfile(isSuccess: err == nil)
+            }
+        } else {
+            userRef.setData([
+                "user_name": "unnamed",
+                "has_icon" : true
+            ]) { err in
+                delegate?.completedUpdatingUserProfile(isSuccess: err == nil)
+            }
+        }
+    }
+    
     func updateUserName(userID: String, name: String, _ hasProfileAlready: Bool) {
         let userRef = firestore.collection("user")
             .document(userID)
@@ -177,18 +212,16 @@ struct FirebaseHelper {
             userRef.updateData([
                 "user_name": name
             ]) { err in
-                delegate?.completedUpdatingUserName(isSuccess: (err == nil))
+                delegate?.completedUpdatingUserProfile(isSuccess: (err == nil))
             }
         } else {
             userRef.setData([
                 "user_name": name,
                 "has_icon" : false
             ]) { err in
-                delegate?.completedUpdatingUserName(isSuccess: (err == nil))
+                delegate?.completedUpdatingUserProfile(isSuccess: (err == nil))
             }
         }
-        
-        
     }
     
     func fetchPictureReviews(shopID: String, limit: Int?) {
@@ -408,7 +441,7 @@ protocol FirebaseHelperDelegate: class {
     func completedDeletingReviewPics()
     func completedFetchingShop(fetchedShopData: Shop)
     func completedUpdatingShopEvaluation()
-    func completedUpdatingUserName(isSuccess: Bool)
+    func completedUpdatingUserProfile(isSuccess: Bool)
 }
 
 // MARK: default implements
@@ -444,7 +477,7 @@ extension FirebaseHelperDelegate {
     func completedUpdatingShopEvaluation() {
         print("default implemented completedUpdatingShopEvaluation")
     }
-    func completedUpdatingUserName(isSuccess: Bool) {
+    func completedUpdatingUserProfile(isSuccess: Bool) {
         print("default implemented completedUpdatingUserName")
     }
 }

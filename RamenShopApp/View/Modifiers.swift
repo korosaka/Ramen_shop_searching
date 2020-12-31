@@ -65,7 +65,8 @@ extension Image {
     
     func iconStyle() -> some View {
         self.resizable()
-            .scaledToFit()
+            //MARK: TODO consider,,scaledToFill?,scaledToFit?,other?
+            .scaledToFill()
             .frame(width: 40, height: 40)
             .clipShape(Circle())
             .padding(1)
@@ -75,7 +76,7 @@ extension Image {
     
     func iconLargeStyle() -> some View {
         self.resizable()
-            .scaledToFit()
+            .scaledToFill()
             .frame(width: 120, height: 120)
             .clipShape(Circle())
             .padding(1)

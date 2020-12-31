@@ -53,6 +53,11 @@ class ProfileSettingViewModel: ObservableObject {
         isEditingName = false
     }
     
+    func updateUserIcon(iconImage: UIImage) {
+        guard let _userID = userID else { return }
+        db.updateUserIcon(_userID, iconImage, hasProfileAlready)
+    }
+    
     func checkPhotoPermission() {
         let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
         if status == .authorized || status == .limited {
@@ -89,7 +94,7 @@ extension ProfileSettingViewModel: FirebaseHelperDelegate {
         hasProfileAlready = true
     }
     
-    func completedUpdatingUserName(isSuccess: Bool) {
+    func completedUpdatingUserProfile(isSuccess: Bool) {
         if isSuccess {
             if !hasProfileAlready { hasProfileAlready = true }
             activeAlertForName = .completion
@@ -104,6 +109,6 @@ extension ProfileSettingViewModel: FirebaseHelperDelegate {
 
 extension ProfileSettingViewModel: ImagePickerDelegate {
     func pickedPicture(image: UIImage) {
-        //MARK: TODO upload image
+        updateUserIcon(iconImage: image)
     }
 }
