@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct ProfileSettingView: View {
+    @EnvironmentObject var viewModel: ProfileSettingViewModel
     var body: some View {
         VStack(spacing: 0) {
             CustomNavigationBar(additionalAction: nil)
@@ -17,6 +18,29 @@ struct ProfileSettingView: View {
             Spacer().frame(height: 30)
             NameProfile()
             Spacer()
+        }
+        .alert(isPresented: $viewModel.isShowAlertForName) {
+            switch viewModel.activeAlertForName {
+            case .confirmation:
+                return Alert(title: Text("Confirmation"),
+                             message: Text("Change name?"),
+                             primaryButton: .default(Text("Yes")) {
+                                viewModel.updateUserName()
+                             },
+                             secondaryButton: .cancel(Text("cancel")))
+            case .completion:
+                return Alert(title: Text("Success"),
+                             message: Text("Profile has been updated!"),
+                             dismissButton: .default(Text("OK")) {
+                                viewModel.resetAlertData()
+                             })
+            case .error:
+                return Alert(title: Text("Failed"),
+                             message: Text("Updating profile was failed"),
+                             dismissButton: .default(Text("OK")){
+                                viewModel.resetAlertData()
+                             })
+            }
         }
         .background(Color.green)
         .navigationBarHidden(true)
@@ -78,9 +102,7 @@ struct NameProfile: View {
                         backColor: .orange,
                         padding: 10,
                         radius: 10)
-            
             Spacer().frame(width: 40)
-            //MARK: TODO set disabled
             Button(action: {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 viewModel.isShowAlertForName = true
@@ -91,29 +113,6 @@ struct NameProfile: View {
                         defaultColor: .red,
                         padding: 10,
                         radius: 10)
-            .alert(isPresented: $viewModel.isShowAlertForName) {
-                switch viewModel.activeAlertForName {
-                case .confirmation:
-                    return Alert(title: Text("Confirmation"),
-                                 message: Text("Change name?"),
-                                 primaryButton: .default(Text("Yes")) {
-                                    viewModel.updateUserName()
-                                 },
-                                 secondaryButton: .cancel(Text("cancel")))
-                case .completion:
-                    return Alert(title: Text("Success"),
-                                 message: Text("User name has been updated!"),
-                                 dismissButton: .default(Text("OK")) {
-                                    viewModel.resetAlertData()
-                                 })
-                case .error:
-                    return Alert(title: Text("Failed"),
-                                 message: Text("Updating user name was failed"),
-                                 dismissButton: .default(Text("OK")){
-                                    viewModel.resetAlertData()
-                                 })
-                }
-            }
             Spacer()
         }
     }

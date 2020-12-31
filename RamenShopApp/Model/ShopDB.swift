@@ -140,34 +140,18 @@ struct FirebaseHelper {
         }
     }
     
-    //MARK: TODO refactoring (the file name will be fixed, so get the image file directly)
     fileprivate func fetchUserIcon(_ userID: String, _ profile: Profile) {
-        let iconStorageRef = storage.reference().child("user_icon/\(userID)")
-        let completionHandler = { (result: StorageListResult, error: Error?) -> Void in
+        createUserIconRef(userID).getData(maxSize: 1 * 1024 * 1024) { data, error in
             // MARK: asynchronous
-            if error != nil {
+            if let error = error {
+                print("Error getting data: \(error)")
                 delegate?.completedFetchingProfile(profile: profile)
-                return print("error happened in fetchUserIcon !!")
-            }
-            let iconRef: StorageReference? = result.items[0]
-            if iconRef != nil {
-                iconRef!.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                    // MARK: asynchronous
-                    if let error = error {
-                        print("Error getting data: \(error)")
-                        delegate?.completedFetchingProfile(profile: profile)
-                    } else {
-                        let iconProfile = Profile(userName: profile.userName, icon: UIImage(data: data!))
-                        delegate?.completedFetchingProfile(profile: iconProfile)
-                    }
-                }
             } else {
-                delegate?.completedFetchingProfile(profile: profile)
-                return
+                let iconProfile = Profile(userName: profile.userName,
+                                          icon: UIImage(data: data!))
+                delegate?.completedFetchingProfile(profile: iconProfile)
             }
         }
-        
-        iconStorageRef.list(withMaxResults: 1, completion: completionHandler)
     }
     
     func updateUserIcon(_ userID: String, _ iconImage: UIImage, _ hasProfileAlready: Bool) {
