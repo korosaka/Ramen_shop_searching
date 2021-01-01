@@ -13,9 +13,10 @@ struct ProfileSettingView: View {
     var body: some View {
         VStack(spacing: 0) {
             CustomNavigationBar(additionalAction: nil)
+            Titleheader()
             Spacer().frame(height: 30)
             IconProfile()
-            Spacer().frame(height: 30)
+            Spacer().frame(height: 50)
             NameProfile()
             Spacer()
         }
@@ -47,6 +48,19 @@ struct ProfileSettingView: View {
     }
 }
 
+struct Titleheader: View {
+    var body: some View {
+        HStack {
+            Spacer()
+            Text("Your Profile")
+                .font(.largeTitle)
+                .foregroundColor(.white)
+                .padding(5)
+            Spacer()
+        }
+        .background(Color.red)
+    }
+}
 
 struct IconProfile: View {
     @EnvironmentObject var viewModel: ProfileSettingViewModel
@@ -60,6 +74,10 @@ struct IconProfile: View {
         }) {
             Text("change icon image")
         }
+        .basicStyle(foreColor: .white,
+                    backColor: .orange,
+                    padding: 10,
+                    radius: 10)
         .sheet(isPresented: $viewModel.isShowPhotoLibrary,
                content: { ImagePicker(delegate: viewModel) })
         .alert(isPresented: $viewModel.isShowPhotoPermissionDenied) {
@@ -78,16 +96,15 @@ struct NameProfile: View {
     
     var body: some View {
         Text(viewModel.getUserName())
-            .font(.title)
+            .font(.largeTitle)
             .bold()
             .foregroundColor(.white)
-        Spacer().frame(height: 10)
+        Spacer().frame(height: 15)
         if viewModel.isEditingName {
             TextField("user name", text: $viewModel.newName)
                 .basicStyle()
         }
-        HStack {
-            Spacer()
+        VStack {
             Button(action: {
                 //MARK: TODO DO within VM
                 viewModel.isEditingName.toggle()
@@ -104,7 +121,7 @@ struct NameProfile: View {
                         backColor: .orange,
                         padding: 10,
                         radius: 10)
-            Spacer().frame(width: 40)
+            Spacer().frame(height: 10)
             Button(action: {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 viewModel.isShowAlertForName = true
@@ -115,7 +132,6 @@ struct NameProfile: View {
                         defaultColor: .red,
                         padding: 10,
                         radius: 10)
-            Spacer()
         }
     }
 }
