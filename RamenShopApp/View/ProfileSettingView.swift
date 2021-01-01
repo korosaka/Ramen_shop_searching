@@ -106,16 +106,9 @@ struct NameProfile: View {
         }
         VStack {
             Button(action: {
-                //MARK: TODO DO within VM
-                viewModel.isEditingName.toggle()
-                viewModel.newName = ""
+                viewModel.onClickChangeName()
             }) {
-                //MARK: TODO DO within VM
-                if viewModel.isEditingName {
-                    Text("cancel")
-                } else {
-                    Text("change name")
-                }
+                Text(viewModel.changeNameButtonText)
             }
             .basicStyle(foreColor: .white,
                         backColor: .orange,

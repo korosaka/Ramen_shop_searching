@@ -51,19 +51,19 @@ extension UIImage {
     }
 }
 
-//MARK: TODO refactoring
 extension Image {
     func iconSmallStyle() -> some View {
-        self.resizable()
-            .scaledToFill()
-            .frame(width: 50, height: 50)
-            .clipShape(Circle())
+        iconStyle(size: 50)
     }
     
     func iconLargeStyle() -> some View {
+        iconStyle(size: 120)
+    }
+    
+    func iconStyle(size: CGFloat) -> some View {
         self.resizable()
             .scaledToFill()
-            .frame(width: 120, height: 120)
+            .frame(width: size, height: size)
             .clipShape(Circle())
     }
 }
