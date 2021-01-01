@@ -53,24 +53,10 @@ extension UIImage {
 
 //MARK: TODO refactoring
 extension Image {
-    func symbolIconStyle() -> some View {
+    func iconSmallStyle() -> some View {
         self.resizable()
-            .frame(width: 41, height: 41)
-    }
-    
-    func symbolIconLargeStyle() -> some View {
-        self.resizable()
-            .frame(width: 121, height: 121)
-    }
-    
-    func iconStyle() -> some View {
-        self.resizable()
-            //MARK: TODO consider,,scaledToFill?,scaledToFit?,other?
             .scaledToFill()
-            .frame(width: 40, height: 40)
-            .clipShape(Circle())
-            .padding(1)
-            .background(Color.black)
+            .frame(width: 50, height: 50)
             .clipShape(Circle())
     }
     
@@ -78,9 +64,6 @@ extension Image {
         self.resizable()
             .scaledToFill()
             .frame(width: 120, height: 120)
-            .clipShape(Circle())
-            .padding(1)
-            .background(Color.black)
             .clipShape(Circle())
     }
 }

@@ -35,11 +35,11 @@ class ProfileSettingViewModel: ObservableObject {
     }
     
     //MARK: TODO is it right to return SwiftUI View to View from VM???
-    func getIconImage() -> some View {
+    func getIconImage() -> Image {
         guard let iconImage = userProfile.icon else {
-            return AnyView(Image(systemName: "person.crop.circle.fill").symbolIconLargeStyle())
+            return Image(systemName: "person.crop.circle.fill")
         }
-        return AnyView(Image(uiImage: iconImage).iconLargeStyle())
+        return Image(uiImage: iconImage)
     }
     
     func getUserName() -> String {

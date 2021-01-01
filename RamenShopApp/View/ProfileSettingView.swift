@@ -51,7 +51,9 @@ struct ProfileSettingView: View {
 struct IconProfile: View {
     @EnvironmentObject var viewModel: ProfileSettingViewModel
     var body: some View {
-        viewModel.getIconImage()
+        viewModel
+            .getIconImage()
+            .iconLargeStyle()
         Spacer().frame(height: 10)
         Button(action: {
             viewModel.checkPhotoPermission()
