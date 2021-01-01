@@ -125,49 +125,87 @@ struct FirebaseHelper {
             if error != nil {
                 return print("error happened in fetchUserProfile !!")
             }
-            var profile = Profile(userName: "unnamed", icon: nil)
             if let data = document?.data() {
-                profile.userName = data["user_name"] as? String ?? "unnamed"
-                let hasIcon = data["has_icon"] as? Bool ?? false
-                if hasIcon {
+                let userName = data["user_name"] as? String ?? "unnamed"
+                let profile = Profile(userName: userName, icon: nil)
+                if data["has_icon"] as? Bool ?? false {
                     fetchUserIcon(userID, profile)
                 } else {
                     delegate?.completedFetchingProfile(profile: profile)
                 }
             } else {
-                delegate?.completedFetchingProfile(profile: profile)
+                delegate?.completedFetchingProfile(profile: nil)
                 return
             }
         }
     }
     
     fileprivate func fetchUserIcon(_ userID: String, _ profile: Profile) {
-        let iconStorageRef = storage.reference().child("user_icon/\(userID)")
-        let completionHandler = { (result: StorageListResult, error: Error?) -> Void in
+        createUserIconRef(userID).getData(maxSize: 1 * 1024 * 1024) { data, error in
             // MARK: asynchronous
-            if error != nil {
+            if let error = error {
+                print("Error getting data: \(error)")
                 delegate?.completedFetchingProfile(profile: profile)
-                return print("error happened in fetchUserIcon !!")
-            }
-            let iconRef: StorageReference? = result.items[0]
-            if iconRef != nil {
-                iconRef!.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                    // MARK: asynchronous
-                    if let error = error {
-                        print("Error getting data: \(error)")
-                        delegate?.completedFetchingProfile(profile: profile)
-                    } else {
-                        let iconProfile = Profile(userName: profile.userName, icon: UIImage(data: data!))
-                        delegate?.completedFetchingProfile(profile: iconProfile)
-                    }
-                }
             } else {
-                delegate?.completedFetchingProfile(profile: profile)
-                return
+                let iconProfile = Profile(userName: profile.userName,
+                                          icon: UIImage(data: data!))
+                delegate?.completedFetchingProfile(profile: iconProfile)
             }
         }
+    }
+    
+    func updateUserIcon(_ userID: String, _ iconImage: UIImage, _ hasProfileAlready: Bool) {
+        guard let data: Data = iconImage.jpegData(compressionQuality: 0.1) else { return }
+        createUserIconRef(userID).putData(data, metadata: nil) { (metadata, error) in
+            if error != nil {
+                delegate?.completedUpdatingUserProfile(isSuccess: false)
+                return
+            }
+            updateUserIconInfo(userID, hasProfileAlready)
+        }
+    }
+    
+    func createUserIconRef(_ userID: String) -> StorageReference {
+        return storage.reference().child("user_icon/\(userID)/icon_image.jpeg")
+    }
+    
+    func updateUserIconInfo(_ userID: String, _ hasProfileAlready: Bool) {
+        let userRef = firestore.collection("user")
+            .document(userID)
+        if hasProfileAlready {
+            userRef.updateData([
+                "has_icon": true
+            ]) { err in
+                delegate?.completedUpdatingUserProfile(isSuccess: err == nil)
+            }
+        } else {
+            userRef.setData([
+                "user_name": "unnamed",
+                "has_icon" : true
+            ]) { err in
+                delegate?.completedUpdatingUserProfile(isSuccess: err == nil)
+            }
+        }
+    }
+    
+    func updateUserName(userID: String, name: String, _ hasProfileAlready: Bool) {
+        let userRef = firestore.collection("user")
+            .document(userID)
         
-        iconStorageRef.list(withMaxResults: 1, completion: completionHandler)
+        if hasProfileAlready {
+            userRef.updateData([
+                "user_name": name
+            ]) { err in
+                delegate?.completedUpdatingUserProfile(isSuccess: (err == nil))
+            }
+        } else {
+            userRef.setData([
+                "user_name": name,
+                "has_icon" : false
+            ]) { err in
+                delegate?.completedUpdatingUserProfile(isSuccess: (err == nil))
+            }
+        }
     }
     
     func fetchPictureReviews(shopID: String, limit: Int?) {
@@ -380,13 +418,14 @@ protocol FirebaseHelperDelegate: class {
     func completedFetchingShops(shops: [Shop])
     func completedFetchingReviews(reviews: [Review])
     func completedFetchingPictures(pictures: [UIImage])
-    func completedFetchingProfile(profile: Profile)
+    func completedFetchingProfile(profile: Profile?)
     func completedFetchingUserReview(reviewID: String, imageCount: Int, evaluation: Int?)
     func completedUpdatingReview(isSuccess: Bool)
     func completedUploadingReviewPics()
     func completedDeletingReviewPics()
     func completedFetchingShop(fetchedShopData: Shop)
     func completedUpdatingShopEvaluation()
+    func completedUpdatingUserProfile(isSuccess: Bool)
 }
 
 // MARK: default implements
@@ -400,7 +439,7 @@ extension FirebaseHelperDelegate {
     func completedFetchingPictures(pictures: [UIImage]) {
         print("default implemented completedFetchingPictures")
     }
-    func completedFetchingProfile(profile: Profile) {
+    func completedFetchingProfile(profile: Profile?) {
         print("default implemented completedFetchingProfile")
     }
     //MARK: TODO the arg should be Review ?
@@ -421,6 +460,9 @@ extension FirebaseHelperDelegate {
     }
     func completedUpdatingShopEvaluation() {
         print("default implemented completedUpdatingShopEvaluation")
+    }
+    func completedUpdatingUserProfile(isSuccess: Bool) {
+        print("default implemented completedUpdatingUserName")
     }
 }
 

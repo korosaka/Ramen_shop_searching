@@ -16,11 +16,11 @@ struct ReviewDetailView: View {
             HStack {
                 if viewModel.userProfile.icon == nil {
                     Image(systemName: "person.crop.circle.fill")
-                        .symbolIconStyle()
+                        .iconSmallStyle()
                         .sidePadding(size: 5)
                 } else {
                     Image(uiImage: viewModel.userProfile.icon!)
-                        .iconStyle()
+                        .iconSmallStyle()
                         .sidePadding(size: 5)
                 }
                 Text(viewModel.userProfile.userName)

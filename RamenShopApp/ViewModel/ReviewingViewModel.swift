@@ -23,7 +23,7 @@ class ReviewingViewModel: ObservableObject {
     var createdDate: Date?
     @Published var evaluation: Int
     @Published var comment: String
-    @Published var pictures: [UIImage]
+    @Published var pictures: [UIImage]?
     @Published var isShowPhotoLibrary = false
     @Published var isShowPhotoPermissionDenied = false
     @Published var isShowAlert = false
@@ -32,8 +32,8 @@ class ReviewingViewModel: ObservableObject {
     private let placeHoler = "enter comment"
     var updateReviewPicsState = (uploaded: false, deleted: false)
     var updateReviewState = (review: false, pictures: false, shopEva: false)
-    var isPicUploadEnabled: Bool { pictures.count < 3 }
-    var isPicCancelEnabled: Bool { pictures.count > 0 }
+    var isPicUploadEnabled: Bool { pictures!.count < 3 }
+    var isPicCancelEnabled: Bool { pictures!.count > 0 }
     var isEnoughInfo: Bool {
         evaluation > 0
             && comment != ""
@@ -86,8 +86,8 @@ class ReviewingViewModel: ObservableObject {
     }
     
     func getUploadedImage(_ index: Int) -> Image {
-        if pictures.count > index {
-            return Image(uiImage: pictures[index]).resizable()
+        if pictures!.count > index {
+            return Image(uiImage: pictures![index]).resizable()
         } else {
             return Image(systemName: "camera.fill")
         }
@@ -111,7 +111,7 @@ class ReviewingViewModel: ObservableObject {
     }
     
     func removePictures() {
-        pictures.removeAll()
+        pictures!.removeAll()
     }
     
     func sendReview() {
@@ -119,10 +119,10 @@ class ReviewingViewModel: ObservableObject {
                         userID: userID ?? "",
                         evaluation: evaluation,
                         comment: comment,
-                        imageCount: pictures.count,
+                        imageCount: pictures!.count,
                         createdDate: Date())
         db.fetchShop(shopID: shop!.shopID) //MARK: to update shop evaluation
-        db.updateReviewPics(pics: pictures,
+        db.updateReviewPics(pics: pictures!,
                             reviewID: review!.reviewID,
                             prePicCount: previousImageCount)
         db.updateReview(shopID: shop!.shopID,

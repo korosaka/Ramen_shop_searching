@@ -31,6 +31,7 @@ class LoginViewModel: ObservableObject, AuthenticationDelegate {
     }
     
     func setUserInfo(user: User) {
+        self.logined = true
         if let userEmail = user.email {
             self.email = userEmail
         }

@@ -52,18 +52,18 @@ extension UIImage {
 }
 
 extension Image {
-    func symbolIconStyle() -> some View {
-        self.resizable()
-            .frame(width: 41, height: 41)
+    func iconSmallStyle() -> some View {
+        iconStyle(size: 50)
     }
     
-    func iconStyle() -> some View {
+    func iconLargeStyle() -> some View {
+        iconStyle(size: 120)
+    }
+    
+    func iconStyle(size: CGFloat) -> some View {
         self.resizable()
-            .scaledToFit()
-            .frame(width: 40, height: 40)
-            .clipShape(Circle())
-            .padding(1)
-            .background(Color.black)
+            .scaledToFill()
+            .frame(width: size, height: size)
             .clipShape(Circle())
     }
 }
@@ -82,8 +82,16 @@ extension View {
                            bottom: size,
                            trailing: 0))
     }
+    
+    func goToSetting() {
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString ) else {
+            return
+        }
+        UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+    }
 }
 
+// MARK: TODO refactoring
 extension Button {
     func setEnabled(enabled: Bool, defaultColor: Color, padding: CGFloat, radius: CGFloat) -> some View {
         if enabled {
@@ -98,5 +106,12 @@ extension Button {
                             .background(Color.black)
                             .cornerRadius(radius))
         }
+    }
+    
+    func basicStyle(foreColor: Color, backColor: Color, padding: CGFloat, radius: CGFloat) -> some View {
+        return AnyView(self.padding(padding)
+                        .foregroundColor(foreColor)
+                        .background(backColor)
+                        .cornerRadius(radius))
     }
 }

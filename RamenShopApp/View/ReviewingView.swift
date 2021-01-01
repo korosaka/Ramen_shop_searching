@@ -143,10 +143,8 @@ struct UploadingPicture: View {
                             defaultColor: .green,
                             padding: 12,
                             radius: 10)
-                //MARK: TODO is sourceType not needed?
                 .sheet(isPresented: $viewModel.isShowPhotoLibrary,
-                       content: { ImagePicker(sourceType: .photoLibrary,
-                                              selectedImages: $viewModel.pictures) })
+                       content: { ImagePicker(reviewImages: $viewModel.pictures) })
                 .alert(isPresented: $viewModel.isShowPhotoPermissionDenied) {
                     Alert(title: Text("This app has no permission"),
                           message: Text("You need to change setting"),
@@ -177,13 +175,6 @@ struct UploadingPicture: View {
                 Spacer()
             }
         }
-    }
-    
-    func goToSetting() {
-        guard let settingsURL = URL(string: UIApplication.openSettingsURLString ) else {
-            return
-        }
-        UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
     }
 }
 

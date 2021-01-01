@@ -125,6 +125,7 @@ struct LatestReviews: View {
     }
 }
 
+//MARK: TODO "if" should be done within VM
 struct ReviewHeadline: View {
     @ObservedObject var viewModel: ReviewHeadlineViewModel
     
@@ -132,11 +133,11 @@ struct ReviewHeadline: View {
         HStack() {
             if viewModel.userProfile.icon == nil {
                 Image(systemName: "person.crop.circle.fill")
-                    .symbolIconStyle()
+                    .iconSmallStyle()
                     .sidePadding(size: 5)
             } else {
                 Image(uiImage: viewModel.userProfile.icon!)
-                    .iconStyle()
+                    .iconSmallStyle()
                     .sidePadding(size: 5)
             }
             
@@ -161,7 +162,7 @@ struct ReviewHeadline: View {
                                leading: 0,
                                bottom: 2,
                                trailing: 0))
-                Text(viewModel.review.comment).lineLimit(2)
+                Text(viewModel.review.comment).lineLimit(1)
             }
             .sidePadding(size: 10)
             .background(Color.white)
