@@ -412,6 +412,21 @@ struct FirebaseHelper {
             delegate?.completedFetchingShop(fetchedShopData: shop)
         }
     }
+    
+    func uploadShopRequest(shopName: String, location: GeoPoint, userID: String) {
+        let shopID = UUID().uuidString
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.setData([
+            "name": shopName,
+            "location": location,
+            "review_info": [ "total_point": 0,
+                             "count": 0 ],
+            "inspection_status": 0,
+            "upload_user": userID
+        ]) { err in
+            delegate?.completedUplodingShopRequest(isSuccess: err == nil)
+        }
+    }
 }
 
 protocol FirebaseHelperDelegate: class {
@@ -426,6 +441,7 @@ protocol FirebaseHelperDelegate: class {
     func completedFetchingShop(fetchedShopData: Shop)
     func completedUpdatingShopEvaluation()
     func completedUpdatingUserProfile(isSuccess: Bool)
+    func completedUplodingShopRequest(isSuccess: Bool)
 }
 
 // MARK: default implements
@@ -463,6 +479,9 @@ extension FirebaseHelperDelegate {
     }
     func completedUpdatingUserProfile(isSuccess: Bool) {
         print("default implemented completedUpdatingUserName")
+    }
+    func completedUplodingShopRequest(isSuccess: Bool) {
+        print("default implemented completedUplodingShopRequest")
     }
 }
 

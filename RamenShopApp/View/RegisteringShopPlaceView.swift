@@ -48,23 +48,19 @@ struct RegisteringShopPlaceView: View {
                 if (viewModel.location == nil) {
                     return Alert(title: Text("Shop info is insufficient"),
                                  message: Text("location data was not got well"),
-                                 dismissButton: .default(Text("OK")){
-                                    //MARK; TODO
-                                 })
+                                 dismissButton: .default(Text("OK")))
                 }
                 if (!viewModel.isZoomedEnough) {
                     return Alert(title: Text("Location is abstract"),
                                  message: Text("you must zoom up this map more!"),
-                                 dismissButton: .default(Text("OK")){
-                                    //MARK; TODO
-                                 })
+                                 dismissButton: .default(Text("OK")))
                 }
                 switch viewModel.activeAlertForName {
                 case .confirmation:
                     return Alert(title: Text("Confirmation"),
                                  message: Text("Are you sure to send this request?"),
                                  primaryButton: .default(Text("Yes")) {
-                                    //MARK; TODO
+                                    viewModel.sendShopRequest()
                                  },
                                  secondaryButton: .cancel(Text("cancel")))
                 case .completion:
@@ -76,9 +72,7 @@ struct RegisteringShopPlaceView: View {
                 case .error:
                     return Alert(title: Text("Failed"),
                                  message: Text("Updating request was failed"),
-                                 dismissButton: .default(Text("OK")){
-                                    //MARK; TODO
-                                 })
+                                 dismissButton: .default(Text("OK")))
                 }
             }
         }

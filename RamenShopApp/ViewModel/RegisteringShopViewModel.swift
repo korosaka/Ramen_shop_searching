@@ -7,11 +7,15 @@
 //
 
 import Foundation
+import Firebase
 import FirebaseFirestore
 class RegisteringShopViewModel: ObservableObject {
+    var db: FirebaseHelper
+    var authentication: Authentication
     @Published var shopName = ""
     @Published var isShowAlert = false
-    var activeAlertForName: ActiveAlert = .confirmation
+    var userID: String?
+    var activeAlertForName = ActiveAlert.confirmation
     var isNameSet: Bool {
         return shopName != ""
     }
@@ -22,11 +26,48 @@ class RegisteringShopViewModel: ObservableObject {
         return _zoom > 19.0
     }
     
+    init() {
+        db = .init()
+        authentication = .init()
+        db.delegate = self
+        authentication.delegate = self
+        authentication.checkCurrentUser()
+    }
+    
     func setLocation(latitude: Double, longitude: Double) {
         location = GeoPoint(latitude: latitude, longitude: longitude)
     }
     
     func setZoom(zoom: Float) {
         self.zoom = zoom
+    }
+    
+    func sendShopRequest() {
+        guard let _userID = userID,
+              let _location = location else {
+            activeAlertForName = .error
+            isShowAlert = true
+            return
+        }
+        db.uploadShopRequest(shopName: shopName,
+                             location: _location,
+                             userID: _userID)
+    }
+}
+
+extension RegisteringShopViewModel: AuthenticationDelegate {
+    func setUserInfo(user: User) {
+        userID = user.uid
+    }
+}
+
+extension RegisteringShopViewModel: FirebaseHelperDelegate {
+    func completedUplodingShopRequest(isSuccess: Bool) {
+        if isSuccess {
+            activeAlertForName = .completion
+        } else {
+            activeAlertForName = .error
+        }
+        isShowAlert = true
     }
 }
