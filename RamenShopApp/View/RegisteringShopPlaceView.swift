@@ -14,12 +14,30 @@ struct RegisteringShopPlaceView: View {
         VStack(spacing: 0) {
             CustomNavigationBar(additionalAction: nil)
             Text("RegisteringShopPlaceView")
-            GoogleMapView(registeringShopVM: viewModel)
-                .padding(5)
-                .background(Color.blue)
-            Spacer()
+            ZStack {
+                GoogleMapView(registeringShopVM: viewModel)
+                CenterMarker()
+            }
+            .padding(5)
+            .background(Color.blue)
         }
         .navigationBarHidden(true)
     }
     
+}
+
+struct CenterMarker: View {
+    var body: some View {
+        VStack(spacing: 0) {
+            Spacer()
+            HStack {
+                Spacer()
+                Image("shop_icon")
+                    .resizable()
+                    .frame(width: 30.0, height: 30.0)
+                Spacer()
+            }
+            Spacer()
+        }
+    }
 }
