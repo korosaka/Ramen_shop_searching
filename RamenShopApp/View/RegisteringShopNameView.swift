@@ -24,6 +24,7 @@ struct RegisteringShopNameView: View {
             NavigationLink(destination: RegisteringShopPlaceView(viewModel: self.viewModel)) {
                 Text("next").foregroundColor(.white)
             }
+            .disabled(!viewModel.isNameSet)
             
             Spacer()
         }

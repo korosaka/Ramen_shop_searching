@@ -60,9 +60,10 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         if mapType == .searching { return }
-        // if zoom level is not enough, reject
-        print("test position: \(position.target)")
-        print("test position: \(position.zoom)")
+        let location = position.target
+        registeringShopVM?.setLocation(latitude: location.latitude,
+                                       longitude: location.longitude)
+        registeringShopVM?.setZoom(zoom: position.zoom)
     }
 }
 
