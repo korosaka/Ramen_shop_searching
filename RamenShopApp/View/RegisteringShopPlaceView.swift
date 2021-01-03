@@ -10,6 +10,7 @@ import SwiftUI
 
 struct RegisteringShopPlaceView: View {
     @ObservedObject var viewModel: RegisteringShopViewModel
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
         VStack(spacing: 0) {
             CustomNavigationBar(additionalAction: nil)
@@ -67,12 +68,16 @@ struct RegisteringShopPlaceView: View {
                     return Alert(title: Text("Success"),
                                  message: Text("Your request has been sent!"),
                                  dismissButton: .default(Text("OK")) {
-                                    //MARK; TODO
+                                    viewModel.resetData()
+                                    presentationMode.wrappedValue.dismiss()
                                  })
                 case .error:
                     return Alert(title: Text("Failed"),
                                  message: Text("Updating request was failed"),
-                                 dismissButton: .default(Text("OK")))
+                                 dismissButton: .default(Text("OK")) {
+                                    viewModel.resetData()
+                                    presentationMode.wrappedValue.dismiss()
+                                 })
                 }
             }
         }

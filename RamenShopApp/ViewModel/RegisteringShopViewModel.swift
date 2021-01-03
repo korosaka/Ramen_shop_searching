@@ -34,6 +34,13 @@ class RegisteringShopViewModel: ObservableObject {
         authentication.checkCurrentUser()
     }
     
+    func resetData() {
+        shopName = ""
+        activeAlertForName = .confirmation
+        location = nil
+        zoom = nil
+    }
+    
     func setLocation(latitude: Double, longitude: Double) {
         location = GeoPoint(latitude: latitude, longitude: longitude)
     }
