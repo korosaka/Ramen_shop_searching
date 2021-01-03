@@ -11,7 +11,7 @@
 		88327BCF25903F4100733326 /* ReviewingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88327BCE25903F4100733326 /* ReviewingView.swift */; };
 		883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883AA0DA256649C7002AC14A /* GoogleMapView.swift */; };
 		884CEB92256CD8960020C932 /* ShopDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB91256CD8960020C932 /* ShopDB.swift */; };
-		884CEB95256CDCD40020C932 /* MapSearchingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB94256CDCD40020C932 /* MapSearchingViewModel.swift */; };
+		884CEB95256CDCD40020C932 /* ShopsMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB94256CDCD40020C932 /* ShopsMapViewModel.swift */; };
 		884CEB98256F66A70020C932 /* GoogleMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB97256F66A70020C932 /* GoogleMap.swift */; };
 		884CEB9B256FBE1F0020C932 /* ShopDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB9A256FBE1F0020C932 /* ShopDetailView.swift */; };
 		88603700255DF18100C5ED1C /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886036FF255DF18100C5ED1C /* Modifiers.swift */; };
@@ -20,6 +20,10 @@
 		8866043325995CD900FF2D98 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866043225995CD900FF2D98 /* CustomNavigationBar.swift */; };
 		88660439259BCA3500FF2D98 /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88660438259BCA3500FF2D98 /* ProfileSettingView.swift */; };
 		8866043C259BE17B00FF2D98 /* ProfileSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866043B259BE17B00FF2D98 /* ProfileSettingViewModel.swift */; };
+		8866048C25A131CE00FF2D98 /* RegisteringShopNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866048B25A131CD00FF2D98 /* RegisteringShopNameView.swift */; };
+		8866048F25A1348D00FF2D98 /* RegisteringShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866048E25A1348D00FF2D98 /* RegisteringShopViewModel.swift */; };
+		8866049225A13B3E00FF2D98 /* RegisteringShopPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */; };
+		8866049525A156BE00FF2D98 /* ShopsMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866049425A156BE00FF2D98 /* ShopsMapView.swift */; };
 		886B34FF255026550056AB86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B34FE255026550056AB86 /* AppDelegate.swift */; };
 		886B3501255026550056AB86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B3500255026550056AB86 /* SceneDelegate.swift */; };
 		886B3503255026550056AB86 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B3502255026550056AB86 /* ContentView.swift */; };
@@ -35,7 +39,7 @@
 		887DA00625817426003E237E /* ReviewDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887DA00525817426003E237E /* ReviewDetailViewModel.swift */; };
 		887DA00A2582A60D003E237E /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 887DA0092582A60D003E237E /* QGrid */; };
 		88A42235257A001C003CC75D /* AllReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A42234257A001C003CC75D /* AllReviewView.swift */; };
-		88AFA7A02559B9C1001D151C /* MapSearchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapSearchingView.swift */; };
+		88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapTopView.swift */; };
 		88C8D22A258C44B500E43583 /* AllPictureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C8D229258C44B500E43583 /* AllPictureViewModel.swift */; };
 		88C8D22F258ECC2000E43583 /* ReviewHeadlineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C8D22E258ECC2000E43583 /* ReviewHeadlineViewModel.swift */; };
 		88FFE9C8258C239800F4E892 /* AllPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FFE9C7258C239800F4E892 /* AllPictureView.swift */; };
@@ -49,7 +53,7 @@
 		88327BCE25903F4100733326 /* ReviewingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewingView.swift; sourceTree = "<group>"; };
 		883AA0DA256649C7002AC14A /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		884CEB91256CD8960020C932 /* ShopDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDB.swift; sourceTree = "<group>"; };
-		884CEB94256CDCD40020C932 /* MapSearchingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchingViewModel.swift; sourceTree = "<group>"; };
+		884CEB94256CDCD40020C932 /* ShopsMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopsMapViewModel.swift; sourceTree = "<group>"; };
 		884CEB97256F66A70020C932 /* GoogleMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMap.swift; sourceTree = "<group>"; };
 		884CEB9A256FBE1F0020C932 /* ShopDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailView.swift; sourceTree = "<group>"; };
 		886036FF255DF18100C5ED1C /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
@@ -58,6 +62,10 @@
 		8866043225995CD900FF2D98 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		88660438259BCA3500FF2D98 /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		8866043B259BE17B00FF2D98 /* ProfileSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewModel.swift; sourceTree = "<group>"; };
+		8866048B25A131CD00FF2D98 /* RegisteringShopNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteringShopNameView.swift; sourceTree = "<group>"; };
+		8866048E25A1348D00FF2D98 /* RegisteringShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteringShopViewModel.swift; sourceTree = "<group>"; };
+		8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteringShopPlaceView.swift; sourceTree = "<group>"; };
+		8866049425A156BE00FF2D98 /* ShopsMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopsMapView.swift; sourceTree = "<group>"; };
 		886B34FB255026550056AB86 /* RamenShopApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RamenShopApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		886B34FE255026550056AB86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		886B3500255026550056AB86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,7 +82,7 @@
 		887DA0002580FC06003E237E /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
 		887DA00525817426003E237E /* ReviewDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewModel.swift; sourceTree = "<group>"; };
 		88A42234257A001C003CC75D /* AllReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewView.swift; sourceTree = "<group>"; };
-		88AFA79F2559B9C1001D151C /* MapSearchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchingView.swift; sourceTree = "<group>"; };
+		88AFA79F2559B9C1001D151C /* MapTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTopView.swift; sourceTree = "<group>"; };
 		88C8D229258C44B500E43583 /* AllPictureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPictureViewModel.swift; sourceTree = "<group>"; };
 		88C8D22E258ECC2000E43583 /* ReviewHeadlineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewHeadlineViewModel.swift; sourceTree = "<group>"; };
 		88FFE9C7258C239800F4E892 /* AllPictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPictureView.swift; sourceTree = "<group>"; };
@@ -150,7 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				886B35392556A11C0056AB86 /* LoginView.swift */,
-				88AFA79F2559B9C1001D151C /* MapSearchingView.swift */,
+				88AFA79F2559B9C1001D151C /* MapTopView.swift */,
 				886036FF255DF18100C5ED1C /* Modifiers.swift */,
 				883AA0DA256649C7002AC14A /* GoogleMapView.swift */,
 				884CEB97256F66A70020C932 /* GoogleMap.swift */,
@@ -162,6 +170,9 @@
 				8866042F2592C8A300FF2D98 /* ImagePicker.swift */,
 				8866043225995CD900FF2D98 /* CustomNavigationBar.swift */,
 				88660438259BCA3500FF2D98 /* ProfileSettingView.swift */,
+				8866048B25A131CD00FF2D98 /* RegisteringShopNameView.swift */,
+				8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */,
+				8866049425A156BE00FF2D98 /* ShopsMapView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -170,7 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				886B353C2557B70B0056AB86 /* LoginViewModel.swift */,
-				884CEB94256CDCD40020C932 /* MapSearchingViewModel.swift */,
+				884CEB94256CDCD40020C932 /* ShopsMapViewModel.swift */,
 				882E43842577B6FC00E941D7 /* ShopDetailViewModel.swift */,
 				887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */,
 				887DA00525817426003E237E /* ReviewDetailViewModel.swift */,
@@ -178,6 +189,7 @@
 				88C8D22E258ECC2000E43583 /* ReviewHeadlineViewModel.swift */,
 				8866042C25917BF400FF2D98 /* ReviewingViewModel.swift */,
 				8866043B259BE17B00FF2D98 /* ProfileSettingViewModel.swift */,
+				8866048E25A1348D00FF2D98 /* RegisteringShopViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -341,8 +353,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */,
+				8866048C25A131CE00FF2D98 /* RegisteringShopNameView.swift in Sources */,
 				887DA0012580FC06003E237E /* ReviewDetailView.swift in Sources */,
 				884CEB98256F66A70020C932 /* GoogleMap.swift in Sources */,
+				8866048F25A1348D00FF2D98 /* RegisteringShopViewModel.swift in Sources */,
 				886B34FF255026550056AB86 /* AppDelegate.swift in Sources */,
 				882E43852577B6FC00E941D7 /* ShopDetailViewModel.swift in Sources */,
 				8866042D25917BF400FF2D98 /* ReviewingViewModel.swift in Sources */,
@@ -356,12 +370,14 @@
 				8866043C259BE17B00FF2D98 /* ProfileSettingViewModel.swift in Sources */,
 				88327BCF25903F4100733326 /* ReviewingView.swift in Sources */,
 				88C8D22F258ECC2000E43583 /* ReviewHeadlineViewModel.swift in Sources */,
+				8866049525A156BE00FF2D98 /* ShopsMapView.swift in Sources */,
 				88603700255DF18100C5ED1C /* Modifiers.swift in Sources */,
 				887D9FFE257FAD48003E237E /* AllReviewViewModel.swift in Sources */,
+				8866049225A13B3E00FF2D98 /* RegisteringShopPlaceView.swift in Sources */,
 				886B3503255026550056AB86 /* ContentView.swift in Sources */,
-				88AFA7A02559B9C1001D151C /* MapSearchingView.swift in Sources */,
+				88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */,
 				88660439259BCA3500FF2D98 /* ProfileSettingView.swift in Sources */,
-				884CEB95256CDCD40020C932 /* MapSearchingViewModel.swift in Sources */,
+				884CEB95256CDCD40020C932 /* ShopsMapViewModel.swift in Sources */,
 				886B35402557CAD30056AB86 /* Authentication.swift in Sources */,
 				884CEB92256CD8960020C932 /* ShopDB.swift in Sources */,
 				886604302592C8A300FF2D98 /* ImagePicker.swift in Sources */,

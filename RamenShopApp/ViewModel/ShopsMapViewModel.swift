@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class MapSearchingViewModel: ObservableObject {
+class ShopsMapViewModel: ObservableObject {
     var shopDB: FirebaseHelper
     @Published var shops: [Shop]
     @Published var isShopSelected = false
@@ -17,6 +17,7 @@ class MapSearchingViewModel: ObservableObject {
         shopDB = .init()
         shops = [Shop]()
         shopDB.delegate = self
+        loadShops()
     }
     
     func loadShops() {
@@ -35,7 +36,7 @@ class MapSearchingViewModel: ObservableObject {
     }
 }
 
-extension MapSearchingViewModel: FirebaseHelperDelegate {
+extension ShopsMapViewModel: FirebaseHelperDelegate {
     func completedFetchingShops(shops: [Shop]) {
         self.shops = shops
     }

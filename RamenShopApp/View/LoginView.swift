@@ -127,7 +127,7 @@ struct LoginView: View {
                     
                     Spacer()
                     if(loginVM.logined) {
-                        NavigationLink(destination: MapSearchingView(viewModel: .init())) {
+                        NavigationLink(destination: MapTopView()) {
                             Text("Go to Ramen Search !").basicButtonTextStyle(Color.white, Color.red)
                         }
                         Spacer().frame(height: 30)
