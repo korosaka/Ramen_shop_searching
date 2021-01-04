@@ -15,11 +15,21 @@ struct MapTopView: View {
             CustomNavigationBar(additionalAction: nil)
             TabView {
                 ShopsMapView(viewModel: .init())
-                    .tabItem { Text("Searching") }
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "magnifyingglass")
+                            Text("Search")
+                        }
+                    }
                     .navigationBarHidden(true)
                 
                 RegisteringShopNameView(viewModel: .init())
-                    .tabItem { Text("Add") }
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "plus")
+                            Text("Add")
+                        }.frame(width: 10)
+                    }
                     .navigationBarHidden(true)
             }
         }

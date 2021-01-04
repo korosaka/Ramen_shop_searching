@@ -12,17 +12,18 @@ struct RegisteringShopNameView: View {
     @ObservedObject var viewModel: RegisteringShopViewModel
     var body: some View {
         VStack(spacing: 0) {
-            Spacer().frame(height: 15)
-            Text("Application for adding new shop")
-                .font(.largeTitle)
+            RequestingTitleBar()
+            Spacer().frame(height: 5)
+            Text("Your request will be inspected within a few days")
                 .foregroundColor(.white)
-            Text("Your application will be inspected for a few days")
-                .foregroundColor(.white)
-            Spacer()
+            Spacer().frame(height: 50)
             TextField("Enter shop name", text: $viewModel.shopName)
-                .basicStyle()
+                .basicStyle().font(.title)
             NavigationLink(destination: RegisteringShopPlaceView(viewModel: self.viewModel)) {
-                Text("next").foregroundColor(.white)
+                Text("enter location")
+                    .font(.title)
+                    .foregroundColor(viewModel.getTextColor(enable: viewModel.isNameSet))
+                    .underline()
             }
             .disabled(!viewModel.isNameSet)
             
@@ -30,5 +31,20 @@ struct RegisteringShopNameView: View {
         }
         .background(Color.blue)
         
+    }
+}
+
+struct RequestingTitleBar: View {
+    var body: some View {
+        HStack {
+            Spacer()
+            Text("New shop request")
+                .font(.largeTitle)
+                .foregroundColor(.white)
+                .bold()
+            Spacer()
+        }
+        .upDownPadding(size: 5)
+        .background(Color.yellow)
     }
 }

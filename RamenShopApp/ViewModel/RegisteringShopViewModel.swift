@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import SwiftUI
 class RegisteringShopViewModel: ObservableObject {
     var db: FirebaseHelper
     var authentication: Authentication
@@ -59,6 +60,13 @@ class RegisteringShopViewModel: ObservableObject {
         db.uploadShopRequest(shopName: shopName,
                              location: _location,
                              userID: _userID)
+    }
+    
+    func getTextColor(enable: Bool) -> Color {
+        if enable {
+            return .white
+        }
+        return .gray
     }
 }
 

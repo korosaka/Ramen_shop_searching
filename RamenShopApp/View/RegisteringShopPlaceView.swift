@@ -15,17 +15,18 @@ struct RegisteringShopPlaceView: View {
         VStack(spacing: 0) {
             CustomNavigationBar(additionalAction: nil)
             VStack(spacing: 0) {
-                Text(viewModel.shopName)
+                RequestingTitleBar()
+                Text("shop: \(viewModel.shopName)")
                     .font(.title)
                     .foregroundColor(.white)
                     .bold()
                 HStack {
                     Spacer()
-                    Text("Put the Ramen Mark on ths shop place")
+                    Text("Put the ramen icon on this shop place")
                         .foregroundColor(.yellow)
                     Spacer()
                 }
-                Text("Set shop's place on the center of this map")
+                Text("(Set shop's place on the center of this map)")
                     .foregroundColor(.white)
             }
             .background(Color.blue)
@@ -40,21 +41,22 @@ struct RegisteringShopPlaceView: View {
             }) {
                 HStack {
                     Spacer()
-                    Text("I've selected shop's place")
+                    Text("Done").bold()
                     Spacer()
                 }
             }
-            .basicStyle(foreColor: .white, backColor: .red, padding: 20, radius: 10).padding(10)
+            .basicStyle(foreColor: .white, backColor: .red, padding: 10, radius: 10)
+            .padding(10)
             .alert(isPresented: $viewModel.isShowAlert) {
                 if (viewModel.location == nil) {
                     return Alert(title: Text("Shop info is insufficient"),
                                  message: Text("location data was not got well"),
-                                 dismissButton: .default(Text("OK")))
+                                 dismissButton: .default(Text("Close")))
                 }
                 if (!viewModel.isZoomedEnough) {
                     return Alert(title: Text("Location is abstract"),
                                  message: Text("you must zoom up this map more!"),
-                                 dismissButton: .default(Text("OK")))
+                                 dismissButton: .default(Text("Close")))
                 }
                 switch viewModel.activeAlertForName {
                 case .confirmation:
