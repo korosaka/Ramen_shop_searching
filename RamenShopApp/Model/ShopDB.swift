@@ -424,6 +424,19 @@ struct FirebaseHelper {
             "inspection_status": 0,
             "upload_user": userID
         ]) { err in
+            if err != nil {
+                delegate?.completedUplodingShopRequest(isSuccess: false)
+                return
+            }
+            uploadRequestUserInfo(shopID, userID)
+        }
+    }
+    
+    func uploadRequestUserInfo(_ shopID: String, _ userID: String) {
+        let userRequestsRef = firestore.collection("user").document(userID)
+        userRequestsRef.updateData([
+            "request_shop": shopID
+        ]) { err in
             delegate?.completedUplodingShopRequest(isSuccess: err == nil)
         }
     }
