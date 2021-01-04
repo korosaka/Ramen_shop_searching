@@ -24,6 +24,8 @@
 		8866048F25A1348D00FF2D98 /* RegisteringShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866048E25A1348D00FF2D98 /* RegisteringShopViewModel.swift */; };
 		8866049225A13B3E00FF2D98 /* RegisteringShopPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */; };
 		8866049525A156BE00FF2D98 /* ShopsMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866049425A156BE00FF2D98 /* ShopsMapView.swift */; };
+		8866049A25A2F4E700FF2D98 /* RequestStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866049925A2F4E700FF2D98 /* RequestStatusView.swift */; };
+		8866049D25A2F70500FF2D98 /* RequestStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866049C25A2F70500FF2D98 /* RequestStatusViewModel.swift */; };
 		886B34FF255026550056AB86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B34FE255026550056AB86 /* AppDelegate.swift */; };
 		886B3501255026550056AB86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B3500255026550056AB86 /* SceneDelegate.swift */; };
 		886B3503255026550056AB86 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B3502255026550056AB86 /* ContentView.swift */; };
@@ -66,6 +68,8 @@
 		8866048E25A1348D00FF2D98 /* RegisteringShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteringShopViewModel.swift; sourceTree = "<group>"; };
 		8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteringShopPlaceView.swift; sourceTree = "<group>"; };
 		8866049425A156BE00FF2D98 /* ShopsMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopsMapView.swift; sourceTree = "<group>"; };
+		8866049925A2F4E700FF2D98 /* RequestStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStatusView.swift; sourceTree = "<group>"; };
+		8866049C25A2F70500FF2D98 /* RequestStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStatusViewModel.swift; sourceTree = "<group>"; };
 		886B34FB255026550056AB86 /* RamenShopApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RamenShopApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		886B34FE255026550056AB86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		886B3500255026550056AB86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +177,7 @@
 				8866048B25A131CD00FF2D98 /* RegisteringShopNameView.swift */,
 				8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */,
 				8866049425A156BE00FF2D98 /* ShopsMapView.swift */,
+				8866049925A2F4E700FF2D98 /* RequestStatusView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -190,6 +195,7 @@
 				8866042C25917BF400FF2D98 /* ReviewingViewModel.swift */,
 				8866043B259BE17B00FF2D98 /* ProfileSettingViewModel.swift */,
 				8866048E25A1348D00FF2D98 /* RegisteringShopViewModel.swift */,
+				8866049C25A2F70500FF2D98 /* RequestStatusViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -375,9 +381,11 @@
 				887D9FFE257FAD48003E237E /* AllReviewViewModel.swift in Sources */,
 				8866049225A13B3E00FF2D98 /* RegisteringShopPlaceView.swift in Sources */,
 				886B3503255026550056AB86 /* ContentView.swift in Sources */,
+				8866049D25A2F70500FF2D98 /* RequestStatusViewModel.swift in Sources */,
 				88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */,
 				88660439259BCA3500FF2D98 /* ProfileSettingView.swift in Sources */,
 				884CEB95256CDCD40020C932 /* ShopsMapViewModel.swift in Sources */,
+				8866049A25A2F4E700FF2D98 /* RequestStatusView.swift in Sources */,
 				886B35402557CAD30056AB86 /* Authentication.swift in Sources */,
 				884CEB92256CD8960020C932 /* ShopDB.swift in Sources */,
 				886604302592C8A300FF2D98 /* ImagePicker.swift in Sources */,

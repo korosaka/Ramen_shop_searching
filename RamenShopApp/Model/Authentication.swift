@@ -14,6 +14,7 @@ class Authentication {
     
     weak var delegate: AuthenticationDelegate?
     
+    //MARK: TODO it should be "getUser(ID) and don't have to use delegate"
     func checkCurrentUser() {
         if let user = Auth.auth().currentUser {
             delegate?.setUserInfo(user: user)

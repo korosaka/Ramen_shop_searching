@@ -19,6 +19,14 @@ struct ProfileSettingView: View {
             Spacer().frame(height: 50)
             NameProfile()
             Spacer()
+            if let _userID = viewModel.userID {
+                NavigationLink(destination: RequestStatusView(viewModel: .init(userID: _userID))) {
+                    Text("your request status")
+                        .underline()
+                        .foregroundColor(.white)
+                }
+                Spacer()
+            }
         }
         .alert(isPresented: $viewModel.isShowAlertForName) {
             switch viewModel.activeAlertForName {
