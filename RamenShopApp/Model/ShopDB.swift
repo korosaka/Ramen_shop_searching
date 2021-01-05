@@ -26,6 +26,7 @@ struct FirebaseHelper {
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
+                //MARK: TODO write like fetchShop()
                 for document in querySnapshot!.documents {
                     let data = document.data()
                     let name = data["name"] as? String ?? ""
@@ -33,11 +34,13 @@ struct FirebaseHelper {
                     let reviewInfo = data["review_info"] as! [String: Any]
                     let totalPoint = reviewInfo["total_point"] as? Int ?? 0
                     let count = reviewInfo["count"] as? Int ?? 0
+                    let inspectionStatus = data["inspection_status"] as? Int ?? -1
                     shops.append(Shop(shopID: document.documentID,
                                       name: name,
                                       location: location,
                                       totalReview: totalPoint,
-                                      reviewCount: count))
+                                      reviewCount: count,
+                                      inspectionStatus: InspectionStatus(rawValue: inspectionStatus)!))
                 }
                 self.delegate?.completedFetchingShops(shops: shops)
             }
@@ -413,14 +416,16 @@ struct FirebaseHelper {
                   let location = shopData["location"] as? GeoPoint,
                   let reviewInfo =  shopData["review_info"] as? [String: Any],
                   let totalEvaluation = reviewInfo["total_point"] as? Int,
-                  let reviewCount = reviewInfo["count"] as? Int
+                  let reviewCount = reviewInfo["count"] as? Int,
+                  let inspectionStatus = shopData["inspection_status"] as? Int
             else { return }
             
             let shop = Shop(shopID: shopID,
                             name: name,
                             location: location,
                             totalReview: totalEvaluation,
-                            reviewCount: reviewCount)
+                            reviewCount: reviewCount,
+                            inspectionStatus: InspectionStatus(rawValue: inspectionStatus)!)
             delegate?.completedFetchingShop(fetchedShopData: shop)
         }
     }
@@ -453,10 +458,23 @@ struct FirebaseHelper {
         }
     }
     
-//    func fetchRequestedShopID(userID: String) {
-//        let userRef = firestore.collection("user").document(userID)
-//
-//    }
+    func fetchRequestedShopID(userID: String) {
+        let userRef = firestore.collection("user").document(userID)
+        userRef.getDocument { (document, error) in
+            if let _error = error {
+                print("Error happen :\(_error)")
+                delegate?.completedFetchingRequestedShopID(shopID: nil)
+                return
+            }
+            guard let userData = document?.data(),
+                  let requestedShopID = userData["request_shop"] as? String
+            else {
+                delegate?.completedFetchingRequestedShopID(shopID: nil)
+                return
+            }
+            delegate?.completedFetchingRequestedShopID(shopID: requestedShopID)
+        }
+    }
 }
 
 protocol FirebaseHelperDelegate: class {
@@ -472,6 +490,7 @@ protocol FirebaseHelperDelegate: class {
     func completedUpdatingShopEvaluation()
     func completedUpdatingUserProfile(isSuccess: Bool)
     func completedUplodingShopRequest(isSuccess: Bool)
+    func completedFetchingRequestedShopID(shopID: String?)
 }
 
 // MARK: default implements
@@ -513,6 +532,9 @@ extension FirebaseHelperDelegate {
     func completedUplodingShopRequest(isSuccess: Bool) {
         print("default implemented completedUplodingShopRequest")
     }
+    func completedFetchingRequestedShopID(shopID: String?) {
+        print("default implemented completedFetchingRequestedShopID")
+    }
 }
 
 struct Shop {
@@ -524,6 +546,7 @@ struct Shop {
     var aveEvaluation: Float {
         return calcAveEvaluation(totalReview, reviewCount)
     }
+    let inspectionStatus: InspectionStatus
     
     func roundEvaluatione() -> String {
         if aveEvaluation == Float(0.0) {
@@ -537,6 +560,22 @@ struct Shop {
             return Float(0.0)
         }
         return Float(totalPoint) / Float(reviewCount)
+    }
+}
+
+enum InspectionStatus: Int {
+    case inProcess = 0
+    case approved = 1
+    case denied = -1
+    func getStatus() -> String {
+        switch self {
+        case .inProcess:
+            return "in process"
+        case .approved:
+            return "approved!"
+        default:
+            return "denied!"
+        }
     }
 }
 

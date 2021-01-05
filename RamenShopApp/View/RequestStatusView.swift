@@ -14,6 +14,15 @@ struct RequestStatusView: View {
         VStack(spacing: 0) {
             CustomNavigationBar(additionalAction: nil)
             Text("RequestStatusView")
+            if viewModel.hasRequest {
+                VStack {
+                    Text("Your Request")
+                    Text("Shop Name: \(viewModel.shopName!)")
+                    Text("Status: \(viewModel.inspectionStatus!.getStatus())")
+                }
+            } else {
+                Text("You have no request")
+            }
             Spacer()
         }
         .background(Color.green)
