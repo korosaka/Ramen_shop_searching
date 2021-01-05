@@ -26,7 +26,7 @@ class Authentication {
             if error != nil {
                 self.delegate?.signUpError(error: error)
             } else {
-                self.delegate?.afterSignUp()
+                self.delegate?.afterSignUp(userID: authResult!.user.uid)
             }
         }
     }
@@ -54,6 +54,7 @@ class Authentication {
     }
 }
 
+//MARK: TODO rename functions' name, and bind success function and error function by set arg (Error?)
 protocol AuthenticationDelegate: class {
     func afterLogin()
     func loginError(error: Error?)
@@ -61,7 +62,7 @@ protocol AuthenticationDelegate: class {
     func logoutError(error: NSError?)
     func afterLogout()
     func setUserInfo(user: User)
-    func afterSignUp()
+    func afterSignUp(userID: String)
 }
 
 extension AuthenticationDelegate {
@@ -83,7 +84,7 @@ extension AuthenticationDelegate {
     func setUserInfo(user: User) {
         print("default implemented setUserInfo")
     }
-    func afterSignUp() {
+    func afterSignUp(userID: String) {
         print("default implemented afterSignUp")
     }
 }

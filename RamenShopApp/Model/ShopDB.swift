@@ -154,6 +154,18 @@ struct FirebaseHelper {
         }
     }
     
+    func uploadUserProfile(_ userID: String) {
+        let userRef = firestore
+            .collection("user")
+            .document(userID)
+        userRef.setData([
+            "user_name": "unnamed",
+            "has_icon" : false
+        ]) { err in
+            delegate?.completedUpdatingUserProfile(isSuccess: err == nil)
+        }
+    }
+    
     func updateUserIcon(_ userID: String, _ iconImage: UIImage, _ hasProfileAlready: Bool) {
         guard let data: Data = iconImage.jpegData(compressionQuality: 0.1) else { return }
         createUserIconRef(userID).putData(data, metadata: nil) { (metadata, error) in
@@ -433,13 +445,18 @@ struct FirebaseHelper {
     }
     
     func uploadRequestUserInfo(_ shopID: String, _ userID: String) {
-        let userRequestsRef = firestore.collection("user").document(userID)
-        userRequestsRef.updateData([
+        let userRef = firestore.collection("user").document(userID)
+        userRef.updateData([
             "request_shop": shopID
         ]) { err in
             delegate?.completedUplodingShopRequest(isSuccess: err == nil)
         }
     }
+    
+//    func fetchRequestedShopID(userID: String) {
+//        let userRef = firestore.collection("user").document(userID)
+//
+//    }
 }
 
 protocol FirebaseHelperDelegate: class {

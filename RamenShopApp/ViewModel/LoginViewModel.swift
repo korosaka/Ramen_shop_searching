@@ -10,15 +10,13 @@ import Foundation
 import Firebase
 
 // MARK: TODO separate extention AuthenticationDelegate
-class LoginViewModel: ObservableObject, AuthenticationDelegate {
-    
-    
+class LoginViewModel: ObservableObject {
     var authentication: Authentication
+    var db: FirebaseHelper
     
     @Published var email = ""
     @Published var password = ""
     @Published var logined = false
-    
     @Published var loginError = false
     @Published var signUpError = false
     @Published var logoutError = false
@@ -26,16 +24,12 @@ class LoginViewModel: ObservableObject, AuthenticationDelegate {
     
     init() {
         authentication = .init()
+        db = .init()
         authentication.delegate = self
+        db.delegate = self
         checkCurrentUser()
     }
     
-    func setUserInfo(user: User) {
-        self.logined = true
-        if let userEmail = user.email {
-            self.email = userEmail
-        }
-    }
     func checkCurrentUser() {
         authentication.checkCurrentUser()
     }
@@ -60,13 +54,22 @@ class LoginViewModel: ObservableObject, AuthenticationDelegate {
         logoutError = false
         errorMesaage = ""
     }
+}
+
+extension LoginViewModel: AuthenticationDelegate {
+    func setUserInfo(user: User) {
+        self.logined = true
+        if let userEmail = user.email {
+            self.email = userEmail
+        }
+    }
     
     func afterLogin() {
         self.logined = true
     }
     
-    func afterSignUp() {
-        checkCurrentUser()
+    func afterSignUp(userID: String) {
+        db.uploadUserProfile(userID)
     }
     
     func loginError(error: Error?) {
@@ -93,5 +96,16 @@ class LoginViewModel: ObservableObject, AuthenticationDelegate {
     func afterLogout() {
         self.logined = false
     }
-    
+}
+
+extension LoginViewModel: FirebaseHelperDelegate {
+    func completedUpdatingUserProfile(isSuccess: Bool) {
+        if isSuccess {
+            self.logined = true
+            checkCurrentUser()
+        } else {
+            self.signUpError = true
+            errorMesaage = "signup error"
+        }
+    }
 }

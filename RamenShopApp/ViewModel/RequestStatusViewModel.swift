@@ -12,10 +12,15 @@ class RequestStatusViewModel: ObservableObject {
     var authentication: Authentication
     var userID: String
     @Published var shopName = ""
+//    var requestedShopID: String?
     
     init(userID: String) {
         db = .init()
         authentication = .init()
         self.userID = userID
     }
+    
+//    func checkRequestedShopID() {
+//
+//    }
 }
