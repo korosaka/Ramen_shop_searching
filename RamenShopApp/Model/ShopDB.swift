@@ -430,6 +430,13 @@ struct FirebaseHelper {
         }
     }
     
+    func deleteShopRequest(shopID: String) {
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.delete() { err in
+            delegate?.completedDeletingingShopRequest(isSuccess: err == nil)
+        }
+    }
+    
     func uploadShopRequest(shopName: String, location: GeoPoint, userID: String) {
         let shopID = UUID().uuidString
         let shopRef = firestore.collection("shop").document(shopID)
@@ -439,12 +446,13 @@ struct FirebaseHelper {
             "review_info": [ "total_point": 0,
                              "count": 0 ],
             "inspection_status": 0,
-            "upload_user": userID
+            "upload_user": userID //MARK: TODO is it useless??
         ]) { err in
             if err != nil {
                 delegate?.completedUplodingShopRequest(isSuccess: false)
                 return
             }
+            //MARK: TODO separate this function
             uploadRequestUserInfo(shopID, userID)
         }
     }
@@ -455,6 +463,15 @@ struct FirebaseHelper {
             "request_shop": shopID
         ]) { err in
             delegate?.completedUplodingShopRequest(isSuccess: err == nil)
+        }
+    }
+    
+    func deleteRequestUserInfo(userID: String) {
+        let userRef = firestore.collection("user").document(userID)
+        userRef.updateData([
+            "request_shop": FieldValue.delete(),
+        ]) { err in
+            delegate?.completedDeletingRequestUserInfo(isSuccess: err == nil)
         }
     }
     
@@ -490,7 +507,9 @@ protocol FirebaseHelperDelegate: class {
     func completedUpdatingShopEvaluation()
     func completedUpdatingUserProfile(isSuccess: Bool)
     func completedUplodingShopRequest(isSuccess: Bool)
+    func completedDeletingingShopRequest(isSuccess: Bool)
     func completedFetchingRequestedShopID(shopID: String?)
+    func completedDeletingRequestUserInfo(isSuccess: Bool)
 }
 
 // MARK: default implements
@@ -532,8 +551,14 @@ extension FirebaseHelperDelegate {
     func completedUplodingShopRequest(isSuccess: Bool) {
         print("default implemented completedUplodingShopRequest")
     }
+    func completedDeletingingShopRequest(isSuccess: Bool) {
+        print("default implemented completedDeletingingShopRequest")
+    }
     func completedFetchingRequestedShopID(shopID: String?) {
         print("default implemented completedFetchingRequestedShopID")
+    }
+    func completedDeletingRequestUserInfo(isSuccess: Bool) {
+        print("default implemented deleteRequestUserInfo")
     }
 }
 
@@ -594,6 +619,15 @@ enum InspectionStatus: Int {
             return "Cancel this request"
         default:
             return "OK, I checked it"
+        }
+    }
+    
+    func getConfirmationMessage() -> String {
+        switch self {
+        case .inProcess:
+            return "Are you sure to cancel this request?"
+        default:
+            return "Are you sure to dismiss this info from here?"
         }
     }
 }
