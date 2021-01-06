@@ -570,11 +570,30 @@ enum InspectionStatus: Int {
     func getStatus() -> String {
         switch self {
         case .inProcess:
-            return "in process"
+            return "In process"
         case .approved:
-            return "approved!"
+            return "Approved!"
         default:
-            return "denied!"
+            return "Denied!"
+        }
+    }
+    func getSubMessage() -> String {
+        switch self {
+        case .inProcess:
+            return "This will be inspected within a few days"
+        case .approved:
+            return "This shop has been added to this app!"
+        default:
+            return "Your request has been denied"
+        }
+    }
+    
+    func getButtonMessage() -> String {
+        switch self {
+        case .inProcess:
+            return "Cancel this request"
+        default:
+            return "OK, I checked it"
         }
     }
 }
