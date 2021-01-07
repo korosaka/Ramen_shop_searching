@@ -24,6 +24,11 @@ class ShopsMapViewModel: ObservableObject {
         shopDB.fetchShops()
     }
     
+    //MARK: TODO (high priority)
+    /*
+     rather than searching and passing shop, only pass shopID, and on the next view that will receive the shopID should fetch Shop data with ID.
+     because this function can take a long time if there lots shop,,,,,,
+     */
     func selectShop(id: String, name: String) {
         for shop in shops {
             if shop.shopID == id {

@@ -22,7 +22,7 @@ struct FirebaseHelper {
     
     func fetchShops() {
         var shops = [Shop]()
-        firestore.collection("shop").getDocuments() { (querySnapshot, err) in
+        createApprovedShopsRef().getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -45,6 +45,12 @@ struct FirebaseHelper {
                 self.delegate?.completedFetchingShops(shops: shops)
             }
         }
+    }
+    
+    func createApprovedShopsRef() -> Query {
+        firestore
+            .collection("shop")
+            .whereField("inspection_status", isEqualTo: InspectionStatus.approved.rawValue)
     }
     
     func fetchLatestReviews(shopID: String) {
