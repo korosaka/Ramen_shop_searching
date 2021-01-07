@@ -16,10 +16,14 @@ class RequestStatusViewModel: ObservableObject {
     @Published var shopName: String?
     @Published var inspectionStatus: InspectionStatus?
     @Published var isShowAlert = false
+    @Published var rejectReason = ""
     var hasRequest: Bool {
         return (shopName != nil) && (inspectionStatus != nil)
     }
-    
+    var isRejected: Bool {
+        guard let _status = inspectionStatus else { return false }
+        return _status == .rejected
+    }
     init(userID: String) {
         db = .init()
         authentication = .init()
@@ -70,6 +74,10 @@ extension RequestStatusViewModel: FirebaseHelperDelegate {
     func completedFetchingShop(fetchedShopData: Shop) {
         shopName = fetchedShopData.name
         inspectionStatus = fetchedShopData.inspectionStatus
+        
+        if inspectionStatus == .rejected {
+            db.fetchRejectReason(shopID: fetchedShopData.shopID)
+        }
     }
     
     func completedDeletingingShopRequest(isSuccess: Bool) {
@@ -88,5 +96,9 @@ extension RequestStatusViewModel: FirebaseHelperDelegate {
             activeAlert = .error
         }
         isShowAlert = true
+    }
+    
+    func completedFetchingRejectReason(reason: String) {
+        rejectReason = reason
     }
 }

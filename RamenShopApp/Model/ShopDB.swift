@@ -430,6 +430,20 @@ struct FirebaseHelper {
         }
     }
     
+    func fetchRejectReason(shopID: String) {
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.getDocument { (document, error) in
+            if let _error = error {
+                print("Error happen :\(_error)")
+                return
+            }
+            guard let shopData = document?.data(),
+                  let rejectReason = shopData["reject_reason"] as? String
+            else { return }
+            delegate?.completedFetchingRejectReason(reason: rejectReason)
+        }
+    }
+    
     func deleteShopRequest(shopID: String) {
         let shopRef = firestore.collection("shop").document(shopID)
         shopRef.delete() { err in
@@ -446,7 +460,8 @@ struct FirebaseHelper {
             "review_info": [ "total_point": 0,
                              "count": 0 ],
             "inspection_status": 0,
-            "upload_user": userID //MARK: TODO is it useless??
+            "reject_reason": "",
+            "upload_user": userID
         ]) { err in
             if err != nil {
                 delegate?.completedUplodingShopRequest(isSuccess: false)
@@ -510,6 +525,7 @@ protocol FirebaseHelperDelegate: class {
     func completedDeletingingShopRequest(isSuccess: Bool)
     func completedFetchingRequestedShopID(shopID: String?)
     func completedDeletingRequestUserInfo(isSuccess: Bool)
+    func completedFetchingRejectReason(reason: String)
 }
 
 // MARK: default implements
@@ -560,6 +576,9 @@ extension FirebaseHelperDelegate {
     func completedDeletingRequestUserInfo(isSuccess: Bool) {
         print("default implemented deleteRequestUserInfo")
     }
+    func completedFetchingRejectReason(reason: String) {
+        print("default implemented completedFetchingRejectReason")
+    }
 }
 
 struct Shop {
@@ -591,7 +610,7 @@ struct Shop {
 enum InspectionStatus: Int {
     case inProcess = 0
     case approved = 1
-    case denied = -1
+    case rejected = -1
     func getStatus() -> String {
         switch self {
         case .inProcess:
@@ -599,7 +618,7 @@ enum InspectionStatus: Int {
         case .approved:
             return "Approved!"
         default:
-            return "Denied!"
+            return "Rejected!"
         }
     }
     func getSubMessage() -> String {
@@ -609,7 +628,7 @@ enum InspectionStatus: Int {
         case .approved:
             return "This shop has been added to this app!"
         default:
-            return "Your request has been denied"
+            return "Your request has been rejected"
         }
     }
     
