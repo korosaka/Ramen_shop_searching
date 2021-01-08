@@ -587,6 +587,7 @@ extension FirebaseHelperDelegate {
     }
 }
 
+//MARK: TODO separete file
 struct Shop {
     let shopID: String
     let name: String
@@ -652,7 +653,7 @@ enum InspectionStatus: Int {
         case .inProcess:
             return "Are you sure to cancel this request?"
         default:
-            return "Are you sure to dismiss this info from here?"
+            return "Have you really checked this info?"
         }
     }
 }

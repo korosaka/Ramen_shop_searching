@@ -42,7 +42,7 @@ struct RequestStatusView: View {
                                 .bold()
                                 .foregroundColor(.red)
                         }
-                        Spacer().frame(height: 50)
+                        Spacer().frame(height: 30)
                         VStack {
                             Text("Inspection Status")
                                 .foregroundColor(.black)
@@ -88,7 +88,7 @@ struct RequestStatusView: View {
                                     backColor: .blue,
                                     padding: 10,
                                     radius: 15)
-                        .padding(20)
+                        .padding(10)
                         .alert(isPresented: $viewModel.isShowAlert) {
                             switch viewModel.activeAlert {
                             case .confirmation:
@@ -112,6 +112,9 @@ struct RequestStatusView: View {
                                              })
                             }
                         }
+                        Text(viewModel.annotation)
+                            .foregroundColor(.gray)
+                            .padding(10)
                     }
                     .background(Color.white)
                     .cornerRadius(10)
