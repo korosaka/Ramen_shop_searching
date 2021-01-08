@@ -10,7 +10,7 @@ import Foundation
 class RequestStatusViewModel: ObservableObject {
     var db: FirebaseHelper
     var authentication: Authentication
-    var userID: String
+    var userID: String?
     var requestedShopID: String?
     var activeAlert: ActiveAlert = .confirmation
     @Published var shopName: String?
@@ -24,16 +24,23 @@ class RequestStatusViewModel: ObservableObject {
         guard let _status = inspectionStatus else { return false }
         return _status == .rejected
     }
-    init(userID: String) {
+    
+    init() {
         db = .init()
         authentication = .init()
-        self.userID = userID
+        checkCurrentUser()
         db.delegate = self
         checkRequestedShopID()
     }
     
+    func checkCurrentUser() {
+        guard let _userID = authentication.getUserUID() else { return }
+        userID = _userID
+    }
+    
     func checkRequestedShopID() {
-        db.fetchRequestedShopID(userID: userID)
+        guard let _userID = userID else { return }
+        db.fetchRequestedShopID(userID: _userID)
     }
     
     func cancelRequest() {
@@ -42,7 +49,8 @@ class RequestStatusViewModel: ObservableObject {
     }
     
     func removeRequestInfoFromProfile() {
-        db.deleteRequestUserInfo(userID: userID)
+        guard let _userID = userID else { return }
+        db.deleteRequestUserInfo(userID: _userID)
     }
     
     func resetData() {

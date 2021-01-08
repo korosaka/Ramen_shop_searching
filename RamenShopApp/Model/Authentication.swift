@@ -14,11 +14,8 @@ class Authentication {
     
     weak var delegate: AuthenticationDelegate?
     
-    //MARK: TODO it should be "getUser(ID) and don't have to use delegate"
-    func checkCurrentUser() {
-        if let user = Auth.auth().currentUser {
-            delegate?.setUserInfo(user: user)
-        }
+    func getUserUID() -> String? {
+        Auth.auth().currentUser?.uid
     }
     
     func createAccount(email: String, password: String) {
@@ -61,7 +58,6 @@ protocol AuthenticationDelegate: class {
     func signUpError(error: Error?)
     func logoutError(error: NSError?)
     func afterLogout()
-    func setUserInfo(user: User)
     func afterSignUp(userID: String)
 }
 
@@ -80,9 +76,6 @@ extension AuthenticationDelegate {
     }
     func afterLogout() {
         print("default implemented afterLogout")
-    }
-    func setUserInfo(user: User) {
-        print("default implemented setUserInfo")
     }
     func afterSignUp(userID: String) {
         print("default implemented afterSignUp")

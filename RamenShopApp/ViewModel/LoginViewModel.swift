@@ -14,7 +14,8 @@ class LoginViewModel: ObservableObject {
     var authentication: Authentication
     var db: FirebaseHelper
     
-    @Published var email = ""
+    //MARK: TODO
+    @Published var email = "Mr.user"
     @Published var password = ""
     @Published var logined = false
     @Published var loginError = false
@@ -31,7 +32,8 @@ class LoginViewModel: ObservableObject {
     }
     
     func checkCurrentUser() {
-        authentication.checkCurrentUser()
+        guard let _ = authentication.getUserUID() else { return }
+        self.logined = true
     }
     
     func login() {
@@ -57,12 +59,6 @@ class LoginViewModel: ObservableObject {
 }
 
 extension LoginViewModel: AuthenticationDelegate {
-    func setUserInfo(user: User) {
-        self.logined = true
-        if let userEmail = user.email {
-            self.email = userEmail
-        }
-    }
     
     func afterLogin() {
         self.logined = true

@@ -31,8 +31,12 @@ class RegisteringShopViewModel: ObservableObject {
         db = .init()
         authentication = .init()
         db.delegate = self
-        authentication.delegate = self
-        authentication.checkCurrentUser()
+        checkCurrentUser()
+    }
+    
+    func checkCurrentUser() {
+        guard let _userID = authentication.getUserUID() else { return }
+        userID = _userID
     }
     
     func resetData() {
@@ -67,12 +71,6 @@ class RegisteringShopViewModel: ObservableObject {
             return .white
         }
         return .gray
-    }
-}
-
-extension RegisteringShopViewModel: AuthenticationDelegate {
-    func setUserInfo(user: User) {
-        userID = user.uid
     }
 }
 
