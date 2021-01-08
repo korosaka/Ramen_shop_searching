@@ -19,12 +19,6 @@ struct ProfileSettingView: View {
             Spacer().frame(height: 50)
             NameProfile()
             Spacer()
-            NavigationLink(destination: RequestStatusView(viewModel: .init())) {
-                Text("your request status")
-                    .underline()
-                    .foregroundColor(.white)
-            }
-            Spacer()
         }
         .alert(isPresented: $viewModel.isShowAlertForName) {
             switch viewModel.activeAlertForName {

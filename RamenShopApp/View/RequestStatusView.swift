@@ -12,7 +12,6 @@ struct RequestStatusView: View {
     @ObservedObject var viewModel: RequestStatusViewModel
     var body: some View {
         VStack(spacing: 0) {
-            CustomNavigationBar(additionalAction: nil)
             HStack {
                 Spacer()
                 Text("Your request's status to add new shop")

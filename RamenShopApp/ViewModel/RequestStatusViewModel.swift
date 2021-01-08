@@ -10,8 +10,8 @@ import Foundation
 class RequestStatusViewModel: ObservableObject {
     var db: FirebaseHelper
     var authentication: Authentication
-    var userID: String?
-    var requestedShopID: String?
+    var userID: String
+    var requestedShopID: String
     var activeAlert: ActiveAlert = .confirmation
     @Published var shopName: String?
     @Published var inspectionStatus: InspectionStatus?
@@ -25,40 +25,34 @@ class RequestStatusViewModel: ObservableObject {
         return _status == .rejected
     }
     
-    init() {
+    var delegate: RequestStatusVMDelegate?
+    
+    init(_ userID: String,
+         _ requestedShopID: String,
+         delegate: RequestStatusVMDelegate?) {
         db = .init()
         authentication = .init()
-        checkCurrentUser()
+        self.userID = userID
+        self.requestedShopID = requestedShopID
         db.delegate = self
-        checkRequestedShopID()
-    }
-    
-    func checkCurrentUser() {
-        guard let _userID = authentication.getUserUID() else { return }
-        userID = _userID
-    }
-    
-    func checkRequestedShopID() {
-        guard let _userID = userID else { return }
-        db.fetchRequestedShopID(userID: _userID)
+        self.delegate = delegate
+        db.fetchShop(shopID: self.requestedShopID)
     }
     
     func cancelRequest() {
-        guard let _shopID = requestedShopID else { return }
-        db.deleteShopRequest(shopID: _shopID)
+        db.deleteShopRequest(shopID: requestedShopID)
     }
     
     func removeRequestInfoFromProfile() {
-        guard let _userID = userID else { return }
-        db.deleteRequestUserInfo(userID: _userID)
+        db.deleteRequestUserInfo(userID: userID)
     }
     
     func resetData() {
         activeAlert = .confirmation
-        requestedShopID = nil
         shopName = nil
         inspectionStatus = nil
-        checkRequestedShopID()
+        
+        delegate?.reloadRequest()
     }
     
     func onClickConfirmation() {
@@ -73,11 +67,6 @@ class RequestStatusViewModel: ObservableObject {
 }
 
 extension RequestStatusViewModel: FirebaseHelperDelegate {
-    func completedFetchingRequestedShopID(shopID: String?) {
-        guard let _shopID = shopID else { return }
-        db.fetchShop(shopID: _shopID)
-        requestedShopID = _shopID
-    }
     
     func completedFetchingShop(fetchedShopData: Shop) {
         shopName = fetchedShopData.name
@@ -109,4 +98,8 @@ extension RequestStatusViewModel: FirebaseHelperDelegate {
     func completedFetchingRejectReason(reason: String) {
         rejectReason = reason
     }
+}
+
+protocol RequestStatusVMDelegate {
+    func reloadRequest()
 }

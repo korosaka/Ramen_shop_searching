@@ -73,7 +73,7 @@ struct LoginView: View {
                                        trailing: 5))
                         .navigationBarHidden(true)
                     if(loginVM.logined) {
-                        Text("Hello, \(loginVM.email)")
+                        Text("logined")
                             .font(.title)
                             .foregroundColor(Color.white)
                             .underline()

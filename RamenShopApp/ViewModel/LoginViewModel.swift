@@ -14,8 +14,7 @@ class LoginViewModel: ObservableObject {
     var authentication: Authentication
     var db: FirebaseHelper
     
-    //MARK: TODO
-    @Published var email = "Mr.user"
+    @Published var email = ""
     @Published var password = ""
     @Published var logined = false
     @Published var loginError = false

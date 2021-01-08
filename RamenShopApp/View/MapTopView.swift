@@ -23,7 +23,7 @@ struct MapTopView: View {
                     }
                     .navigationBarHidden(true)
                 
-                RegisteringShopNameView(viewModel: .init())
+                RequestingTopView(viewModel: .init())
                     .tabItem {
                         VStack {
                             Image(systemName: "plus")

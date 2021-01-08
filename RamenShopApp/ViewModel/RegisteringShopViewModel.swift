@@ -27,10 +27,13 @@ class RegisteringShopViewModel: ObservableObject {
         return _zoom > 19.0
     }
     
-    init() {
+    var delegate: RegisteringShopVMDelegate?
+    
+    init(delegate: RegisteringShopVMDelegate?) {
         db = .init()
         authentication = .init()
         db.delegate = self
+        self.delegate = delegate
         checkCurrentUser()
     }
     
@@ -44,6 +47,8 @@ class RegisteringShopViewModel: ObservableObject {
         activeAlertForName = .confirmation
         location = nil
         zoom = nil
+        
+        delegate?.reloadRequestStatus()
     }
     
     func setLocation(latitude: Double, longitude: Double) {
@@ -83,4 +88,8 @@ extension RegisteringShopViewModel: FirebaseHelperDelegate {
         }
         isShowAlert = true
     }
+}
+
+protocol RegisteringShopVMDelegate {
+    func reloadRequestStatus()
 }
