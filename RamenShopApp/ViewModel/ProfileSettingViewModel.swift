@@ -37,8 +37,13 @@ class ProfileSettingViewModel: ObservableObject {
         //MARK: TODO refactoring (profile init)
         userProfile = Profile(userName: "unnamed")
         db.delegate = self
-        authentication.delegate = self
-        authentication.checkCurrentUser()
+        checkCurrentUser()
+    }
+    
+    func checkCurrentUser() {
+        guard let _userID = authentication.getUserUID() else { return }
+        userID = _userID
+        db.fetchUserProfile(userID: _userID)
     }
     
     //MARK: TODO is it right to return SwiftUI View to View from VM???
@@ -89,13 +94,6 @@ class ProfileSettingViewModel: ObservableObject {
     func onClickChangeName() {
         isEditingName.toggle()
         newName = ""
-    }
-}
-
-extension ProfileSettingViewModel: AuthenticationDelegate {
-    func setUserInfo(user: User) {
-        userID = user.uid
-        db.fetchUserProfile(userID: user.uid)
     }
 }
 

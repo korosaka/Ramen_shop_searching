@@ -15,7 +15,7 @@ class ShopDetailViewModel: ObservableObject {
     @Published var pictures: [UIImage]
     @Published var shop: Shop?
     
-    init(mapVM: MapSearchingViewModel) {
+    init(mapVM: ShopsMapViewModel) {
         if mapVM.isShopSelected {
             shop = mapVM.selectedShop!
         }

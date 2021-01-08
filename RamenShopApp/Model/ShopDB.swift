@@ -22,10 +22,11 @@ struct FirebaseHelper {
     
     func fetchShops() {
         var shops = [Shop]()
-        firestore.collection("shop").getDocuments() { (querySnapshot, err) in
+        createApprovedShopsRef().getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
+                //MARK: TODO write like fetchShop()
                 for document in querySnapshot!.documents {
                     let data = document.data()
                     let name = data["name"] as? String ?? ""
@@ -33,15 +34,23 @@ struct FirebaseHelper {
                     let reviewInfo = data["review_info"] as! [String: Any]
                     let totalPoint = reviewInfo["total_point"] as? Int ?? 0
                     let count = reviewInfo["count"] as? Int ?? 0
+                    let inspectionStatus = data["inspection_status"] as? Int ?? -1
                     shops.append(Shop(shopID: document.documentID,
                                       name: name,
                                       location: location,
                                       totalReview: totalPoint,
-                                      reviewCount: count))
+                                      reviewCount: count,
+                                      inspectionStatus: InspectionStatus(rawValue: inspectionStatus)!))
                 }
                 self.delegate?.completedFetchingShops(shops: shops)
             }
         }
+    }
+    
+    func createApprovedShopsRef() -> Query {
+        firestore
+            .collection("shop")
+            .whereField("inspection_status", isEqualTo: InspectionStatus.approved.rawValue)
     }
     
     func fetchLatestReviews(shopID: String) {
@@ -151,6 +160,18 @@ struct FirebaseHelper {
                                           icon: UIImage(data: data!))
                 delegate?.completedFetchingProfile(profile: iconProfile)
             }
+        }
+    }
+    
+    func uploadUserProfile(_ userID: String) {
+        let userRef = firestore
+            .collection("user")
+            .document(userID)
+        userRef.setData([
+            "user_name": "unnamed",
+            "has_icon" : false
+        ]) { err in
+            delegate?.completedUpdatingUserProfile(isSuccess: err == nil)
         }
     }
     
@@ -401,15 +422,95 @@ struct FirebaseHelper {
                   let location = shopData["location"] as? GeoPoint,
                   let reviewInfo =  shopData["review_info"] as? [String: Any],
                   let totalEvaluation = reviewInfo["total_point"] as? Int,
-                  let reviewCount = reviewInfo["count"] as? Int
+                  let reviewCount = reviewInfo["count"] as? Int,
+                  let inspectionStatus = shopData["inspection_status"] as? Int
             else { return }
             
             let shop = Shop(shopID: shopID,
                             name: name,
                             location: location,
                             totalReview: totalEvaluation,
-                            reviewCount: reviewCount)
+                            reviewCount: reviewCount,
+                            inspectionStatus: InspectionStatus(rawValue: inspectionStatus)!)
             delegate?.completedFetchingShop(fetchedShopData: shop)
+        }
+    }
+    
+    func fetchRejectReason(shopID: String) {
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.getDocument { (document, error) in
+            if let _error = error {
+                print("Error happen :\(_error)")
+                return
+            }
+            guard let shopData = document?.data(),
+                  let rejectReason = shopData["reject_reason"] as? String
+            else { return }
+            delegate?.completedFetchingRejectReason(reason: rejectReason)
+        }
+    }
+    
+    func deleteShopRequest(shopID: String) {
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.delete() { err in
+            delegate?.completedDeletingingShopRequest(isSuccess: err == nil)
+        }
+    }
+    
+    func uploadShopRequest(shopName: String, location: GeoPoint, userID: String) {
+        let shopID = UUID().uuidString
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.setData([
+            "name": shopName,
+            "location": location,
+            "review_info": [ "total_point": 0,
+                             "count": 0 ],
+            "inspection_status": 0,
+            "reject_reason": "",
+            "upload_user": userID
+        ]) { err in
+            if err != nil {
+                delegate?.completedUplodingShopRequest(isSuccess: false)
+                return
+            }
+            //MARK: TODO separate this function
+            uploadRequestUserInfo(shopID, userID)
+        }
+    }
+    
+    func uploadRequestUserInfo(_ shopID: String, _ userID: String) {
+        let userRef = firestore.collection("user").document(userID)
+        userRef.updateData([
+            "request_shop": shopID
+        ]) { err in
+            delegate?.completedUplodingShopRequest(isSuccess: err == nil)
+        }
+    }
+    
+    func deleteRequestUserInfo(userID: String) {
+        let userRef = firestore.collection("user").document(userID)
+        userRef.updateData([
+            "request_shop": FieldValue.delete(),
+        ]) { err in
+            delegate?.completedDeletingRequestUserInfo(isSuccess: err == nil)
+        }
+    }
+    
+    func fetchRequestedShopID(userID: String) {
+        let userRef = firestore.collection("user").document(userID)
+        userRef.getDocument { (document, error) in
+            if let _error = error {
+                print("Error happen :\(_error)")
+                delegate?.completedFetchingRequestedShopID(shopID: nil)
+                return
+            }
+            guard let userData = document?.data(),
+                  let requestedShopID = userData["request_shop"] as? String
+            else {
+                delegate?.completedFetchingRequestedShopID(shopID: nil)
+                return
+            }
+            delegate?.completedFetchingRequestedShopID(shopID: requestedShopID)
         }
     }
 }
@@ -426,6 +527,11 @@ protocol FirebaseHelperDelegate: class {
     func completedFetchingShop(fetchedShopData: Shop)
     func completedUpdatingShopEvaluation()
     func completedUpdatingUserProfile(isSuccess: Bool)
+    func completedUplodingShopRequest(isSuccess: Bool)
+    func completedDeletingingShopRequest(isSuccess: Bool)
+    func completedFetchingRequestedShopID(shopID: String?)
+    func completedDeletingRequestUserInfo(isSuccess: Bool)
+    func completedFetchingRejectReason(reason: String)
 }
 
 // MARK: default implements
@@ -464,8 +570,24 @@ extension FirebaseHelperDelegate {
     func completedUpdatingUserProfile(isSuccess: Bool) {
         print("default implemented completedUpdatingUserName")
     }
+    func completedUplodingShopRequest(isSuccess: Bool) {
+        print("default implemented completedUplodingShopRequest")
+    }
+    func completedDeletingingShopRequest(isSuccess: Bool) {
+        print("default implemented completedDeletingingShopRequest")
+    }
+    func completedFetchingRequestedShopID(shopID: String?) {
+        print("default implemented completedFetchingRequestedShopID")
+    }
+    func completedDeletingRequestUserInfo(isSuccess: Bool) {
+        print("default implemented deleteRequestUserInfo")
+    }
+    func completedFetchingRejectReason(reason: String) {
+        print("default implemented completedFetchingRejectReason")
+    }
 }
 
+//MARK: TODO separete file
 struct Shop {
     let shopID: String
     let name: String
@@ -475,6 +597,7 @@ struct Shop {
     var aveEvaluation: Float {
         return calcAveEvaluation(totalReview, reviewCount)
     }
+    let inspectionStatus: InspectionStatus
     
     func roundEvaluatione() -> String {
         if aveEvaluation == Float(0.0) {
@@ -488,6 +611,50 @@ struct Shop {
             return Float(0.0)
         }
         return Float(totalPoint) / Float(reviewCount)
+    }
+}
+
+enum InspectionStatus: Int {
+    case inProcess = 0
+    case approved = 1
+    case rejected = -1
+    func getStatus() -> String {
+        switch self {
+        case .inProcess:
+            return "In process"
+        case .approved:
+            return "Approved!"
+        default:
+            return "Rejected!"
+        }
+    }
+    func getSubMessage() -> String {
+        switch self {
+        case .inProcess:
+            return "This will be inspected within a few days"
+        case .approved:
+            return "This shop has been added to this app!"
+        default:
+            return "Your request has been rejected"
+        }
+    }
+    
+    func getButtonMessage() -> String {
+        switch self {
+        case .inProcess:
+            return "Cancel this request"
+        default:
+            return "OK, I checked it"
+        }
+    }
+    
+    func getConfirmationMessage() -> String {
+        switch self {
+        case .inProcess:
+            return "Are you sure to cancel this request?"
+        default:
+            return "Have you really checked this info?"
+        }
     }
 }
 

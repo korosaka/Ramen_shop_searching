@@ -14,10 +14,8 @@ class Authentication {
     
     weak var delegate: AuthenticationDelegate?
     
-    func checkCurrentUser() {
-        if let user = Auth.auth().currentUser {
-            delegate?.setUserInfo(user: user)
-        }
+    func getUserUID() -> String? {
+        Auth.auth().currentUser?.uid
     }
     
     func createAccount(email: String, password: String) {
@@ -25,7 +23,7 @@ class Authentication {
             if error != nil {
                 self.delegate?.signUpError(error: error)
             } else {
-                self.delegate?.afterSignUp()
+                self.delegate?.afterSignUp(userID: authResult!.user.uid)
             }
         }
     }
@@ -53,14 +51,14 @@ class Authentication {
     }
 }
 
+//MARK: TODO rename functions' name, and bind success function and error function by set arg (Error?)
 protocol AuthenticationDelegate: class {
     func afterLogin()
     func loginError(error: Error?)
     func signUpError(error: Error?)
     func logoutError(error: NSError?)
     func afterLogout()
-    func setUserInfo(user: User)
-    func afterSignUp()
+    func afterSignUp(userID: String)
 }
 
 extension AuthenticationDelegate {
@@ -79,10 +77,7 @@ extension AuthenticationDelegate {
     func afterLogout() {
         print("default implemented afterLogout")
     }
-    func setUserInfo(user: User) {
-        print("default implemented setUserInfo")
-    }
-    func afterSignUp() {
+    func afterSignUp(userID: String) {
         print("default implemented afterSignUp")
     }
 }

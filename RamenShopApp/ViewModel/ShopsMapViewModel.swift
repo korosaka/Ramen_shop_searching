@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class MapSearchingViewModel: ObservableObject {
+class ShopsMapViewModel: ObservableObject {
     var shopDB: FirebaseHelper
     @Published var shops: [Shop]
     @Published var isShopSelected = false
@@ -17,12 +17,18 @@ class MapSearchingViewModel: ObservableObject {
         shopDB = .init()
         shops = [Shop]()
         shopDB.delegate = self
+        loadShops()
     }
     
     func loadShops() {
         shopDB.fetchShops()
     }
     
+    //MARK: TODO (high priority)
+    /*
+     rather than searching and passing shop, only pass shopID, and on the next view that will receive the shopID should fetch Shop data with ID.
+     because this function can take a long time if there lots shop,,,,,,
+     */
     func selectShop(id: String, name: String) {
         for shop in shops {
             if shop.shopID == id {
@@ -35,7 +41,7 @@ class MapSearchingViewModel: ObservableObject {
     }
 }
 
-extension MapSearchingViewModel: FirebaseHelperDelegate {
+extension ShopsMapViewModel: FirebaseHelperDelegate {
     func completedFetchingShops(shops: [Shop]) {
         self.shops = shops
     }

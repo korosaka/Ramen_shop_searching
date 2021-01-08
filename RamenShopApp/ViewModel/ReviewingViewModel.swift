@@ -51,8 +51,13 @@ class ReviewingViewModel: ObservableObject {
         self.shop = shop
         self.delegate = delegate
         db.delegate = self
-        authentication.delegate = self
-        authentication.checkCurrentUser()
+        checkCurrentUser()
+    }
+    
+    func checkCurrentUser() {
+        guard let _userID = authentication.getUserUID() else { return }
+        userID = _userID
+        checkAlreadySentReview()
     }
     
     func setEvaluation(num: Int) {
@@ -152,13 +157,6 @@ class ReviewingViewModel: ObservableObject {
     
     func leaveReviewing() {
         delegate.stopReviewing()
-    }
-}
-
-extension ReviewingViewModel: AuthenticationDelegate {
-    func setUserInfo(user: User) {
-        userID = user.uid
-        checkAlreadySentReview()
     }
 }
 

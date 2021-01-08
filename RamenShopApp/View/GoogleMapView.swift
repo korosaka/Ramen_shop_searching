@@ -12,13 +12,14 @@ import GoogleMaps
 // MARK: to use UIKit's View(GMSMapView) in SwiftUI
 struct GoogleMapView: UIViewRepresentable {
     
-    var shops: [Shop]
     let gMap: GoogleMap
     
-    init(shops: [Shop], vm: MapSearchingViewModel) {
-        self.shops = shops
-        gMap = GoogleMap()
-        gMap.viewModel = vm
+    init(shopsMapVM: ShopsMapViewModel) {
+        gMap = GoogleMap(shopsMapVM)
+    }
+    
+    init(registeringShopVM: RegisteringShopViewModel) {
+        gMap = GoogleMap(registeringShopVM)
     }
     
     // MARK: called only once
@@ -27,6 +28,6 @@ struct GoogleMapView: UIViewRepresentable {
     }
     
     func updateUIView(_ mapView: GMSMapView, context: Self.Context) {
-        gMap.updateMapView(mapView, shops)
+        gMap.updateMapView(mapView)
     }
 }
