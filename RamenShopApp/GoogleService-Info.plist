@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>48466133002-uh673p2noki8q8m7n0ort2jl83vp23ij.apps.googleusercontent.com</string>
+	<string>827240633841-i39jon2238uj90eitsn8e09do2e259m1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.48466133002-uh673p2noki8q8m7n0ort2jl83vp23ij</string>
+	<string>com.googleusercontent.apps.827240633841-i39jon2238uj90eitsn8e09do2e259m1</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD0DImV_u_GQ4fRwLT8pVDM_IZWWgdB9R4</string>
+	<string>AIzaSyAm_T5gbUdGft9SFaIQhzoVeKfHabpJcg4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>48466133002</string>
+	<string>827240633841</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>ciccc.ca.korosaka.RamenShopApp</string>
+	<string>ciccc.ca.koro.RamenShopApp</string>
 	<key>PROJECT_ID</key>
-	<string>ramenshopsearching-ios</string>
+	<string>ramenshop-ios</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ramenshopsearching-ios.appspot.com</string>
+	<string>ramenshop-ios.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:48466133002:ios:9b720471b951b6dc095ff3</string>
-	<key>DATABASE_URL</key>
-	<string>https://ramenshopsearching-ios.firebaseio.com</string>
+	<string>1:827240633841:ios:1f0dffa478811575aea050</string>
 </dict>
 </plist>

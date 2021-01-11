@@ -37,11 +37,11 @@
 		886B353A2556A11C0056AB86 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B35392556A11C0056AB86 /* LoginView.swift */; };
 		886B353D2557B70B0056AB86 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B353C2557B70B0056AB86 /* LoginViewModel.swift */; };
 		886B35402557CAD30056AB86 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B353F2557CAD30056AB86 /* Authentication.swift */; };
-		886B35422557D8BE0056AB86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 886B35412557D8BE0056AB86 /* GoogleService-Info.plist */; };
 		887D9FFE257FAD48003E237E /* AllReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */; };
 		887DA0012580FC06003E237E /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887DA0002580FC06003E237E /* ReviewDetailView.swift */; };
 		887DA00625817426003E237E /* ReviewDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887DA00525817426003E237E /* ReviewDetailViewModel.swift */; };
 		887DA00A2582A60D003E237E /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 887DA0092582A60D003E237E /* QGrid */; };
+		888FCC5B25ABE5D500622DD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 888FCC5A25ABE5D500622DD9 /* GoogleService-Info.plist */; };
 		88A42235257A001C003CC75D /* AllReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A42234257A001C003CC75D /* AllReviewView.swift */; };
 		88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapTopView.swift */; };
 		88C8D22A258C44B500E43583 /* AllPictureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C8D229258C44B500E43583 /* AllPictureViewModel.swift */; };
@@ -85,10 +85,10 @@
 		886B35392556A11C0056AB86 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		886B353C2557B70B0056AB86 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		886B353F2557CAD30056AB86 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
-		886B35412557D8BE0056AB86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewViewModel.swift; sourceTree = "<group>"; };
 		887DA0002580FC06003E237E /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
 		887DA00525817426003E237E /* ReviewDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewModel.swift; sourceTree = "<group>"; };
+		888FCC5A25ABE5D500622DD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		88A42234257A001C003CC75D /* AllReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewView.swift; sourceTree = "<group>"; };
 		88AFA79F2559B9C1001D151C /* MapTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTopView.swift; sourceTree = "<group>"; };
 		88C8D229258C44B500E43583 /* AllPictureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPictureViewModel.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 				886B3504255026560056AB86 /* Assets.xcassets */,
 				886B3509255026560056AB86 /* LaunchScreen.storyboard */,
 				886B350C255026560056AB86 /* Info.plist */,
-				886B35412557D8BE0056AB86 /* GoogleService-Info.plist */,
+				888FCC5A25ABE5D500622DD9 /* GoogleService-Info.plist */,
 				886B3506255026560056AB86 /* Preview Content */,
 			);
 			path = RamenShopApp;
@@ -292,7 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				886B350B255026560056AB86 /* LaunchScreen.storyboard in Resources */,
-				886B35422557D8BE0056AB86 /* GoogleService-Info.plist in Resources */,
+				888FCC5B25ABE5D500622DD9 /* GoogleService-Info.plist in Resources */,
 				886B3508255026560056AB86 /* Preview Assets.xcassets in Resources */,
 				886B3505255026560056AB86 /* Assets.xcassets in Resources */,
 			);
@@ -544,7 +544,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ciccc.ca.korosaka.RamenShopApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ciccc.ca.koro.RamenShopApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -565,7 +565,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ciccc.ca.korosaka.RamenShopApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ciccc.ca.koro.RamenShopApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
