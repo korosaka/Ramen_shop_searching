@@ -20,9 +20,9 @@ struct FirebaseHelper {
         storage = Storage.storage()
     }
     
-    func fetchShops() {
+    func fetchShops(target: InspectionStatus) {
         var shops = [Shop]()
-        createApprovedShopsRef().getDocuments() { (querySnapshot, err) in
+        createShopsRef(target).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -47,10 +47,10 @@ struct FirebaseHelper {
         }
     }
     
-    func createApprovedShopsRef() -> Query {
+    func createShopsRef(_ target: InspectionStatus) -> Query {
         firestore
             .collection("shop")
-            .whereField("inspection_status", isEqualTo: InspectionStatus.approved.rawValue)
+            .whereField("inspection_status", isEqualTo: target.rawValue)
     }
     
     func fetchLatestReviews(shopID: String) {
@@ -237,6 +237,7 @@ struct FirebaseHelper {
             .collection("review")
         var pictureReviewRef = reviewStoreRef.whereField("image_number", isGreaterThan: 0)
         // MARK: TODO .order(by: "created_at", descending: true)
+        // let test = pictureReviewRef.order(by: "created_at", descending: true)
         if let _limit = limit {
             pictureReviewRef = pictureReviewRef.limit(to: _limit)
         }

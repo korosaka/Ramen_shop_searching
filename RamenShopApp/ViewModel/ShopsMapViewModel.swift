@@ -21,7 +21,7 @@ class ShopsMapViewModel: ObservableObject {
     }
     
     func loadShops() {
-        shopDB.fetchShops()
+        shopDB.fetchShops(target: .approved)
     }
     
     //MARK: TODO (high priority)

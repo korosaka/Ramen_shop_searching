@@ -21,6 +21,13 @@ struct AdminPageView: View {
                 Text("AdminPageView")
                 Spacer()
             }
+            List {
+                ForEach(viewModel.requestedShops, id: \.shopID) { request in
+                    Text(request.name)
+                }
+            }
+            .background(Color.white)
+            .padding(5)
             Spacer()
         }
         .background(Color.red)
