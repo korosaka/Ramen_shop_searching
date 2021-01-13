@@ -22,6 +22,10 @@ struct GoogleMapView: UIViewRepresentable {
         gMap = GoogleMap(registeringShopVM)
     }
     
+    init(inspectingRequestVM: InspectingRequestViewModel) {
+        gMap = GoogleMap(inspectingRequestVM)
+    }
+    
     // MARK: called only once
     func makeUIView(context: Self.Context) -> GMSMapView {
         return gMap.makeMapView()

@@ -12,5 +12,6 @@ struct InspectingRequestView: View {
     @ObservedObject var viewModel: InspectingRequestViewModel
     var body: some View {
         Text(viewModel.requestedShop.name)
+        GoogleMapView(inspectingRequestVM: viewModel)
     }
 }
