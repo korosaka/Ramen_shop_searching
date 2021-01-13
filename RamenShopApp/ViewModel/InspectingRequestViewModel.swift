@@ -10,6 +10,7 @@ import Foundation
 class InspectingRequestViewModel: ObservableObject {
     let requestedShop: Shop
     @Published var currentShops: [Shop]
+    @Published var rejectReason = ""
     var db: FirebaseHelper
     
     init(request: Shop) {
