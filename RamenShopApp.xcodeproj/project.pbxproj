@@ -42,6 +42,8 @@
 		887DA00625817426003E237E /* ReviewDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887DA00525817426003E237E /* ReviewDetailViewModel.swift */; };
 		887DA00A2582A60D003E237E /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 887DA0092582A60D003E237E /* QGrid */; };
 		888FCC5B25ABE5D500622DD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 888FCC5A25ABE5D500622DD9 /* GoogleService-Info.plist */; };
+		888FCCF425AED40D00622DD9 /* AdminPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCF325AED40D00622DD9 /* AdminPageView.swift */; };
+		888FCCF725AEDB5000622DD9 /* AdminPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCF625AEDB5000622DD9 /* AdminPageViewModel.swift */; };
 		88A42235257A001C003CC75D /* AllReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A42234257A001C003CC75D /* AllReviewView.swift */; };
 		88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapTopView.swift */; };
 		88C8D22A258C44B500E43583 /* AllPictureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C8D229258C44B500E43583 /* AllPictureViewModel.swift */; };
@@ -90,6 +92,8 @@
 		887DA00525817426003E237E /* ReviewDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewModel.swift; sourceTree = "<group>"; };
 		888FCC5A25ABE5D500622DD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		888FCC9725ACCECA00622DD9 /* RamenShopApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RamenShopApp.entitlements; sourceTree = "<group>"; };
+		888FCCF325AED40D00622DD9 /* AdminPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPageView.swift; sourceTree = "<group>"; };
+		888FCCF625AEDB5000622DD9 /* AdminPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPageViewModel.swift; sourceTree = "<group>"; };
 		88A42234257A001C003CC75D /* AllReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewView.swift; sourceTree = "<group>"; };
 		88AFA79F2559B9C1001D151C /* MapTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTopView.swift; sourceTree = "<group>"; };
 		88C8D229258C44B500E43583 /* AllPictureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPictureViewModel.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 				8866049425A156BE00FF2D98 /* ShopsMapView.swift */,
 				8866049925A2F4E700FF2D98 /* RequestStatusView.swift */,
 				88009D4425A831C400B4F813 /* RequestingTopView.swift */,
+				888FCCF325AED40D00622DD9 /* AdminPageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 				8866048E25A1348D00FF2D98 /* RegisteringShopViewModel.swift */,
 				8866049C25A2F70500FF2D98 /* RequestStatusViewModel.swift */,
 				88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */,
+				888FCCF625AEDB5000622DD9 /* AdminPageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -385,6 +391,7 @@
 				88327BCF25903F4100733326 /* ReviewingView.swift in Sources */,
 				88C8D22F258ECC2000E43583 /* ReviewHeadlineViewModel.swift in Sources */,
 				88009D4825A831E100B4F813 /* RequestingTopViewModel.swift in Sources */,
+				888FCCF425AED40D00622DD9 /* AdminPageView.swift in Sources */,
 				8866049525A156BE00FF2D98 /* ShopsMapView.swift in Sources */,
 				88603700255DF18100C5ED1C /* Modifiers.swift in Sources */,
 				887D9FFE257FAD48003E237E /* AllReviewViewModel.swift in Sources */,
@@ -395,6 +402,7 @@
 				88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */,
 				88660439259BCA3500FF2D98 /* ProfileSettingView.swift in Sources */,
 				884CEB95256CDCD40020C932 /* ShopsMapViewModel.swift in Sources */,
+				888FCCF725AEDB5000622DD9 /* AdminPageViewModel.swift in Sources */,
 				8866049A25A2F4E700FF2D98 /* RequestStatusView.swift in Sources */,
 				886B35402557CAD30056AB86 /* Authentication.swift in Sources */,
 				884CEB92256CD8960020C932 /* ShopDB.swift in Sources */,

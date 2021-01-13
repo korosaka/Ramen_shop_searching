@@ -21,6 +21,9 @@ class LoginViewModel: ObservableObject {
     @Published var signUpError = false
     @Published var logoutError = false
     var errorMesaage = ""
+    var isAdmin: Bool {
+        return email == "ramen.shop.admin@gmail.com"
+    }
     
     init() {
         authentication = .init()
@@ -33,6 +36,8 @@ class LoginViewModel: ObservableObject {
     func checkCurrentUser() {
         guard let _ = authentication.getUserUID() else { return }
         self.logined = true
+        guard let userEmail = authentication.getUserEmail() else { return }
+        self.email = userEmail
     }
     
     func login() {
