@@ -479,6 +479,25 @@ struct FirebaseHelper {
         }
     }
     
+    func approveRequest(_ shopID: String) {
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.updateData([
+            "inspection_status": InspectionStatus.approved.rawValue
+        ]) { err in
+            delegate?.completedUpdatingRequestStatus(isSuccess: err == nil)
+        }
+    }
+    
+    func rejectRequest(_ shopID: String, reason: String) {
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.updateData([
+            "inspection_status": InspectionStatus.rejected.rawValue,
+            "reject_reason": reason
+        ]) { err in
+            delegate?.completedUpdatingRequestStatus(isSuccess: err == nil)
+        }
+    }
+    
     func uploadRequestUserInfo(_ shopID: String, _ userID: String) {
         let userRef = firestore.collection("user").document(userID)
         userRef.updateData([
@@ -530,6 +549,7 @@ protocol FirebaseHelperDelegate: class {
     func completedUpdatingUserProfile(isSuccess: Bool)
     func completedUplodingShopRequest(isSuccess: Bool)
     func completedDeletingingShopRequest(isSuccess: Bool)
+    func completedUpdatingRequestStatus(isSuccess: Bool)
     func completedFetchingRequestedShopID(shopID: String?)
     func completedDeletingRequestUserInfo(isSuccess: Bool)
     func completedFetchingRejectReason(reason: String)
@@ -576,6 +596,9 @@ extension FirebaseHelperDelegate {
     }
     func completedDeletingingShopRequest(isSuccess: Bool) {
         print("default implemented completedDeletingingShopRequest")
+    }
+    func completedUpdatingRequestStatus(isSuccess: Bool) {
+        print("default implemented completedUpdatingRequestStatus")
     }
     func completedFetchingRequestedShopID(shopID: String?) {
         print("default implemented completedFetchingRequestedShopID")

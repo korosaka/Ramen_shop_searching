@@ -10,7 +10,7 @@ import SwiftUI
 
 struct InspectingRequestView: View {
     @ObservedObject var viewModel: InspectingRequestViewModel
-    @State var isShowApproveConfirmation = false
+    @Environment(\.presentationMode) var presentationMode
     @State var isShowRejectModal = false
     var body: some View {
         VStack(spacing: 0) {
@@ -25,7 +25,7 @@ struct InspectingRequestView: View {
                 .padding(5)
             HStack {
                 Spacer()
-                Button(action: { isShowApproveConfirmation.toggle() }) {
+                Button(action: { viewModel.isShowingAlert.toggle() }) {
                     Text("Approve")
                         .font(.title)
                         .bold()
@@ -34,14 +34,6 @@ struct InspectingRequestView: View {
                             backColor: .blue,
                             padding: 10,
                             radius: 10)
-                .alert(isPresented: $isShowApproveConfirmation) {
-                    Alert(title: Text("Final confirmation"),
-                          message: Text("Are you sure to approve it?"),
-                          primaryButton: .default(Text("Yes")) {
-                            //MARK: TODO
-                          },
-                          secondaryButton: .cancel(Text("cancel")))
-                }
                 Spacer()
                 Button(action: { isShowRejectModal.toggle() }) {
                     Text("Reject")
@@ -61,11 +53,37 @@ struct InspectingRequestView: View {
         }
         .background(Color.green)
         .navigationBarHidden(true)
+        .alert(isPresented: $viewModel.isShowingAlert) {
+            switch viewModel.activeAlert {
+            case .confirmation:
+                return Alert(title: Text("Final confirmation"),
+                             message: Text("Are you sure to approve it?"),
+                             primaryButton: .default(Text("Yes")) {
+                                viewModel.approve()
+                             },
+                             secondaryButton: .cancel(Text("cancel")))
+            case .completion:
+                return Alert(title: Text("Success!"),
+                             message: Text("Updating has been done."),
+                             dismissButton: .default(Text("OK")) {
+                                presentationMode.wrappedValue.dismiss()
+                                //MARK: TODO reload shops on Admin page
+                             })
+            case .error:
+                return Alert(title: Text("Fail"),
+                             message: Text("Updating was failed"),
+                             dismissButton: .default(Text("OK")) {
+                                presentationMode.wrappedValue.dismiss()
+                                //MARK: TODO reload shops on Admin page
+                             })
+            }
+        }
     }
 }
 
 struct RejectModal: View {
     @ObservedObject var viewModel: InspectingRequestViewModel
+    @Environment(\.presentationMode) var presentationMode
     @State var isShowRejectConfirmation = false
     var body: some View {
         VStack {
@@ -93,7 +111,8 @@ struct RejectModal: View {
                     Alert(title: Text("Final confirmation"),
                           message: Text("Are you sure to reject it?"),
                           primaryButton: .default(Text("Yes")) {
-                            //MARK: TODO
+                            viewModel.reject()
+                            presentationMode.wrappedValue.dismiss()
                           },
                           secondaryButton: .cancel(Text("cancel")))
                 }

@@ -11,6 +11,8 @@ class InspectingRequestViewModel: ObservableObject {
     let requestedShop: Shop
     @Published var currentShops: [Shop]
     @Published var rejectReason = ""
+    @Published var isShowingAlert = false
+    var activeAlert: ActiveAlert = .confirmation
     var db: FirebaseHelper
     
     init(request: Shop) {
@@ -28,10 +30,27 @@ class InspectingRequestViewModel: ObservableObject {
     func getTargetLongitude() -> Double {
         return requestedShop.location.longitude
     }
+    
+    func approve() {
+        db.approveRequest(requestedShop.shopID)
+    }
+    
+    func reject() {
+        db.rejectRequest(requestedShop.shopID, reason: rejectReason)
+    }
 }
 
 extension InspectingRequestViewModel: FirebaseHelperDelegate {
     func completedFetchingShops(shops: [Shop]) {
         currentShops = shops
+    }
+    
+    func completedUpdatingRequestStatus(isSuccess: Bool) {
+        if isSuccess {
+            activeAlert = .completion
+        } else {
+            activeAlert = .error
+        }
+        isShowingAlert = true
     }
 }
