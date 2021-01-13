@@ -89,6 +89,7 @@
 		887DA0002580FC06003E237E /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
 		887DA00525817426003E237E /* ReviewDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewModel.swift; sourceTree = "<group>"; };
 		888FCC5A25ABE5D500622DD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		888FCC9725ACCECA00622DD9 /* RamenShopApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RamenShopApp.entitlements; sourceTree = "<group>"; };
 		88A42234257A001C003CC75D /* AllReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewView.swift; sourceTree = "<group>"; };
 		88AFA79F2559B9C1001D151C /* MapTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTopView.swift; sourceTree = "<group>"; };
 		88C8D229258C44B500E43583 /* AllPictureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPictureViewModel.swift; sourceTree = "<group>"; };
@@ -139,6 +140,7 @@
 		886B34FD255026550056AB86 /* RamenShopApp */ = {
 			isa = PBXGroup;
 			children = (
+				888FCC9725ACCECA00622DD9 /* RamenShopApp.entitlements */,
 				886B353E2557CA890056AB86 /* Model */,
 				886B353B2557B6E30056AB86 /* ViewModel */,
 				886B35382556A0C40056AB86 /* View */,
@@ -535,7 +537,9 @@
 			baseConfigurationReference = A5D6C3FBE114337FC41E58D1 /* Pods-RamenShopApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = RamenShopApp/RamenShopApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"RamenShopApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 377486B56V;
 				ENABLE_PREVIEWS = YES;
@@ -546,6 +550,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ciccc.ca.koro.RamenShopApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "RamenShopApp Provisioning Profiles";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -556,7 +561,9 @@
 			baseConfigurationReference = 1088270E322016859E4E4F7E /* Pods-RamenShopApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = RamenShopApp/RamenShopApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"RamenShopApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 377486B56V;
 				ENABLE_PREVIEWS = YES;
@@ -567,6 +574,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ciccc.ca.koro.RamenShopApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "RamenShopApp Provisioning Profiles";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
