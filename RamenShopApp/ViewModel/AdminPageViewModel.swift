@@ -19,6 +19,12 @@ class AdminPageViewModel: ObservableObject {
     }
 }
 
+extension AdminPageViewModel: InspectingRequestVMDelegate {
+    func completedInspectionRequest() {
+        db.fetchShops(target: .inProcess)
+    }
+}
+
 extension AdminPageViewModel: FirebaseHelperDelegate {
     func completedFetchingShops(shops: [Shop]) {
         requestedShops = shops

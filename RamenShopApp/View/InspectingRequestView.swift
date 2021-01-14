@@ -67,14 +67,14 @@ struct InspectingRequestView: View {
                              message: Text("Updating has been done."),
                              dismissButton: .default(Text("OK")) {
                                 presentationMode.wrappedValue.dismiss()
-                                //MARK: TODO reload shops on Admin page
+                                viewModel.completedInspection()
                              })
             case .error:
                 return Alert(title: Text("Fail"),
                              message: Text("Updating was failed"),
                              dismissButton: .default(Text("OK")) {
                                 presentationMode.wrappedValue.dismiss()
-                                //MARK: TODO reload shops on Admin page
+                                viewModel.completedInspection()
                              })
             }
         }

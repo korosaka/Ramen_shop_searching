@@ -14,13 +14,15 @@ class InspectingRequestViewModel: ObservableObject {
     @Published var isShowingAlert = false
     var activeAlert: ActiveAlert = .confirmation
     var db: FirebaseHelper
+    var delegate: InspectingRequestVMDelegate?
     
-    init(request: Shop) {
+    init(request: Shop, delegate: InspectingRequestVMDelegate?) {
         db = .init()
         requestedShop = request
         currentShops = .init()
         db.delegate = self
         db.fetchShops(target: .approved)
+        self.delegate = delegate
     }
     
     func getTargetLatitude() -> Double {
@@ -38,6 +40,14 @@ class InspectingRequestViewModel: ObservableObject {
     func reject() {
         db.rejectRequest(requestedShop.shopID, reason: rejectReason)
     }
+    
+    func completedInspection() {
+        delegate?.completedInspectionRequest()
+    }
+}
+
+protocol InspectingRequestVMDelegate {
+    func completedInspectionRequest()
 }
 
 extension InspectingRequestViewModel: FirebaseHelperDelegate {

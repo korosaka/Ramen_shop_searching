@@ -23,7 +23,8 @@ struct AdminPageView: View {
             }
             List {
                 ForEach(viewModel.requestedShops, id: \.shopID) { request in
-                    NavigationLink(destination: InspectingRequestView(viewModel: .init(request: request))) {
+                    NavigationLink(destination: InspectingRequestView(viewModel: .init(request: request,
+                                                                                       delegate: viewModel))) {
                         Text(request.name)
                     }
                 }
