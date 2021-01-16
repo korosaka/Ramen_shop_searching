@@ -41,14 +41,6 @@ class Authentication {
                 strongSelf.delegate?.loginError(error: error)
             }
         }
-        //MARK: TEST to get fcm token
-//        Messaging.messaging().token { token, error in
-//          if let error = error {
-//            print("Error fetching FCM registration token: \(error)")
-//          } else if let token = token {
-//            print("FCM registration token: \(token)")
-//          }
-//        }
     }
     
     func logout() {

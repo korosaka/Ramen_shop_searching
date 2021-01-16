@@ -66,6 +66,8 @@ extension LoginViewModel: AuthenticationDelegate {
     
     func afterLogin() {
         self.logined = true
+        guard let _userID = authentication.getUserUID() else { return }
+        RegisteringToken().registerTokenToUser(to: _userID)
     }
     
     func afterSignUp(userID: String) {
@@ -103,6 +105,8 @@ extension LoginViewModel: FirebaseHelperDelegate {
         if isSuccess {
             self.logined = true
             checkCurrentUser()
+            guard let _userID = authentication.getUserUID() else { return }
+            RegisteringToken().registerTokenToUser(to: _userID)
         } else {
             self.signUpError = true
             errorMesaage = "signup error"
