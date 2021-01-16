@@ -44,6 +44,18 @@ class InspectingRequestViewModel: ObservableObject {
     func completedInspection() {
         delegate?.completedInspectionRequest()
     }
+    
+    func fetchUserToken() {
+        let userID = requestedShop.uploadUser
+        db.fetchUserToken(of: userID)
+    }
+    
+    func sendPush(to token: String) {
+        PushNotificationSender()
+            .sendPushNotification(to: token,
+                                  title: "Inspecting has been done!",
+                                  body: "Your adding shop request has been inspected. Please check it in app.")
+    }
 }
 
 protocol InspectingRequestVMDelegate {
@@ -56,14 +68,16 @@ extension InspectingRequestViewModel: FirebaseHelperDelegate {
     }
     
     func completedUpdatingRequestStatus(isSuccess: Bool) {
-        //        let testFcmToken = "fjnVCahel0QElSLHaSlWdO:APA91bH6-Yp0BYLUtcFs7u5vSxaxxCKaJA33W5ePtVYpDuyN57xhRtCqY3OSzfImGUeO2VTCfeSXPpEmi-J6RLniQFMgtIv6mOhUP5Pu3bzcatpbobyIK1OBVgEGx9FFuDqie7oKDbSG"
         if isSuccess {
             activeAlert = .completion
-            //            PushNotificationSender().sendPushNotification(to: testFcmToken, title: "test push", body: "this is test push notification!!")
-            let userID = requestedShop.uploadUser
+            fetchUserToken()
         } else {
             activeAlert = .error
         }
         isShowingAlert = true
+    }
+    
+    func completedFetchingToken(token: String) {
+        sendPush(to: token)
     }
 }

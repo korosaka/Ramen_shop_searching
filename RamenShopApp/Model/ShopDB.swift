@@ -536,6 +536,21 @@ struct FirebaseHelper {
             delegate?.completedRegisteringToken(isSuccess: err == nil)
         }
     }
+    
+    func fetchUserToken(of userID: String) {
+        let userRef = firestore.collection("user").document(userID)
+        userRef.getDocument { (document, error) in
+            if let _error = error {
+                print("Error happen :\(_error)")
+                return
+            }
+            guard let userData = document?.data(),
+                  let token = userData["fcm_token"] as? String
+            else { return }
+            
+            delegate?.completedFetchingToken(token: token)
+        }
+    }
 }
 
 protocol FirebaseHelperDelegate: class {
@@ -557,6 +572,7 @@ protocol FirebaseHelperDelegate: class {
     func completedDeletingRequestUserInfo(isSuccess: Bool)
     func completedFetchingRejectReason(reason: String)
     func completedRegisteringToken(isSuccess: Bool)
+    func completedFetchingToken(token: String)
 }
 
 // MARK: default implements
@@ -615,6 +631,9 @@ extension FirebaseHelperDelegate {
     }
     func completedRegisteringToken(isSuccess: Bool) {
         print("default implemented completedRegisteringToken")
+    }
+    func completedFetchingToken(token: String) {
+        print("default implemented completedFetchingToken")
     }
 }
 
