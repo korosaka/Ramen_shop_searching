@@ -17,9 +17,10 @@ import GooglePlaces
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let cGoogleMapsAPIKey = "AIzaSyD0DImV_u_GQ4fRwLT8pVDM_IZWWgdB9R4"
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        Messaging.messaging().delegate = self
         
         if #available (iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
@@ -42,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: UISceneSession Lifecycle
-
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
@@ -114,5 +115,12 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         print(userInfo)
         
         completionHandler()
+    }
+}
+
+extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        guard let userID = Authentication().getUserUID() else { return }
+        FirebaseHelper().registerTokenToUser(token: fcmToken, to: userID)
     }
 }
