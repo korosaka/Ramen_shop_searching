@@ -26,25 +26,32 @@ struct FirebaseHelper {
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
-                //MARK: TODO write like fetchShop()
                 for document in querySnapshot!.documents {
-                    let data = document.data()
-                    let name = data["name"] as? String ?? ""
-                    let location = data["location"] as! GeoPoint
-                    let reviewInfo = data["review_info"] as! [String: Any]
-                    let totalPoint = reviewInfo["total_point"] as? Int ?? 0
-                    let count = reviewInfo["count"] as? Int ?? 0
-                    let inspectionStatus = data["inspection_status"] as? Int ?? -1
-                    shops.append(Shop(shopID: document.documentID,
-                                      name: name,
-                                      location: location,
-                                      totalReview: totalPoint,
-                                      reviewCount: count,
-                                      inspectionStatus: InspectionStatus(rawValue: inspectionStatus)!))
+                    let shop = extractShop(shopID: document.documentID,
+                                           shopData: document.data())
+                    shops.append(shop)
                 }
                 self.delegate?.completedFetchingShops(shops: shops)
             }
         }
+    }
+    
+    func extractShop(shopID: String, shopData: [String : Any]) -> Shop {
+        let name = shopData["name"] as? String ?? ""
+        let location = shopData["location"] as! GeoPoint
+        let reviewInfo = shopData["review_info"] as! [String: Any]
+        let totalPoint = reviewInfo["total_point"] as? Int ?? 0
+        let count = reviewInfo["count"] as? Int ?? 0
+        let userID = shopData["upload_user"] as? String ?? ""
+        let inspectionStatus = shopData["inspection_status"] as? Int ?? -1
+        
+        return Shop(shopID: shopID,
+                    name: name,
+                    location: location,
+                    totalReview: totalPoint,
+                    reviewCount: count,
+                    uploadUser: userID,
+                    inspectionStatus: InspectionStatus(rawValue: inspectionStatus)!)
     }
     
     func createShopsRef(_ target: InspectionStatus) -> Query {
@@ -418,21 +425,8 @@ struct FirebaseHelper {
                 print("Error happen :\(_error)")
                 return
             }
-            guard let shopData = document?.data(),
-                  let name = shopData["name"] as? String,
-                  let location = shopData["location"] as? GeoPoint,
-                  let reviewInfo =  shopData["review_info"] as? [String: Any],
-                  let totalEvaluation = reviewInfo["total_point"] as? Int,
-                  let reviewCount = reviewInfo["count"] as? Int,
-                  let inspectionStatus = shopData["inspection_status"] as? Int
-            else { return }
-            
-            let shop = Shop(shopID: shopID,
-                            name: name,
-                            location: location,
-                            totalReview: totalEvaluation,
-                            reviewCount: reviewCount,
-                            inspectionStatus: InspectionStatus(rawValue: inspectionStatus)!)
+            guard let shopData = document?.data() else { return }
+            let shop = extractShop(shopID: shopID, shopData: shopData)
             delegate?.completedFetchingShop(fetchedShopData: shop)
         }
     }
@@ -631,6 +625,7 @@ struct Shop {
     let location: GeoPoint
     let totalReview: Int
     let reviewCount: Int
+    let uploadUser: String
     var aveEvaluation: Float {
         return calcAveEvaluation(totalReview, reviewCount)
     }
