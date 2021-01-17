@@ -18,7 +18,11 @@ struct AdminPageView: View {
             Spacer()
             HStack {
                 Spacer()
-                Text("AdminPageView")
+                Text("Adding shop requests")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .bold()
+                    .underline()
                 Spacer()
             }
             List {
