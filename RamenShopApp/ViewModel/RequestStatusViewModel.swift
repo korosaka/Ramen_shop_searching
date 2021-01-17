@@ -86,6 +86,7 @@ extension RequestStatusViewModel: FirebaseHelperDelegate {
         }
     }
     
+    //MARK: TODO even if failed, should do removeRequestInfoFromProfile(),,,? to avoid that request data remains only in user
     func completedDeletingingShopRequest(isSuccess: Bool) {
         if isSuccess {
             removeRequestInfoFromProfile()

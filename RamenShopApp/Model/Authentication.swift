@@ -18,6 +18,10 @@ class Authentication {
         Auth.auth().currentUser?.uid
     }
     
+    func getUserEmail() -> String? {
+        Auth.auth().currentUser?.email
+    }
+    
     func createAccount(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {

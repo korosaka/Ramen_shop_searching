@@ -21,6 +21,9 @@ class LoginViewModel: ObservableObject {
     @Published var signUpError = false
     @Published var logoutError = false
     var errorMesaage = ""
+    var isAdmin: Bool {
+        return email == "ramen.shop.admin@gmail.com"
+    }
     
     init() {
         authentication = .init()
@@ -33,6 +36,8 @@ class LoginViewModel: ObservableObject {
     func checkCurrentUser() {
         guard let _ = authentication.getUserUID() else { return }
         self.logined = true
+        guard let userEmail = authentication.getUserEmail() else { return }
+        self.email = userEmail
     }
     
     func login() {
@@ -61,6 +66,8 @@ extension LoginViewModel: AuthenticationDelegate {
     
     func afterLogin() {
         self.logined = true
+        guard let _userID = authentication.getUserUID() else { return }
+        RegisteringToken().registerTokenToUser(to: _userID)
     }
     
     func afterSignUp(userID: String) {
@@ -98,6 +105,8 @@ extension LoginViewModel: FirebaseHelperDelegate {
         if isSuccess {
             self.logined = true
             checkCurrentUser()
+            guard let _userID = authentication.getUserUID() else { return }
+            RegisteringToken().registerTokenToUser(to: _userID)
         } else {
             self.signUpError = true
             errorMesaage = "signup error"

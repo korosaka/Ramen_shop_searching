@@ -20,37 +20,44 @@ struct FirebaseHelper {
         storage = Storage.storage()
     }
     
-    func fetchShops() {
+    func fetchShops(target: InspectionStatus) {
         var shops = [Shop]()
-        createApprovedShopsRef().getDocuments() { (querySnapshot, err) in
+        createShopsRef(target).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
-                //MARK: TODO write like fetchShop()
                 for document in querySnapshot!.documents {
-                    let data = document.data()
-                    let name = data["name"] as? String ?? ""
-                    let location = data["location"] as! GeoPoint
-                    let reviewInfo = data["review_info"] as! [String: Any]
-                    let totalPoint = reviewInfo["total_point"] as? Int ?? 0
-                    let count = reviewInfo["count"] as? Int ?? 0
-                    let inspectionStatus = data["inspection_status"] as? Int ?? -1
-                    shops.append(Shop(shopID: document.documentID,
-                                      name: name,
-                                      location: location,
-                                      totalReview: totalPoint,
-                                      reviewCount: count,
-                                      inspectionStatus: InspectionStatus(rawValue: inspectionStatus)!))
+                    let shop = extractShop(shopID: document.documentID,
+                                           shopData: document.data())
+                    shops.append(shop)
                 }
                 self.delegate?.completedFetchingShops(shops: shops)
             }
         }
     }
     
-    func createApprovedShopsRef() -> Query {
+    func extractShop(shopID: String, shopData: [String : Any]) -> Shop {
+        let name = shopData["name"] as? String ?? ""
+        let location = shopData["location"] as! GeoPoint
+        let reviewInfo = shopData["review_info"] as! [String: Any]
+        let totalPoint = reviewInfo["total_point"] as? Int ?? 0
+        let count = reviewInfo["count"] as? Int ?? 0
+        let userID = shopData["upload_user"] as? String ?? ""
+        let inspectionStatus = shopData["inspection_status"] as? Int ?? -1
+        
+        return Shop(shopID: shopID,
+                    name: name,
+                    location: location,
+                    totalReview: totalPoint,
+                    reviewCount: count,
+                    uploadUser: userID,
+                    inspectionStatus: InspectionStatus(rawValue: inspectionStatus)!)
+    }
+    
+    func createShopsRef(_ target: InspectionStatus) -> Query {
         firestore
             .collection("shop")
-            .whereField("inspection_status", isEqualTo: InspectionStatus.approved.rawValue)
+            .whereField("inspection_status", isEqualTo: target.rawValue)
     }
     
     func fetchLatestReviews(shopID: String) {
@@ -237,6 +244,7 @@ struct FirebaseHelper {
             .collection("review")
         var pictureReviewRef = reviewStoreRef.whereField("image_number", isGreaterThan: 0)
         // MARK: TODO .order(by: "created_at", descending: true)
+        // let test = pictureReviewRef.order(by: "created_at", descending: true)
         if let _limit = limit {
             pictureReviewRef = pictureReviewRef.limit(to: _limit)
         }
@@ -417,21 +425,8 @@ struct FirebaseHelper {
                 print("Error happen :\(_error)")
                 return
             }
-            guard let shopData = document?.data(),
-                  let name = shopData["name"] as? String,
-                  let location = shopData["location"] as? GeoPoint,
-                  let reviewInfo =  shopData["review_info"] as? [String: Any],
-                  let totalEvaluation = reviewInfo["total_point"] as? Int,
-                  let reviewCount = reviewInfo["count"] as? Int,
-                  let inspectionStatus = shopData["inspection_status"] as? Int
-            else { return }
-            
-            let shop = Shop(shopID: shopID,
-                            name: name,
-                            location: location,
-                            totalReview: totalEvaluation,
-                            reviewCount: reviewCount,
-                            inspectionStatus: InspectionStatus(rawValue: inspectionStatus)!)
+            guard let shopData = document?.data() else { return }
+            let shop = extractShop(shopID: shopID, shopData: shopData)
             delegate?.completedFetchingShop(fetchedShopData: shop)
         }
     }
@@ -478,6 +473,25 @@ struct FirebaseHelper {
         }
     }
     
+    func approveRequest(_ shopID: String) {
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.updateData([
+            "inspection_status": InspectionStatus.approved.rawValue
+        ]) { err in
+            delegate?.completedUpdatingRequestStatus(isSuccess: err == nil)
+        }
+    }
+    
+    func rejectRequest(_ shopID: String, reason: String) {
+        let shopRef = firestore.collection("shop").document(shopID)
+        shopRef.updateData([
+            "inspection_status": InspectionStatus.rejected.rawValue,
+            "reject_reason": reason
+        ]) { err in
+            delegate?.completedUpdatingRequestStatus(isSuccess: err == nil)
+        }
+    }
+    
     func uploadRequestUserInfo(_ shopID: String, _ userID: String) {
         let userRef = firestore.collection("user").document(userID)
         userRef.updateData([
@@ -513,6 +527,30 @@ struct FirebaseHelper {
             delegate?.completedFetchingRequestedShopID(shopID: requestedShopID)
         }
     }
+    
+    func registerTokenToUser(token: String, to userID: String) {
+        let userRef = firestore.collection("user").document(userID)
+        userRef.updateData([
+            "fcm_token": token
+        ]) { err in
+            delegate?.completedRegisteringToken(isSuccess: err == nil)
+        }
+    }
+    
+    func fetchUserToken(of userID: String) {
+        let userRef = firestore.collection("user").document(userID)
+        userRef.getDocument { (document, error) in
+            if let _error = error {
+                print("Error happen :\(_error)")
+                return
+            }
+            guard let userData = document?.data(),
+                  let token = userData["fcm_token"] as? String
+            else { return }
+            
+            delegate?.completedFetchingToken(token: token)
+        }
+    }
 }
 
 protocol FirebaseHelperDelegate: class {
@@ -529,9 +567,12 @@ protocol FirebaseHelperDelegate: class {
     func completedUpdatingUserProfile(isSuccess: Bool)
     func completedUplodingShopRequest(isSuccess: Bool)
     func completedDeletingingShopRequest(isSuccess: Bool)
+    func completedUpdatingRequestStatus(isSuccess: Bool)
     func completedFetchingRequestedShopID(shopID: String?)
     func completedDeletingRequestUserInfo(isSuccess: Bool)
     func completedFetchingRejectReason(reason: String)
+    func completedRegisteringToken(isSuccess: Bool)
+    func completedFetchingToken(token: String)
 }
 
 // MARK: default implements
@@ -576,6 +617,9 @@ extension FirebaseHelperDelegate {
     func completedDeletingingShopRequest(isSuccess: Bool) {
         print("default implemented completedDeletingingShopRequest")
     }
+    func completedUpdatingRequestStatus(isSuccess: Bool) {
+        print("default implemented completedUpdatingRequestStatus")
+    }
     func completedFetchingRequestedShopID(shopID: String?) {
         print("default implemented completedFetchingRequestedShopID")
     }
@@ -584,6 +628,12 @@ extension FirebaseHelperDelegate {
     }
     func completedFetchingRejectReason(reason: String) {
         print("default implemented completedFetchingRejectReason")
+    }
+    func completedRegisteringToken(isSuccess: Bool) {
+        print("default implemented completedRegisteringToken")
+    }
+    func completedFetchingToken(token: String) {
+        print("default implemented completedFetchingToken")
     }
 }
 
@@ -594,6 +644,7 @@ struct Shop {
     let location: GeoPoint
     let totalReview: Int
     let reviewCount: Int
+    let uploadUser: String
     var aveEvaluation: Float {
         return calcAveEvaluation(totalReview, reviewCount)
     }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		88009D4525A831C400B4F813 /* RequestingTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88009D4425A831C400B4F813 /* RequestingTopView.swift */; };
 		88009D4825A831E100B4F813 /* RequestingTopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */; };
+		88242E0425B2A33F0051A2C7 /* RegisteringToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88242E0325B2A33F0051A2C7 /* RegisteringToken.swift */; };
 		882E43852577B6FC00E941D7 /* ShopDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882E43842577B6FC00E941D7 /* ShopDetailViewModel.swift */; };
 		88327BCF25903F4100733326 /* ReviewingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88327BCE25903F4100733326 /* ReviewingView.swift */; };
 		883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883AA0DA256649C7002AC14A /* GoogleMapView.swift */; };
@@ -37,11 +38,16 @@
 		886B353A2556A11C0056AB86 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B35392556A11C0056AB86 /* LoginView.swift */; };
 		886B353D2557B70B0056AB86 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B353C2557B70B0056AB86 /* LoginViewModel.swift */; };
 		886B35402557CAD30056AB86 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B353F2557CAD30056AB86 /* Authentication.swift */; };
-		886B35422557D8BE0056AB86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 886B35412557D8BE0056AB86 /* GoogleService-Info.plist */; };
 		887D9FFE257FAD48003E237E /* AllReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */; };
 		887DA0012580FC06003E237E /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887DA0002580FC06003E237E /* ReviewDetailView.swift */; };
 		887DA00625817426003E237E /* ReviewDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887DA00525817426003E237E /* ReviewDetailViewModel.swift */; };
 		887DA00A2582A60D003E237E /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 887DA0092582A60D003E237E /* QGrid */; };
+		888FCC5B25ABE5D500622DD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 888FCC5A25ABE5D500622DD9 /* GoogleService-Info.plist */; };
+		888FCCF425AED40D00622DD9 /* AdminPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCF325AED40D00622DD9 /* AdminPageView.swift */; };
+		888FCCF725AEDB5000622DD9 /* AdminPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCF625AEDB5000622DD9 /* AdminPageViewModel.swift */; };
+		888FCCFA25AF05BC00622DD9 /* InspectingRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCF925AF05BC00622DD9 /* InspectingRequestView.swift */; };
+		888FCCFD25AF063700622DD9 /* InspectingRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCFC25AF063700622DD9 /* InspectingRequestViewModel.swift */; };
+		888FCD2D25B1DA1F00622DD9 /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCD2C25B1DA1F00622DD9 /* PushNotificationSender.swift */; };
 		88A42235257A001C003CC75D /* AllReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A42234257A001C003CC75D /* AllReviewView.swift */; };
 		88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapTopView.swift */; };
 		88C8D22A258C44B500E43583 /* AllPictureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C8D229258C44B500E43583 /* AllPictureViewModel.swift */; };
@@ -55,6 +61,7 @@
 		257556D638399B742D1568DC /* Pods_RamenShopApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RamenShopApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88009D4425A831C400B4F813 /* RequestingTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestingTopView.swift; sourceTree = "<group>"; };
 		88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestingTopViewModel.swift; sourceTree = "<group>"; };
+		88242E0325B2A33F0051A2C7 /* RegisteringToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteringToken.swift; sourceTree = "<group>"; };
 		882E43842577B6FC00E941D7 /* ShopDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailViewModel.swift; sourceTree = "<group>"; };
 		88327BCE25903F4100733326 /* ReviewingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewingView.swift; sourceTree = "<group>"; };
 		883AA0DA256649C7002AC14A /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
@@ -85,10 +92,16 @@
 		886B35392556A11C0056AB86 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		886B353C2557B70B0056AB86 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		886B353F2557CAD30056AB86 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
-		886B35412557D8BE0056AB86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		887D9FFD257FAD48003E237E /* AllReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewViewModel.swift; sourceTree = "<group>"; };
 		887DA0002580FC06003E237E /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
 		887DA00525817426003E237E /* ReviewDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewModel.swift; sourceTree = "<group>"; };
+		888FCC5A25ABE5D500622DD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		888FCC9725ACCECA00622DD9 /* RamenShopApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RamenShopApp.entitlements; sourceTree = "<group>"; };
+		888FCCF325AED40D00622DD9 /* AdminPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPageView.swift; sourceTree = "<group>"; };
+		888FCCF625AEDB5000622DD9 /* AdminPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPageViewModel.swift; sourceTree = "<group>"; };
+		888FCCF925AF05BC00622DD9 /* InspectingRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectingRequestView.swift; sourceTree = "<group>"; };
+		888FCCFC25AF063700622DD9 /* InspectingRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectingRequestViewModel.swift; sourceTree = "<group>"; };
+		888FCD2C25B1DA1F00622DD9 /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 		88A42234257A001C003CC75D /* AllReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewView.swift; sourceTree = "<group>"; };
 		88AFA79F2559B9C1001D151C /* MapTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTopView.swift; sourceTree = "<group>"; };
 		88C8D229258C44B500E43583 /* AllPictureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPictureViewModel.swift; sourceTree = "<group>"; };
@@ -139,6 +152,7 @@
 		886B34FD255026550056AB86 /* RamenShopApp */ = {
 			isa = PBXGroup;
 			children = (
+				888FCC9725ACCECA00622DD9 /* RamenShopApp.entitlements */,
 				886B353E2557CA890056AB86 /* Model */,
 				886B353B2557B6E30056AB86 /* ViewModel */,
 				886B35382556A0C40056AB86 /* View */,
@@ -148,7 +162,7 @@
 				886B3504255026560056AB86 /* Assets.xcassets */,
 				886B3509255026560056AB86 /* LaunchScreen.storyboard */,
 				886B350C255026560056AB86 /* Info.plist */,
-				886B35412557D8BE0056AB86 /* GoogleService-Info.plist */,
+				888FCC5A25ABE5D500622DD9 /* GoogleService-Info.plist */,
 				886B3506255026560056AB86 /* Preview Content */,
 			);
 			path = RamenShopApp;
@@ -183,6 +197,8 @@
 				8866049425A156BE00FF2D98 /* ShopsMapView.swift */,
 				8866049925A2F4E700FF2D98 /* RequestStatusView.swift */,
 				88009D4425A831C400B4F813 /* RequestingTopView.swift */,
+				888FCCF325AED40D00622DD9 /* AdminPageView.swift */,
+				888FCCF925AF05BC00622DD9 /* InspectingRequestView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -202,6 +218,8 @@
 				8866048E25A1348D00FF2D98 /* RegisteringShopViewModel.swift */,
 				8866049C25A2F70500FF2D98 /* RequestStatusViewModel.swift */,
 				88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */,
+				888FCCF625AEDB5000622DD9 /* AdminPageViewModel.swift */,
+				888FCCFC25AF063700622DD9 /* InspectingRequestViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -211,6 +229,8 @@
 			children = (
 				886B353F2557CAD30056AB86 /* Authentication.swift */,
 				884CEB91256CD8960020C932 /* ShopDB.swift */,
+				888FCD2C25B1DA1F00622DD9 /* PushNotificationSender.swift */,
+				88242E0325B2A33F0051A2C7 /* RegisteringToken.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -292,7 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				886B350B255026560056AB86 /* LaunchScreen.storyboard in Resources */,
-				886B35422557D8BE0056AB86 /* GoogleService-Info.plist in Resources */,
+				888FCC5B25ABE5D500622DD9 /* GoogleService-Info.plist in Resources */,
 				886B3508255026560056AB86 /* Preview Assets.xcassets in Resources */,
 				886B3505255026560056AB86 /* Assets.xcassets in Resources */,
 			);
@@ -364,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				888FCCFD25AF063700622DD9 /* InspectingRequestViewModel.swift in Sources */,
 				883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */,
 				8866048C25A131CE00FF2D98 /* RegisteringShopNameView.swift in Sources */,
 				887DA0012580FC06003E237E /* ReviewDetailView.swift in Sources */,
@@ -383,16 +404,21 @@
 				88327BCF25903F4100733326 /* ReviewingView.swift in Sources */,
 				88C8D22F258ECC2000E43583 /* ReviewHeadlineViewModel.swift in Sources */,
 				88009D4825A831E100B4F813 /* RequestingTopViewModel.swift in Sources */,
+				888FCCF425AED40D00622DD9 /* AdminPageView.swift in Sources */,
 				8866049525A156BE00FF2D98 /* ShopsMapView.swift in Sources */,
 				88603700255DF18100C5ED1C /* Modifiers.swift in Sources */,
 				887D9FFE257FAD48003E237E /* AllReviewViewModel.swift in Sources */,
 				88009D4525A831C400B4F813 /* RequestingTopView.swift in Sources */,
+				88242E0425B2A33F0051A2C7 /* RegisteringToken.swift in Sources */,
 				8866049225A13B3E00FF2D98 /* RegisteringShopPlaceView.swift in Sources */,
 				886B3503255026550056AB86 /* ContentView.swift in Sources */,
 				8866049D25A2F70500FF2D98 /* RequestStatusViewModel.swift in Sources */,
 				88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */,
+				888FCCFA25AF05BC00622DD9 /* InspectingRequestView.swift in Sources */,
 				88660439259BCA3500FF2D98 /* ProfileSettingView.swift in Sources */,
 				884CEB95256CDCD40020C932 /* ShopsMapViewModel.swift in Sources */,
+				888FCCF725AEDB5000622DD9 /* AdminPageViewModel.swift in Sources */,
+				888FCD2D25B1DA1F00622DD9 /* PushNotificationSender.swift in Sources */,
 				8866049A25A2F4E700FF2D98 /* RequestStatusView.swift in Sources */,
 				886B35402557CAD30056AB86 /* Authentication.swift in Sources */,
 				884CEB92256CD8960020C932 /* ShopDB.swift in Sources */,
@@ -535,7 +561,9 @@
 			baseConfigurationReference = A5D6C3FBE114337FC41E58D1 /* Pods-RamenShopApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = RamenShopApp/RamenShopApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"RamenShopApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 377486B56V;
 				ENABLE_PREVIEWS = YES;
@@ -544,8 +572,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ciccc.ca.korosaka.RamenShopApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ciccc.ca.koro.RamenShopApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "RamenShopApp Provisioning Profiles";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -556,7 +585,9 @@
 			baseConfigurationReference = 1088270E322016859E4E4F7E /* Pods-RamenShopApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = RamenShopApp/RamenShopApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"RamenShopApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 377486B56V;
 				ENABLE_PREVIEWS = YES;
@@ -565,8 +596,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ciccc.ca.korosaka.RamenShopApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ciccc.ca.koro.RamenShopApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "RamenShopApp Provisioning Profiles";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
