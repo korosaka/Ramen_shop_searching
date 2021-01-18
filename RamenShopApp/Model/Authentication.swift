@@ -33,11 +33,17 @@ class Authentication {
             if error != nil {
                 self.delegate?.signUpError(error: error)
             } else {
-                //MARK: TODO send email
-                
-                //MARK: TODO do only when verification success
-                self.delegate?.afterSignUp(userID: authResult!.user.uid)
+                Auth.auth().currentUser?.sendEmailVerification { (error) in
+                    //MARK: TODO even when email adress is invalied, error is nil,,,,,,
+                    self.delegate?.completedSendingEmail(isSuccess: error == nil)
+                }
             }
+        }
+    }
+    
+    func deleteAccount() {
+        Auth.auth().currentUser?.delete { error in
+            self.delegate?.completedDeletingAccount(isSuccess: error == nil)
         }
     }
     
@@ -79,8 +85,9 @@ protocol AuthenticationDelegate: class {
     func signUpError(error: Error?)
     func logoutError(error: NSError?)
     func afterLogout()
-    func afterSignUp(userID: String)
     func informEmailNotVerified()
+    func completedSendingEmail(isSuccess: Bool)
+    func completedDeletingAccount(isSuccess: Bool)
 }
 
 extension AuthenticationDelegate {
@@ -99,11 +106,13 @@ extension AuthenticationDelegate {
     func afterLogout() {
         print("default implemented afterLogout")
     }
-    func afterSignUp(userID: String) {
-        print("default implemented afterSignUp")
-    }
     func informEmailNotVerified() {
         print("default implemented informEmailNotVerified")
     }
-    
+    func completedSendingEmail(isSuccess: Bool) {
+        print("default implemented completedSendingEmail")
+    }
+    func completedDeletingAccount(isSuccess: Bool) {
+        print("default implemented completedDeletingAccount")
+    }
 }

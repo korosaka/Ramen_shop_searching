@@ -11,6 +11,7 @@ import SwiftUI
 struct SignupView: View {
     
     @ObservedObject var viewModel: LoginViewModel
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack(spacing: 0) {
@@ -30,11 +31,24 @@ struct SignupView: View {
                 Text("Create account")
                     .basicButtonTextStyle(Color.white, Color.yellow)
             }
-            .alert(isPresented: $viewModel.signUpError) {
-                Alert(title: Text("Signup Error"),
-                      message: Text(viewModel.errorMesaage),
-                      dismissButton: .default(Text("OK"),
-                                              action: { self.viewModel.reset() }))
+            .alert(isPresented: $viewModel.isShowSignUpAlert) {
+                if viewModel.sentEmail {
+                    return Alert(title: Text("Sent Email!"),
+                                 message: Text("We sent Email to your adress, so please check it."),
+                                 dismissButton: .default(Text("OK"),
+                                                         action: {
+                                                            self.viewModel.reset()
+                                                            presentationMode.wrappedValue.dismiss()
+                                                         }
+                                 )
+                    )
+                } else {
+                    return Alert(title: Text("Signup Error"),
+                                 message: Text(viewModel.errorMesaage),
+                                 dismissButton: .default(Text("OK"),
+                                                         action: { self.viewModel.reset() }))
+                }
+                
             }
             Spacer()
         }
