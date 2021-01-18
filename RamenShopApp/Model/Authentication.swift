@@ -14,6 +14,12 @@ class Authentication {
     
     weak var delegate: AuthenticationDelegate?
     
+    var isEmailVerified: Bool {
+        guard let isVerified = Auth.auth().currentUser?.isEmailVerified
+        else { return false }
+        return isVerified
+    }
+    
     func getUserUID() -> String? {
         Auth.auth().currentUser?.uid
     }
@@ -27,6 +33,9 @@ class Authentication {
             if error != nil {
                 self.delegate?.signUpError(error: error)
             } else {
+                //MARK: TODO send email
+                
+                //MARK: TODO do only when verification success
                 self.delegate?.afterSignUp(userID: authResult!.user.uid)
             }
         }
@@ -36,10 +45,18 @@ class Authentication {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             guard let strongSelf = self else { return }
             if error == nil {
-                strongSelf.delegate?.afterLogin()
+                strongSelf.checkEmailVerified()
             } else {
                 strongSelf.delegate?.loginError(error: error)
             }
+        }
+    }
+    
+    func checkEmailVerified() {
+        if isEmailVerified {
+            delegate?.afterLogin()
+        } else {
+            delegate?.informEmailNotVerified()
         }
     }
     
@@ -63,6 +80,7 @@ protocol AuthenticationDelegate: class {
     func logoutError(error: NSError?)
     func afterLogout()
     func afterSignUp(userID: String)
+    func informEmailNotVerified()
 }
 
 extension AuthenticationDelegate {
@@ -84,4 +102,8 @@ extension AuthenticationDelegate {
     func afterSignUp(userID: String) {
         print("default implemented afterSignUp")
     }
+    func informEmailNotVerified() {
+        print("default implemented informEmailNotVerified")
+    }
+    
 }

@@ -111,11 +111,24 @@ struct LoginView: View {
                                 Text("Login")
                                     .basicButtonTextStyle(Color.white, Color.blue)
                             }
-                            .alert(isPresented: $viewModel.loginError) {
-                                Alert(title: Text("Login Error"),
-                                      message: Text(viewModel.errorMesaage),
-                                      dismissButton: .default(Text("OK"),
-                                                              action: { self.viewModel.reset() }))
+                            .alert(isPresented: $viewModel.isShowLoginAlert) {
+                                if viewModel.isEmailNotVerified {
+                                    return Alert(title: Text("Your Email has not been verified."),
+                                                 message: Text("We have sent a Email, so please check it."),
+                                                 dismissButton: .default(Text("OK"),
+                                                                         action: { self.viewModel.reset()
+                                                                         }
+                                                 )
+                                    )
+                                } else {
+                                    return Alert(title: Text("Login Error"),
+                                                 message: Text(viewModel.errorMesaage),
+                                                 dismissButton: .default(Text("OK"),
+                                                                         action: { self.viewModel.reset()
+                                                                         }
+                                                 )
+                                    )
+                                }
                             }
                         }
                         .padding(.init(top: 100,

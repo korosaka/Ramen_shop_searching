@@ -17,9 +17,10 @@ class LoginViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
     @Published var logined = false
-    @Published var loginError = false
+    @Published var isShowLoginAlert = false
     @Published var signUpError = false
     @Published var logoutError = false
+    var isEmailNotVerified = false
     var errorMesaage = ""
     var isAdmin: Bool {
         return email == "ramen.shop.admin@gmail.com"
@@ -34,7 +35,7 @@ class LoginViewModel: ObservableObject {
     }
     
     func checkCurrentUser() {
-        guard let _ = authentication.getUserUID() else { return }
+        if !authentication.isEmailVerified { return }
         self.logined = true
         guard let userEmail = authentication.getUserEmail() else { return }
         self.email = userEmail
@@ -55,10 +56,11 @@ class LoginViewModel: ObservableObject {
     func reset() {
         email = ""
         password = ""
-        loginError = false
+        isShowLoginAlert = false
         signUpError = false
         logoutError = false
         errorMesaage = ""
+        isEmailNotVerified = false
     }
 }
 
@@ -76,7 +78,7 @@ extension LoginViewModel: AuthenticationDelegate {
     
     func loginError(error: Error?) {
         if error != nil {
-            loginError = true
+            isShowLoginAlert = true
             errorMesaage = "error: \(error!)"
         }
     }
@@ -98,13 +100,21 @@ extension LoginViewModel: AuthenticationDelegate {
     func afterLogout() {
         self.logined = false
     }
+    
+    func informEmailNotVerified() {
+        isEmailNotVerified = true
+        isShowLoginAlert = true
+    }
 }
 
 extension LoginViewModel: FirebaseHelperDelegate {
     func completedUpdatingUserProfile(isSuccess: Bool) {
         if isSuccess {
             self.logined = true
+            
+            //MARK: TODO it seems unneeded
             checkCurrentUser()
+            
             guard let _userID = authentication.getUserUID() else { return }
             RegisteringToken().registerTokenToUser(to: _userID)
         } else {
