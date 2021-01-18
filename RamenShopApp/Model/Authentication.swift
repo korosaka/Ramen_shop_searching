@@ -14,6 +14,12 @@ class Authentication {
     
     weak var delegate: AuthenticationDelegate?
     
+    var isEmailVerified: Bool {
+        guard let isVerified = Auth.auth().currentUser?.isEmailVerified
+        else { return false }
+        return isVerified
+    }
+    
     func getUserUID() -> String? {
         Auth.auth().currentUser?.uid
     }
@@ -27,8 +33,17 @@ class Authentication {
             if error != nil {
                 self.delegate?.signUpError(error: error)
             } else {
-                self.delegate?.afterSignUp(userID: authResult!.user.uid)
+                Auth.auth().currentUser?.sendEmailVerification { (error) in
+                    //MARK: TODO even when email adress is invalied, error is nil,,,,,,
+                    self.delegate?.completedSendingEmail(isSuccess: error == nil)
+                }
             }
+        }
+    }
+    
+    func deleteAccount() {
+        Auth.auth().currentUser?.delete { error in
+            self.delegate?.completedDeletingAccount(isSuccess: error == nil)
         }
     }
     
@@ -36,10 +51,18 @@ class Authentication {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             guard let strongSelf = self else { return }
             if error == nil {
-                strongSelf.delegate?.afterLogin()
+                strongSelf.checkEmailVerified()
             } else {
                 strongSelf.delegate?.loginError(error: error)
             }
+        }
+    }
+    
+    func checkEmailVerified() {
+        if isEmailVerified {
+            delegate?.afterLogin()
+        } else {
+            delegate?.informEmailNotVerified()
         }
     }
     
@@ -62,7 +85,9 @@ protocol AuthenticationDelegate: class {
     func signUpError(error: Error?)
     func logoutError(error: NSError?)
     func afterLogout()
-    func afterSignUp(userID: String)
+    func informEmailNotVerified()
+    func completedSendingEmail(isSuccess: Bool)
+    func completedDeletingAccount(isSuccess: Bool)
 }
 
 extension AuthenticationDelegate {
@@ -81,7 +106,13 @@ extension AuthenticationDelegate {
     func afterLogout() {
         print("default implemented afterLogout")
     }
-    func afterSignUp(userID: String) {
-        print("default implemented afterSignUp")
+    func informEmailNotVerified() {
+        print("default implemented informEmailNotVerified")
+    }
+    func completedSendingEmail(isSuccess: Bool) {
+        print("default implemented completedSendingEmail")
+    }
+    func completedDeletingAccount(isSuccess: Bool) {
+        print("default implemented completedDeletingAccount")
     }
 }
