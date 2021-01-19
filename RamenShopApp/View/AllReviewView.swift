@@ -31,6 +31,7 @@ struct AllReviewView: View {
                         }
                     }
                 }
+                .listRowBackground(Color.white)
             }
             .background(Color.white)
             .padding(5)

@@ -162,7 +162,9 @@ struct ReviewHeadline: View {
                                leading: 0,
                                bottom: 2,
                                trailing: 0))
-                Text(viewModel.review.comment).lineLimit(1)
+                Text(viewModel.review.comment)
+                    .foregroundColor(.black)
+                    .lineLimit(1)
             }
             .sidePadding(size: 10)
             .background(Color.white)
