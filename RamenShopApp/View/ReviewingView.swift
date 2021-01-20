@@ -75,9 +75,13 @@ struct CustomStarButton: View {
 
 struct EditingCommentView: View {
     @EnvironmentObject var viewModel: ReviewingViewModel
+    init() {
+        UITextView.appearance().backgroundColor = .clear
+    }
     var body: some View {
         VStack {
             TextEditor(text: $viewModel.comment)
+                .background(Color.white)
                 .frame(width: UIScreen.main.bounds.width * 0.9,
                        height: 250)
                 .foregroundColor(viewModel.getCommentFontColor())

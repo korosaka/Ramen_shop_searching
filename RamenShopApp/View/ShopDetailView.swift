@@ -147,6 +147,7 @@ struct ReviewHeadline: View {
                         .foregroundColor(.yellow)
                         .font(.subheadline)
                     Text(String(viewModel.review.evaluation))
+                        .foregroundColor(.black)
                     Spacer()
                     Text(viewModel.review.displayDate())
                         .foregroundColor(.gray)
