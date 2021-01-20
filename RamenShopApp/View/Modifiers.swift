@@ -63,6 +63,8 @@ extension Image {
     func iconStyle(size: CGFloat) -> some View {
         self.resizable()
             .scaledToFill()
+            .foregroundColor(.gray)
+            .background(Color.white)
             .frame(width: size, height: size)
             .clipShape(Circle())
     }

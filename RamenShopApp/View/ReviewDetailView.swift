@@ -24,6 +24,7 @@ struct ReviewDetailView: View {
                         .sidePadding(size: 5)
                 }
                 Text(viewModel.userProfile.userName)
+                    .foregroundColor(.black)
                 Spacer()
             }
             HStack {
@@ -36,11 +37,12 @@ struct ReviewDetailView: View {
                 Spacer()
                 Text(viewModel.review.displayDate())
                     .font(.headline)
-            }.padding(.init(top: 5,
-                            leading: 0,
-                            bottom: 5,
-                            trailing: 0))
-            Text(viewModel.review.comment).padding(.bottom)
+                    .foregroundColor(.black)
+            }
+            .upDownPadding(size: 5)
+            Text(viewModel.review.comment)
+                .padding(.bottom)
+                .foregroundColor(.black)
             PictureCollectionView(scrollable: false,
                                   ramenImages: viewModel.reviewImages)
         }
