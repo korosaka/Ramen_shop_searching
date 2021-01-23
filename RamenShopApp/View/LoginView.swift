@@ -185,8 +185,24 @@ struct LoginView: View {
                         })
                     }
                 }
+                if viewModel.showingLoginProgress {
+                    CustomedProgress()
+                }
             }
         }
     }
 }
 
+struct CustomedProgress: View {
+    var body: some View {
+        HStack {
+            Spacer()
+            ProgressView("in process")
+                .foregroundColor(.white)
+                .upDownPadding(size: 30)
+            Spacer()
+        }
+        .background(Color.blue).cornerRadius(20)
+        .sidePadding(size: 30)
+    }
+}

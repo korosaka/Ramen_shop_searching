@@ -20,6 +20,7 @@ class LoginViewModel: ObservableObject {
     @Published var isShowLoginAlert = false
     @Published var isShowSignUpAlert = false
     @Published var logoutError = false
+    @Published var showingLoginProgress = false
     var isEmailNotVerified = false
     var sentEmail = false
     var errorMesaage = ""
@@ -44,6 +45,7 @@ class LoginViewModel: ObservableObject {
     }
     
     func login() {
+        showingLoginProgress = true
         authentication.login(email: email, password: password)
     }
     
@@ -52,6 +54,7 @@ class LoginViewModel: ObservableObject {
     }
     
     func logout() {
+        showingLoginProgress = true
         authentication.logout()
     }
     
@@ -70,12 +73,14 @@ class LoginViewModel: ObservableObject {
 extension LoginViewModel: AuthenticationDelegate {
     
     func afterLogin() {
+        showingLoginProgress = false
         self.logined = true
         guard let _userID = authentication.getUserUID() else { return }
         RegisteringToken().registerTokenToUser(to: _userID)
     }
     
     func loginError(error: Error?) {
+        showingLoginProgress = false
         if error != nil {
             isShowLoginAlert = true
             errorMesaage = "error: \(error!)"
@@ -90,6 +95,7 @@ extension LoginViewModel: AuthenticationDelegate {
     }
     
     func logoutError(error: NSError?) {
+        showingLoginProgress = false
         if error != nil {
             self.logoutError = true
             errorMesaage = "error: \(error!)"
@@ -97,6 +103,7 @@ extension LoginViewModel: AuthenticationDelegate {
     }
     
     func afterLogout() {
+        self.showingLoginProgress = false
         self.logined = false
     }
     
