@@ -14,43 +14,48 @@ struct SignupView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar(additionalAction: nil)
-            Spacer()
-            TextField("email", text: $viewModel.email)
-                .basicStyle()
-            TextField("passsword", text: $viewModel.password)
-                .basicStyle()
-                .padding(.init(top: 0,
-                               leading: 0,
-                               bottom: 20,
-                               trailing: 0))
-            Button(action: {
-                self.viewModel.createAccount()
-            }) {
-                Text("Create account")
-                    .basicButtonTextStyle(Color.white, Color.yellow)
-            }
-            .alert(isPresented: $viewModel.isShowSignUpAlert) {
-                if viewModel.sentEmail {
-                    return Alert(title: Text("Sent Email!"),
-                                 message: Text("We sent Email to your adress, so please check it."),
-                                 dismissButton: .default(Text("OK"),
-                                                         action: {
-                                                            self.viewModel.reset()
-                                                            presentationMode.wrappedValue.dismiss()
-                                                         }
-                                 )
-                    )
-                } else {
-                    return Alert(title: Text("Signup Error"),
-                                 message: Text(viewModel.errorMesaage),
-                                 dismissButton: .default(Text("OK"),
-                                                         action: { self.viewModel.reset() }))
+        ZStack {
+            VStack(spacing: 0) {
+                CustomNavigationBar(additionalAction: nil)
+                Spacer()
+                TextField("email", text: $viewModel.email)
+                    .basicStyle()
+                TextField("passsword", text: $viewModel.password)
+                    .basicStyle()
+                    .padding(.init(top: 0,
+                                   leading: 0,
+                                   bottom: 20,
+                                   trailing: 0))
+                Button(action: {
+                    self.viewModel.createAccount()
+                }) {
+                    Text("Create account")
+                        .basicButtonTextStyle(Color.white, Color.yellow)
                 }
-                
+                .alert(isPresented: $viewModel.isShowSignUpAlert) {
+                    if viewModel.sentEmail {
+                        return Alert(title: Text("Sent Email!"),
+                                     message: Text("We sent Email to your adress, so please check it."),
+                                     dismissButton: .default(Text("OK"),
+                                                             action: {
+                                                                self.viewModel.reset()
+                                                                presentationMode.wrappedValue.dismiss()
+                                                             }
+                                     )
+                        )
+                    } else {
+                        return Alert(title: Text("Signup Error"),
+                                     message: Text(viewModel.errorMesaage),
+                                     dismissButton: .default(Text("OK"),
+                                                             action: { self.viewModel.reset() }))
+                    }
+                    
+                }
+                Spacer()
             }
-            Spacer()
+            if viewModel.isShowingProgress {
+                CustomedProgress()
+            }
         }
         .background(Color.green)
         .navigationBarHidden(true)
@@ -185,8 +190,24 @@ struct LoginView: View {
                         })
                     }
                 }
+                if viewModel.isShowingProgress {
+                    CustomedProgress()
+                }
             }
         }
     }
 }
 
+struct CustomedProgress: View {
+    var body: some View {
+        HStack {
+            Spacer()
+            ProgressView("in process")
+                .foregroundColor(.white)
+                .upDownPadding(size: 30)
+            Spacer()
+        }
+        .background(Color.blue).cornerRadius(20)
+        .sidePadding(size: 30)
+    }
+}

@@ -13,6 +13,7 @@ class AllPictureViewModel: ObservableObject {
     var db: FirebaseHelper
     var shopID: String?
     @Published var allImages: [RamenImage]
+    @Published var isShowingProgress = false
     
     init(shopID: String?) {
         db = .init()
@@ -23,12 +24,14 @@ class AllPictureViewModel: ObservableObject {
     
     func fetchAllImage() {
         guard let _id = shopID else { return print("error in AllPictureViewModel") }
+        isShowingProgress = true
         db.fetchPictureReviews(shopID: _id, limit: nil)
     }
 }
 
 extension AllPictureViewModel: FirebaseHelperDelegate {
     func completedFetchingPictures(pictures: [UIImage]) {
+        isShowingProgress = false
         allImages.removeAll()
         pictures.forEach { picture in
             let ramenImage = RamenImage(picture: Image(uiImage: picture))

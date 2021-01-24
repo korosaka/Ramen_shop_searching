@@ -11,6 +11,7 @@ class ShopsMapViewModel: ObservableObject {
     var shopDB: FirebaseHelper
     @Published var shops: [Shop]
     @Published var isShopSelected = false
+    @Published var isShowingProgress = false
     var selectedShop: Shop?
     
     init() {
@@ -21,6 +22,7 @@ class ShopsMapViewModel: ObservableObject {
     }
     
     func loadShops() {
+        isShowingProgress = true
         shopDB.fetchShops(target: .approved)
     }
     
@@ -43,6 +45,7 @@ class ShopsMapViewModel: ObservableObject {
 
 extension ShopsMapViewModel: FirebaseHelperDelegate {
     func completedFetchingShops(shops: [Shop]) {
+        isShowingProgress = false
         self.shops = shops
     }
 }

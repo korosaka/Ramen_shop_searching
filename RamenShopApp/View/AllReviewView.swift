@@ -13,31 +13,38 @@ struct AllReviewView: View {
     @ObservedObject var viewModel: AllReviewViewModel
     
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar(additionalAction: nil)
-            Text("All Review")
-                .font(.title)
-                .foregroundColor(.yellow)
-                .padding(5)
-            List {
-                ForEach(viewModel.reviews, id: \.reviewID) { review in
-                    Button(action: {
-                        viewModel.switchShowDetail(reviewID: review.reviewID)
-                    }) {
-                        if viewModel.showDetailDic[review.reviewID] ?? false {
-                            ReviewDetailView(viewModel: .init(review: review))
-                        } else {
-                            ReviewHeadline(viewModel: .init(review: review))
+        ZStack {
+            VStack(spacing: 0) {
+                CustomNavigationBar(additionalAction: nil)
+                Text("All Review")
+                    .font(.title)
+                    .foregroundColor(.yellow)
+                    .padding(5)
+                List {
+                    ForEach(viewModel.reviews, id: \.reviewID) { review in
+                        Button(action: {
+                            viewModel.switchShowDetail(reviewID: review.reviewID)
+                        }) {
+                            if viewModel.showDetailDic[review.reviewID] ?? false {
+                                ReviewDetailView(viewModel: .init(review: review))
+                            } else {
+                                ReviewHeadline(viewModel: .init(review: review))
+                            }
                         }
                     }
+                    .listRowBackground(Color.white)
                 }
-                .listRowBackground(Color.white)
+                .background(Color.white)
+                .padding(5)
             }
-            .background(Color.white)
-            .padding(5)
+            if viewModel.isShowingProgress {
+                CustomedProgress()
+            }
         }
         .background(Color.blue)
         .navigationBarHidden(true)
-        
+        .onAppear() {
+            viewModel.fetchAllReview()
+        }
     }
 }

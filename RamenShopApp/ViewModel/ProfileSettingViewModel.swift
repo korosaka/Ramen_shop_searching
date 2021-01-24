@@ -16,6 +16,7 @@ class ProfileSettingViewModel: ObservableObject {
     @Published var newName = ""
     @Published var isShowPhotoLibrary = false
     @Published var isShowPhotoPermissionDenied = false
+    @Published var isShowingProgress = false
     var db: FirebaseHelper
     var authentication: Authentication
     var userID: String?
@@ -43,6 +44,7 @@ class ProfileSettingViewModel: ObservableObject {
     func checkCurrentUser() {
         guard let _userID = authentication.getUserUID() else { return }
         userID = _userID
+        isShowingProgress = true
         db.fetchUserProfile(userID: _userID)
     }
     
@@ -60,6 +62,7 @@ class ProfileSettingViewModel: ObservableObject {
     
     func updateUserName() {
         guard let _userID = userID else { return }
+        isShowingProgress = true
         db.updateUserName(userID: _userID, name: newName, hasProfileAlready)
         newName = ""
         isEditingName = false
@@ -67,6 +70,7 @@ class ProfileSettingViewModel: ObservableObject {
     
     func updateUserIcon(iconImage: UIImage) {
         guard let _userID = userID else { return }
+        isShowingProgress = true
         db.updateUserIcon(_userID, iconImage, hasProfileAlready)
     }
     
@@ -99,6 +103,7 @@ class ProfileSettingViewModel: ObservableObject {
 
 extension ProfileSettingViewModel: FirebaseHelperDelegate {
     func completedFetchingProfile(profile: Profile?) {
+        isShowingProgress = false
         guard let _profile = profile else { return }
         userProfile = _profile
         hasProfileAlready = true
@@ -112,7 +117,10 @@ extension ProfileSettingViewModel: FirebaseHelperDelegate {
             activeAlertForName = .error
         }
         isShowAlertForName = true
-        guard let _userID = userID else { return }
+        guard let _userID = userID else {
+            isShowingProgress = false
+            return
+        }
         db.fetchUserProfile(userID: _userID)
     }
 }

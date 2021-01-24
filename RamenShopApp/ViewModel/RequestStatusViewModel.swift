@@ -17,6 +17,7 @@ class RequestStatusViewModel: ObservableObject {
     @Published var inspectionStatus: InspectionStatus?
     @Published var isShowAlert = false
     @Published var rejectReason = ""
+    @Published var isShowingProgress = false
     var hasRequest: Bool {
         return (shopName != nil) && (inspectionStatus != nil)
     }
@@ -49,10 +50,12 @@ class RequestStatusViewModel: ObservableObject {
     }
     
     func cancelRequest() {
+        isShowingProgress = true
         db.deleteShopRequest(shopID: requestedShopID)
     }
     
     func removeRequestInfoFromProfile() {
+        isShowingProgress = true
         db.deleteRequestUserInfo(userID: userID)
     }
     
@@ -91,12 +94,14 @@ extension RequestStatusViewModel: FirebaseHelperDelegate {
         if isSuccess {
             removeRequestInfoFromProfile()
         } else {
+            isShowingProgress = false
             activeAlert = .error
             isShowAlert = true
         }
     }
     
     func completedDeletingRequestUserInfo(isSuccess: Bool) {
+        isShowingProgress = false
         if isSuccess {
             activeAlert = .completion
         } else {

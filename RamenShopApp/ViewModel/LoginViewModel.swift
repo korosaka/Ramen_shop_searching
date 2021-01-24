@@ -20,6 +20,7 @@ class LoginViewModel: ObservableObject {
     @Published var isShowLoginAlert = false
     @Published var isShowSignUpAlert = false
     @Published var logoutError = false
+    @Published var isShowingProgress = false
     var isEmailNotVerified = false
     var sentEmail = false
     var errorMesaage = ""
@@ -44,14 +45,17 @@ class LoginViewModel: ObservableObject {
     }
     
     func login() {
+        isShowingProgress = true
         authentication.login(email: email, password: password)
     }
     
     func createAccount() {
+        isShowingProgress = true
         authentication.createAccount(email: email, password: password)
     }
     
     func logout() {
+        isShowingProgress = true
         authentication.logout()
     }
     
@@ -70,12 +74,14 @@ class LoginViewModel: ObservableObject {
 extension LoginViewModel: AuthenticationDelegate {
     
     func afterLogin() {
+        isShowingProgress = false
         self.logined = true
         guard let _userID = authentication.getUserUID() else { return }
         RegisteringToken().registerTokenToUser(to: _userID)
     }
     
     func loginError(error: Error?) {
+        isShowingProgress = false
         if error != nil {
             isShowLoginAlert = true
             errorMesaage = "error: \(error!)"
@@ -83,6 +89,7 @@ extension LoginViewModel: AuthenticationDelegate {
     }
     
     func signUpError(error: Error?) {
+        isShowingProgress = false
         if error != nil {
             self.isShowSignUpAlert = true
             errorMesaage = "error: \(error!)"
@@ -90,6 +97,7 @@ extension LoginViewModel: AuthenticationDelegate {
     }
     
     func logoutError(error: NSError?) {
+        isShowingProgress = false
         if error != nil {
             self.logoutError = true
             errorMesaage = "error: \(error!)"
@@ -97,6 +105,7 @@ extension LoginViewModel: AuthenticationDelegate {
     }
     
     func afterLogout() {
+        self.isShowingProgress = false
         self.logined = false
     }
     
@@ -107,6 +116,7 @@ extension LoginViewModel: AuthenticationDelegate {
     
     func completedSendingEmail(isSuccess: Bool) {
         if isSuccess {
+            isShowingProgress = false
             sentEmail = true
             isShowSignUpAlert = true
             db.uploadUserProfile(authentication.getUserUID()!)
@@ -116,6 +126,7 @@ extension LoginViewModel: AuthenticationDelegate {
     }
     
     func completedDeletingAccount(isSuccess: Bool) {
+        isShowingProgress = false
         if isSuccess {
             self.isShowSignUpAlert = true
             errorMesaage = "Your Email adress may be invalid. Please use valid Email adress."

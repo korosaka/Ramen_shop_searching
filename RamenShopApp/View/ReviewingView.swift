@@ -11,27 +11,32 @@ import SwiftUI
 struct ReviewingView: View {
     @EnvironmentObject var viewModel: ReviewingViewModel
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar {
-                viewModel.leaveReviewing()
+        ZStack {
+            VStack(spacing: 0) {
+                CustomNavigationBar {
+                    viewModel.leaveReviewing()
+                }
+                ScrollView(.vertical) {
+                    Spacer().frame(height: 10)
+                    ShopName(shopName: viewModel.shop?.name)
+                        .sidePadding(size: 15)
+                    Spacer().frame(height: 10)
+                    StarSelectView()
+                        .sidePadding(size: 20)
+                    Spacer().frame(height: 20)
+                    EditingCommentView()
+                    Spacer().frame(height: 30)
+                    UploadingPicture()
+                        .sidePadding(size: 15)
+                    Spacer().frame(height: 40)
+                    DoneButton()
+                }
+                .frame(width: UIScreen.main.bounds.width)
+                .background(Color.blue)
             }
-            ScrollView(.vertical) {
-                Spacer().frame(height: 10)
-                ShopName(shopName: viewModel.shop?.name)
-                    .sidePadding(size: 15)
-                Spacer().frame(height: 10)
-                StarSelectView()
-                    .sidePadding(size: 20)
-                Spacer().frame(height: 20)
-                EditingCommentView()
-                Spacer().frame(height: 30)
-                UploadingPicture()
-                    .sidePadding(size: 15)
-                Spacer().frame(height: 40)
-                DoneButton()
+            if viewModel.isShowingProgress {
+                CustomedProgress()
             }
-            .frame(width: UIScreen.main.bounds.width)
-            .background(Color.blue)
         }
         .navigationBarHidden(true)
     }

@@ -29,6 +29,7 @@ class ReviewingViewModel: ObservableObject {
     @Published var isShowAlert = false
     @Published var activeAlert: ActiveAlert = .confirmation
     @Published var isEditingComment = false
+    @Published var isShowingProgress = false
     private let placeHoler = "enter comment"
     var updateReviewPicsState = (uploaded: false, deleted: false)
     var updateReviewState = (review: false, pictures: false, shopEva: false)
@@ -126,6 +127,7 @@ class ReviewingViewModel: ObservableObject {
                         comment: comment,
                         imageCount: pictures!.count,
                         createdDate: Date())
+        isShowingProgress = true
         db.fetchShop(shopID: shop!.shopID) //MARK: to update shop evaluation
         db.updateReviewPics(pics: pictures!,
                             reviewID: review!.reviewID,
@@ -150,6 +152,7 @@ class ReviewingViewModel: ObservableObject {
     
     func checkReviewStatus() {
         if updateReviewState.review && updateReviewState.pictures && updateReviewState.shopEva {
+            isShowingProgress = false
             leaveReviewing()
             isShowAlert = true
         }

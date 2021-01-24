@@ -11,6 +11,7 @@ class AllReviewViewModel: ObservableObject {
     
     @Published var reviews: [Review]
     @Published var showDetailDic: [String: Bool]
+    @Published var isShowingProgress = false
     var currentDetail: String?
     var db: FirebaseHelper
     var shop: Shop
@@ -21,10 +22,10 @@ class AllReviewViewModel: ObservableObject {
         reviews = .init()
         showDetailDic = .init()
         db.delegate = self
-        fetchAllReview()
     }
     
     func fetchAllReview() {
+        isShowingProgress = true
         db.fetchAllReview(shopID: shop.shopID)
     }
     
@@ -46,6 +47,7 @@ class AllReviewViewModel: ObservableObject {
 
 extension AllReviewViewModel: FirebaseHelperDelegate {
     func completedFetchingReviews(reviews: [Review]) {
+        isShowingProgress = false
         reviews.forEach {
             showDetailDic[$0.reviewID] = false
         }

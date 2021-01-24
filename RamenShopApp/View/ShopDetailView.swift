@@ -13,36 +13,41 @@ struct ShopDetailView: View {
     @ObservedObject var viewModel: ShopDetailViewModel
     
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar(additionalAction: nil)
-            ScrollView(.vertical) {
-                VStack {
-                    Spacer().frame(height: 10)
-                    ShopName(shopName: viewModel.shop?.name).sidePadding(size: 15)
-                    ShopEvaluation(aveEvaluation: viewModel.shop?.roundEvaluatione())
-                    Spacer().frame(height: 30)
-                    LatestReviews(latestReviews: viewModel.latestReviews,
-                                  shop: viewModel.shop!)
-                    Spacer().frame(height: 20)
-                    Pictures(pictures: viewModel.pictures, shopID: viewModel.shop?.shopID)
-                        .sidePadding(size: 10)
-                    Spacer().frame(height: 30)
+        ZStack {
+            VStack(spacing: 0) {
+                CustomNavigationBar(additionalAction: nil)
+                ScrollView(.vertical) {
+                    VStack {
+                        Spacer().frame(height: 10)
+                        ShopName(shopName: viewModel.shop?.name).sidePadding(size: 15)
+                        ShopEvaluation(aveEvaluation: viewModel.shop?.roundEvaluatione())
+                        Spacer().frame(height: 30)
+                        LatestReviews(latestReviews: viewModel.latestReviews,
+                                      shop: viewModel.shop!)
+                        Spacer().frame(height: 20)
+                        Pictures(pictures: viewModel.pictures, shopID: viewModel.shop?.shopID)
+                            .sidePadding(size: 10)
+                        Spacer().frame(height: 30)
+                    }
                 }
-            }
-            .background(Color.blue)
-            
-            HStack {
-                Spacer()
-                NavigationLink(destination: ReviewingView()
-                                .environmentObject(ReviewingViewModel(shop: viewModel.shop, delegate: viewModel))) {
-                    Text("Review this shop").font(.largeTitle)
-                        .foregroundColor(.white)
-                        .underline()
-                        .upDownPadding(size: 5)
+                .background(Color.blue)
+                
+                HStack {
+                    Spacer()
+                    NavigationLink(destination: ReviewingView()
+                                    .environmentObject(ReviewingViewModel(shop: viewModel.shop, delegate: viewModel))) {
+                        Text("Review this shop").font(.largeTitle)
+                            .foregroundColor(.white)
+                            .underline()
+                            .upDownPadding(size: 5)
+                    }
+                    Spacer()
                 }
-                Spacer()
+                .background(Color.red)
             }
-            .background(Color.red)
+            if viewModel.isShowingProgress {
+                CustomedProgress()
+            }
         }
         .navigationBarHidden(true)
     }
