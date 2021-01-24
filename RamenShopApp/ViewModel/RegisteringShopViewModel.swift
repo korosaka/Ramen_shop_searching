@@ -15,6 +15,7 @@ class RegisteringShopViewModel: ObservableObject {
     var authentication: Authentication
     @Published var shopName = ""
     @Published var isShowAlert = false
+    @Published var isShowingProgress = false
     var userID: String?
     var activeAlertForName = ActiveAlert.confirmation
     var isNameSet: Bool {
@@ -66,6 +67,7 @@ class RegisteringShopViewModel: ObservableObject {
             isShowAlert = true
             return
         }
+        isShowingProgress = true
         db.uploadShopRequest(shopName: shopName,
                              location: _location,
                              userID: _userID)
@@ -81,6 +83,7 @@ class RegisteringShopViewModel: ObservableObject {
 
 extension RegisteringShopViewModel: FirebaseHelperDelegate {
     func completedUplodingShopRequest(isSuccess: Bool) {
+        isShowingProgress = false
         if isSuccess {
             activeAlertForName = .completion
         } else {
