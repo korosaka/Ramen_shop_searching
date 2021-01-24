@@ -14,6 +14,8 @@ class ShopDetailViewModel: ObservableObject {
     @Published var latestReviews: [Review]
     @Published var pictures: [UIImage]
     @Published var shop: Shop?
+    var isLoading = (review: false, picture: false)
+    @Published var isShowingProgress = false
     
     init(mapVM: ShopsMapViewModel) {
         if mapVM.isShopSelected {
@@ -28,6 +30,8 @@ class ShopDetailViewModel: ObservableObject {
     
     func fetchDataFromDB() {
         if shop == nil { return }
+        isLoading = (true, true)
+        isShowingProgress = true
         db.fetchLatestReviews(shopID: shop!.shopID)
         let maxReviewCount = 3
         db.fetchPictureReviews(shopID: shop!.shopID, limit: maxReviewCount)
@@ -41,9 +45,13 @@ class ShopDetailViewModel: ObservableObject {
 
 extension ShopDetailViewModel: FirebaseHelperDelegate {
     func completedFetchingReviews(reviews: [Review]) {
+        isLoading.review = false
+        if !isLoading.picture { isShowingProgress = false }
         latestReviews = reviews
     }
     func completedFetchingPictures(pictures: [UIImage]) {
+        isLoading.picture = false
+        if !isLoading.review { isShowingProgress = false }
         self.pictures = pictures
     }
     

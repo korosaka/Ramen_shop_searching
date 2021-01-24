@@ -261,6 +261,9 @@ struct FirebaseHelper {
     func fetchImageFromReviewDocs(imageReviewsQS: QuerySnapshot) {
         var totalPictures = [UIImage]()
         let totalImageReviewCount = imageReviewsQS.documents.count
+        if totalImageReviewCount == 0 {
+            self.delegate?.completedFetchingPictures(pictures: totalPictures)
+        }
         var readImageReviewCount = 0
         
         let completionHandler = { (pictures: [UIImage]) -> Void in
