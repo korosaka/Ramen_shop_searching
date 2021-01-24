@@ -11,14 +11,19 @@ import SwiftUI
 struct ProfileSettingView: View {
     @EnvironmentObject var viewModel: ProfileSettingViewModel
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar(additionalAction: nil)
-            Titleheader()
-            Spacer().frame(height: 30)
-            IconProfile()
-            Spacer().frame(height: 50)
-            NameProfile()
-            Spacer()
+        ZStack {
+            VStack(spacing: 0) {
+                CustomNavigationBar(additionalAction: nil)
+                Titleheader()
+                Spacer().frame(height: 30)
+                IconProfile()
+                Spacer().frame(height: 50)
+                NameProfile()
+                Spacer()
+            }
+            if viewModel.isShowingProgress {
+                CustomedProgress()
+            }
         }
         .alert(isPresented: $viewModel.isShowAlertForName) {
             switch viewModel.activeAlertForName {
