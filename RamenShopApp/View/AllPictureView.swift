@@ -13,21 +13,26 @@ struct AllPictureView: View {
     @ObservedObject var viewModel: AllPictureViewModel
     
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar(additionalAction: nil)
-            Text("All picture")
-                .font(.title)
-                .foregroundColor(.red)
-                .padding(5)
-            Spacer()
-            PictureCollectionView(scrollable: true,
-                                  ramenImages: viewModel.allImages)
-                .sidePadding(size: 5)
-            Spacer()
+        ZStack {
+            VStack(spacing: 0) {
+                CustomNavigationBar(additionalAction: nil)
+                Text("All picture")
+                    .font(.title)
+                    .foregroundColor(.red)
+                    .padding(5)
+                Spacer()
+                PictureCollectionView(scrollable: true,
+                                      ramenImages: viewModel.allImages)
+                    .sidePadding(size: 5)
+                Spacer()
+            }
+            if viewModel.isShowingProgress {
+                CustomedProgress()
+            }
         }
         .navigationBarHidden(true)
         .onAppear() {
-            self.viewModel.fetchAllImage()
+            viewModel.fetchAllImage()
         }
     }
 }
