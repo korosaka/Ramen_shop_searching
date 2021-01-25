@@ -12,6 +12,7 @@
 		88242E0425B2A33F0051A2C7 /* RegisteringToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88242E0325B2A33F0051A2C7 /* RegisteringToken.swift */; };
 		882E43852577B6FC00E941D7 /* ShopDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882E43842577B6FC00E941D7 /* ShopDetailViewModel.swift */; };
 		88327BCF25903F4100733326 /* ReviewingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88327BCE25903F4100733326 /* ReviewingView.swift */; };
+		8835815825BE4E18009AB89B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8835815725BE4E18009AB89B /* SettingsView.swift */; };
 		883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883AA0DA256649C7002AC14A /* GoogleMapView.swift */; };
 		884CEB92256CD8960020C932 /* ShopDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB91256CD8960020C932 /* ShopDB.swift */; };
 		884CEB95256CDCD40020C932 /* ShopsMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884CEB94256CDCD40020C932 /* ShopsMapViewModel.swift */; };
@@ -64,6 +65,7 @@
 		88242E0325B2A33F0051A2C7 /* RegisteringToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteringToken.swift; sourceTree = "<group>"; };
 		882E43842577B6FC00E941D7 /* ShopDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailViewModel.swift; sourceTree = "<group>"; };
 		88327BCE25903F4100733326 /* ReviewingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewingView.swift; sourceTree = "<group>"; };
+		8835815725BE4E18009AB89B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		883AA0DA256649C7002AC14A /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		884CEB91256CD8960020C932 /* ShopDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDB.swift; sourceTree = "<group>"; };
 		884CEB94256CDCD40020C932 /* ShopsMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopsMapViewModel.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				88009D4425A831C400B4F813 /* RequestingTopView.swift */,
 				888FCCF325AED40D00622DD9 /* AdminPageView.swift */,
 				888FCCF925AF05BC00622DD9 /* InspectingRequestView.swift */,
+				8835815725BE4E18009AB89B /* SettingsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 				888FCCFD25AF063700622DD9 /* InspectingRequestViewModel.swift in Sources */,
 				883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */,
 				8866048C25A131CE00FF2D98 /* RegisteringShopNameView.swift in Sources */,
+				8835815825BE4E18009AB89B /* SettingsView.swift in Sources */,
 				887DA0012580FC06003E237E /* ReviewDetailView.swift in Sources */,
 				884CEB98256F66A70020C932 /* GoogleMap.swift in Sources */,
 				8866048F25A1348D00FF2D98 /* RegisteringShopViewModel.swift in Sources */,
