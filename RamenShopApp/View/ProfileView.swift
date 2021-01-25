@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-struct ProfileSettingView: View {
-    @EnvironmentObject var viewModel: ProfileSettingViewModel
+struct ProfileView: View {
+    @EnvironmentObject var viewModel: ProfileViewModel
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -66,7 +66,7 @@ struct Titleheader: View {
 }
 
 struct IconProfile: View {
-    @EnvironmentObject var viewModel: ProfileSettingViewModel
+    @EnvironmentObject var viewModel: ProfileViewModel
     var body: some View {
         viewModel
             .getIconImage()
@@ -95,7 +95,7 @@ struct IconProfile: View {
 }
 
 struct NameProfile: View {
-    @EnvironmentObject var viewModel: ProfileSettingViewModel
+    @EnvironmentObject var viewModel: ProfileViewModel
     
     var body: some View {
         Text(viewModel.getUserName())

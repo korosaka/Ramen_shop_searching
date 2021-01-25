@@ -31,8 +31,8 @@ struct MapTopView: View {
                         }
                     }
                     .navigationBarHidden(true)
-                ProfileSettingView()
-                    .environmentObject(ProfileSettingViewModel())
+                ProfileView()
+                    .environmentObject(ProfileViewModel())
                     .tabItem {
                         VStack {
                             Image(systemName: "person.fill")
