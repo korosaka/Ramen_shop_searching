@@ -28,17 +28,26 @@ struct MapTopView: View {
                         VStack {
                             Image(systemName: "plus")
                             Text("Add")
-                        }.frame(width: 10)
+                        }
+                    }
+                    .navigationBarHidden(true)
+                ProfileSettingView()
+                    .environmentObject(ProfileSettingViewModel())
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "person.fill")
+                            Text("Profile")
+                        }
                     }
                     .navigationBarHidden(true)
                 SettingsView()
                     .tabItem {
-                    VStack {
-                        Image(systemName: "list.bullet")
-                        Text("Settings")
-                    }.frame(width: 10)
-                }
-                .navigationBarHidden(true)
+                        VStack {
+                            Image(systemName: "list.bullet")
+                            Text("Settings")
+                        }
+                    }
+                    .navigationBarHidden(true)
             }
         }
     }

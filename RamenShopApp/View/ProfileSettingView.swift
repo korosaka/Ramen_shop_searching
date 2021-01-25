@@ -13,7 +13,6 @@ struct ProfileSettingView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                CustomNavigationBar(additionalAction: nil)
                 Titleheader()
                 Spacer().frame(height: 30)
                 IconProfile()
@@ -49,7 +48,6 @@ struct ProfileSettingView: View {
             }
         }
         .background(Color.green)
-        .navigationBarHidden(true)
     }
 }
 
