@@ -22,8 +22,8 @@
 		8866042D25917BF400FF2D98 /* ReviewingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866042C25917BF400FF2D98 /* ReviewingViewModel.swift */; };
 		886604302592C8A300FF2D98 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866042F2592C8A300FF2D98 /* ImagePicker.swift */; };
 		8866043325995CD900FF2D98 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866043225995CD900FF2D98 /* CustomNavigationBar.swift */; };
-		88660439259BCA3500FF2D98 /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88660438259BCA3500FF2D98 /* ProfileSettingView.swift */; };
-		8866043C259BE17B00FF2D98 /* ProfileSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866043B259BE17B00FF2D98 /* ProfileSettingViewModel.swift */; };
+		88660439259BCA3500FF2D98 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88660438259BCA3500FF2D98 /* ProfileView.swift */; };
+		8866043C259BE17B00FF2D98 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866043B259BE17B00FF2D98 /* ProfileViewModel.swift */; };
 		8866048C25A131CE00FF2D98 /* RegisteringShopNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866048B25A131CD00FF2D98 /* RegisteringShopNameView.swift */; };
 		8866048F25A1348D00FF2D98 /* RegisteringShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866048E25A1348D00FF2D98 /* RegisteringShopViewModel.swift */; };
 		8866049225A13B3E00FF2D98 /* RegisteringShopPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */; };
@@ -75,8 +75,8 @@
 		8866042C25917BF400FF2D98 /* ReviewingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewingViewModel.swift; sourceTree = "<group>"; };
 		8866042F2592C8A300FF2D98 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		8866043225995CD900FF2D98 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
-		88660438259BCA3500FF2D98 /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
-		8866043B259BE17B00FF2D98 /* ProfileSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewModel.swift; sourceTree = "<group>"; };
+		88660438259BCA3500FF2D98 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		8866043B259BE17B00FF2D98 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		8866048B25A131CD00FF2D98 /* RegisteringShopNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteringShopNameView.swift; sourceTree = "<group>"; };
 		8866048E25A1348D00FF2D98 /* RegisteringShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteringShopViewModel.swift; sourceTree = "<group>"; };
 		8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteringShopPlaceView.swift; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 				88327BCE25903F4100733326 /* ReviewingView.swift */,
 				8866042F2592C8A300FF2D98 /* ImagePicker.swift */,
 				8866043225995CD900FF2D98 /* CustomNavigationBar.swift */,
-				88660438259BCA3500FF2D98 /* ProfileSettingView.swift */,
+				88660438259BCA3500FF2D98 /* ProfileView.swift */,
 				8866048B25A131CD00FF2D98 /* RegisteringShopNameView.swift */,
 				8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */,
 				8866049425A156BE00FF2D98 /* ShopsMapView.swift */,
@@ -217,7 +217,7 @@
 				88C8D229258C44B500E43583 /* AllPictureViewModel.swift */,
 				88C8D22E258ECC2000E43583 /* ReviewHeadlineViewModel.swift */,
 				8866042C25917BF400FF2D98 /* ReviewingViewModel.swift */,
-				8866043B259BE17B00FF2D98 /* ProfileSettingViewModel.swift */,
+				8866043B259BE17B00FF2D98 /* ProfileViewModel.swift */,
 				8866048E25A1348D00FF2D98 /* RegisteringShopViewModel.swift */,
 				8866049C25A2F70500FF2D98 /* RequestStatusViewModel.swift */,
 				88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */,
@@ -404,7 +404,7 @@
 				886B353D2557B70B0056AB86 /* LoginViewModel.swift in Sources */,
 				88C8D22A258C44B500E43583 /* AllPictureViewModel.swift in Sources */,
 				884CEB9B256FBE1F0020C932 /* ShopDetailView.swift in Sources */,
-				8866043C259BE17B00FF2D98 /* ProfileSettingViewModel.swift in Sources */,
+				8866043C259BE17B00FF2D98 /* ProfileViewModel.swift in Sources */,
 				88327BCF25903F4100733326 /* ReviewingView.swift in Sources */,
 				88C8D22F258ECC2000E43583 /* ReviewHeadlineViewModel.swift in Sources */,
 				88009D4825A831E100B4F813 /* RequestingTopViewModel.swift in Sources */,
@@ -419,7 +419,7 @@
 				8866049D25A2F70500FF2D98 /* RequestStatusViewModel.swift in Sources */,
 				88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */,
 				888FCCFA25AF05BC00622DD9 /* InspectingRequestView.swift in Sources */,
-				88660439259BCA3500FF2D98 /* ProfileSettingView.swift in Sources */,
+				88660439259BCA3500FF2D98 /* ProfileView.swift in Sources */,
 				884CEB95256CDCD40020C932 /* ShopsMapViewModel.swift in Sources */,
 				888FCCF725AEDB5000622DD9 /* AdminPageViewModel.swift in Sources */,
 				888FCD2D25B1DA1F00622DD9 /* PushNotificationSender.swift in Sources */,

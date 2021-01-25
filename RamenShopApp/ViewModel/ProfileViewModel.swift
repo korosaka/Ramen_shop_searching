@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Firebase
 import Photos
-class ProfileSettingViewModel: ObservableObject {
+class ProfileViewModel: ObservableObject {
     @Published var userProfile: Profile
     @Published var isEditingName = false
     @Published var newName = ""
@@ -101,7 +101,7 @@ class ProfileSettingViewModel: ObservableObject {
     }
 }
 
-extension ProfileSettingViewModel: FirebaseHelperDelegate {
+extension ProfileViewModel: FirebaseHelperDelegate {
     func completedFetchingProfile(profile: Profile?) {
         isShowingProgress = false
         guard let _profile = profile else { return }
@@ -125,7 +125,7 @@ extension ProfileSettingViewModel: FirebaseHelperDelegate {
     }
 }
 
-extension ProfileSettingViewModel: ImagePickerDelegate {
+extension ProfileViewModel: ImagePickerDelegate {
     func pickedPicture(image: UIImage) {
         updateUserIcon(iconImage: image)
     }
