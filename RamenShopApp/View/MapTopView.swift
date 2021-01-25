@@ -31,6 +31,14 @@ struct MapTopView: View {
                         }.frame(width: 10)
                     }
                     .navigationBarHidden(true)
+                SettingsView()
+                    .tabItem {
+                    VStack {
+                        Image(systemName: "list.bullet")
+                        Text("Settings")
+                    }.frame(width: 10)
+                }
+                .navigationBarHidden(true)
             }
         }
     }
