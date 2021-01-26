@@ -15,22 +15,24 @@ struct SignupView: View {
     
     var body: some View {
         ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.pasteGreen, Color.whitePasteGreen]),
+                           startPoint: .top,
+                           endPoint: .bottom)
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
                 Spacer()
                 TextField("email", text: $viewModel.email)
                     .basicStyle()
+                Spacer().frame(height: 30)
                 TextField("passsword", text: $viewModel.password)
                     .basicStyle()
-                    .padding(.init(top: 0,
-                                   leading: 0,
-                                   bottom: 20,
-                                   trailing: 0))
+                Spacer().frame(height: 50)
                 Button(action: {
                     self.viewModel.createAccount()
                 }) {
-                    Text("Create account")
-                        .basicButtonTextStyle(Color.white, Color.yellow)
+                    Text("done")
+                        .containingSymbol(symbol: "person.badge.plus",
+                                          color: .viridianGreen)
                 }
                 .alert(isPresented: $viewModel.isShowSignUpAlert) {
                     if viewModel.sentEmail {
@@ -57,7 +59,6 @@ struct SignupView: View {
                 CustomedProgress()
             }
         }
-        .background(Color.green)
         .navigationBarHidden(true)
     }
 }
