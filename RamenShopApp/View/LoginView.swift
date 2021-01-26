@@ -87,7 +87,9 @@ struct LoginView: View {
                     if(viewModel.logined) {
                         if viewModel.isAdmin {
                             NavigationLink(destination: AdminPageView(viewModel: .init())) {
-                                Text("Admin Page").basicButtonTextStyle(Color.white, Color.red)
+                                Text("admin")
+                                    .containingSymbol(symbol: "person.3",
+                                                      color: .purple)
                             }
                         } else {
                             NavigationLink(destination: MapTopView()) {
@@ -116,12 +118,10 @@ struct LoginView: View {
                         VStack {
                             TextField("email", text: $viewModel.email)
                                 .basicStyle()
+                            Spacer().frame(height: 30)
                             TextField("passsword", text: $viewModel.password)
                                 .basicStyle()
-                                .padding(.init(top: 0,
-                                               leading: 0,
-                                               bottom: 20,
-                                               trailing: 0))
+                            Spacer().frame(height: 40)
                             Button(action: {
                                 self.viewModel.login()
                             }) {

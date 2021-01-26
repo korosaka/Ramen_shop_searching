@@ -13,7 +13,7 @@ struct BasicTextField: ViewModifier {
         content
             .frame(maxWidth: .infinity)
             .textFieldStyle(RoundedBorderTextFieldStyle())
-            .padding(.init(top: 10, leading: 20, bottom: 10, trailing: 20))
+            .sidePadding(size: 20)
     }
 }
 
