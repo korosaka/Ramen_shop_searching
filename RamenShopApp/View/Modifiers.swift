@@ -23,22 +23,29 @@ extension TextField {
     }
 }
 
+//MARK: TODO refactoring like Button.basicStyle
 extension Text {
     func basicButtonTextStyle(_ foreColor: Color, _ backColor: Color) -> some View {
         self.font(.title)
             .bold()
             .foregroundColor(foreColor)
-            .padding(.init(top: 10,
-                           leading: 0,
-                           bottom: 10,
-                           trailing: 0))
+            .upDownPadding(size: 10)
             .frame(maxWidth: .infinity)
             .border(Color.black, width: 2)
             .background(backColor)
-            .padding(.init(top: 0,
-                           leading: 20,
-                           bottom: 0,
-                           trailing: 20))
+            .sidePadding(size: 20)
+    }
+    
+    func containingSymbol(symbol: String, color: Color) -> some View {
+        HStack {
+            self.foregroundColor(.white).bold().font(.title)
+            Image(systemName: symbol).foregroundColor(.white).font(.title3)
+        }
+        .upDownPadding(size: 8)
+        .sidePadding(size: 25)
+        .background(color)
+        .cornerRadius(20)
+        .shadow(color: .black, radius: 2)
     }
 }
 
@@ -116,4 +123,19 @@ extension Button {
                         .background(backColor)
                         .cornerRadius(radius))
     }
+}
+
+extension Color {
+    static var darkGray: Color { return Color.init(red: 51 / 255, green: 51 / 255, blue: 51 / 255) }
+    static var pastelRed: Color { return Color.init(red: 255 / 255, green: 163 / 255, blue: 209 / 255) }
+    static var viridianGreen: Color { return Color.init(red: 0 / 255, green: 136 / 255, blue: 90 / 255) }
+    static var pasteGreen: Color { return Color.init(red: 127 / 255, green: 255 / 255, blue: 127 / 255) }
+    static var whitePasteGreen: Color { return Color.init(red: 173 / 255, green: 255 / 255, blue: 214 / 255) }
+    static var navy: Color { return Color.init(red: 0 / 255, green: 0 / 255, blue: 204 / 255) }
+    static var strongRed: Color { return Color.init(red: 255 / 255, green: 0 / 255, blue: 0 / 255) }
+    static var strongPink: Color { return Color.init(red: 255 / 255, green: 0 / 255, blue: 127 / 255) }
+    static var pastelPink: Color { return Color.init(red: 255 / 255, green: 188 / 255, blue: 255 / 255) }
+    static var skyBlue: Color { return Color.init(red: 0 / 255, green: 255 / 255, blue: 255 / 255) }
+    static var seaBlue: Color { return Color.init(red: 0 / 255, green: 127 / 255, blue: 255 / 255) }
+    
 }

@@ -68,45 +68,42 @@ struct LoginView: View {
     
     @ObservedObject var viewModel: LoginViewModel
     
-    
     var body: some View {
         NavigationView {
             ZStack {
-                Color.pink
+                LinearGradient(gradient: Gradient(colors: [Color.pasteGreen, Color.whitePasteGreen]),
+                               startPoint: .top,
+                               endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all)
                 VStack {
-                    Text("Ramen Search App")
-                        .foregroundColor(Color.white)
-                        .font(.largeTitle)
+                    Spacer().frame(height: UIScreen.main.bounds.height / 4)
+                    Text("RAMEN SHOP MAP")
+                        .foregroundColor(Color.strongRed)
+                        .font(.system(size: 35, weight: .black, design: .default))
+                        .italic()
                         .bold()
-                        .frame(maxWidth: .infinity)
-                        .padding(.init(top: 40,
-                                       leading: 0,
-                                       bottom: 40,
-                                       trailing: 0))
-                        .background(Color.red)
-                        .cornerRadius(20)
-                        .padding(.init(top: 100,
-                                       leading: 5,
-                                       bottom: 0,
-                                       trailing: 5))
-                        .navigationBarHidden(true)
+                        .shadow(color: .black, radius: 2, x: 2, y: 2)
+                    Spacer().frame(height: 70)
                     if(viewModel.logined) {
-                        Text("logined")
-                            .font(.title)
-                            .foregroundColor(Color.white)
-                            .underline()
-                            .padding()
-                        
+                        if viewModel.isAdmin {
+                            NavigationLink(destination: AdminPageView(viewModel: .init())) {
+                                Text("Admin Page").basicButtonTextStyle(Color.white, Color.red)
+                            }
+                        } else {
+                            NavigationLink(destination: MapTopView()) {
+                                Text("start")
+                                    .containingSymbol(symbol: "play.circle.fill",
+                                                      color: .strongPink)
+                            }
+                        }
+                        Spacer().frame(height: 35)
                         Button(action: {
                             self.viewModel.logout()
                         }) {
-                            Text("Logout")
-                                .basicButtonTextStyle(Color.white, Color.purple)
-                                .padding(.init(top: 10,
-                                               leading: 0,
-                                               bottom: 0,
-                                               trailing: 0))
+                            Text("logout")
+                                .foregroundColor(.darkGray)
+                                .underline()
+                                .font(.title2)
                         }
                         .alert(isPresented: $viewModel.logoutError) {
                             Alert(title: Text("Logout Error"),
@@ -114,6 +111,7 @@ struct LoginView: View {
                                   dismissButton: .default(Text("OK"),
                                                           action: { self.viewModel.reset() }))
                         }
+                        Spacer()
                     } else {
                         VStack {
                             TextField("email", text: $viewModel.email)
@@ -127,8 +125,9 @@ struct LoginView: View {
                             Button(action: {
                                 self.viewModel.login()
                             }) {
-                                Text("Login")
-                                    .basicButtonTextStyle(Color.white, Color.blue)
+                                Text("login")
+                                    .containingSymbol(symbol: "key.fill",
+                                                      color: .seaBlue)
                             }
                             .alert(isPresented: $viewModel.isShowLoginAlert) {
                                 if viewModel.isEmailNotVerified {
@@ -150,45 +149,34 @@ struct LoginView: View {
                                 }
                             }
                         }
-                        .padding(.init(top: 100,
-                                       leading: 0,
-                                       bottom: 0,
-                                       trailing: 0))
                         .onAppear() { self.viewModel.reset() }
-                    }
-                    
-                    Spacer()
-                    if(viewModel.logined) {
-                        if viewModel.isAdmin {
-                            NavigationLink(destination: AdminPageView(viewModel: .init())) {
-                                Text("Admin Page").basicButtonTextStyle(Color.white, Color.red)
-                            }
-                        } else {
-                            NavigationLink(destination: MapTopView()) {
-                                Text("Go to Ramen Search !").basicButtonTextStyle(Color.white, Color.red)
-                            }
-                        }
-                    }
-                    Spacer()
-                    
-                    if(!viewModel.logined) {
+                        Spacer()
                         NavigationLink(destination: SignupView(viewModel: viewModel)) {
-                            Text("Create new account")
-                                .basicButtonTextStyle(Color.white, Color.yellow)
-                                .padding(.init(top: 0,
-                                               leading: 0,
-                                               bottom: 10,
-                                               trailing: 0))
+                            HStack {
+                                Spacer()
+                                Text("sign up").foregroundColor(.white).bold().font(.title)
+                                Spacer().frame(width: 15)
+                                Image(systemName: "person.badge.plus").foregroundColor(.white).font(.title3)
+                                Spacer()
+                            }
+                            .upDownPadding(size: 8)
+                            .sidePadding(size: 25)
+                            .background(Color.viridianGreen)
+                            .cornerRadius(20)
+                            .shadow(color: .black, radius: 2)
+                            .sidePadding(size: 25)
                         }
                         .simultaneousGesture(TapGesture().onEnded{
                             self.viewModel.reset()
                         })
+                        Spacer().frame(height: 20)
                     }
                 }
                 if viewModel.isShowingProgress {
                     CustomedProgress()
                 }
             }
+            .navigationBarHidden(true)
         }
     }
 }
@@ -202,7 +190,8 @@ struct CustomedProgress: View {
                 .upDownPadding(size: 30)
             Spacer()
         }
-        .background(Color.blue).cornerRadius(20)
+        .background(Color.blue)
+        .cornerRadius(20)
         .sidePadding(size: 30)
     }
 }
