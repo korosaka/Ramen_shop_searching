@@ -36,10 +36,10 @@ extension Text {
             .sidePadding(size: 20)
     }
     
-    func containingSymbol(symbol: String, color: Color) -> some View {
+    func containingSymbol(symbol: String, color: Color, textFont: Font, symbolFont: Font) -> some View {
         HStack {
-            self.foregroundColor(.white).bold().font(.title)
-            Image(systemName: symbol).foregroundColor(.white).font(.title3)
+            self.foregroundColor(.white).bold().font(textFont)
+            Image(systemName: symbol).foregroundColor(.white).font(symbolFont)
         }
         .upDownPadding(size: 8)
         .sidePadding(size: 25)
@@ -129,7 +129,7 @@ extension Color {
     static var darkGray: Color { return Color.init(red: 51 / 255, green: 51 / 255, blue: 51 / 255) }
     static var pastelRed: Color { return Color.init(red: 255 / 255, green: 163 / 255, blue: 209 / 255) }
     static var viridianGreen: Color { return Color.init(red: 0 / 255, green: 136 / 255, blue: 90 / 255) }
-    static var pasteGreen: Color { return Color.init(red: 127 / 255, green: 255 / 255, blue: 127 / 255) }
+    static var pastelGreen: Color { return Color.init(red: 127 / 255, green: 255 / 255, blue: 127 / 255) }
     static var whitePasteGreen: Color { return Color.init(red: 173 / 255, green: 255 / 255, blue: 214 / 255) }
     static var navy: Color { return Color.init(red: 0 / 255, green: 0 / 255, blue: 204 / 255) }
     static var strongRed: Color { return Color.init(red: 255 / 255, green: 0 / 255, blue: 0 / 255) }

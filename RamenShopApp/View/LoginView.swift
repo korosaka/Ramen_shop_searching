@@ -15,7 +15,7 @@ struct SignupView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.pasteGreen, Color.whitePasteGreen]),
+            LinearGradient(gradient: Gradient(colors: [Color.pastelGreen, Color.whitePasteGreen]),
                            startPoint: .top,
                            endPoint: .bottom)
             VStack(spacing: 0) {
@@ -38,7 +38,9 @@ struct SignupView: View {
                 }) {
                     Text("done")
                         .containingSymbol(symbol: "person.badge.plus",
-                                          color: .viridianGreen)
+                                          color: .viridianGreen,
+                                          textFont: .title,
+                                          symbolFont: .title3)
                 }
                 .alert(isPresented: $viewModel.isShowSignUpAlert) {
                     if viewModel.sentEmail {
@@ -78,7 +80,7 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color.pasteGreen, Color.whitePasteGreen]),
+                LinearGradient(gradient: Gradient(colors: [Color.pastelGreen, Color.whitePasteGreen]),
                                startPoint: .top,
                                endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all)
@@ -96,13 +98,17 @@ struct LoginView: View {
                             NavigationLink(destination: AdminPageView(viewModel: .init())) {
                                 Text("admin")
                                     .containingSymbol(symbol: "person.3",
-                                                      color: .purple)
+                                                      color: .purple,
+                                                      textFont: .title,
+                                                      symbolFont: .title3)
                             }
                         } else {
                             NavigationLink(destination: MapTopView()) {
                                 Text("start")
                                     .containingSymbol(symbol: "play.circle.fill",
-                                                      color: .strongPink)
+                                                      color: .strongPink,
+                                                      textFont: .title,
+                                                      symbolFont: .title3)
                             }
                         }
                         Spacer().frame(height: 35)
@@ -134,7 +140,9 @@ struct LoginView: View {
                             }) {
                                 Text("login")
                                     .containingSymbol(symbol: "key.fill",
-                                                      color: .seaBlue)
+                                                      color: .seaBlue,
+                                                      textFont: .title,
+                                                      symbolFont: .title3)
                             }
                             .alert(isPresented: $viewModel.isShowLoginAlert) {
                                 if viewModel.isEmailNotVerified {
