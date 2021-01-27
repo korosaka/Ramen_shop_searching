@@ -30,7 +30,7 @@ struct ShopDetailView: View {
                         Pictures(pictures: viewModel.pictures,
                                  shopID: viewModel.shop?.shopID)
                             .sidePadding(size: 10)
-                        Spacer().frame(height: 60)
+                        Spacer().frame(height: 100)
                     }
                 }
                 
@@ -39,10 +39,10 @@ struct ShopDetailView: View {
                     NavigationLink(destination: ReviewingView()
                                     .environmentObject(ReviewingViewModel(shop: viewModel.shop, delegate: viewModel))) {
                         Text("review")
-                            .containingSymbol(symbol: "bubble.left.fill",
-                                              color: .strongPink,
-                                              textFont: .largeTitle,
-                                              symbolFont: .title)
+                            .containingSymbolWide(symbol: "bubble.left.fill",
+                                                  color: .strongPink,
+                                                  textFont: .largeTitle,
+                                                  symbolFont: .title)
                     }
                     Spacer()
                 }

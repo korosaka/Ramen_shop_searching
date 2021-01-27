@@ -48,6 +48,20 @@ extension Text {
         .shadow(color: .black, radius: 2)
     }
     
+    func containingSymbolWide(symbol: String, color: Color, textFont: Font, symbolFont: Font) -> some View {
+        HStack {
+            Spacer()
+            self.foregroundColor(.white).bold().font(textFont)
+            Spacer().frame(width: 15)
+            Image(systemName: symbol).foregroundColor(.white).font(symbolFont)
+            Spacer()
+        }
+        .upDownPadding(size: 8)
+        .background(color)
+        .cornerRadius(20)
+        .shadow(color: .black, radius: 2)
+    }
+    
     func largestTitleStyle() -> some View {
         self
             .foregroundColor(Color.strongRed)

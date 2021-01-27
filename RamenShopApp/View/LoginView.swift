@@ -102,7 +102,7 @@ struct LoginView: View {
                                                       symbolFont: .title3)
                             }
                         }
-                        Spacer().frame(height: 35)
+                        Spacer().frame(height: 45)
                         Button(action: {
                             self.viewModel.logout()
                         }) {
@@ -158,19 +158,12 @@ struct LoginView: View {
                         .onAppear() { self.viewModel.reset() }
                         Spacer()
                         NavigationLink(destination: SignupView(viewModel: viewModel)) {
-                            HStack {
-                                Spacer()
-                                Text("sign up").foregroundColor(.white).bold().font(.title)
-                                Spacer().frame(width: 15)
-                                Image(systemName: "chevron.right").foregroundColor(.white).font(.title3)
-                                Spacer()
-                            }
-                            .upDownPadding(size: 8)
-                            .sidePadding(size: 25)
-                            .background(Color.viridianGreen)
-                            .cornerRadius(20)
-                            .shadow(color: .black, radius: 2)
-                            .sidePadding(size: 25)
+                            Text("sign up")
+                                .containingSymbolWide(symbol: "chevron.right",
+                                                      color: .viridianGreen,
+                                                      textFont: .title,
+                                                      symbolFont: .title3)
+                                .sidePadding(size: 20)
                         }
                         .simultaneousGesture(TapGesture().onEnded{
                             self.viewModel.reset()
