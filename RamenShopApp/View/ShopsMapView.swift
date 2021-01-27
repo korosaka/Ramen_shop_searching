@@ -13,9 +13,9 @@ struct ShopsMapView: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
+            BackGroundView()
             GoogleMapView(shopsMapVM: viewModel)
                 .padding(3)
-                .background(Color.pastelGreen)
             
             Button(action: {
                 self.viewModel.loadShops()

@@ -47,6 +47,15 @@ extension Text {
         .cornerRadius(20)
         .shadow(color: .black, radius: 2)
     }
+    
+    func largestTitleStyle() -> some View {
+        self
+            .foregroundColor(Color.strongRed)
+            .font(.system(size: 35, weight: .black, design: .default))
+            .italic()
+            .bold()
+            .shadow(color: .black, radius: 2, x: 2, y: 2)
+    }
 }
 
 extension UIImage {
@@ -137,5 +146,6 @@ extension Color {
     static var pastelPink: Color { return Color.init(red: 255 / 255, green: 188 / 255, blue: 255 / 255) }
     static var skyBlue: Color { return Color.init(red: 0 / 255, green: 255 / 255, blue: 255 / 255) }
     static var seaBlue: Color { return Color.init(red: 0 / 255, green: 127 / 255, blue: 255 / 255) }
-    
+    static var gold: Color { return Color.init(red: 255 / 255, green: 215 / 255, blue: 0 / 255) }
+    static var pastelYellow: Color { return Color.init(red: 255 / 255, green: 255 / 255, blue: 127 / 255) }
 }

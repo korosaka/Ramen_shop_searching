@@ -15,9 +15,7 @@ struct SignupView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.pastelGreen, Color.whitePasteGreen]),
-                           startPoint: .top,
-                           endPoint: .bottom)
+            BackGroundView()
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
                 Spacer().frame(height: UIScreen.main.bounds.height / 5)
@@ -80,18 +78,11 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color.pastelGreen, Color.whitePasteGreen]),
-                               startPoint: .top,
-                               endPoint: .bottom)
+                BackGroundView()
                     .edgesIgnoringSafeArea(.all)
                 VStack {
                     Spacer().frame(height: UIScreen.main.bounds.height / 4)
-                    Text("RAMEN SHOP MAP")
-                        .foregroundColor(Color.strongRed)
-                        .font(.system(size: 35, weight: .black, design: .default))
-                        .italic()
-                        .bold()
-                        .shadow(color: .black, radius: 2, x: 2, y: 2)
+                    Text("RAMEN SHOP MAP").largestTitleStyle()
                     Spacer().frame(height: 70)
                     if(viewModel.logined) {
                         if viewModel.isAdmin {
@@ -208,5 +199,14 @@ struct CustomedProgress: View {
         .background(Color.blue)
         .cornerRadius(20)
         .sidePadding(size: 30)
+    }
+}
+
+struct BackGroundView: View {
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [Color.green,
+                                                   Color.pastelGreen]),
+                       startPoint: .top,
+                       endPoint: .bottom)
     }
 }
