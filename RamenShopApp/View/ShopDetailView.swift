@@ -23,10 +23,10 @@ struct ShopDetailView: View {
                         ShopName(shopName: viewModel.shop?.name)
                         Spacer().frame(height: 10)
                         ShopEvaluation(aveEvaluation: viewModel.shop?.roundEvaluatione())
-                        Spacer().frame(height: 30)
+                        Spacer().frame(height: 40)
                         LatestReviews(latestReviews: viewModel.latestReviews,
                                       shop: viewModel.shop!)
-                        Spacer().frame(height: 30)
+                        Spacer().frame(height: 40)
                         Pictures(pictures: viewModel.pictures,
                                  shopID: viewModel.shop?.shopID)
                             .sidePadding(size: 10)
@@ -88,9 +88,11 @@ struct LatestReviews: View {
         if latestReviews.count > 0 {
             Text("latest reviews")
                 .foregroundColor(.white)
+                .shadow(color: .black, radius: 1, x: 1, y: 1)
         } else {
             Text("there is no review")
                 .foregroundColor(.white)
+                .shadow(color: .black, radius: 1, x: 1, y: 1)
         }
         
         if latestReviews.count > 0 {
@@ -108,17 +110,14 @@ struct LatestReviews: View {
                                trailing: 15))
         }
         if latestReviews.count > 0 {
-            NavigationLink(destination: AllReviewView(viewModel: .init(shop: shop))) {
-                HStack {
-                    Spacer()
+            HStack {
+                Spacer()
+                NavigationLink(destination: AllReviewView(viewModel: .init(shop: shop))) {
                     Text("all review...")
                         .foregroundColor(.seaBlue)
                         .underline()
+                        .sidePadding(size: 15)
                 }
-                .padding(.init(top: 3,
-                               leading: 0,
-                               bottom: 0,
-                               trailing: 15))
             }
         }
     }
@@ -182,6 +181,7 @@ struct Pictures: View {
             VStack {
                 Text("uploaded pictures")
                     .foregroundColor(.white)
+                    .shadow(color: .black, radius: 1, x: 1, y: 1)
                 HStack {
                     Spacer()
                     ForEach(0...2, id: \.self) { index in
@@ -205,22 +205,19 @@ struct Pictures: View {
                 .background(Color.white)
                 .cornerRadius(10)
                 
-                NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
-                    HStack {
-                        Spacer()
+                HStack {
+                    Spacer()
+                    NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
                         Text("all picture...")
                             .foregroundColor(.seaBlue)
                             .underline()
                     }
-                    .padding(.init(top: 3,
-                                   leading: 0,
-                                   bottom: 0,
-                                   trailing: 0))
                 }
             }
         } else {
             Text("there is no picture")
                 .foregroundColor(.white)
+                .shadow(color: .black, radius: 1, x: 1, y: 1)
         }
     }
 }

@@ -34,7 +34,7 @@ struct SignupView: View {
                 Button(action: {
                     self.viewModel.createAccount()
                 }) {
-                    Text("done")
+                    Text("sign up")
                         .containingSymbol(symbol: "person.badge.plus",
                                           color: .viridianGreen,
                                           textFont: .title,
@@ -162,7 +162,7 @@ struct LoginView: View {
                                 Spacer()
                                 Text("sign up").foregroundColor(.white).bold().font(.title)
                                 Spacer().frame(width: 15)
-                                Image(systemName: "person.badge.plus").foregroundColor(.white).font(.title3)
+                                Image(systemName: "chevron.right").foregroundColor(.white).font(.title3)
                                 Spacer()
                             }
                             .upDownPadding(size: 8)
