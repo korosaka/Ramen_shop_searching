@@ -140,6 +140,7 @@ extension Color {
     static var viridianGreen: Color { return Color.init(red: 0 / 255, green: 136 / 255, blue: 90 / 255) }
     static var pastelGreen: Color { return Color.init(red: 127 / 255, green: 255 / 255, blue: 127 / 255) }
     static var whitePasteGreen: Color { return Color.init(red: 173 / 255, green: 255 / 255, blue: 214 / 255) }
+    static var superWhitePasteGreen: Color { return Color.init(red: 224 / 255, green: 255 / 255, blue: 224 / 255) }
     static var navy: Color { return Color.init(red: 0 / 255, green: 0 / 255, blue: 204 / 255) }
     static var strongRed: Color { return Color.init(red: 255 / 255, green: 0 / 255, blue: 0 / 255) }
     static var strongPink: Color { return Color.init(red: 255 / 255, green: 0 / 255, blue: 127 / 255) }

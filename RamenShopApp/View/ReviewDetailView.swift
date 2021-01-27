@@ -86,7 +86,6 @@ struct PictureCollectionView: View {
                 PictureCell(ramenImage: ramenImage, size: pictureSize)
             }
             .frame(height: frameHieght)
-            .background(Color.blue)
         }
         
     }
@@ -102,8 +101,8 @@ struct PictureCell: View {
             .resizable()
             .scaledToFit()
             .frame(width: size, height: size)
-            .background(Color.red)
-            .border(Color.black)
+            .background(Color.white)
+            .border(Color.green)
     }
 }
 
