@@ -12,6 +12,7 @@ struct ReviewingView: View {
     @EnvironmentObject var viewModel: ReviewingViewModel
     var body: some View {
         ZStack {
+            BackGroundView()
             VStack(spacing: 0) {
                 CustomNavigationBar {
                     viewModel.leaveReviewing()
@@ -19,20 +20,18 @@ struct ReviewingView: View {
                 ScrollView(.vertical) {
                     Spacer().frame(height: 10)
                     ShopName(shopName: viewModel.shop?.name)
-                        .sidePadding(size: 15)
-                    Spacer().frame(height: 10)
+                    Spacer().frame(height: 20)
                     StarSelectView()
                         .sidePadding(size: 20)
                     Spacer().frame(height: 20)
                     EditingCommentView()
-                    Spacer().frame(height: 30)
+                    Spacer().frame(height: 50)
                     UploadingPicture()
-                        .sidePadding(size: 15)
+                        .sidePadding(size: 10)
                     Spacer().frame(height: 40)
                     DoneButton()
                 }
                 .frame(width: UIScreen.main.bounds.width)
-                .background(Color.blue)
             }
             if viewModel.isShowingProgress {
                 CustomedProgress()
@@ -45,16 +44,18 @@ struct ReviewingView: View {
 struct StarSelectView: View {
     var body: some View {
         VStack {
-            Text("Your Evaluation!")
+            Text("your evaluation")
                 .font(.headline)
                 .foregroundColor(.white)
+                .shadow(color: .black, radius: 2, x: 2, y: 2)
+            Spacer().frame(height: 10)
             HStack {
                 CustomStarButton(starNumber: 1)
                 CustomStarButton(starNumber: 2)
                 CustomStarButton(starNumber: 3)
                 CustomStarButton(starNumber: 4)
                 CustomStarButton(starNumber: 5)
-            }.background(Color.white)
+            }
         }
         
     }
@@ -71,7 +72,8 @@ struct CustomStarButton: View {
             }) {
                 viewModel.getStarImage(num: starNumber)
                     .font(.largeTitle)
-                    .foregroundColor(.yellow)
+                    .foregroundColor(.gold)
+                    .shadow(color: .black, radius: 1.5)
             }
             Spacer()
         }
@@ -87,8 +89,9 @@ struct EditingCommentView: View {
         VStack {
             TextEditor(text: $viewModel.comment)
                 .background(Color.white)
-                .frame(width: UIScreen.main.bounds.width * 0.9,
+                .frame(width: UIScreen.main.bounds.width * 0.95,
                        height: 250)
+                .cornerRadius(10)
                 .foregroundColor(viewModel.getCommentFontColor())
                 .onTapGesture { viewModel.onTapComment() }
             HStack {
@@ -97,12 +100,15 @@ struct EditingCommentView: View {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     viewModel.stopEditingComment()
                 }) {
-                    Text("Stop editing comment")
-                        .font(.headline)
-                        .bold()
+                    HStack {
+                        Image(systemName: "pencil.slash")
+                        Spacer().frame(width: 5)
+                        Text("stop editing").bold()
+                    }
+                    .sidePadding(size: 10)
                 }
                 .setEnabled(enabled: viewModel.isEditingComment,
-                            defaultColor: .yellow,
+                            defaultColor: .strongRed,
                             padding: 12,
                             radius: 10)
                 Spacer()
@@ -120,7 +126,7 @@ struct UploadingPicture: View {
             HStack {
                 Spacer()
                 Text("You can upload by 3 pictures")
-                    .foregroundColor(.white)
+                    .foregroundColor(.navy)
                 Spacer()
             }
             HStack {
@@ -144,9 +150,11 @@ struct UploadingPicture: View {
                 Button(action: {
                     viewModel.checkPhotoPermission()
                 }) {
-                    Text("Upload picture")
-                        .font(.headline)
-                        .bold()
+                    HStack {
+                        Image(systemName: "square.and.arrow.up")
+                        Spacer().frame(width: 5)
+                        Text("upload picture").bold()
+                    }
                 }
                 .setEnabled(enabled: viewModel.isPicUploadEnabled,
                             defaultColor: .green,
@@ -166,13 +174,16 @@ struct UploadingPicture: View {
                 Button(action: {
                     isShowCancelConfirmation.toggle()
                 }) {
-                    Text("Cancel upload")
-                        .font(.headline)
-                        .bold()
-                }.setEnabled(enabled: viewModel.isPicCancelEnabled,
-                             defaultColor: .orange,
-                             padding: 12,
-                             radius: 10)
+                    HStack {
+                        Image(systemName: "trash.fill")
+                        Spacer().frame(width: 5)
+                        Text("cancel upload").bold()
+                    }
+                }
+                .setEnabled(enabled: viewModel.isPicCancelEnabled,
+                            defaultColor: .strongRed,
+                            padding: 12,
+                            radius: 10)
                 .alert(isPresented: $isShowCancelConfirmation) {
                     Alert(title: Text("Cencel uploading"),
                           message: Text("Do you remove pictures?"),
@@ -193,22 +204,25 @@ struct DoneButton: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        HStack {
-            Spacer()
-            Button(action: {
-                viewModel.activeAlert = .confirmation
-                viewModel.isShowAlert = true
-            }) {
-                Text("Send Review!")
+        Button(action: {
+            viewModel.activeAlert = .confirmation
+            viewModel.isShowAlert = true
+        }) {
+            HStack {
+                Spacer()
+                Image(systemName: "paperplane.fill")
+                    .font(.largeTitle)
+                Spacer().frame(width: 20)
+                Text("send review")
                     .font(.largeTitle)
                     .bold()
+                Spacer()
             }
-            .setEnabled(enabled: viewModel.isEnoughInfo,
-                        defaultColor: .red,
-                        padding: 10,
-                        radius: 20)
-            Spacer()
         }
+        .setEnabled(enabled: viewModel.isEnoughInfo,
+                    defaultColor: .strongPink,
+                    padding: 10,
+                    radius: 20)
         .padding(10)
         .alert(isPresented: $viewModel.isShowAlert) {
             switch viewModel.activeAlert {

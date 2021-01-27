@@ -45,7 +45,7 @@ extension Text {
         .sidePadding(size: 25)
         .background(color)
         .cornerRadius(20)
-        .shadow(color: .black, radius: 2)
+        .shadow(color: .black, radius: 2, x: 1, y: 1)
     }
     
     func containingSymbolWide(symbol: String, color: Color, textFont: Font, symbolFont: Font) -> some View {
@@ -59,7 +59,7 @@ extension Text {
         .upDownPadding(size: 8)
         .background(color)
         .cornerRadius(20)
-        .shadow(color: .black, radius: 2)
+        .shadow(color: .black, radius: 2, x: 1, y: 1)
     }
     
     func largestTitleStyle() -> some View {
@@ -130,12 +130,13 @@ extension Button {
             return AnyView(self.padding(padding)
                             .foregroundColor(.white)
                             .background(defaultColor)
-                            .cornerRadius(radius))
+                            .cornerRadius(radius)
+                            .shadow(color: .black, radius: 2, x: 1, y: 1))
         } else {
             return AnyView(self.disabled(true)
                             .padding(padding)
                             .foregroundColor(.gray)
-                            .background(Color.black)
+                            .background(Color.pastelGray)
                             .cornerRadius(radius))
         }
     }
@@ -150,6 +151,7 @@ extension Button {
 
 extension Color {
     static var darkGray: Color { return Color.init(red: 51 / 255, green: 51 / 255, blue: 51 / 255) }
+    static var pastelGray: Color { return Color.init(red: 204 / 255, green: 204 / 255, blue: 204 / 255) }
     static var pastelRed: Color { return Color.init(red: 255 / 255, green: 163 / 255, blue: 209 / 255) }
     static var viridianGreen: Color { return Color.init(red: 0 / 255, green: 136 / 255, blue: 90 / 255) }
     static var pastelGreen: Color { return Color.init(red: 127 / 255, green: 255 / 255, blue: 127 / 255) }
