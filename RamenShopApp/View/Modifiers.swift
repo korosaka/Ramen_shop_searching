@@ -38,9 +38,10 @@ extension Text {
     
     func containingSymbol(symbol: String, color: Color, textFont: Font, symbolFont: Font) -> some View {
         HStack {
-            self.foregroundColor(.white).bold().font(textFont)
-            Image(systemName: symbol).foregroundColor(.white).font(symbolFont)
+            self.bold().font(textFont)
+            Image(systemName: symbol).font(symbolFont)
         }
+        .foregroundColor(.white)
         .upDownPadding(size: 8)
         .sidePadding(size: 25)
         .background(color)
@@ -48,14 +49,27 @@ extension Text {
         .shadow(color: .black, radius: 2, x: 1, y: 1)
     }
     
+    func containingSymbolDisable(symbol: String, textFont: Font, symbolFont: Font) -> some View {
+        HStack {
+            self.bold().font(textFont)
+            Image(systemName: symbol).font(symbolFont)
+        }
+        .foregroundColor(.gray)
+        .upDownPadding(size: 8)
+        .sidePadding(size: 25)
+        .background(Color.pastelGray)
+        .cornerRadius(20)
+    }
+    
     func containingSymbolWide(symbol: String, color: Color, textFont: Font, symbolFont: Font) -> some View {
         HStack {
             Spacer()
-            self.foregroundColor(.white).bold().font(textFont)
+            self.bold().font(textFont)
             Spacer().frame(width: 15)
-            Image(systemName: symbol).foregroundColor(.white).font(symbolFont)
+            Image(systemName: symbol).font(symbolFont)
             Spacer()
         }
+        .foregroundColor(.white)
         .upDownPadding(size: 8)
         .background(color)
         .cornerRadius(20)
