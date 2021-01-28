@@ -70,6 +70,14 @@ extension Text {
             .bold()
             .shadow(color: .black, radius: 2, x: 2, y: 2)
     }
+    
+    func middleTitleStyle() -> some View {
+        self
+            .font(.title)
+            .bold()
+            .foregroundColor(.white)
+            .shadow(color: .black, radius: 2, x: 2, y: 2)
+    }
 }
 
 extension UIImage {

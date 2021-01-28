@@ -17,12 +17,8 @@ struct AllPictureView: View {
             BackGroundView()
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
-                Text("All picture")
-                    .font(.title)
-                    .bold()
-                    .foregroundColor(.white)
-                    .shadow(color: .black, radius: 2, x: 2, y: 2)
-                    .padding(3)
+                Spacer().frame(height: 15)
+                Text("All picture").middleTitleStyle()
                 Spacer()
                 PictureCollectionView(scrollable: true,
                                       ramenImages: viewModel.allImages)
