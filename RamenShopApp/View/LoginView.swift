@@ -15,22 +15,30 @@ struct SignupView: View {
     
     var body: some View {
         ZStack {
+            BackGroundView()
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
-                Spacer()
+                Spacer().frame(height: UIScreen.main.bounds.height / 5)
+                Text("Sign Up")
+                    .foregroundColor(.viridianGreen)
+                    .font(.largeTitle)
+                    .bold()
+                    .shadow(color: .black, radius: 2, x: 2, y: 2)
+                Spacer().frame(height: 70)
                 TextField("email", text: $viewModel.email)
                     .basicStyle()
+                Spacer().frame(height: 30)
                 TextField("passsword", text: $viewModel.password)
                     .basicStyle()
-                    .padding(.init(top: 0,
-                                   leading: 0,
-                                   bottom: 20,
-                                   trailing: 0))
+                Spacer().frame(height: 50)
                 Button(action: {
                     self.viewModel.createAccount()
                 }) {
-                    Text("Create account")
-                        .basicButtonTextStyle(Color.white, Color.yellow)
+                    Text("sign up")
+                        .containingSymbol(symbol: "person.badge.plus",
+                                          color: .viridianGreen,
+                                          textFont: .title,
+                                          symbolFont: .title3)
                 }
                 .alert(isPresented: $viewModel.isShowSignUpAlert) {
                     if viewModel.sentEmail {
@@ -57,7 +65,6 @@ struct SignupView: View {
                 CustomedProgress()
             }
         }
-        .background(Color.green)
         .navigationBarHidden(true)
     }
 }
@@ -68,45 +75,41 @@ struct LoginView: View {
     
     @ObservedObject var viewModel: LoginViewModel
     
-    
     var body: some View {
         NavigationView {
             ZStack {
-                Color.pink
+                BackGroundView()
                     .edgesIgnoringSafeArea(.all)
                 VStack {
-                    Text("Ramen Search App")
-                        .foregroundColor(Color.white)
-                        .font(.largeTitle)
-                        .bold()
-                        .frame(maxWidth: .infinity)
-                        .padding(.init(top: 40,
-                                       leading: 0,
-                                       bottom: 40,
-                                       trailing: 0))
-                        .background(Color.red)
-                        .cornerRadius(20)
-                        .padding(.init(top: 100,
-                                       leading: 5,
-                                       bottom: 0,
-                                       trailing: 5))
-                        .navigationBarHidden(true)
+                    Spacer().frame(height: UIScreen.main.bounds.height / 4)
+                    Text("RAMEN SHOP MAP").largestTitleStyle()
+                    Spacer().frame(height: 70)
                     if(viewModel.logined) {
-                        Text("logined")
-                            .font(.title)
-                            .foregroundColor(Color.white)
-                            .underline()
-                            .padding()
-                        
+                        if viewModel.isAdmin {
+                            NavigationLink(destination: AdminPageView(viewModel: .init())) {
+                                Text("admin")
+                                    .containingSymbol(symbol: "person.3",
+                                                      color: .purple,
+                                                      textFont: .title,
+                                                      symbolFont: .title3)
+                            }
+                        } else {
+                            NavigationLink(destination: MapTopView()) {
+                                Text("start")
+                                    .containingSymbol(symbol: "play.circle.fill",
+                                                      color: .strongPink,
+                                                      textFont: .title,
+                                                      symbolFont: .title3)
+                            }
+                        }
+                        Spacer().frame(height: 45)
                         Button(action: {
                             self.viewModel.logout()
                         }) {
-                            Text("Logout")
-                                .basicButtonTextStyle(Color.white, Color.purple)
-                                .padding(.init(top: 10,
-                                               leading: 0,
-                                               bottom: 0,
-                                               trailing: 0))
+                            Text("logout")
+                                .foregroundColor(.darkGray)
+                                .underline()
+                                .font(.title2)
                         }
                         .alert(isPresented: $viewModel.logoutError) {
                             Alert(title: Text("Logout Error"),
@@ -114,21 +117,23 @@ struct LoginView: View {
                                   dismissButton: .default(Text("OK"),
                                                           action: { self.viewModel.reset() }))
                         }
+                        Spacer()
                     } else {
                         VStack {
                             TextField("email", text: $viewModel.email)
                                 .basicStyle()
+                            Spacer().frame(height: 30)
                             TextField("passsword", text: $viewModel.password)
                                 .basicStyle()
-                                .padding(.init(top: 0,
-                                               leading: 0,
-                                               bottom: 20,
-                                               trailing: 0))
+                            Spacer().frame(height: 40)
                             Button(action: {
                                 self.viewModel.login()
                             }) {
-                                Text("Login")
-                                    .basicButtonTextStyle(Color.white, Color.blue)
+                                Text("login")
+                                    .containingSymbol(symbol: "key.fill",
+                                                      color: .seaBlue,
+                                                      textFont: .title,
+                                                      symbolFont: .title3)
                             }
                             .alert(isPresented: $viewModel.isShowLoginAlert) {
                                 if viewModel.isEmailNotVerified {
@@ -150,59 +155,48 @@ struct LoginView: View {
                                 }
                             }
                         }
-                        .padding(.init(top: 100,
-                                       leading: 0,
-                                       bottom: 0,
-                                       trailing: 0))
                         .onAppear() { self.viewModel.reset() }
-                    }
-                    
-                    Spacer()
-                    if(viewModel.logined) {
-                        if viewModel.isAdmin {
-                            NavigationLink(destination: AdminPageView(viewModel: .init())) {
-                                Text("Admin Page").basicButtonTextStyle(Color.white, Color.red)
-                            }
-                        } else {
-                            NavigationLink(destination: MapTopView()) {
-                                Text("Go to Ramen Search !").basicButtonTextStyle(Color.white, Color.red)
-                            }
-                        }
-                    }
-                    Spacer()
-                    
-                    if(!viewModel.logined) {
+                        Spacer()
                         NavigationLink(destination: SignupView(viewModel: viewModel)) {
-                            Text("Create new account")
-                                .basicButtonTextStyle(Color.white, Color.yellow)
-                                .padding(.init(top: 0,
-                                               leading: 0,
-                                               bottom: 10,
-                                               trailing: 0))
+                            Text("sign up")
+                                .containingSymbolWide(symbol: "chevron.right",
+                                                      color: .viridianGreen,
+                                                      textFont: .title,
+                                                      symbolFont: .title3)
+                                .sidePadding(size: 20)
                         }
                         .simultaneousGesture(TapGesture().onEnded{
                             self.viewModel.reset()
                         })
+                        Spacer().frame(height: 20)
                     }
                 }
                 if viewModel.isShowingProgress {
                     CustomedProgress()
                 }
             }
+            .navigationBarHidden(true)
         }
     }
 }
 
 struct CustomedProgress: View {
     var body: some View {
-        HStack {
-            Spacer()
-            ProgressView("in process")
-                .foregroundColor(.white)
-                .upDownPadding(size: 30)
-            Spacer()
-        }
-        .background(Color.blue).cornerRadius(20)
-        .sidePadding(size: 30)
+        ProgressView("in process")
+            .foregroundColor(.viridianGreen)
+            .upDownPadding(size: 15)
+            .wideStyle()
+            .background(Color.superWhitePasteGreen)
+            .cornerRadius(20)
+            .sidePadding(size: 30)
+    }
+}
+
+struct BackGroundView: View {
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [Color.green,
+                                                   Color.pastelGreen]),
+                       startPoint: .top,
+                       endPoint: .bottom)
     }
 }

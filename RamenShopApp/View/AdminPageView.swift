@@ -13,31 +13,26 @@ struct AdminPageView: View {
     @ObservedObject var viewModel: AdminPageViewModel
     
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar(additionalAction: nil)
-            Spacer()
-            HStack {
-                Spacer()
-                Text("Adding shop requests")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .bold()
-                    .underline()
-                Spacer()
-            }
-            List {
-                ForEach(viewModel.requestedShops, id: \.shopID) { request in
-                    NavigationLink(destination: InspectingRequestView(viewModel: .init(request: request,
-                                                                                       delegate: viewModel))) {
-                        Text(request.name)
+        ZStack {
+            BackGroundView()
+            VStack(spacing: 0) {
+                CustomNavigationBar(additionalAction: nil)
+                Spacer().frame(height: 15)
+                Text("Shop Requests").middleTitleStyle()
+                Spacer().frame(height: 15)
+                List {
+                    ForEach(viewModel.requestedShops, id: \.shopID) { request in
+                        NavigationLink(destination: InspectingRequestView(viewModel: .init(request: request,
+                                                                                           delegate: viewModel))) {
+                            Text(request.name)
+                        }
                     }
                 }
+                .background(Color.white)
+                .cornerRadius(15)
+                .padding(5)
             }
-            .background(Color.white)
-            .padding(5)
-            Spacer()
         }
-        .background(Color.red)
         .navigationBarHidden(true)
     }
 }

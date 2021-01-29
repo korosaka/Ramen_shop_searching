@@ -14,12 +14,11 @@ struct AllPictureView: View {
     
     var body: some View {
         ZStack {
+            BackGroundView()
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
-                Text("All picture")
-                    .font(.title)
-                    .foregroundColor(.red)
-                    .padding(5)
+                Spacer().frame(height: 15)
+                Text("All picture").middleTitleStyle()
                 Spacer()
                 PictureCollectionView(scrollable: true,
                                       ramenImages: viewModel.allImages)

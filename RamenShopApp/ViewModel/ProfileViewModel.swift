@@ -24,13 +24,6 @@ class ProfileViewModel: ObservableObject {
     var activeAlertForName: ActiveAlert = .confirmation
     var isNameEdited: Bool { isEditingName && newName != "" }
     var hasProfileAlready = false
-    var changeNameButtonText: String {
-        if isEditingName {
-            return "cancel"
-        } else {
-            return "change name"
-        }
-    }
     
     init() {
         db = .init()

@@ -12,13 +12,17 @@ struct ProfileView: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     var body: some View {
         ZStack {
-            VStack(spacing: 0) {
-                Titleheader()
-                Spacer().frame(height: 30)
-                IconProfile()
-                Spacer().frame(height: 50)
-                NameProfile()
-                Spacer()
+            BackGroundView()
+            ScrollView(.vertical) {
+                VStack(spacing: 0) {
+                    Spacer().frame(height: 15)
+                    Titleheader()
+                    Spacer().frame(height: 50)
+                    IconProfile()
+                    Spacer().frame(height: 70)
+                    NameProfile()
+                    Spacer().frame(height: 100)
+                }
             }
             if viewModel.isShowingProgress {
                 CustomedProgress()
@@ -47,7 +51,6 @@ struct ProfileView: View {
                              })
             }
         }
-        .background(Color.green)
     }
 }
 
@@ -55,32 +58,32 @@ struct Titleheader: View {
     var body: some View {
         HStack {
             Spacer()
-            Text("Your Profile")
-                .font(.largeTitle)
-                .foregroundColor(.white)
-                .padding(5)
+            Text("Your Profile").middleTitleStyle()
             Spacer()
         }
-        .background(Color.red)
     }
 }
 
 struct IconProfile: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     var body: some View {
+        Text("ICON")
+            .foregroundColor(.white)
+            .shadow(color: .black, radius: 0.5, x: 0.5, y: 0.5)
+        Spacer().frame(height: 10)
         viewModel
             .getIconImage()
             .iconLargeStyle()
-        Spacer().frame(height: 10)
+        Spacer().frame(height: 15)
         Button(action: {
             viewModel.checkPhotoPermission()
         }) {
-            Text("change icon image")
+            Text("change icon")
+                .containingSymbol(symbol: "photo",
+                                  color: .viridianGreen,
+                                  textFont: .title2,
+                                  symbolFont: .title3)
         }
-        .basicStyle(foreColor: .white,
-                    backColor: .orange,
-                    padding: 10,
-                    radius: 10)
         .sheet(isPresented: $viewModel.isShowPhotoLibrary,
                content: { ImagePicker(delegate: viewModel) })
         .alert(isPresented: $viewModel.isShowPhotoPermissionDenied) {
@@ -98,36 +101,60 @@ struct NameProfile: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     
     var body: some View {
-        Text(viewModel.getUserName())
-            .font(.largeTitle)
-            .bold()
+        Text("NAME")
             .foregroundColor(.white)
-        Spacer().frame(height: 15)
+            .shadow(color: .black, radius: 0.5, x: 0.5, y: 0.5)
+        Spacer().frame(height: 2)
+        
         if viewModel.isEditingName {
+            Spacer().frame(height: 15)
             TextField("user name", text: $viewModel.newName)
                 .basicStyle()
-        }
-        VStack {
+            Spacer().frame(height: 15)
+            HStack {
+                Spacer()
+                Button(action: {
+                    viewModel.onClickChangeName()
+                }) {
+                    Text("cancel")
+                        .containingSymbol(symbol: "trash.fill",
+                                          color: .strongRed,
+                                          textFont: .title2,
+                                          symbolFont: .title3)
+                }
+                Spacer()
+                Button(action: {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    viewModel.isShowAlertForName = true
+                }) {
+                    Spacer().frame(width: 15)
+                    Text("done").font(.title2).bold()
+                    Spacer().frame(width: 5)
+                    Image(systemName: "paperplane.fill").font(.title3)
+                    Spacer().frame(width: 15)
+                }
+                .setEnabled(enabled: viewModel.isNameEdited,
+                            defaultColor: .strongPink,
+                            padding: 10,
+                            radius: 20)
+                Spacer()
+            }
+        } else {
+            Text(viewModel.getUserName())
+                .font(.largeTitle)
+                .bold()
+                .foregroundColor(.strongPink)
+                .shadow(color: .black, radius: 2, x: 2, y: 2)
+            Spacer().frame(height: 15)
             Button(action: {
                 viewModel.onClickChangeName()
             }) {
-                Text(viewModel.changeNameButtonText)
+                Text("change name")
+                    .containingSymbol(symbol: "pencil",
+                                      color: .viridianGreen,
+                                      textFont: .title2,
+                                      symbolFont: .title3)
             }
-            .basicStyle(foreColor: .white,
-                        backColor: .orange,
-                        padding: 10,
-                        radius: 10)
-            Spacer().frame(height: 10)
-            Button(action: {
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                viewModel.isShowAlertForName = true
-            }) {
-                Text("done")
-            }
-            .setEnabled(enabled: viewModel.isNameEdited,
-                        defaultColor: .red,
-                        padding: 10,
-                        radius: 10)
         }
     }
 }

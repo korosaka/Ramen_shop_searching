@@ -12,31 +12,31 @@ struct ShopsMapView: View {
     @ObservedObject var viewModel: ShopsMapViewModel
     
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            GoogleMapView(shopsMapVM: viewModel)
-                .padding(5)
-                .background(Color.blue)
-            
-            Button(action: {
-                self.viewModel.loadShops()
-            }) {
-                Text("Reload")
-                    .foregroundColor(.white)
-                    .padding(10)
-                    .background(Color.purple)
-                    .cornerRadius(13)
-                    .overlay(RoundedRectangle(cornerRadius: 13)
-                                .stroke(Color.black, lineWidth: 2)
-                    )
-                    .padding(10)
+        ZStack {
+            BackGroundView()
+            VStack(spacing: 0) {
+                Spacer().frame(height: 15)
+                Text("Ramen Shop Map").middleTitleStyle()
+                Spacer().frame(height: 15)
+                ZStack(alignment: .topTrailing) {
+                    GoogleMapView(shopsMapVM: viewModel)
+                        .cornerRadius(20)
+                        .padding(5)
+                    
+                    Button(action: {
+                        self.viewModel.loadShops()
+                    }) {
+                        Text("reload")
+                            .containingSymbol(symbol: "arrow.triangle.2.circlepath",
+                                              color: .strongPink,
+                                              textFont: .title3,
+                                              symbolFont: .title3)
+                            .padding(10)
+                    }
+                }
             }
             if viewModel.isShowingProgress {
-                VStack {
-                    Spacer()
-                    CustomedProgress()
-                    Spacer()
-                }
-                
+                CustomedProgress()
             }
             NavigationLink(destination: ShopDetailView(viewModel: .init(mapVM: self.viewModel)),
                            isActive: $viewModel.isShopSelected) {

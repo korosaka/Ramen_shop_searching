@@ -14,36 +14,39 @@ struct ShopDetailView: View {
     
     var body: some View {
         ZStack {
+            BackGroundView()
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
                 ScrollView(.vertical) {
                     VStack {
                         Spacer().frame(height: 10)
-                        ShopName(shopName: viewModel.shop?.name).sidePadding(size: 15)
+                        ShopName(shopName: viewModel.shop?.name)
+                        Spacer().frame(height: 10)
                         ShopEvaluation(aveEvaluation: viewModel.shop?.roundEvaluatione())
-                        Spacer().frame(height: 30)
+                        Spacer().frame(height: 40)
                         LatestReviews(latestReviews: viewModel.latestReviews,
                                       shop: viewModel.shop!)
-                        Spacer().frame(height: 20)
-                        Pictures(pictures: viewModel.pictures, shopID: viewModel.shop?.shopID)
+                        Spacer().frame(height: 40)
+                        Pictures(pictures: viewModel.pictures,
+                                 shopID: viewModel.shop?.shopID)
                             .sidePadding(size: 10)
-                        Spacer().frame(height: 30)
+                        Spacer().frame(height: 100)
                     }
                 }
-                .background(Color.blue)
                 
                 HStack {
                     Spacer()
                     NavigationLink(destination: ReviewingView()
                                     .environmentObject(ReviewingViewModel(shop: viewModel.shop, delegate: viewModel))) {
-                        Text("Review this shop").font(.largeTitle)
-                            .foregroundColor(.white)
-                            .underline()
-                            .upDownPadding(size: 5)
+                        Text("review")
+                            .containingSymbolWide(symbol: "bubble.left.fill",
+                                                  color: .strongPink,
+                                                  textFont: .largeTitle,
+                                                  symbolFont: .title)
                     }
                     Spacer()
                 }
-                .background(Color.red)
+                Spacer().frame(height: 10)
             }
             if viewModel.isShowingProgress {
                 CustomedProgress()
@@ -55,16 +58,8 @@ struct ShopDetailView: View {
 
 struct ShopName: View {
     let shopName: String?
-    
     var body: some View {
-        Text(shopName ?? "no-name")
-            .foregroundColor(Color.red)
-            .font(.largeTitle)
-            .bold()
-            .frame(maxWidth: .infinity)
-            .upDownPadding(size: 30)
-            .background(Color.white)
-            .cornerRadius(20)
+        Text(shopName ?? "no-name").largestTitleStyle()
     }
 }
 
@@ -74,11 +69,13 @@ struct ShopEvaluation: View {
     var body: some View {
         HStack {
             Image(systemName: "star.fill")
-                .foregroundColor(.yellow)
-                .font(.largeTitle)
+                .foregroundColor(.gold)
+                .font(.title)
+                .shadow(color: .black, radius: 1)
             Text(aveEvaluation ?? String(""))
-                .foregroundColor(.yellow)
+                .foregroundColor(.gold).bold()
                 .font(.largeTitle)
+                .shadow(color: .black, radius: 1)
         }
     }
 }
@@ -89,14 +86,13 @@ struct LatestReviews: View {
     
     var body: some View {
         if latestReviews.count > 0 {
-            Text("Latest reviews")
+            Text("latest reviews")
                 .foregroundColor(.white)
-                .underline()
-                .padding(3)
+                .shadow(color: .black, radius: 1, x: 1, y: 1)
         } else {
-            Text("There is no review")
+            Text("there is no review")
                 .foregroundColor(.white)
-                .padding(3)
+                .shadow(color: .black, radius: 1, x: 1, y: 1)
         }
         
         if latestReviews.count > 0 {
@@ -114,17 +110,14 @@ struct LatestReviews: View {
                                trailing: 15))
         }
         if latestReviews.count > 0 {
-            NavigationLink(destination: AllReviewView(viewModel: .init(shop: shop))) {
-                HStack {
-                    Spacer()
-                    Text("All review...")
-                        .foregroundColor(.white)
+            HStack {
+                Spacer()
+                NavigationLink(destination: AllReviewView(viewModel: .init(shop: shop))) {
+                    Text("all review...")
+                        .foregroundColor(.seaBlue)
                         .underline()
+                        .sidePadding(size: 15)
                 }
-                .padding(.init(top: 3,
-                               leading: 0,
-                               bottom: 0,
-                               trailing: 15))
             }
         }
     }
@@ -186,6 +179,9 @@ struct Pictures: View {
     var body: some View {
         if pictures.count > 0 {
             VStack {
+                Text("uploaded pictures")
+                    .foregroundColor(.white)
+                    .shadow(color: .black, radius: 1, x: 1, y: 1)
                 HStack {
                     Spacer()
                     ForEach(0...2, id: \.self) { index in
@@ -209,23 +205,19 @@ struct Pictures: View {
                 .background(Color.white)
                 .cornerRadius(10)
                 
-                NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
-                    HStack {
-                        Spacer()
-                        Text("All picture...")
-                            .foregroundColor(.white)
+                HStack {
+                    Spacer()
+                    NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
+                        Text("all picture...")
+                            .foregroundColor(.seaBlue)
                             .underline()
                     }
-                    .padding(.init(top: 3,
-                                   leading: 0,
-                                   bottom: 0,
-                                   trailing: 0))
                 }
             }
         } else {
-            Text("There is no picture")
+            Text("there is no picture")
                 .foregroundColor(.white)
-                .padding(3)
+                .shadow(color: .black, radius: 1, x: 1, y: 1)
         }
     }
 }

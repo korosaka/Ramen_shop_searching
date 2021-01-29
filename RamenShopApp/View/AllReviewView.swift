@@ -14,12 +14,11 @@ struct AllReviewView: View {
     
     var body: some View {
         ZStack {
+            BackGroundView()
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
-                Text("All Review")
-                    .font(.title)
-                    .foregroundColor(.yellow)
-                    .padding(5)
+                Spacer().frame(height: 15)
+                Text("All Review").middleTitleStyle()
                 List {
                     ForEach(viewModel.reviews, id: \.reviewID) { review in
                         Button(action: {
@@ -32,16 +31,15 @@ struct AllReviewView: View {
                             }
                         }
                     }
-                    .listRowBackground(Color.white)
+                    .listRowBackground(Color.superWhitePasteGreen)
                 }
-                .background(Color.white)
+                .cornerRadius(15)
                 .padding(5)
             }
             if viewModel.isShowingProgress {
                 CustomedProgress()
             }
         }
-        .background(Color.blue)
         .navigationBarHidden(true)
         .onAppear() {
             viewModel.fetchAllReview()

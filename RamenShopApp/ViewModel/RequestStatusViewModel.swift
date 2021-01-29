@@ -29,7 +29,7 @@ class RequestStatusViewModel: ObservableObject {
         guard let _status = inspectionStatus else { return "" }
         switch _status {
         case .inProcess:
-            return "※You cannot create another request until reviewing this request would finish or canceling it."
+            return "※You cannot create another request until reviewing this request would be done or canceled."
         default:
             return "※If you wanna create new request, you need to click the above button."
         }

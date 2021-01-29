@@ -10,21 +10,25 @@ import SwiftUI
 
 struct SettingsView: View {
     var body: some View {
-        VStack {
-            if let url = URL(string: "https://korosaka.github.io/privacy_policy_for_RamenMap/") {
-                HStack {
-                    Spacer()
-                    Link("Privacy Policy", destination: url)
-                    Spacer()
+        ZStack {
+            BackGroundView()
+            VStack {
+                Spacer().frame(height: 15)
+                Text("Settings").middleTitleStyle()
+                Spacer().frame(height: 50)
+                if let url = URL(string: "https://korosaka.github.io/privacy_policy_for_RamenMap/") {
+                    HStack {
+                        Spacer()
+                        Link("Privacy Policy", destination: url)
+                        Spacer()
+                    }
+                    .upDownPadding(size: 10)
+                    .background(Color.superWhitePasteGreen)
+                    .cornerRadius(20)
+                    .sidePadding(size: 50)
                 }
-                .upDownPadding(size: 30)
-                .background(Color.white)
-                .cornerRadius(20)
-                .sidePadding(size: 30)
-                .upDownPadding(size: 50)
+                Spacer()
             }
-            Spacer()
         }
-        .background(Color.gray)
     }
 }

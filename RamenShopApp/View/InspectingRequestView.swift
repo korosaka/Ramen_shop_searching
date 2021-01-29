@@ -13,69 +13,66 @@ struct InspectingRequestView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var isShowRejectModal = false
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar(additionalAction: nil)
-            Text(viewModel.requestedShop.name)
-                .font(.title)
-                .bold()
-                .underline()
-                .foregroundColor(.white)
-                .padding(5)
-            GoogleMapView(inspectingRequestVM: viewModel)
-                .padding(5)
-            HStack {
-                Spacer()
-                Button(action: { viewModel.isShowingAlert.toggle() }) {
-                    Text("Approve")
-                        .font(.title)
-                        .bold()
+        ZStack {
+            BackGroundView()
+            VStack(spacing: 0) {
+                CustomNavigationBar(additionalAction: nil)
+                Spacer().frame(height: 10)
+                Text(viewModel.requestedShop.name)
+                    .largestTitleStyle()
+                Spacer().frame(height: 10)
+                GoogleMapView(inspectingRequestVM: viewModel)
+                    .cornerRadius(20)
+                    .padding(5)
+                HStack {
+                    Spacer()
+                    Button(action: { viewModel.isShowingAlert.toggle() }) {
+                        Text("Approve")
+                            .containingSymbol(symbol: "hand.thumbsup.fill",
+                                              color: .seaBlue,
+                                              textFont: .title2,
+                                              symbolFont: .title3)
+                    }
+                    Spacer()
+                    Button(action: { isShowRejectModal.toggle() }) {
+                        Text("Reject")
+                            .containingSymbol(symbol: "hand.thumbsdown.fill",
+                                              color: .strongRed,
+                                              textFont: .title2,
+                                              symbolFont: .title3)
+                    }
+                    .sheet(isPresented: $isShowRejectModal) {
+                        RejectModal(viewModel: self.viewModel)
+                    }
+                    Spacer()
                 }
-                .basicStyle(foreColor: .white,
-                            backColor: .blue,
-                            padding: 10,
-                            radius: 10)
-                Spacer()
-                Button(action: { isShowRejectModal.toggle() }) {
-                    Text("Reject")
-                        .font(.title)
-                        .bold()
-                }
-                .basicStyle(foreColor: .white,
-                            backColor: .red,
-                            padding: 10,
-                            radius: 10)
-                .sheet(isPresented: $isShowRejectModal) {
-                    RejectModal(viewModel: self.viewModel)
-                }
-                Spacer()
+                .upDownPadding(size: 15)
             }
-            .upDownPadding(size: 15)
-        }
-        .background(Color.green)
-        .navigationBarHidden(true)
-        .alert(isPresented: $viewModel.isShowingAlert) {
-            switch viewModel.activeAlert {
-            case .confirmation:
-                return Alert(title: Text("Final confirmation"),
-                             message: Text("Are you sure to approve it?"),
-                             primaryButton: .default(Text("Yes")) {
-                                viewModel.approve()
-                             },
-                             secondaryButton: .cancel(Text("cancel")))
-            case .completion:
-                return Alert(title: Text("Success!"),
-                             message: Text("Updating has been done."),
-                             dismissButton: .default(Text("OK")) {
-                                presentationMode.wrappedValue.dismiss()
-                                viewModel.completedInspection()
-                             })
-            case .error:
-                return Alert(title: Text("Fail"),
-                             message: Text("Updating was failed"),
-                             dismissButton: .default(Text("OK")) {
-                                presentationMode.wrappedValue.dismiss()
-                                viewModel.completedInspection()
-                             })
+            .navigationBarHidden(true)
+            .alert(isPresented: $viewModel.isShowingAlert) {
+                switch viewModel.activeAlert {
+                case .confirmation:
+                    return Alert(title: Text("Final confirmation"),
+                                 message: Text("Are you sure to approve it?"),
+                                 primaryButton: .default(Text("Yes")) {
+                                    viewModel.approve()
+                                 },
+                                 secondaryButton: .cancel(Text("cancel")))
+                case .completion:
+                    return Alert(title: Text("Success!"),
+                                 message: Text("Updating has been done."),
+                                 dismissButton: .default(Text("OK")) {
+                                    presentationMode.wrappedValue.dismiss()
+                                    viewModel.completedInspection()
+                                 })
+                case .error:
+                    return Alert(title: Text("Fail"),
+                                 message: Text("Updating was failed"),
+                                 dismissButton: .default(Text("OK")) {
+                                    presentationMode.wrappedValue.dismiss()
+                                    viewModel.completedInspection()
+                                 })
+                }
             }
         }
     }
@@ -87,21 +84,21 @@ struct RejectModal: View {
     @State var isShowRejectConfirmation = false
     var body: some View {
         VStack {
-            Text("reason for reject")
-                .font(.title)
-                .foregroundColor(.white)
-                .bold()
-                .underline()
+            Text("Reason")
+                .middleTitleStyle()
                 .upDownPadding(size: 10)
             TextEditor(text: $viewModel.rejectReason)
                 .frame(width: UIScreen.main.bounds.width * 0.9,
                        height: 250)
+                .cornerRadius(10)
+            Spacer().frame(height: 20)
             HStack {
                 Spacer()
                 Button(action: { isShowRejectConfirmation.toggle() }) {
                     Text("Done")
                         .font(.title)
                         .bold()
+                        .shadow(color: .black, radius: 2, x: 2, y: 2)
                 }
                 .basicStyle(foreColor: .white,
                             backColor: .red,
@@ -123,6 +120,7 @@ struct RejectModal: View {
                     Text("Stop")
                         .font(.title)
                         .bold()
+                        .shadow(color: .black, radius: 2, x: 2, y: 2)
                 }
                 .basicStyle(foreColor: .white,
                             backColor: .blue,

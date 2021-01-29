@@ -8,6 +8,7 @@
 
 import Firebase
 import FirebaseFirestore
+import SwiftUI
 
 struct FirebaseHelper {
     let firestore: Firestore
@@ -682,23 +683,35 @@ enum InspectionStatus: Int {
             return "Rejected!"
         }
     }
+    
+    func getStatusColor() -> Color {
+        switch self {
+        case .inProcess:
+            return .gold
+        case .approved:
+            return .seaBlue
+        default:
+            return .strongRed
+        }
+    }
+    
     func getSubMessage() -> String {
         switch self {
         case .inProcess:
-            return "This will be inspected within a few days"
+            return "This will be done within a few days."
         case .approved:
             return "This shop has been added to this app!"
         default:
-            return "Your request has been rejected"
+            return "Your request has been rejected."
         }
     }
     
     func getButtonMessage() -> String {
         switch self {
         case .inProcess:
-            return "Cancel this request"
+            return "cancel this request"
         default:
-            return "OK, I checked it"
+            return "I've checked it"
         }
     }
     
