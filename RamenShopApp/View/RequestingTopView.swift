@@ -14,9 +14,10 @@ struct RequestingTopView: View {
         //MARK: without VStack, crash will happen (see issue#43 for detail)
         VStack {
             if viewModel.hasRequest {
-                RequestStatusView(viewModel: .init(viewModel.userID!,
-                                                   viewModel.requestedShopID!,
-                                                   delegate: viewModel))
+                RequestStatusView()
+                    .environmentObject(RequestStatusViewModel(viewModel.userID!,
+                                                              viewModel.requestedShopID!,
+                                                              delegate: viewModel))
             } else {
                 RegisteringShopNameView(viewModel: .init(delegate: viewModel))
             }

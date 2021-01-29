@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct RequestStatusView: View {
-    @ObservedObject var viewModel: RequestStatusViewModel
+    @EnvironmentObject var viewModel: RequestStatusViewModel
     var body: some View {
         ZStack {
             BackGroundView()
@@ -19,10 +19,10 @@ struct RequestStatusView: View {
                     .middleTitleStyle()
                 if viewModel.hasRequest {
                     Spacer().frame(height: 30)
-                    RequestInfo(viewModel: viewModel)
+                    RequestInfo()
                         .sidePadding(size: 15)
                     Spacer().frame(height: 20)
-                    RemoveButton(viewModel: viewModel)
+                    RemoveButton()
                         .sidePadding(size: 15)
                     Spacer().frame(height: 30)
                     Text(viewModel.annotation)
@@ -45,14 +45,13 @@ struct RequestStatusView: View {
 }
 
 struct RequestInfo: View {
-    @ObservedObject var viewModel: RequestStatusViewModel
+    @EnvironmentObject var viewModel: RequestStatusViewModel
     var body: some View {
         VStack(spacing: 0) {
             Spacer().frame(height: 10).wideStyle()
-            //MARK: TODO this makes clash!
-            RequestedShopName(name: viewModel.shopName!)
+            RequestedShopName(name: viewModel.shopName ?? "")
             Spacer().frame(height: 30)
-            ReviewStatus(viewModel: viewModel)
+            ReviewStatus()
             Spacer().frame(height: 10)
         }
         .background(Color.superWhitePasteGreen)
@@ -75,16 +74,16 @@ struct RequestedShopName: View {
 }
 
 struct ReviewStatus: View {
-    @ObservedObject var viewModel: RequestStatusViewModel
+    @EnvironmentObject var viewModel: RequestStatusViewModel
     var body: some View {
         VStack {
             Text("review status")
                 .foregroundColor(.black)
                 .underline()
             Spacer().frame(height: 5)
-            Text(viewModel.inspectionStatus!.getStatus()).largestTitleStyleWithColor(color: viewModel.inspectionStatus!.getStatusColor())
+            Text(viewModel.inspectionStatus?.getStatus() ?? "").largestTitleStyleWithColor(color: viewModel.inspectionStatus?.getStatusColor() ?? .black)
             Spacer().frame(height: 5)
-            Text(viewModel.inspectionStatus!.getSubMessage()).foregroundColor(.gray)
+            Text(viewModel.inspectionStatus?.getSubMessage() ?? "").foregroundColor(.gray)
             Spacer().frame(height: 30)
             if viewModel.isRejected {
                 VStack {
@@ -105,12 +104,12 @@ struct ReviewStatus: View {
 }
 
 struct RemoveButton: View {
-    @ObservedObject var viewModel: RequestStatusViewModel
+    @EnvironmentObject var viewModel: RequestStatusViewModel
     var body: some View {
         Button(action: {
             viewModel.isShowAlert = true
         }) {
-            Text(viewModel.inspectionStatus!.getButtonMessage())
+            Text(viewModel.inspectionStatus?.getButtonMessage() ?? "")
                 .containingSymbolWide(symbol: "trash",
                                       color: .strongRed,
                                       textFont: .title,
@@ -120,7 +119,7 @@ struct RemoveButton: View {
             switch viewModel.activeAlert {
             case .confirmation:
                 return Alert(title: Text("Confirmation"),
-                             message: Text(viewModel.inspectionStatus!.getConfirmationMessage()),
+                             message: Text(viewModel.inspectionStatus?.getConfirmationMessage() ?? ""),
                              primaryButton: .default(Text("Yes")) {
                                 viewModel.onClickConfirmation()
                              },
