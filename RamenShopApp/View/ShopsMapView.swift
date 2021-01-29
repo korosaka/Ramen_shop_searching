@@ -45,3 +45,20 @@ struct ShopsMapView: View {
         }
     }
 }
+
+
+//MARK: TODO
+//struct ReloadButton: View {
+//    let buttonAction: ()
+//    var body: some View {
+//        Button(action: {
+//            buttonAction
+//        }) {
+//            Text("reload")
+//                .containingSymbol(symbol: "arrow.triangle.2.circlepath",
+//                                  color: .strongPink,
+//                                  textFont: .title3,
+//                                  symbolFont: .title3)
+//        }
+//    }
+//}

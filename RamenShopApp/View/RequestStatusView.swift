@@ -30,6 +30,7 @@ struct RequestStatusView: View {
                         .foregroundColor(.navy)
                         .padding(10)
                         .sidePadding(size: 10)
+                    Spacer().frame(height: 50)
                 } else {
                     Spacer()
                     Text("You have no request now").foregroundColor(.white)
@@ -86,18 +87,11 @@ struct ReviewStatus: View {
             Text(viewModel.inspectionStatus?.getSubMessage() ?? "").foregroundColor(.gray)
             Spacer().frame(height: 30)
             if viewModel.isRejected {
-                VStack {
-                    Text("reason for reject")
-                        .foregroundColor(.black)
-                        .underline()
-                        .wideStyle()
-                    Spacer().frame(height: 5)
-                    Text(viewModel.rejectReason)
-                        .foregroundColor(.navy)
-                        .bold()
-                }
-                .padding(5)
+                RejectReason()
+                    .padding(5)
+                Spacer().frame(height: 30)
             }
+            ReloadStatusButton()
             Spacer().frame(height: 5)
         }
     }
@@ -137,6 +131,37 @@ struct RemoveButton: View {
                                 viewModel.resetData()
                              })
             }
+        }
+    }
+}
+
+struct RejectReason: View {
+    @EnvironmentObject var viewModel: RequestStatusViewModel
+    var body: some View {
+        VStack {
+            Text("reason for reject")
+                .foregroundColor(.black)
+                .underline()
+                .wideStyle()
+            Spacer().frame(height: 5)
+            Text(viewModel.rejectReason)
+                .foregroundColor(.navy)
+                .bold()
+        }
+    }
+}
+
+struct ReloadStatusButton: View {
+    @EnvironmentObject var viewModel: RequestStatusViewModel
+    var body: some View {
+        Button(action: {
+            self.viewModel.fetchRequestStatus()
+        }) {
+            Text("reload")
+                .containingSymbol(symbol: "arrow.triangle.2.circlepath",
+                                  color: .strongPink,
+                                  textFont: .title3,
+                                  symbolFont: .title3)
         }
     }
 }
