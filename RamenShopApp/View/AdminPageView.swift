@@ -31,8 +31,28 @@ struct AdminPageView: View {
                 .background(Color.white)
                 .cornerRadius(15)
                 .padding(5)
+                ReloadRequestsButton(viewModel: viewModel)
+                    .padding(10)
+            }
+            if viewModel.isShowingProgress {
+                CustomedProgress()
             }
         }
         .navigationBarHidden(true)
+    }
+}
+
+struct ReloadRequestsButton: View {
+    @ObservedObject var viewModel: AdminPageViewModel
+    var body: some View {
+        Button(action: {
+            viewModel.fetchRequests()
+        }) {
+            Text("reload")
+                .containingSymbol(symbol: "arrow.triangle.2.circlepath",
+                                  color: .strongPink,
+                                  textFont: .title3,
+                                  symbolFont: .title3)
+        }
     }
 }
