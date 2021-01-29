@@ -18,9 +18,13 @@ struct RequestStatusView: View {
                 Text("Your Request Status")
                     .middleTitleStyle()
                 if viewModel.hasRequest {
+                    Spacer().frame(height: 30)
                     RequestInfo(viewModel: viewModel)
-                        .padding(10)
-                    Spacer().frame(height: 25)
+                        .sidePadding(size: 15)
+                    Spacer().frame(height: 20)
+                    RemoveButton(viewModel: viewModel)
+                        .sidePadding(size: 15)
+                    Spacer().frame(height: 30)
                     Text(viewModel.annotation)
                         .bold()
                         .foregroundColor(.navy)
@@ -43,13 +47,12 @@ struct RequestStatusView: View {
 struct RequestInfo: View {
     @ObservedObject var viewModel: RequestStatusViewModel
     var body: some View {
-        VStack {
-            Spacer().frame(height: 10)
+        VStack(spacing: 0) {
+            Spacer().frame(height: 10).wideStyle()
+            //MARK: TODO this makes clash!
             RequestedShopName(name: viewModel.shopName!)
-            Spacer().frame(height: 35)
+            Spacer().frame(height: 30)
             ReviewStatus(viewModel: viewModel)
-            Spacer().frame(height: 60)
-            RemoveButton(viewModel: viewModel)
             Spacer().frame(height: 10)
         }
         .background(Color.superWhitePasteGreen)
@@ -80,21 +83,23 @@ struct ReviewStatus: View {
                 .underline()
             Spacer().frame(height: 5)
             Text(viewModel.inspectionStatus!.getStatus()).largestTitleStyleWithColor(color: viewModel.inspectionStatus!.getStatusColor())
-            Spacer().frame(height: 10)
+            Spacer().frame(height: 5)
             Text(viewModel.inspectionStatus!.getSubMessage()).foregroundColor(.gray)
+            Spacer().frame(height: 30)
             if viewModel.isRejected {
                 VStack {
                     Text("reason for reject")
-                        .bold()
+                        .foregroundColor(.black)
                         .underline()
-                    Spacer().frame(height: 2)
+                        .wideStyle()
+                    Spacer().frame(height: 5)
                     Text(viewModel.rejectReason)
+                        .foregroundColor(.navy)
+                        .bold()
                 }
-                .padding(3)
-                .background(Color.gray)
-                .cornerRadius(10)
-                .padding(10)
+                .padding(5)
             }
+            Spacer().frame(height: 5)
         }
     }
 }
@@ -108,9 +113,8 @@ struct RemoveButton: View {
             Text(viewModel.inspectionStatus!.getButtonMessage())
                 .containingSymbolWide(symbol: "trash",
                                       color: .strongRed,
-                                      textFont: .title2,
-                                      symbolFont: .title3)
-                .wideStyle()
+                                      textFont: .title,
+                                      symbolFont: .title2)
         }
         .alert(isPresented: $viewModel.isShowAlert) {
             switch viewModel.activeAlert {
