@@ -12,127 +12,128 @@ struct RequestStatusView: View {
     @ObservedObject var viewModel: RequestStatusViewModel
     var body: some View {
         ZStack {
-            VStack(spacing: 0) {
-                HStack {
+            BackGroundView()
+            ScrollView(.vertical) {
+                Spacer().frame(height: 15)
+                Text("Your Request Status")
+                    .middleTitleStyle()
+                if viewModel.hasRequest {
+                    RequestInfo(viewModel: viewModel)
+                        .padding(10)
+                    Spacer().frame(height: 25)
+                    Text(viewModel.annotation)
+                        .bold()
+                        .foregroundColor(.navy)
+                        .padding(10)
+                        .sidePadding(size: 10)
+                } else {
                     Spacer()
-                    Text("Your request's status to add new shop")
-                        .font(.title)
-                        .foregroundColor(.white)
+                    Text("You have no request now").foregroundColor(.white)
                     Spacer()
-                }
-                .background(Color.orange)
-                ScrollView(.vertical) {
-                    if viewModel.hasRequest {
-                        VStack {
-                            HStack {
-                                Spacer()
-                                Text("Your Request")
-                                    .font(.largeTitle)
-                                    .bold()
-                                    .foregroundColor(.blue)
-                                Spacer()
-                            }
-                            Spacer().frame(height: 30)
-                            VStack {
-                                Text("Shop Name")
-                                    .foregroundColor(.black)
-                                    .underline()
-                                Spacer().frame(height: 5)
-                                Text(viewModel.shopName!)
-                                    .font(.title)
-                                    .bold()
-                                    .foregroundColor(.red)
-                            }
-                            Spacer().frame(height: 30)
-                            VStack {
-                                Text("Inspection Status")
-                                    .foregroundColor(.black)
-                                    .underline()
-                                Spacer().frame(height: 5)
-                                Text(viewModel.inspectionStatus!.getStatus())
-                                    .font(.title)
-                                    .bold()
-                                    .foregroundColor(.red)
-                                Text(viewModel.inspectionStatus!.getSubMessage())
-                                if viewModel.isRejected {
-                                    VStack {
-                                        //MARK: TODO refactor(create this type modifire)
-                                        HStack {
-                                            Spacer()
-                                            Text("reason for reject")
-                                                .bold()
-                                                .underline()
-                                            Spacer()
-                                        }
-                                        Spacer().frame(height: 2)
-                                        Text(viewModel.rejectReason)
-                                    }
-                                    .padding(3)
-                                    .background(Color.gray)
-                                    .cornerRadius(10)
-                                    .padding(10)
-                                }
-                            }
-                            Spacer()
-                            Button(action: {
-                                viewModel.isShowAlert = true
-                            }) {
-                                HStack {
-                                    Spacer()
-                                    Text(viewModel.inspectionStatus!.getButtonMessage())
-                                        .font(.title)
-                                        .bold()
-                                    Spacer()
-                                }
-                            }
-                            .basicStyle(foreColor: .white,
-                                        backColor: .blue,
-                                        padding: 10,
-                                        radius: 15)
-                            .padding(10)
-                            .alert(isPresented: $viewModel.isShowAlert) {
-                                switch viewModel.activeAlert {
-                                case .confirmation:
-                                    return Alert(title: Text("Confirmation"),
-                                                 message: Text(viewModel.inspectionStatus!.getConfirmationMessage()),
-                                                 primaryButton: .default(Text("Yes")) {
-                                                    viewModel.onClickConfirmation()
-                                                 },
-                                                 secondaryButton: .cancel(Text("cancel")))
-                                case .completion:
-                                    return Alert(title: Text("Success"),
-                                                 message: Text("Updating data was succeeded"),
-                                                 dismissButton: .default(Text("Close")) {
-                                                    viewModel.resetData()
-                                                 })
-                                case .error:
-                                    return Alert(title: Text("Fail"),
-                                                 message: Text("Updating data was failed"),
-                                                 dismissButton: .default(Text("Close")) {
-                                                    viewModel.resetData()
-                                                 })
-                                }
-                            }
-                            Text(viewModel.annotation)
-                                .foregroundColor(.gray)
-                                .padding(10)
-                        }
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .padding(20)
-                    } else {
-                        Spacer()
-                        Text("You have no request now").foregroundColor(.white)
-                        Spacer()
-                    }
                 }
             }
             if viewModel.isShowingProgress {
                 CustomedProgress()
             }
         }
-        .background(Color.green)
         .navigationBarHidden(true)
     }
 }
 
+struct RequestInfo: View {
+    @ObservedObject var viewModel: RequestStatusViewModel
+    var body: some View {
+        VStack {
+            Spacer().frame(height: 10)
+            RequestedShopName(name: viewModel.shopName!)
+            Spacer().frame(height: 35)
+            ReviewStatus(viewModel: viewModel)
+            Spacer().frame(height: 60)
+            RemoveButton(viewModel: viewModel)
+            Spacer().frame(height: 10)
+        }
+        .background(Color.superWhitePasteGreen)
+        .cornerRadius(20)
+    }
+}
+
+struct RequestedShopName: View {
+    let name: String
+    var body: some View {
+        VStack {
+            Text("shop name")
+                .foregroundColor(.black)
+                .underline()
+            Spacer().frame(height: 5)
+            Text(name)
+                .largestTitleStyleWithColor(color: .viridianGreen)
+        }
+    }
+}
+
+struct ReviewStatus: View {
+    @ObservedObject var viewModel: RequestStatusViewModel
+    var body: some View {
+        VStack {
+            Text("review status")
+                .foregroundColor(.black)
+                .underline()
+            Spacer().frame(height: 5)
+            Text(viewModel.inspectionStatus!.getStatus()).largestTitleStyleWithColor(color: viewModel.inspectionStatus!.getStatusColor())
+            Spacer().frame(height: 10)
+            Text(viewModel.inspectionStatus!.getSubMessage()).foregroundColor(.gray)
+            if viewModel.isRejected {
+                VStack {
+                    Text("reason for reject")
+                        .bold()
+                        .underline()
+                    Spacer().frame(height: 2)
+                    Text(viewModel.rejectReason)
+                }
+                .padding(3)
+                .background(Color.gray)
+                .cornerRadius(10)
+                .padding(10)
+            }
+        }
+    }
+}
+
+struct RemoveButton: View {
+    @ObservedObject var viewModel: RequestStatusViewModel
+    var body: some View {
+        Button(action: {
+            viewModel.isShowAlert = true
+        }) {
+            Text(viewModel.inspectionStatus!.getButtonMessage())
+                .containingSymbolWide(symbol: "trash",
+                                      color: .strongRed,
+                                      textFont: .title2,
+                                      symbolFont: .title3)
+                .wideStyle()
+        }
+        .alert(isPresented: $viewModel.isShowAlert) {
+            switch viewModel.activeAlert {
+            case .confirmation:
+                return Alert(title: Text("Confirmation"),
+                             message: Text(viewModel.inspectionStatus!.getConfirmationMessage()),
+                             primaryButton: .default(Text("Yes")) {
+                                viewModel.onClickConfirmation()
+                             },
+                             secondaryButton: .cancel(Text("cancel")))
+            case .completion:
+                return Alert(title: Text("Success"),
+                             message: Text("Updating data was succeeded"),
+                             dismissButton: .default(Text("Close")) {
+                                viewModel.resetData()
+                             })
+            case .error:
+                return Alert(title: Text("Fail"),
+                             message: Text("Updating data was failed"),
+                             dismissButton: .default(Text("Close")) {
+                                viewModel.resetData()
+                             })
+            }
+        }
+    }
+}

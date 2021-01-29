@@ -90,9 +90,14 @@ extension Text {
         .cornerRadius(20)
     }
     
+    //MARK: TODO replace with largestTitleStyleWithColor(color: .strongRed)
     func largestTitleStyle() -> some View {
+        largestTitleStyleWithColor(color: .strongRed)
+    }
+    
+    func largestTitleStyleWithColor(color: Color) -> some View {
         self
-            .foregroundColor(Color.strongRed)
+            .foregroundColor(color)
             .font(.system(size: 35, weight: .black, design: .default))
             .italic()
             .bold()
@@ -149,6 +154,15 @@ extension View {
                            leading: 0,
                            bottom: size,
                            trailing: 0))
+    }
+    
+    //MARK: TODO use anywhere!!
+    func wideStyle()  -> some View {
+        HStack {
+            Spacer()
+            self
+            Spacer()
+        }
     }
     
     func goToSetting() {
