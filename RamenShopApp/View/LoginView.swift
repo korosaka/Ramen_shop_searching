@@ -182,16 +182,13 @@ struct LoginView: View {
 
 struct CustomedProgress: View {
     var body: some View {
-        HStack {
-            Spacer()
-            ProgressView("in process")
-                .foregroundColor(.white)
-                .upDownPadding(size: 30)
-            Spacer()
-        }
-        .background(Color.blue)
-        .cornerRadius(20)
-        .sidePadding(size: 30)
+        ProgressView("in process")
+            .foregroundColor(.viridianGreen)
+            .upDownPadding(size: 15)
+            .wideStyle()
+            .background(Color.superWhitePasteGreen)
+            .cornerRadius(20)
+            .sidePadding(size: 30)
     }
 }
 

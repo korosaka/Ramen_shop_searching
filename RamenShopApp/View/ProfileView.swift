@@ -68,7 +68,7 @@ struct IconProfile: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     var body: some View {
         Text("ICON")
-            .foregroundColor(.seaBlue)
+            .foregroundColor(.white)
             .shadow(color: .black, radius: 0.5, x: 0.5, y: 0.5)
         Spacer().frame(height: 10)
         viewModel
@@ -80,7 +80,7 @@ struct IconProfile: View {
         }) {
             Text("change icon")
                 .containingSymbol(symbol: "photo",
-                                  color: .seaBlue,
+                                  color: .viridianGreen,
                                   textFont: .title2,
                                   symbolFont: .title3)
         }
@@ -102,7 +102,7 @@ struct NameProfile: View {
     
     var body: some View {
         Text("NAME")
-            .foregroundColor(.seaBlue)
+            .foregroundColor(.white)
             .shadow(color: .black, radius: 0.5, x: 0.5, y: 0.5)
         Spacer().frame(height: 2)
         
@@ -151,7 +151,7 @@ struct NameProfile: View {
             }) {
                 Text("change name")
                     .containingSymbol(symbol: "pencil",
-                                      color: .seaBlue,
+                                      color: .viridianGreen,
                                       textFont: .title2,
                                       symbolFont: .title3)
             }
