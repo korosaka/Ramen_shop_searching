@@ -46,6 +46,11 @@ class RequestStatusViewModel: ObservableObject {
         self.requestedShopID = requestedShopID
         db.delegate = self
         self.delegate = delegate
+        fetchRequestStatus()
+    }
+    
+    func fetchRequestStatus() {
+        isShowingProgress = true
         db.fetchShop(shopID: self.requestedShopID)
     }
     
@@ -81,6 +86,7 @@ class RequestStatusViewModel: ObservableObject {
 extension RequestStatusViewModel: FirebaseHelperDelegate {
     
     func completedFetchingShop(fetchedShopData: Shop) {
+        isShowingProgress = false
         shopName = fetchedShopData.name
         inspectionStatus = fetchedShopData.inspectionStatus
         
