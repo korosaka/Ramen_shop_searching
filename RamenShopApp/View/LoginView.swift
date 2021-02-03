@@ -177,6 +177,7 @@ struct LoginView: View {
             }
             .navigationBarHidden(true)
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
