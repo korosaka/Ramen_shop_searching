@@ -12,6 +12,8 @@ class ShopsMapViewModel: ObservableObject {
     @Published var shops: [Shop]
     @Published var isShopSelected = false
     @Published var isShowingProgress = false
+    @Published var evaluationFilter = -1
+    let filterValues: [Float] = [2.5, 3.5, 4.5]
     var selectedShop: Shop?
     
     init() {

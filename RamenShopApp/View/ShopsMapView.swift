@@ -17,7 +17,7 @@ struct ShopsMapView: View {
             VStack(spacing: 0) {
                 Spacer().frame(height: 15)
                 Text("Ramen Shop Map").middleTitleStyle()
-                Spacer().frame(height: 15)
+                Spacer().frame(height: 8)
                 ZStack(alignment: .topTrailing) {
                     GoogleMapView(shopsMapVM: viewModel)
                         .cornerRadius(20)
@@ -34,6 +34,10 @@ struct ShopsMapView: View {
                             .padding(10)
                     }
                 }
+                Spacer().frame(height: 5)
+                EvaluationFilter(viewModel: viewModel)
+                    .sidePadding(size: 5)
+                Spacer().frame(height: 20)
             }
             if viewModel.isShowingProgress {
                 CustomedProgress()
@@ -46,6 +50,24 @@ struct ShopsMapView: View {
     }
 }
 
+struct EvaluationFilter: View {
+    @ObservedObject var viewModel: ShopsMapViewModel
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            Text("evaluation filter")
+                .foregroundColor(.viridianGreen)
+                .shadow(color: .black, radius: 0.5, x: 0.5, y: 0.5)
+            Picker(selection: $viewModel.evaluationFilter, label: Text("EvaFilter"), content: {
+                Text("---").tag(-1)
+                ForEach(0..<viewModel.filterValues.count, id: \.self) { index in
+                    Text(String(viewModel.filterValues[index])).tag(index)
+                }
+            })
+            .pickerStyle(SegmentedPickerStyle())
+        }
+    }
+}
 
 //MARK: TODO
 //struct ReloadButton: View {
