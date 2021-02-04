@@ -57,9 +57,11 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
         switch mapType {
         case .admin:
             showRequestedShop(inspectingRequestVM?.requestedShop, mapView)
-            showAllShops(mapView, shops: inspectingRequestVM?.currentShops)
+            showAllShops(mapView, shops: inspectingRequestVM?.currentShops, filterIndex: nil, filterValues: [])
         case .searching:
-            showAllShops(mapView, shops: shopsMapVM?.shops)
+            showAllShops(mapView,
+                         shops: shopsMapVM?.shops,
+                         filterIndex: shopsMapVM?.evaluationFilter, filterValues: shopsMapVM!.filterValues)
         case .registering:
             return
         }
@@ -72,10 +74,15 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
         marker.map = mapView
     }
     
-    func showAllShops(_ mapView: GMSMapView, shops: [Shop]?) {
+    func showAllShops(_ mapView: GMSMapView, shops: [Shop]?, filterIndex: Int?, filterValues: [Float]) {
         guard let _shops = shops else { return }
         
         for shop in _shops {
+            if isOutOfFilter(filterIndex,
+                             filterValues,
+                             shopEva: shop.aveEvaluation) {
+                continue
+            }
             let marker = GMSMarker()
             let location = shop.location
             marker.icon = UIImage(named: "shop_icon")!.resized(withPercentage: 0.1)
@@ -86,6 +93,16 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
             
             marker.map = mapView
         }
+    }
+     
+    func isOutOfFilter(_ filterIndex: Int?, _ filterValues: [Float], shopEva: Float) -> Bool {
+        if !isValidFilter(filterIndex) { return false }
+        return shopEva < filterValues[filterIndex!]
+    }
+    
+    func isValidFilter(_ filterIndex: Int?) -> Bool {
+        guard let _filterIndex = filterIndex else { return false }
+        return _filterIndex >= 0
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
