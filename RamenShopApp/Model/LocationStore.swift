@@ -7,6 +7,18 @@
 //
 
 import Foundation
+import GoogleMaps
+
 class LocationStore {
+    let latitudeKey = "latitude_value"
+    let longitudeKey = "longitude_value"
+    func storeLocation(location: CLLocationCoordinate2D) {
+        UserDefaults.standard.set(location.latitude, forKey: latitudeKey)
+        UserDefaults.standard.set(location.longitude, forKey: longitudeKey)
+    }
     
+    func testPrint() {
+        //MARK: if any data can't be got, return 0.0
+        print("test1", UserDefaults.standard.double(forKey: latitudeKey))
+    }
 }

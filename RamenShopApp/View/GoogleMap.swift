@@ -69,6 +69,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
         
         guard let locationInfo = mapView.myLocation?.coordinate else { return }
         centerUserLocation(mapView, locationInfo)
+        LocationStore().storeLocation(location: locationInfo)
     }
     
     func centerUserLocation(_ mapView: GMSMapView, _ location: CLLocationCoordinate2D) {
@@ -104,7 +105,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
             marker.map = mapView
         }
     }
-     
+    
     func isOutOfFilter(_ filterIndex: Int?, _ filterValues: [Float], shopEva: Float) -> Bool {
         if !isValidFilter(filterIndex) { return false }
         return shopEva < filterValues[filterIndex!]
