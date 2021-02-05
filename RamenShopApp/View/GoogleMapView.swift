@@ -22,7 +22,7 @@ struct GoogleMapView: UIViewRepresentable {
         gMap = GoogleMap(registeringShopVM)
     }
     
-    init(inspectingRequestVM: InspectingRequestViewModel) {
+    init(inspectingRequestVM: ReviewingRequestViewModel) {
         gMap = GoogleMap(inspectingRequestVM)
     }
     

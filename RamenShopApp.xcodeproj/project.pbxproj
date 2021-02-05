@@ -46,8 +46,8 @@
 		888FCC5B25ABE5D500622DD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 888FCC5A25ABE5D500622DD9 /* GoogleService-Info.plist */; };
 		888FCCF425AED40D00622DD9 /* AdminPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCF325AED40D00622DD9 /* AdminPageView.swift */; };
 		888FCCF725AEDB5000622DD9 /* AdminPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCF625AEDB5000622DD9 /* AdminPageViewModel.swift */; };
-		888FCCFA25AF05BC00622DD9 /* InspectingRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCF925AF05BC00622DD9 /* InspectingRequestView.swift */; };
-		888FCCFD25AF063700622DD9 /* InspectingRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCFC25AF063700622DD9 /* InspectingRequestViewModel.swift */; };
+		888FCCFA25AF05BC00622DD9 /* ReviewingRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCF925AF05BC00622DD9 /* ReviewingRequestView.swift */; };
+		888FCCFD25AF063700622DD9 /* ReviewingRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCCFC25AF063700622DD9 /* ReviewingRequestViewModel.swift */; };
 		888FCD2D25B1DA1F00622DD9 /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCD2C25B1DA1F00622DD9 /* PushNotificationSender.swift */; };
 		88A42235257A001C003CC75D /* AllReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A42234257A001C003CC75D /* AllReviewView.swift */; };
 		88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapTopView.swift */; };
@@ -101,8 +101,8 @@
 		888FCC9725ACCECA00622DD9 /* RamenShopApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RamenShopApp.entitlements; sourceTree = "<group>"; };
 		888FCCF325AED40D00622DD9 /* AdminPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPageView.swift; sourceTree = "<group>"; };
 		888FCCF625AEDB5000622DD9 /* AdminPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPageViewModel.swift; sourceTree = "<group>"; };
-		888FCCF925AF05BC00622DD9 /* InspectingRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectingRequestView.swift; sourceTree = "<group>"; };
-		888FCCFC25AF063700622DD9 /* InspectingRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectingRequestViewModel.swift; sourceTree = "<group>"; };
+		888FCCF925AF05BC00622DD9 /* ReviewingRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewingRequestView.swift; sourceTree = "<group>"; };
+		888FCCFC25AF063700622DD9 /* ReviewingRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewingRequestViewModel.swift; sourceTree = "<group>"; };
 		888FCD2C25B1DA1F00622DD9 /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 		88A42234257A001C003CC75D /* AllReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewView.swift; sourceTree = "<group>"; };
 		88AFA79F2559B9C1001D151C /* MapTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTopView.swift; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 				8866049925A2F4E700FF2D98 /* RequestStatusView.swift */,
 				88009D4425A831C400B4F813 /* RequestingTopView.swift */,
 				888FCCF325AED40D00622DD9 /* AdminPageView.swift */,
-				888FCCF925AF05BC00622DD9 /* InspectingRequestView.swift */,
+				888FCCF925AF05BC00622DD9 /* ReviewingRequestView.swift */,
 				8835815725BE4E18009AB89B /* SettingsView.swift */,
 			);
 			path = View;
@@ -222,7 +222,7 @@
 				8866049C25A2F70500FF2D98 /* RequestStatusViewModel.swift */,
 				88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */,
 				888FCCF625AEDB5000622DD9 /* AdminPageViewModel.swift */,
-				888FCCFC25AF063700622DD9 /* InspectingRequestViewModel.swift */,
+				888FCCFC25AF063700622DD9 /* ReviewingRequestViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -387,7 +387,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				888FCCFD25AF063700622DD9 /* InspectingRequestViewModel.swift in Sources */,
+				888FCCFD25AF063700622DD9 /* ReviewingRequestViewModel.swift in Sources */,
 				883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */,
 				8866048C25A131CE00FF2D98 /* RegisteringShopNameView.swift in Sources */,
 				8835815825BE4E18009AB89B /* SettingsView.swift in Sources */,
@@ -418,7 +418,7 @@
 				886B3503255026550056AB86 /* ContentView.swift in Sources */,
 				8866049D25A2F70500FF2D98 /* RequestStatusViewModel.swift in Sources */,
 				88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */,
-				888FCCFA25AF05BC00622DD9 /* InspectingRequestView.swift in Sources */,
+				888FCCFA25AF05BC00622DD9 /* ReviewingRequestView.swift in Sources */,
 				88660439259BCA3500FF2D98 /* ProfileView.swift in Sources */,
 				884CEB95256CDCD40020C932 /* ShopsMapViewModel.swift in Sources */,
 				888FCCF725AEDB5000622DD9 /* AdminPageViewModel.swift in Sources */,

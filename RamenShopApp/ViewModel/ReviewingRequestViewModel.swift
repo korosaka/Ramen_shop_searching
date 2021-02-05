@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class InspectingRequestViewModel: ObservableObject {
+class ReviewingRequestViewModel: ObservableObject {
     let requestedShop: Shop
     @Published var currentShops: [Shop]
     @Published var rejectReason = ""
@@ -53,8 +53,8 @@ class InspectingRequestViewModel: ObservableObject {
     func sendPush(to token: String) {
         PushNotificationSender()
             .sendPushNotification(to: token,
-                                  title: "Inspecting has been done!",
-                                  body: "Your adding shop request has been inspected. Please check it in app.")
+                                  title: "Reviewing has been done!",
+                                  body: "Your adding shop request has been reviewed. Please check it in app.")
     }
 }
 
@@ -62,7 +62,7 @@ protocol InspectingRequestVMDelegate {
     func completedInspectionRequest()
 }
 
-extension InspectingRequestViewModel: FirebaseHelperDelegate {
+extension ReviewingRequestViewModel: FirebaseHelperDelegate {
     func completedFetchingShops(shops: [Shop]) {
         currentShops = shops
     }

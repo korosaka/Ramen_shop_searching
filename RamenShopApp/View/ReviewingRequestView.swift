@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-struct InspectingRequestView: View {
-    @ObservedObject var viewModel: InspectingRequestViewModel
+struct ReviewingRequestView: View {
+    @ObservedObject var viewModel: ReviewingRequestViewModel
     @Environment(\.presentationMode) var presentationMode
     @State var isShowRejectModal = false
     var body: some View {
@@ -79,7 +79,7 @@ struct InspectingRequestView: View {
 }
 
 struct RejectModal: View {
-    @ObservedObject var viewModel: InspectingRequestViewModel
+    @ObservedObject var viewModel: ReviewingRequestViewModel
     @Environment(\.presentationMode) var presentationMode
     @State var isShowRejectConfirmation = false
     var body: some View {

@@ -13,7 +13,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
     
     var shopsMapVM: ShopsMapViewModel?
     var registeringShopVM: RegisteringShopViewModel?
-    var inspectingRequestVM: InspectingRequestViewModel?
+    var inspectingRequestVM: ReviewingRequestViewModel?
     var mapType: MapType
     
     init(_ shopsMapVM: ShopsMapViewModel) {
@@ -28,7 +28,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
         super.init()
     }
     
-    init(_ inspectingRequestVM: InspectingRequestViewModel) {
+    init(_ inspectingRequestVM: ReviewingRequestViewModel) {
         self.inspectingRequestVM = inspectingRequestVM
         mapType = .admin
         super.init()
