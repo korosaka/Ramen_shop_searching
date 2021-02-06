@@ -88,15 +88,8 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let userInfo = notification.request.content.userInfo
-        
-        if let messageID = userInfo["gcm.message_id"] {
-            print("Message ID: \(messageID)")
-        }
-        
-        print(userInfo)
-        
-        completionHandler([])
+        //MARK: withou this, notification will never be shown on screen
+        completionHandler([.banner, .list, .sound])
     }
     
     //MARK: when tap "open" of push notification when app is background

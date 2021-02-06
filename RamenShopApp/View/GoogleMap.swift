@@ -13,7 +13,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
     
     var shopsMapVM: ShopsMapViewModel?
     var registeringShopVM: RegisteringShopViewModel?
-    var inspectingRequestVM: InspectingRequestViewModel?
+    var inspectingRequestVM: ReviewingRequestViewModel?
     var mapType: MapType
     
     init(_ shopsMapVM: ShopsMapViewModel) {
@@ -28,7 +28,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
         super.init()
     }
     
-    init(_ inspectingRequestVM: InspectingRequestViewModel) {
+    init(_ inspectingRequestVM: ReviewingRequestViewModel) {
         self.inspectingRequestVM = inspectingRequestVM
         mapType = .admin
         super.init()
@@ -42,8 +42,8 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
             let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
             return mapView
         }
-        //MARK: TODO camera should be set current user location
-        let camera = GMSCameraPosition.camera(withLatitude: 49.284832194, longitude: -123.106999572, zoom: 11.0)
+        //MARK: for when location is not permitted
+        let camera = GMSCameraPosition.camera(withLatitude: 50.0, longitude: -100.0, zoom: 1.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         // MARK: is it enough ?? https://developers.google.com/maps/documentation/ios-sdk/current-place-tutorial
         mapView.isMyLocationEnabled = true
@@ -58,6 +58,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
         case .admin:
             showRequestedShop(inspectingRequestVM?.requestedShop, mapView)
             showAllShops(mapView, shops: inspectingRequestVM?.currentShops, filterIndex: nil, filterValues: [])
+            return
         case .searching:
             showAllShops(mapView,
                          shops: shopsMapVM?.shops,
@@ -65,6 +66,17 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
         case .registering:
             return
         }
+        
+        guard let locationInfo = mapView.myLocation?.coordinate else { return }
+        centerUserLocation(mapView, locationInfo)
+        guard let userID = Authentication().getUserUID() else { return }
+        FirebaseHelper().updateUserLocation(userID: userID, location: locationInfo)
+    }
+    
+    func centerUserLocation(_ mapView: GMSMapView, _ location: CLLocationCoordinate2D) {
+        let camera = GMSCameraPosition.camera(withLatitude: location.latitude,
+                                              longitude: location.longitude, zoom: 11.0)
+        mapView.camera = camera
     }
     
     func showRequestedShop(_ requestedShop: Shop?, _ mapView: GMSMapView) {
@@ -94,7 +106,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
             marker.map = mapView
         }
     }
-     
+    
     func isOutOfFilter(_ filterIndex: Int?, _ filterValues: [Float], shopEva: Float) -> Bool {
         if !isValidFilter(filterIndex) { return false }
         return shopEva < filterValues[filterIndex!]
