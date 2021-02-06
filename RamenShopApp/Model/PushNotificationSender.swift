@@ -16,10 +16,10 @@ class PushNotificationSender {
         
         let urlString = "https://fcm.googleapis.com/fcm/send"
         let url = NSURL(string: urlString)!
+        //MARK: data can be added by using "data"
         let paramString: [String : Any] = ["to" : token,
                                            "notification" : ["title" : receiver.title,
-                                                             "body" : receiver.body],
-                                           "data" : []]
+                                                             "body" : receiver.body]]
         
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = "POST"
@@ -52,7 +52,7 @@ enum NotificationReceiver: String {
         case .requester:
             return "Reviewing has been done!"
         default:
-            return "New shop was registered!"
+            return "New shop has been registered near you!"
         }
     }
     

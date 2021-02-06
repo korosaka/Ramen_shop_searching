@@ -45,9 +45,14 @@ class ReviewingRequestViewModel: ObservableObject {
         delegate?.completedInspectionRequest()
     }
     
-    func fetchUserToken() {
+    func informRequester() {
         let userID = requestedShop.uploadUser
         db.fetchUserToken(of: userID)
+    }
+    
+    func informNearUsers() {
+        db.fetchNearUsers(shopLocation: requestedShop.location,
+                          requesterID: requestedShop.uploadUser)
     }
     
     func sendPush(to token: String, receiver: NotificationReceiver) {
@@ -66,10 +71,12 @@ extension ReviewingRequestViewModel: FirebaseHelperDelegate {
         currentShops = shops
     }
     
-    func completedUpdatingRequestStatus(isSuccess: Bool) {
+    func completedUpdatingRequestStatus(isSuccess: Bool,
+                                        status: ReviewingStatus) {
         if isSuccess {
             activeAlert = .completion
-            fetchUserToken()
+            informRequester()
+            if status == .approved { informNearUsers() }
         } else {
             activeAlert = .error
         }
@@ -78,5 +85,11 @@ extension ReviewingRequestViewModel: FirebaseHelperDelegate {
     
     func completedFetchingToken(token: String) {
         sendPush(to: token, receiver: .requester)
+    }
+    
+    func completedFetchingNearUsers(tokens: [String]) {
+        for token in tokens {
+            sendPush(to: token, receiver: .allUser)
+        }
     }
 }

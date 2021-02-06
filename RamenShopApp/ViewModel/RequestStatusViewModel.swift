@@ -14,7 +14,7 @@ class RequestStatusViewModel: ObservableObject {
     var requestedShopID: String
     var activeAlert: ActiveAlert = .confirmation
     @Published var shopName: String?
-    @Published var inspectionStatus: InspectionStatus?
+    @Published var inspectionStatus: ReviewingStatus?
     @Published var isShowAlert = false
     @Published var rejectReason = ""
     @Published var isShowingProgress = false

@@ -10,6 +10,7 @@ import Firebase
 import FirebaseFirestore
 import SwiftUI
 import GoogleMaps
+import CoreLocation
 
 struct FirebaseHelper {
     let firestore: Firestore
@@ -22,7 +23,7 @@ struct FirebaseHelper {
         storage = Storage.storage()
     }
     
-    func fetchShops(target: InspectionStatus) {
+    func fetchShops(target: ReviewingStatus) {
         var shops = [Shop]()
         createShopsRef(target).getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -53,10 +54,10 @@ struct FirebaseHelper {
                     totalReview: totalPoint,
                     reviewCount: count,
                     uploadUser: userID,
-                    inspectionStatus: InspectionStatus(rawValue: inspectionStatus)!)
+                    inspectionStatus: ReviewingStatus(rawValue: inspectionStatus)!)
     }
     
-    func createShopsRef(_ target: InspectionStatus) -> Query {
+    func createShopsRef(_ target: ReviewingStatus) -> Query {
         firestore
             .collection("shop")
             .whereField("inspection_status", isEqualTo: target.rawValue)
@@ -434,8 +435,38 @@ struct FirebaseHelper {
             if let err = err {
                 print("Error updating document: \(err)")
             }
-//            delegate?
         }
+    }
+    
+    func fetchNearUsers(shopLocation: GeoPoint, requesterID: String) {
+        var tokens = [String]()
+        firestore.collection("user").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for doc in querySnapshot!.documents {
+                    if doc.documentID == requesterID { continue }
+                    guard let userLocation = doc.data()["last_location"] as? GeoPoint else { continue }
+                    
+                    if isNearUser(shopLocation, userLocation) {
+                        guard let token = doc.data()["fcm_token"] as? String else { continue }
+                        tokens.append(token)
+                    }
+                }
+                delegate?.completedFetchingNearUsers(tokens: tokens)
+            }
+        }
+    }
+    
+    func isNearUser(_ shopLocation: GeoPoint, _ userLocation: GeoPoint) -> Bool {
+        let p1 = CLLocation(latitude: shopLocation.latitude,
+                            longitude:shopLocation.longitude)
+        let p2 = CLLocation(latitude: userLocation.latitude,
+                            longitude:userLocation.longitude)
+        //MARK: unit: meters
+        let distance = p1.distance(from: p2)
+        let limitDistance = 10000.0
+        return distance < limitDistance
     }
     
     func fetchShop(shopID: String) {
@@ -496,19 +527,19 @@ struct FirebaseHelper {
     func approveRequest(_ shopID: String) {
         let shopRef = firestore.collection("shop").document(shopID)
         shopRef.updateData([
-            "inspection_status": InspectionStatus.approved.rawValue
+            "inspection_status": ReviewingStatus.approved.rawValue
         ]) { err in
-            delegate?.completedUpdatingRequestStatus(isSuccess: err == nil)
+            delegate?.completedUpdatingRequestStatus(isSuccess: err == nil, status: .approved)
         }
     }
     
     func rejectRequest(_ shopID: String, reason: String) {
         let shopRef = firestore.collection("shop").document(shopID)
         shopRef.updateData([
-            "inspection_status": InspectionStatus.rejected.rawValue,
+            "inspection_status": ReviewingStatus.rejected.rawValue,
             "reject_reason": reason
         ]) { err in
-            delegate?.completedUpdatingRequestStatus(isSuccess: err == nil)
+            delegate?.completedUpdatingRequestStatus(isSuccess: err == nil, status: .rejected)
         }
     }
     
@@ -587,12 +618,13 @@ protocol FirebaseHelperDelegate: class {
     func completedUpdatingUserProfile(isSuccess: Bool)
     func completedUplodingShopRequest(isSuccess: Bool)
     func completedDeletingingShopRequest(isSuccess: Bool)
-    func completedUpdatingRequestStatus(isSuccess: Bool)
+    func completedUpdatingRequestStatus(isSuccess: Bool, status: ReviewingStatus)
     func completedFetchingRequestedShopID(shopID: String?)
     func completedDeletingRequestUserInfo(isSuccess: Bool)
     func completedFetchingRejectReason(reason: String)
     func completedRegisteringToken(isSuccess: Bool)
     func completedFetchingToken(token: String)
+    func completedFetchingNearUsers(tokens: [String])
 }
 
 // MARK: default implements
@@ -637,7 +669,7 @@ extension FirebaseHelperDelegate {
     func completedDeletingingShopRequest(isSuccess: Bool) {
         print("default implemented completedDeletingingShopRequest")
     }
-    func completedUpdatingRequestStatus(isSuccess: Bool) {
+    func completedUpdatingRequestStatus(isSuccess: Bool, status: ReviewingStatus) {
         print("default implemented completedUpdatingRequestStatus")
     }
     func completedFetchingRequestedShopID(shopID: String?) {
@@ -655,6 +687,9 @@ extension FirebaseHelperDelegate {
     func completedFetchingToken(token: String) {
         print("default implemented completedFetchingToken")
     }
+    func completedFetchingNearUsers(tokens: [String]) {
+        print("default implemented completedFetchingNearUsers")
+    }
 }
 
 //MARK: TODO separete file
@@ -668,7 +703,7 @@ struct Shop {
     var aveEvaluation: Float {
         return calcAveEvaluation(totalReview, reviewCount)
     }
-    let inspectionStatus: InspectionStatus
+    let inspectionStatus: ReviewingStatus
     
     func roundEvaluatione() -> String {
         if aveEvaluation == Float(0.0) {
@@ -685,7 +720,7 @@ struct Shop {
     }
 }
 
-enum InspectionStatus: Int {
+enum ReviewingStatus: Int {
     case inProcess = 0
     case approved = 1
     case rejected = -1
