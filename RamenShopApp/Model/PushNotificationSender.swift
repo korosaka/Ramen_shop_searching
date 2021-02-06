@@ -19,12 +19,11 @@ class PushNotificationSender {
         let paramString: [String : Any] = ["to" : token,
                                            "notification" : ["title" : receiver.title,
                                                              "body" : receiver.body],
-                                           "data" : ["receiver" : receiver.rawValue]
-        ]
+                                           "data" : []]
         
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONSerialization.data(withJSONObject:paramString, options: [.prettyPrinted])
+        request.httpBody = try? JSONSerialization.data(withJSONObject: paramString, options: [.prettyPrinted])
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("key=\(serverKey)", forHTTPHeaderField: "Authorization")
         

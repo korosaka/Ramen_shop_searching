@@ -9,6 +9,7 @@
 import Firebase
 import FirebaseFirestore
 import SwiftUI
+import GoogleMaps
 
 struct FirebaseHelper {
     let firestore: Firestore
@@ -419,6 +420,21 @@ struct FirebaseHelper {
                 print("Error updating document: \(err)")
             }
             delegate?.completedUpdatingShopEvaluation()
+        }
+    }
+    
+    func updateUserLocation(userID: String, location: CLLocationCoordinate2D) {
+        let userRef = firestore.collection("user").document(userID)
+        let geoPoint = GeoPoint(latitude: location.latitude,
+                                longitude: location.longitude)
+        
+        userRef.updateData([
+            "last_location": geoPoint
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            }
+//            delegate?
         }
     }
     
