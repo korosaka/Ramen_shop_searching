@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class InspectingRequestViewModel: ObservableObject {
+class ReviewingRequestViewModel: ObservableObject {
     let requestedShop: Shop
     @Published var currentShops: [Shop]
     @Published var rejectReason = ""
@@ -45,16 +45,20 @@ class InspectingRequestViewModel: ObservableObject {
         delegate?.completedInspectionRequest()
     }
     
-    func fetchUserToken() {
+    func informRequester() {
         let userID = requestedShop.uploadUser
         db.fetchUserToken(of: userID)
     }
     
-    func sendPush(to token: String) {
+    func informNearUsers() {
+        db.fetchNearUsers(shopLocation: requestedShop.location,
+                          requesterID: requestedShop.uploadUser)
+    }
+    
+    func sendPush(to token: String, receiver: NotificationReceiver) {
         PushNotificationSender()
             .sendPushNotification(to: token,
-                                  title: "Inspecting has been done!",
-                                  body: "Your adding shop request has been inspected. Please check it in app.")
+                                  receiver: receiver)
     }
 }
 
@@ -62,15 +66,17 @@ protocol InspectingRequestVMDelegate {
     func completedInspectionRequest()
 }
 
-extension InspectingRequestViewModel: FirebaseHelperDelegate {
+extension ReviewingRequestViewModel: FirebaseHelperDelegate {
     func completedFetchingShops(shops: [Shop]) {
         currentShops = shops
     }
     
-    func completedUpdatingRequestStatus(isSuccess: Bool) {
+    func completedUpdatingRequestStatus(isSuccess: Bool,
+                                        status: ReviewingStatus) {
         if isSuccess {
             activeAlert = .completion
-            fetchUserToken()
+            informRequester()
+            if status == .approved { informNearUsers() }
         } else {
             activeAlert = .error
         }
@@ -78,6 +84,12 @@ extension InspectingRequestViewModel: FirebaseHelperDelegate {
     }
     
     func completedFetchingToken(token: String) {
-        sendPush(to: token)
+        sendPush(to: token, receiver: .requester)
+    }
+    
+    func completedFetchingNearUsers(tokens: [String]) {
+        for token in tokens {
+            sendPush(to: token, receiver: .allUser)
+        }
     }
 }
