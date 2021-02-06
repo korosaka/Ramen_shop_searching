@@ -78,6 +78,7 @@ extension LoginViewModel: AuthenticationDelegate {
         self.logined = true
         guard let _userID = authentication.getUserUID() else { return }
         RegisteringToken().registerTokenToUser(to: _userID)
+        LocationStore().storeUserID(_userID)
     }
     
     func loginError(error: Error?) {

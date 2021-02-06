@@ -50,11 +50,10 @@ class ReviewingRequestViewModel: ObservableObject {
         db.fetchUserToken(of: userID)
     }
     
-    func sendPush(to token: String) {
+    func sendPush(to token: String, receiver: NotificationReceiver) {
         PushNotificationSender()
             .sendPushNotification(to: token,
-                                  title: "Reviewing has been done!",
-                                  body: "Your adding shop request has been reviewed. Please check it in app.")
+                                  receiver: receiver)
     }
 }
 
@@ -78,6 +77,6 @@ extension ReviewingRequestViewModel: FirebaseHelperDelegate {
     }
     
     func completedFetchingToken(token: String) {
-        sendPush(to: token)
+        sendPush(to: token, receiver: .requester)
     }
 }
