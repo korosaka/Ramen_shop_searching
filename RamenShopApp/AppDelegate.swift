@@ -88,11 +88,6 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let userInfo = notification.request.content.userInfo
-        if let _data = userInfo["receiver"] {
-            print("DATA: \(_data)")
-        }
-        
         //MARK: withou this, notification will never be shown on screen
         completionHandler([.banner, .list, .sound])
     }
