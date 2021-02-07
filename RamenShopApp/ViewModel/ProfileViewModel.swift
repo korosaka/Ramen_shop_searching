@@ -17,6 +17,7 @@ class ProfileViewModel: ObservableObject {
     @Published var isShowPhotoLibrary = false
     @Published var isShowPhotoPermissionDenied = false
     @Published var isShowingProgress = false
+    @Published var isShowingMenu = false
     var db: FirebaseHelper
     var authentication: Authentication
     var userID: String?
@@ -121,5 +122,6 @@ extension ProfileViewModel: FirebaseHelperDelegate {
 extension ProfileViewModel: ImagePickerDelegate {
     func pickedPicture(image: UIImage) {
         updateUserIcon(iconImage: image)
+        isShowingMenu = false
     }
 }
