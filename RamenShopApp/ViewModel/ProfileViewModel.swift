@@ -17,10 +17,11 @@ class ProfileViewModel: ObservableObject {
     @Published var isShowPhotoLibrary = false
     @Published var isShowPhotoPermissionDenied = false
     @Published var isShowingProgress = false
+    @Published var isShowingMenu = false
     var db: FirebaseHelper
     var authentication: Authentication
     var userID: String?
-    @Published var isShowAlertForName = false
+    @Published var isShowingAlert = false
     var activeAlertForName: ActiveAlert = .confirmation
     var isNameEdited: Bool { isEditingName && newName != "" }
     var hasProfileAlready = false
@@ -109,7 +110,7 @@ extension ProfileViewModel: FirebaseHelperDelegate {
         } else {
             activeAlertForName = .error
         }
-        isShowAlertForName = true
+        isShowingAlert = true
         guard let _userID = userID else {
             isShowingProgress = false
             return

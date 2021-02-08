@@ -14,8 +14,6 @@ struct SettingsView: View {
             BackGroundView()
             VStack {
                 Spacer().frame(height: 15)
-                Text("Settings").middleTitleStyle()
-                Spacer().frame(height: 50)
                 if let url = URL(string: "https://korosaka.github.io/privacy_policy_for_RamenMap/") {
                     HStack {
                         Spacer()
