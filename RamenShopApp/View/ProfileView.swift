@@ -24,31 +24,11 @@ struct ProfileView: View {
                     }
                     .wideStyle()
                     
-                    VStack(spacing: 0) {
-                        Spacer().frame(height: 15)
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                viewModel.isShowingMenu.toggle()
-                            }) {
-                                Image(systemName: "gearshape.fill")
-                                    .foregroundColor(.gray)
-                                    .font(.title)
-                                    .shadow(color: .black, radius: 1, x: 1, y: 1)
-                            }
-                        }
-                        if viewModel.isShowingMenu {
-                            Spacer().frame(height: 10)
-                            HStack {
-                                Spacer()
-                                ProfileSettingMenu()
-                            }
-                        }
-                    }
-                    .sidePadding(size: 10)
+                    ProfileSetting()
+                        .sidePadding(size: 10)
                 }
-                
             }
+            
             if viewModel.isShowingProgress {
                 CustomedProgress()
             }
@@ -148,6 +128,35 @@ struct NameProfile: View {
     }
 }
 
+struct ProfileSetting: View {
+    @EnvironmentObject var viewModel: ProfileViewModel
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            Spacer().frame(height: 15)
+            HStack {
+                Spacer()
+                Button(action: {
+                    viewModel.isShowingMenu.toggle()
+                }) {
+                    Image(systemName: "gearshape.fill")
+                        .foregroundColor(.gray)
+                        .font(.title)
+                        .shadow(color: .black, radius: 1, x: 1, y: 1)
+                }
+            }
+            
+            if viewModel.isShowingMenu {
+                Spacer().frame(height: 10)
+                HStack {
+                    Spacer()
+                    ProfileSettingMenu()
+                }
+            }
+        }
+    }
+}
+
 struct ProfileSettingMenu: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     
@@ -156,20 +165,20 @@ struct ProfileSettingMenu: View {
             Spacer().frame(height: 15)
             Button(action: {
                 viewModel.checkPhotoPermission()
-                viewModel.isShowingMenu.toggle()
+                viewModel.isShowingMenu = false
             }) {
                 Text("change icon")
             }
             Spacer().frame(height: 25)
             Button(action: {
                 viewModel.onClickChangeName()
-                viewModel.isShowingMenu.toggle()
+                viewModel.isShowingMenu = false
             }) {
                 Text("change name")
             }
             Spacer().frame(height: 25)
             Button(action: {
-                viewModel.isShowingMenu.toggle()
+                viewModel.isShowingMenu = false
             }) {
                 Text("close")
             }
