@@ -21,7 +21,7 @@ class ProfileViewModel: ObservableObject {
     var db: FirebaseHelper
     var authentication: Authentication
     var userID: String?
-    @Published var isShowAlertForName = false
+    @Published var isShowingAlert = false
     var activeAlertForName: ActiveAlert = .confirmation
     var isNameEdited: Bool { isEditingName && newName != "" }
     var hasProfileAlready = false
@@ -110,7 +110,7 @@ extension ProfileViewModel: FirebaseHelperDelegate {
         } else {
             activeAlertForName = .error
         }
-        isShowAlertForName = true
+        isShowingAlert = true
         guard let _userID = userID else {
             isShowingProgress = false
             return
@@ -122,6 +122,5 @@ extension ProfileViewModel: FirebaseHelperDelegate {
 extension ProfileViewModel: ImagePickerDelegate {
     func pickedPicture(image: UIImage) {
         updateUserIcon(iconImage: image)
-        isShowingMenu = false
     }
 }
