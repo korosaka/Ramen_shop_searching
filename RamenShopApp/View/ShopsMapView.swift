@@ -15,9 +15,6 @@ struct ShopsMapView: View {
         ZStack {
             BackGroundView()
             VStack(spacing: 0) {
-                Spacer().frame(height: 15)
-                Text("Ramen Shop Map").middleTitleStyle()
-                Spacer().frame(height: 8)
                 ZStack(alignment: .topTrailing) {
                     GoogleMapView(shopsMapVM: viewModel)
                         .cornerRadius(20)
