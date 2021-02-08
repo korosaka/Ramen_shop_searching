@@ -140,9 +140,9 @@ struct ProfileSetting: View {
                     viewModel.isShowingMenu.toggle()
                 }) {
                     Image(systemName: "gearshape.fill")
-                        .foregroundColor(.gray)
-                        .font(.title)
-                        .shadow(color: .black, radius: 1, x: 1, y: 1)
+                        .circleSymbol(font: .title3,
+                                      fore: .gray,
+                                      back: .white)
                 }
             }
             

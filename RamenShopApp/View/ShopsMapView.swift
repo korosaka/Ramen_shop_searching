@@ -23,11 +23,10 @@ struct ShopsMapView: View {
                     Button(action: {
                         self.viewModel.loadShops()
                     }) {
-                        Text("reload")
-                            .containingSymbol(symbol: "arrow.triangle.2.circlepath",
-                                              color: .strongPink,
-                                              textFont: .title3,
-                                              symbolFont: .title3)
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .circleSymbol(font: .title3,
+                                          fore: .white,
+                                          back: .strongPink)
                             .padding(10)
                     }
                 }

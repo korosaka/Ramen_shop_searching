@@ -157,11 +157,10 @@ struct ReloadStatusButton: View {
         Button(action: {
             self.viewModel.fetchRequestStatus()
         }) {
-            Text("reload")
-                .containingSymbol(symbol: "arrow.triangle.2.circlepath",
-                                  color: .strongPink,
-                                  textFont: .title3,
-                                  symbolFont: .title3)
+            Image(systemName: "arrow.triangle.2.circlepath")
+                .circleSymbol(font: .title3,
+                              fore: .white,
+                              back: .strongPink)
         }
     }
 }
