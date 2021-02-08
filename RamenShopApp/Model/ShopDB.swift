@@ -602,6 +602,24 @@ struct FirebaseHelper {
             delegate?.completedFetchingToken(token: token)
         }
     }
+    
+    func fetchFavoriteFlag(_ userID: String, _ shopID: String) {
+        let userRef = firestore.collection("user").document(userID)
+        userRef.getDocument { (document, error) in
+            if let _error = error {
+                print("Error happen :\(_error)")
+                delegate?.completedFetchingFavoFlag(flag: false)
+                return
+            }
+            guard let userData = document?.data(),
+                  let favorites = userData["favorite_shops"] as? [String]
+            else {
+                delegate?.completedFetchingFavoFlag(flag: false)
+                return
+            }
+            delegate?.completedFetchingFavoFlag(flag: favorites.contains(shopID))
+        }
+    }
 }
 
 protocol FirebaseHelperDelegate: class {
@@ -625,6 +643,7 @@ protocol FirebaseHelperDelegate: class {
     func completedRegisteringToken(isSuccess: Bool)
     func completedFetchingToken(token: String)
     func completedFetchingNearUsers(tokens: [String])
+    func completedFetchingFavoFlag(flag: Bool)
 }
 
 // MARK: default implements
@@ -689,6 +708,9 @@ extension FirebaseHelperDelegate {
     }
     func completedFetchingNearUsers(tokens: [String]) {
         print("default implemented completedFetchingNearUsers")
+    }
+    func completedFetchingFavoFlag(flag: Bool) {
+        print("default implemented completedFetchingFavoFlag")
     }
 }
 

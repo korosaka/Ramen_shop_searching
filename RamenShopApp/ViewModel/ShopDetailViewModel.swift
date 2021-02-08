@@ -13,8 +13,9 @@ class ShopDetailViewModel: ObservableObject {
     var db: FirebaseHelper
     @Published var latestReviews: [Review]
     @Published var pictures: [UIImage]
+    @Published var favorite = false
     @Published var shop: Shop?
-    var isLoading = (review: false, picture: false)
+    var isLoading = (review: false, picture: false, favorite: false)
     @Published var isShowingProgress = false
     
     init(mapVM: ShopsMapViewModel) {
@@ -29,34 +30,49 @@ class ShopDetailViewModel: ObservableObject {
     }
     
     func fetchDataFromDB() {
-        if shop == nil { return }
-        isLoading = (true, true)
+        guard let shopID = shop?.shopID,
+              let userID = Authentication().getUserUID()
+        else { return }
+        isLoading = (true, true, true)
         isShowingProgress = true
-        db.fetchLatestReviews(shopID: shop!.shopID)
+        db.fetchLatestReviews(shopID: shopID)
         let maxReviewCount = 3
-        db.fetchPictureReviews(shopID: shop!.shopID, limit: maxReviewCount)
+        db.fetchPictureReviews(shopID: shopID, limit: maxReviewCount)
+        db.fetchFavoriteFlag(userID, shopID)
     }
     
     func reloadShop() {
         guard let shopID = shop?.shopID else { return }
         db.fetchShop(shopID: shopID)
     }
+    
+    func checkLoadingStatuses() {
+        if !isLoading.picture && !isLoading.review && !isLoading.favorite {
+            isShowingProgress = false
+        }
+    }
 }
 
 extension ShopDetailViewModel: FirebaseHelperDelegate {
     func completedFetchingReviews(reviews: [Review]) {
         isLoading.review = false
-        if !isLoading.picture { isShowingProgress = false }
+        checkLoadingStatuses()
         latestReviews = reviews
     }
     func completedFetchingPictures(pictures: [UIImage]) {
         isLoading.picture = false
-        if !isLoading.review { isShowingProgress = false }
+        checkLoadingStatuses()
         self.pictures = pictures
     }
     
     func completedFetchingShop(fetchedShopData: Shop) {
         shop = fetchedShopData
+    }
+    
+    func completedFetchingFavoFlag(flag: Bool) {
+        isLoading.favorite = false
+        checkLoadingStatuses()
+        favorite = flag
     }
 }
 

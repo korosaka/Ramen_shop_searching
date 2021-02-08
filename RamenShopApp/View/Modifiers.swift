@@ -139,6 +139,15 @@ extension Image {
             .frame(width: size, height: size)
             .clipShape(Circle())
     }
+    
+    func circleSymbol(font: Font, fore: Color, back: Color) -> some View {
+        self.font(font)
+            .foregroundColor(fore)
+            .padding(8)
+            .background(back)
+            .clipShape(Circle())
+            .shadow(color: .black, radius: 2, x: 1, y: 1)
+    }
 }
 
 extension View {
