@@ -67,7 +67,7 @@ extension ShopDetailViewModel: FirebaseHelperDelegate {
         checkLoadingStatuses()
         latestReviews = reviews
     }
-    func completedFetchingPictures(pictures: [UIImage]) {
+    func completedFetchingPictures(pictures: [UIImage], shopID: String?) {
         isLoading.picture = false
         checkLoadingStatuses()
         self.pictures = pictures

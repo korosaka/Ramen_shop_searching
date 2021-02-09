@@ -18,6 +18,7 @@ class ProfileViewModel: ObservableObject {
     @Published var isShowPhotoPermissionDenied = false
     @Published var isShowingProgress = false
     @Published var isShowingMenu = false
+    @Published var userFavorites: [FavoriteShopInfo]
     var db: FirebaseHelper
     var authentication: Authentication
     var userID: String?
@@ -29,10 +30,12 @@ class ProfileViewModel: ObservableObject {
     init() {
         db = .init()
         authentication = .init()
+        userFavorites = .init()
         //MARK: TODO refactoring (profile init)
         userProfile = Profile(userName: "unnamed")
         db.delegate = self
         checkCurrentUser()
+        showUserFavorites()
     }
     
     func checkCurrentUser() {
@@ -93,6 +96,17 @@ class ProfileViewModel: ObservableObject {
         isEditingName.toggle()
         newName = ""
     }
+    
+    func showUserFavorites() {
+        guard let _userID = userID else { return }
+        db.fetchUserFavorites(of: _userID)
+    }
+    
+    func fetchFavoriteShopNames() {
+        for shopInfo in userFavorites {
+            db.fetchShop(shopID: shopInfo.id)
+        }
+    }
 }
 
 extension ProfileViewModel: FirebaseHelperDelegate {
@@ -116,6 +130,50 @@ extension ProfileViewModel: FirebaseHelperDelegate {
             return
         }
         db.fetchUserProfile(userID: _userID)
+    }
+    
+    func completedFetchingUserFavorites(favoriteIDs: [String]) {
+        for favorite in favoriteIDs {
+            let favoriteShop = FavoriteShopInfo(id: favorite,
+                                                shopName: nil,
+                                                shopTopImage: nil)
+            userFavorites.append(favoriteShop)
+        }
+        for favorite in favoriteIDs {
+            db.fetchShop(shopID: favorite)
+        }
+    }
+    
+    func completedFetchingShop(fetchedShopData: Shop) {
+        for index in 0..<userFavorites.count {
+            let shopInfo = userFavorites[index]
+            if shopInfo.id == fetchedShopData.shopID {
+                let newInfo = FavoriteShopInfo(id: shopInfo.id,
+                                               shopName: fetchedShopData.name,
+                                               shopTopImage: shopInfo.shopTopImage)
+                userFavorites[index] = newInfo
+            }
+        }
+        
+        for favorite in userFavorites {
+            db.fetchPictureReviews(shopID: favorite.id, limit: 1)
+        }
+    }
+    
+    func completedFetchingPictures(pictures: [UIImage], shopID: String?) {
+        guard let _shopID = shopID else { return }
+        if pictures.count == 0 { return }
+        let image = Image(uiImage: pictures[0])
+        
+        for index in 0..<userFavorites.count {
+            let shopInfo = userFavorites[index]
+            if shopInfo.id == _shopID {
+                let newInfo = FavoriteShopInfo(id: shopInfo.id,
+                                               shopName: shopInfo.shopName,
+                                               shopTopImage: image)
+                userFavorites[index] = newInfo
+            }
+        }
     }
 }
 

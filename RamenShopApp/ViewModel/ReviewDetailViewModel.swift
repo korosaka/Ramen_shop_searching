@@ -36,7 +36,7 @@ class ReviewDetailViewModel: ObservableObject {
 }
 
 extension ReviewDetailViewModel: FirebaseHelperDelegate {
-    func completedFetchingPictures(pictures: [UIImage]) {
+    func completedFetchingPictures(pictures: [UIImage], shopID: String?) {
         reviewImages.removeAll()
         pictures.forEach { picture in
             let ramenImage = RamenImage(picture: Image(uiImage: picture))

@@ -255,17 +255,18 @@ struct FirebaseHelper {
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
-                self.fetchImageFromReviewDocs(imageReviewsQS: querySnapshot!)
+                self.fetchImageFromReviewDocs(imageReviewsQS: querySnapshot!, shopID)
             }
         }
     }
     
     // MARK: to get images of a shop (used for ShopDetail)
-    func fetchImageFromReviewDocs(imageReviewsQS: QuerySnapshot) {
+    func fetchImageFromReviewDocs(imageReviewsQS: QuerySnapshot, _ shopID: String) {
         var totalPictures = [UIImage]()
         let totalImageReviewCount = imageReviewsQS.documents.count
         if totalImageReviewCount == 0 {
-            self.delegate?.completedFetchingPictures(pictures: totalPictures)
+            self.delegate?.completedFetchingPictures(pictures: totalPictures,
+                                                     shopID: shopID)
         }
         var readImageReviewCount = 0
         
@@ -274,7 +275,8 @@ struct FirebaseHelper {
             readImageReviewCount += 1
             // MARK: completed getting images of every review?
             if readImageReviewCount == totalImageReviewCount {
-                self.delegate?.completedFetchingPictures(pictures: totalPictures)
+                self.delegate?.completedFetchingPictures(pictures: totalPictures,
+                                                         shopID: shopID)
             }
         }
         
@@ -286,7 +288,8 @@ struct FirebaseHelper {
     // MARK: to get images of a review (used for ReviewDetail)
     func fetchImageFromReview(review: Review) {
         let completionHandler = { (pictures: [UIImage]) -> Void in
-            self.delegate?.completedFetchingPictures(pictures: pictures)
+            self.delegate?.completedFetchingPictures(pictures: pictures,
+                                                     shopID: nil)
         }
         fetchReviewImage(id: review.reviewID, completion: completionHandler)
     }
@@ -634,12 +637,28 @@ struct FirebaseHelper {
             ])
         }
     }
+    
+    func fetchUserFavorites(of userID: String) {
+        let userRef = firestore.collection("user").document(userID)
+        userRef.getDocument { (document, error) in
+            if let _error = error {
+                print("Error happen :\(_error)")
+                return
+            }
+            guard let userData = document?.data(),
+                  let favorites = userData["favorite_shops"] as? [String]
+            else {
+                return
+            }
+            delegate?.completedFetchingUserFavorites(favoriteIDs: favorites)
+        }
+    }
 }
 
 protocol FirebaseHelperDelegate: class {
     func completedFetchingShops(shops: [Shop])
     func completedFetchingReviews(reviews: [Review])
-    func completedFetchingPictures(pictures: [UIImage])
+    func completedFetchingPictures(pictures: [UIImage], shopID: String?)
     func completedFetchingProfile(profile: Profile?)
     func completedFetchingUserReview(reviewID: String, imageCount: Int, evaluation: Int?)
     func completedUpdatingReview(isSuccess: Bool)
@@ -658,6 +677,7 @@ protocol FirebaseHelperDelegate: class {
     func completedFetchingToken(token: String)
     func completedFetchingNearUsers(tokens: [String])
     func completedFetchingFavoFlag(flag: Bool)
+    func completedFetchingUserFavorites(favoriteIDs: [String])
 }
 
 // MARK: default implements
@@ -668,7 +688,7 @@ extension FirebaseHelperDelegate {
     func completedFetchingReviews(reviews: [Review]) {
         print("default implemented completedFetchingReviews")
     }
-    func completedFetchingPictures(pictures: [UIImage]) {
+    func completedFetchingPictures(pictures: [UIImage], shopID: String?) {
         print("default implemented completedFetchingPictures")
     }
     func completedFetchingProfile(profile: Profile?) {
@@ -725,6 +745,9 @@ extension FirebaseHelperDelegate {
     }
     func completedFetchingFavoFlag(flag: Bool) {
         print("default implemented completedFetchingFavoFlag")
+    }
+    func completedFetchingUserFavorites(favoriteIDs: [String]) {
+        print("default implemented completedFetchingUserFavorites")
     }
 }
 

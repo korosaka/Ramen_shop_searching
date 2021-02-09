@@ -30,7 +30,7 @@ class AllPictureViewModel: ObservableObject {
 }
 
 extension AllPictureViewModel: FirebaseHelperDelegate {
-    func completedFetchingPictures(pictures: [UIImage]) {
+    func completedFetchingPictures(pictures: [UIImage], shopID: String?) {
         isShowingProgress = false
         allImages.removeAll()
         pictures.forEach { picture in

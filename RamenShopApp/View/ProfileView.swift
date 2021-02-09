@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import QGrid
 
 struct ProfileView: View {
     @EnvironmentObject var viewModel: ProfileViewModel
@@ -20,7 +21,9 @@ struct ProfileView: View {
                         IconProfile()
                         Spacer().frame(height: 10)
                         NameProfile()
-                        Spacer().frame(height: 10)
+                        Spacer().frame(height: 20)
+                        FavoriteHeader()
+                        FavoriteCollectionView(scrollable: false, favorites: viewModel.userFavorites)
                     }
                     .wideStyle()
                     
@@ -188,4 +191,93 @@ struct ProfileSettingMenu: View {
         .background(Color.superWhitePasteGreen)
         .cornerRadius(10)
     }
+}
+
+struct FavoriteHeader: View {
+    @EnvironmentObject var viewModel: ProfileViewModel
+    
+    var body: some View {
+        Image(systemName: "heart.fill")
+            .font(.title2)
+            .foregroundColor(.strongPink)
+            .upDownPadding(size: 5)
+            .wideStyle()
+            .background(Color.superWhitePasteGreen)
+    }
+    
+}
+
+struct FavoriteCollectionView: View {
+    let scrollable: Bool
+    let favorites: [FavoriteShopInfo]
+    let pictureSize: CGFloat = UIScreen.main.bounds.size.width / 2
+    let space: CGFloat = 0.0
+    let padding: CGFloat = 0.0
+    var row: Int {
+        return (favorites.count + 1) / 2
+    }
+    var frameHieght: CGFloat? {
+        if scrollable {
+            return .none
+        } else {
+            return pictureSize * CGFloat(row)
+        }
+    }
+    
+    var body: some View {
+        if favorites.count == 0 {
+            VStack {
+                Text("No Picture")
+            }
+        } else {
+            QGrid(self.favorites,
+                  columns: 2,
+                  vSpacing: space,
+                  hSpacing: space,
+                  vPadding: padding,
+                  hPadding: padding,
+                  isScrollable: scrollable,
+                  showScrollIndicators: scrollable
+            ) { shopInfo in
+                FavoriteCell(shop: shopInfo, size: pictureSize)
+            }
+            .frame(height: frameHieght)
+        }
+        
+    }
+    
+}
+
+struct FavoriteCell: View {
+    let shop: FavoriteShopInfo
+    let size: CGFloat
+    
+    var body: some View {
+        
+        VStack {
+            if let image = shop.shopTopImage {
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: size, height: size)
+                    .background(Color.white)
+                    .border(Color.green)
+            } else {
+                Image(systemName: "camera.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: size, height: size)
+                    .background(Color.white)
+                    .border(Color.green)
+            }
+            Text(shop.shopName ?? "")
+        }
+        
+    }
+}
+
+struct FavoriteShopInfo: Identifiable {
+    let id: String //MARK: ShopID
+    var shopName: String?
+    var shopTopImage: Image?
 }
