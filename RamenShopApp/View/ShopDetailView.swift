@@ -22,7 +22,7 @@ struct ShopDetailView: View {
                         Spacer().frame(height: 10)
                         ShopName(shopName: viewModel.shop?.name)
                         Spacer().frame(height: 10)
-                        ShopEvaluation(viewModel: viewModel)
+                        EvaluationFavorite(viewModel: viewModel)
                         Spacer().frame(height: 40)
                         LatestReviews(latestReviews: viewModel.latestReviews,
                                       shop: viewModel.shop!)
@@ -63,7 +63,7 @@ struct ShopName: View {
     }
 }
 
-struct ShopEvaluation: View {
+struct EvaluationFavorite: View {
     @ObservedObject var viewModel: ShopDetailViewModel
     
     var body: some View {
@@ -80,7 +80,9 @@ struct ShopEvaluation: View {
             }
             .wideStyle()
             
-            Button(action: {}) {
+            Button(action: {
+                viewModel.switchFavorite()
+            }) {
                 if viewModel.favorite {
                     Image(systemName: "heart.fill")
                         .circleSymbol(font: .title3,

@@ -620,6 +620,20 @@ struct FirebaseHelper {
             delegate?.completedFetchingFavoFlag(flag: favorites.contains(shopID))
         }
     }
+    
+    func updateFavoriteFlag(_ userID: String, _ shopID: String, favoFlag: Bool) {
+        let userRef = firestore.collection("user").document(userID)
+        if favoFlag {
+            //MARK: arrayUnion https://firebase.google.com/docs/firestore/manage-data/add-data
+            userRef.updateData([
+                "favorite_shops": FieldValue.arrayUnion([shopID])
+            ])
+        } else {
+            userRef.updateData([
+                "favorite_shops": FieldValue.arrayRemove([shopID])
+            ])
+        }
+    }
 }
 
 protocol FirebaseHelperDelegate: class {

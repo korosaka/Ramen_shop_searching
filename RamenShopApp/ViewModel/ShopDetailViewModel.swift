@@ -51,6 +51,14 @@ class ShopDetailViewModel: ObservableObject {
             isShowingProgress = false
         }
     }
+    
+    func switchFavorite() {
+        guard let shopID = shop?.shopID,
+              let userID = Authentication().getUserUID()
+        else { return }
+        favorite.toggle()
+        db.updateFavoriteFlag(userID, shopID, favoFlag: favorite)
+    }
 }
 
 extension ShopDetailViewModel: FirebaseHelperDelegate {
