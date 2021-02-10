@@ -15,9 +15,6 @@ struct ShopsMapView: View {
         ZStack {
             BackGroundView()
             VStack(spacing: 0) {
-                Spacer().frame(height: 15)
-                Text("Ramen Shop Map").middleTitleStyle()
-                Spacer().frame(height: 8)
                 ZStack(alignment: .topTrailing) {
                     GoogleMapView(shopsMapVM: viewModel)
                         .cornerRadius(20)
@@ -26,11 +23,10 @@ struct ShopsMapView: View {
                     Button(action: {
                         self.viewModel.loadShops()
                     }) {
-                        Text("reload")
-                            .containingSymbol(symbol: "arrow.triangle.2.circlepath",
-                                              color: .strongPink,
-                                              textFont: .title3,
-                                              symbolFont: .title3)
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .circleSymbol(font: .title3,
+                                          fore: .white,
+                                          back: .strongPink)
                             .padding(10)
                     }
                 }
