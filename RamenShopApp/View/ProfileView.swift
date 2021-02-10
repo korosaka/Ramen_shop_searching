@@ -14,33 +14,31 @@ struct ProfileView: View {
     var body: some View {
         ZStack {
             Color.white
-            ScrollView(.vertical) {
-                ZStack(alignment: .topTrailing) {
+            ZStack(alignment: .topTrailing) {
+                VStack(spacing: 0) {
                     VStack(spacing: 0) {
-                        VStack(spacing: 0) {
-                            Spacer().frame(height: 15)
-                            IconProfile()
-                            Spacer().frame(height: 10)
-                            NameProfile()
-                            Spacer().frame(height: 20)
-                        }
-                        .wideStyle()
-                        .background(BackGroundView())
-                        VStack(spacing: 0) {
-                            FavoriteHeader()
-                            FavoriteCollectionView(scrollable: false, favorites: viewModel.userFavorites)
-                            Spacer().frame(height: 100)
-                        }
-                    }
-                    
-                    VStack(spacing: 0) {
-                        Spacer().frame(height: 10)
-                        ReloadButton()
-                            .sidePadding(size: 10)
                         Spacer().frame(height: 15)
-                        ProfileSetting()
-                            .sidePadding(size: 10)
+                        IconProfile()
+                        Spacer().frame(height: 10)
+                        NameProfile()
+                        Spacer().frame(height: 20)
                     }
+                    .wideStyle()
+                    .background(BackGroundView())
+                    VStack(spacing: 0) {
+                        FavoriteHeader()
+                        FavoriteCollectionView(scrollable: true,
+                                               favorites: viewModel.userFavorites)
+                    }
+                }
+                
+                VStack(spacing: 0) {
+                    Spacer().frame(height: 10)
+                    ReloadButton()
+                        .sidePadding(size: 10)
+                    Spacer().frame(height: 15)
+                    ProfileSetting()
+                        .sidePadding(size: 10)
                 }
             }
             
@@ -250,6 +248,8 @@ struct FavoriteCollectionView: View {
             return .none
         } else {
             return pictureSize * CGFloat(row)
+                + space * CGFloat(row - 1)
+                + padding * 2
         }
     }
     
