@@ -13,22 +13,34 @@ struct ProfileView: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     var body: some View {
         ZStack {
-            BackGroundView()
+            Color.white
             ScrollView(.vertical) {
                 ZStack(alignment: .topTrailing) {
                     VStack(spacing: 0) {
-                        Spacer().frame(height: 15)
-                        IconProfile()
-                        Spacer().frame(height: 10)
-                        NameProfile()
-                        Spacer().frame(height: 20)
-                        FavoriteHeader()
-                        FavoriteCollectionView(scrollable: false, favorites: viewModel.userFavorites)
+                        VStack(spacing: 0) {
+                            Spacer().frame(height: 15)
+                            IconProfile()
+                            Spacer().frame(height: 10)
+                            NameProfile()
+                            Spacer().frame(height: 20)
+                        }
+                        .wideStyle()
+                        .background(BackGroundView())
+                        VStack(spacing: 0) {
+                            FavoriteHeader()
+                            FavoriteCollectionView(scrollable: false, favorites: viewModel.userFavorites)
+                            Spacer().frame(height: 100)
+                        }
                     }
-                    .wideStyle()
                     
-                    ProfileSetting()
-                        .sidePadding(size: 10)
+                    VStack(spacing: 0) {
+                        Spacer().frame(height: 10)
+                        ReloadButton()
+                            .sidePadding(size: 10)
+                        Spacer().frame(height: 15)
+                        ProfileSetting()
+                            .sidePadding(size: 10)
+                    }
                 }
             }
             
@@ -131,12 +143,29 @@ struct NameProfile: View {
     }
 }
 
+struct ReloadButton: View {
+    @EnvironmentObject var viewModel: ProfileViewModel
+    
+    var body: some View {
+        HStack {
+            Spacer()
+            Button(action: {
+                self.viewModel.reload()
+            }) {
+                Image(systemName: "arrow.triangle.2.circlepath")
+                    .circleSymbol(font: .title3,
+                                  fore: .white,
+                                  back: .strongPink)
+            }
+        }
+    }
+}
+
 struct ProfileSetting: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     
     var body: some View {
         VStack(spacing: 0) {
-            Spacer().frame(height: 15)
             HStack {
                 Spacer()
                 Button(action: {
@@ -144,8 +173,8 @@ struct ProfileSetting: View {
                 }) {
                     Image(systemName: "gearshape.fill")
                         .circleSymbol(font: .title3,
-                                      fore: .gray,
-                                      back: .white)
+                                      fore: .white,
+                                      back: .gray)
                 }
             }
             
@@ -188,7 +217,7 @@ struct ProfileSettingMenu: View {
             Spacer().frame(height: 15)
         }
         .sidePadding(size: 5)
-        .background(Color.superWhitePasteGreen)
+        .background(Color.whitePasteGreen)
         .cornerRadius(10)
     }
 }
@@ -198,11 +227,11 @@ struct FavoriteHeader: View {
     
     var body: some View {
         Image(systemName: "heart.fill")
-            .font(.title2)
+            .font(.title)
             .foregroundColor(.strongPink)
             .upDownPadding(size: 5)
-            .wideStyle()
-            .background(Color.superWhitePasteGreen)
+            .wideStyle().background(Color.superWhitePasteGreen)
+            .shadow(color: .black, radius: 1)
     }
     
 }
@@ -210,9 +239,9 @@ struct FavoriteHeader: View {
 struct FavoriteCollectionView: View {
     let scrollable: Bool
     let favorites: [FavoriteShopInfo]
-    let pictureSize: CGFloat = UIScreen.main.bounds.size.width / 2
-    let space: CGFloat = 0.0
-    let padding: CGFloat = 0.0
+    let pictureSize: CGFloat = UIScreen.main.bounds.size.width / 2.5
+    let space: CGFloat = 3.0
+    let padding: CGFloat = 3.0
     var row: Int {
         return (favorites.count + 1) / 2
     }
@@ -227,7 +256,8 @@ struct FavoriteCollectionView: View {
     var body: some View {
         if favorites.count == 0 {
             VStack {
-                Text("No Picture")
+                Text("No Favorite Shop")
+                    .upDownPadding(size: 30)
             }
         } else {
             QGrid(self.favorites,
@@ -253,25 +283,26 @@ struct FavoriteCell: View {
     let size: CGFloat
     
     var body: some View {
-        
-        VStack {
+        VStack(spacing: 0) {
             if let image = shop.shopTopImage {
                 image
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
                     .frame(width: size, height: size)
-                    .background(Color.white)
-                    .border(Color.green)
+                    .clipShape(Circle())
             } else {
-                Image(systemName: "camera.fill")
-                    .resizable()
-                    .scaledToFit()
+                Image(systemName: "camera.fill").font(.title)
+                    .padding(20)
                     .frame(width: size, height: size)
-                    .background(Color.white)
-                    .border(Color.green)
+                    .background(Color.gray)
+                    .foregroundColor(.black)
+                    .clipShape(Circle())
             }
             Text(shop.shopName ?? "")
+                .bold()
+                .sidePadding(size: 10)
         }
+        .upDownPadding(size: 15)
         
     }
 }

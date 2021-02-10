@@ -34,8 +34,7 @@ class ProfileViewModel: ObservableObject {
         //MARK: TODO refactoring (profile init)
         userProfile = Profile(userName: "unnamed")
         db.delegate = self
-        checkCurrentUser()
-        showUserFavorites()
+        fetchData()
     }
     
     func checkCurrentUser() {
@@ -106,6 +105,16 @@ class ProfileViewModel: ObservableObject {
         for shopInfo in userFavorites {
             db.fetchShop(shopID: shopInfo.id)
         }
+    }
+    
+    func fetchData() {
+        checkCurrentUser()
+        showUserFavorites()
+    }
+    
+    func reload() {
+        userFavorites.removeAll()
+        fetchData()
     }
 }
 
