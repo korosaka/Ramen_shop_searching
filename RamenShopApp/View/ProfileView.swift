@@ -269,7 +269,7 @@ struct FavoriteCollectionView: View {
                   isScrollable: scrollable,
                   showScrollIndicators: scrollable
             ) { shopInfo in
-                FavoriteCell(shop: shopInfo, size: pictureSize)
+                FavoriteCell(shopInfo: shopInfo, size: pictureSize)
             }
             .frame(height: frameHieght)
         }
@@ -279,31 +279,32 @@ struct FavoriteCollectionView: View {
 }
 
 struct FavoriteCell: View {
-    let shop: FavoriteShopInfo
+    let shopInfo: FavoriteShopInfo
     let size: CGFloat
     
     var body: some View {
-        VStack(spacing: 0) {
-            if let image = shop.shopTopImage {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: size, height: size)
-                    .clipShape(Circle())
-            } else {
-                Image(systemName: "camera.fill").font(.title)
-                    .padding(20)
-                    .frame(width: size, height: size)
-                    .background(Color.gray)
-                    .foregroundColor(.black)
-                    .clipShape(Circle())
+        NavigationLink(destination: ShopDetailView(viewModel: .init(shopID: shopInfo.id))) {
+            VStack(spacing: 0) {
+                if let image = shopInfo.shopTopImage {
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: size, height: size)
+                        .clipShape(Circle())
+                } else {
+                    Image(systemName: "camera.fill").font(.title)
+                        .padding(20)
+                        .frame(width: size, height: size)
+                        .background(Color.gray)
+                        .foregroundColor(.black)
+                        .clipShape(Circle())
+                }
+                Text(shopInfo.shopName ?? "")
+                    .bold()
+                    .sidePadding(size: 10)
             }
-            Text(shop.shopName ?? "")
-                .bold()
-                .sidePadding(size: 10)
         }
         .upDownPadding(size: 15)
-        
     }
 }
 

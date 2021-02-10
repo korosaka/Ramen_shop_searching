@@ -16,6 +16,7 @@ class ShopDetailViewModel: ObservableObject {
     @Published var favorite = false
     @Published var shop: Shop?
     var isLoading = (review: false, picture: false, favorite: false)
+    var isFromProfile = false
     @Published var isShowingProgress = false
     
     init(mapVM: ShopsMapViewModel) {
@@ -27,6 +28,15 @@ class ShopDetailViewModel: ObservableObject {
         pictures = .init()
         db.delegate = self
         fetchDataFromDB()
+    }
+    
+    init(shopID: String) {
+        self.db = .init()
+        latestReviews = .init()
+        pictures = .init()
+        db.delegate = self
+        isFromProfile = true
+        db.fetchShop(shopID: shopID)
     }
     
     func fetchDataFromDB() {
@@ -75,6 +85,7 @@ extension ShopDetailViewModel: FirebaseHelperDelegate {
     
     func completedFetchingShop(fetchedShopData: Shop) {
         shop = fetchedShopData
+        if isFromProfile { fetchDataFromDB() }
     }
     
     func completedFetchingFavoFlag(flag: Bool) {
