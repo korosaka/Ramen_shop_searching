@@ -22,13 +22,13 @@ struct ShopDetailView: View {
                         Spacer().frame(height: 10)
                         ShopName(shopName: viewModel.shop?.name)
                         Spacer().frame(height: 10)
-                        EvaluationFavorite(viewModel: viewModel)
+                        EvaluationLabel(viewModel: viewModel)
                         Spacer().frame(height: 5)
                     }
                     .background(BackGroundView())
                     ScrollView(.vertical) {
                         LatestReviews(latestReviews: viewModel.latestReviews,
-                                      shop: viewModel.shop!)
+                                      shop: viewModel.shop)
                         Spacer().frame(height: 40)
                         Pictures(pictures: viewModel.pictures,
                                  shopID: viewModel.shop?.shopID)
@@ -66,7 +66,7 @@ struct ShopName: View {
     }
 }
 
-struct EvaluationFavorite: View {
+struct EvaluationLabel: View {
     @ObservedObject var viewModel: ShopDetailViewModel
     
     var body: some View {
@@ -83,34 +83,41 @@ struct EvaluationFavorite: View {
             }
             .wideStyle()
             
-            VStack(spacing: 0) {
-                Button(action: {
-                    viewModel.switchFavorite()
-                }) {
-                    if viewModel.favorite {
-                        Image(systemName: "heart.fill")
-                            .circleSymbol(font: .title3,
-                                          fore: .pink,
-                                          back: .superWhitePasteGreen)
-                    } else {
-                        Image(systemName: "heart")
-                            .circleSymbol(font: .title3,
-                                          fore: .pink,
-                                          back: .superWhitePasteGreen)
-                    }
+            FavoriteMapIcons(viewModel: viewModel)
+        }
+    }
+}
+
+struct FavoriteMapIcons: View {
+    @ObservedObject var viewModel: ShopDetailViewModel
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            Button(action: {
+                viewModel.switchFavorite()
+            }) {
+                if viewModel.favorite {
+                    Image(systemName: "heart.fill")
+                        .circleSymbol(font: .title3,
+                                      fore: .pink,
+                                      back: .superWhitePasteGreen)
+                } else {
+                    Image(systemName: "heart")
+                        .circleSymbol(font: .title3,
+                                      fore: .pink,
+                                      back: .superWhitePasteGreen)
                 }
-                .sidePadding(size: 10)
-                Spacer().frame(height: 20)
-                Button(action: {
-                    //MARK: TODO
-                }) {
-                    
+            }
+            .sidePadding(size: 10)
+            Spacer().frame(height: 20)
+            if let shop = viewModel.shop {
+                NavigationLink(destination: MapFromShop(targetShop: shop)) {
                     Image(systemName: "mappin.and.ellipse")
                         .circleSymbol(font: .title3,
                                       fore: .viridianGreen,
                                       back: .superWhitePasteGreen)
-                    
                 }
+                
                 .sidePadding(size: 10)
             }
         }
@@ -119,7 +126,7 @@ struct EvaluationFavorite: View {
 
 struct LatestReviews: View {
     let latestReviews: [Review]
-    let shop: Shop
+    let shop: Shop?
     
     var body: some View {
         Text("latest reviews")
@@ -155,11 +162,13 @@ struct LatestReviews: View {
             Spacer().frame(height: 20)
             HStack {
                 Spacer()
-                NavigationLink(destination: AllReviewView(viewModel: .init(shop: shop))) {
-                    Text("all review...")
-                        .foregroundColor(.seaBlue)
-                        .underline()
-                        .sidePadding(size: 15)
+                if let _shop = shop {
+                    NavigationLink(destination: AllReviewView(viewModel: .init(shop: _shop))) {
+                        Text("all review...")
+                            .foregroundColor(.seaBlue)
+                            .underline()
+                            .sidePadding(size: 15)
+                    }
                 }
             }
         }
