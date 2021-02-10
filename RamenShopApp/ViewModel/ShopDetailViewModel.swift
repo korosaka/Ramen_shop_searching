@@ -30,6 +30,7 @@ class ShopDetailViewModel: ObservableObject {
         fetchDataFromDB()
     }
     
+    //MARK: when navigated from Profile
     init(shopID: String) {
         self.db = .init()
         latestReviews = .init()
