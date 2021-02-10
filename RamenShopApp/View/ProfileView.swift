@@ -7,23 +7,36 @@
 //
 
 import SwiftUI
+import QGrid
 
 struct ProfileView: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     var body: some View {
         ZStack {
-            BackGroundView()
-            ScrollView(.vertical) {
-                ZStack(alignment: .topTrailing) {
+            Color.white
+            ZStack(alignment: .topTrailing) {
+                VStack(spacing: 0) {
                     VStack(spacing: 0) {
                         Spacer().frame(height: 15)
                         IconProfile()
                         Spacer().frame(height: 10)
                         NameProfile()
-                        Spacer().frame(height: 10)
+                        Spacer().frame(height: 20)
                     }
                     .wideStyle()
-                    
+                    .background(BackGroundView())
+                    VStack(spacing: 0) {
+                        FavoriteHeader()
+                        FavoriteCollectionView(scrollable: true,
+                                               favorites: viewModel.userFavorites)
+                    }
+                }
+                
+                VStack(spacing: 0) {
+                    Spacer().frame(height: 10)
+                    ReloadButton()
+                        .sidePadding(size: 10)
+                    Spacer().frame(height: 15)
                     ProfileSetting()
                         .sidePadding(size: 10)
                 }
@@ -128,21 +141,38 @@ struct NameProfile: View {
     }
 }
 
+struct ReloadButton: View {
+    @EnvironmentObject var viewModel: ProfileViewModel
+    
+    var body: some View {
+        HStack {
+            Spacer()
+            Button(action: {
+                self.viewModel.reload()
+            }) {
+                Image(systemName: "arrow.triangle.2.circlepath")
+                    .circleSymbol(font: .title3,
+                                  fore: .white,
+                                  back: .strongPink)
+            }
+        }
+    }
+}
+
 struct ProfileSetting: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     
     var body: some View {
         VStack(spacing: 0) {
-            Spacer().frame(height: 15)
             HStack {
                 Spacer()
                 Button(action: {
                     viewModel.isShowingMenu.toggle()
                 }) {
                     Image(systemName: "gearshape.fill")
-                        .foregroundColor(.gray)
-                        .font(.title)
-                        .shadow(color: .black, radius: 1, x: 1, y: 1)
+                        .circleSymbol(font: .title3,
+                                      fore: .white,
+                                      back: .gray)
                 }
             }
             
@@ -185,7 +215,101 @@ struct ProfileSettingMenu: View {
             Spacer().frame(height: 15)
         }
         .sidePadding(size: 5)
-        .background(Color.superWhitePasteGreen)
+        .background(Color.whitePasteGreen)
         .cornerRadius(10)
     }
+}
+
+struct FavoriteHeader: View {
+    @EnvironmentObject var viewModel: ProfileViewModel
+    
+    var body: some View {
+        Image(systemName: "heart.fill")
+            .font(.title)
+            .foregroundColor(.strongPink)
+            .upDownPadding(size: 5)
+            .wideStyle().background(Color.superWhitePasteGreen)
+            .shadow(color: .black, radius: 1)
+    }
+    
+}
+
+struct FavoriteCollectionView: View {
+    let scrollable: Bool
+    let favorites: [FavoriteShopInfo]
+    let pictureSize: CGFloat = UIScreen.main.bounds.size.width / 2.5
+    let space: CGFloat = 3.0
+    let padding: CGFloat = 3.0
+    var row: Int {
+        return (favorites.count + 1) / 2
+    }
+    var frameHieght: CGFloat? {
+        if scrollable {
+            return .none
+        } else {
+            return pictureSize * CGFloat(row)
+                + space * CGFloat(row - 1)
+                + padding * 2
+        }
+    }
+    
+    var body: some View {
+        if favorites.count == 0 {
+            VStack {
+                Text("No Favorite Shop")
+                    .upDownPadding(size: 30)
+            }
+        } else {
+            QGrid(self.favorites,
+                  columns: 2,
+                  vSpacing: space,
+                  hSpacing: space,
+                  vPadding: padding,
+                  hPadding: padding,
+                  isScrollable: scrollable,
+                  showScrollIndicators: scrollable
+            ) { shopInfo in
+                FavoriteCell(shopInfo: shopInfo, size: pictureSize)
+            }
+            .frame(height: frameHieght)
+        }
+        
+    }
+    
+}
+
+struct FavoriteCell: View {
+    let shopInfo: FavoriteShopInfo
+    let size: CGFloat
+    
+    var body: some View {
+        NavigationLink(destination: ShopDetailView(viewModel: .init(shopID: shopInfo.id))) {
+            VStack(spacing: 0) {
+                if let image = shopInfo.shopTopImage {
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: size, height: size)
+                        .clipShape(Circle())
+                } else {
+                    Image(systemName: "camera.fill").font(.title)
+                        .padding(20)
+                        .frame(width: size, height: size)
+                        .background(Color.gray)
+                        .foregroundColor(.black)
+                        .clipShape(Circle())
+                }
+                Text(shopInfo.shopName ?? "")
+                    .bold()
+                    .sidePadding(size: 10)
+            }
+        }
+        .upDownPadding(size: 15)
+    }
+}
+
+struct FavoriteShopInfo: Identifiable {
+    let id: String //MARK: ShopID
+    var shopName: String?
+    var shopTopImage: Image?
 }

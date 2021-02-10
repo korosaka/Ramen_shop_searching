@@ -22,7 +22,7 @@ struct ShopDetailView: View {
                         Spacer().frame(height: 10)
                         ShopName(shopName: viewModel.shop?.name)
                         Spacer().frame(height: 10)
-                        ShopEvaluation(aveEvaluation: viewModel.shop?.roundEvaluatione())
+                        EvaluationFavorite(viewModel: viewModel)
                         Spacer().frame(height: 40)
                         LatestReviews(latestReviews: viewModel.latestReviews,
                                       shop: viewModel.shop!)
@@ -63,19 +63,39 @@ struct ShopName: View {
     }
 }
 
-struct ShopEvaluation: View {
-    let aveEvaluation: String?
+struct EvaluationFavorite: View {
+    @ObservedObject var viewModel: ShopDetailViewModel
     
     var body: some View {
-        HStack {
-            Image(systemName: "star.fill")
-                .foregroundColor(.gold)
-                .font(.title)
-                .shadow(color: .black, radius: 1)
-            Text(aveEvaluation ?? String(""))
-                .foregroundColor(.gold).bold()
-                .font(.largeTitle)
-                .shadow(color: .black, radius: 1)
+        ZStack(alignment: .trailing) {
+            HStack {
+                Image(systemName: "star.fill")
+                    .foregroundColor(.gold)
+                    .font(.title)
+                    .shadow(color: .black, radius: 1)
+                Text(viewModel.shop?.roundEvaluatione() ?? String(""))
+                    .foregroundColor(.gold).bold()
+                    .font(.largeTitle)
+                    .shadow(color: .black, radius: 1)
+            }
+            .wideStyle()
+            
+            Button(action: {
+                viewModel.switchFavorite()
+            }) {
+                if viewModel.favorite {
+                    Image(systemName: "heart.fill")
+                        .circleSymbol(font: .title3,
+                                      fore: .pink,
+                                      back: .superWhitePasteGreen)
+                } else {
+                    Image(systemName: "heart")
+                        .circleSymbol(font: .title3,
+                                      fore: .pink,
+                                      back: .superWhitePasteGreen)
+                }
+            }
+            .sidePadding(size: 20)
         }
     }
 }
