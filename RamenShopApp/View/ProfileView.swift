@@ -30,6 +30,7 @@ struct ProfileView: View {
                         FavoriteCollectionView(scrollable: true,
                                                favorites: viewModel.userFavorites)
                     }
+                    Spacer()
                 }
                 
                 VStack(spacing: 0) {
