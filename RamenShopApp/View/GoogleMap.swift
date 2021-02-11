@@ -14,6 +14,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
     var shopsMapVM: ShopsMapViewModel?
     var registeringShopVM: RegisteringShopViewModel?
     var inspectingRequestVM: ReviewingRequestViewModel?
+    var particularShop: Shop?
     var mapType: MapType
     
     init(_ shopsMapVM: ShopsMapViewModel) {
@@ -31,6 +32,12 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
     init(_ inspectingRequestVM: ReviewingRequestViewModel) {
         self.inspectingRequestVM = inspectingRequestVM
         mapType = .admin
+        super.init()
+    }
+    
+    init(_ shop: Shop) {
+        particularShop = shop
+        mapType = .fromShop
         super.init()
     }
     
@@ -56,7 +63,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
         mapView.clear()
         switch mapType {
         case .admin:
-            showRequestedShop(inspectingRequestVM?.requestedShop, mapView)
+            showTargetShop(inspectingRequestVM?.requestedShop, mapView)
             showAllShops(mapView, shops: inspectingRequestVM?.currentShops, filterIndex: nil, filterValues: [])
             return
         case .searching:
@@ -64,6 +71,9 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
                          shops: shopsMapVM?.shops,
                          filterIndex: shopsMapVM?.evaluationFilter, filterValues: shopsMapVM!.filterValues)
         case .registering:
+            return
+        case .fromShop:
+            showTargetShop(particularShop, mapView)
             return
         }
         
@@ -79,8 +89,8 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
         mapView.camera = camera
     }
     
-    func showRequestedShop(_ requestedShop: Shop?, _ mapView: GMSMapView) {
-        guard let shop = requestedShop else { return }
+    func showTargetShop(_ targetShop: Shop?, _ mapView: GMSMapView) {
+        guard let shop = targetShop else { return }
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: shop.location.latitude, longitude: shop.location.longitude)
         marker.map = mapView
@@ -132,5 +142,5 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
 }
 
 enum MapType {
-    case searching, registering, admin
+    case searching, registering, admin, fromShop
 }

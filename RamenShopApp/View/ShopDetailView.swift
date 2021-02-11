@@ -14,23 +14,26 @@ struct ShopDetailView: View {
     
     var body: some View {
         ZStack {
-            BackGroundView()
+            Color.whitePasteGreen
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
-                ScrollView(.vertical) {
-                    VStack {
+                VStack(spacing: 0) {
+                    VStack(spacing: 0) {
                         Spacer().frame(height: 10)
                         ShopName(shopName: viewModel.shop?.name)
                         Spacer().frame(height: 10)
-                        EvaluationFavorite(viewModel: viewModel)
-                        Spacer().frame(height: 40)
+                        EvaluationLabel(viewModel: viewModel)
+                        Spacer().frame(height: 5)
+                    }
+                    .background(BackGroundView())
+                    ScrollView(.vertical) {
                         LatestReviews(latestReviews: viewModel.latestReviews,
-                                      shop: viewModel.shop!)
+                                      shop: viewModel.shop)
                         Spacer().frame(height: 40)
                         Pictures(pictures: viewModel.pictures,
                                  shopID: viewModel.shop?.shopID)
-                            .sidePadding(size: 10)
-                        Spacer().frame(height: 100)
+                        Spacer().frame(height: 50)
+                        Spacer()
                     }
                 }
                 
@@ -63,7 +66,7 @@ struct ShopName: View {
     }
 }
 
-struct EvaluationFavorite: View {
+struct EvaluationLabel: View {
     @ObservedObject var viewModel: ShopDetailViewModel
     
     var body: some View {
@@ -80,6 +83,16 @@ struct EvaluationFavorite: View {
             }
             .wideStyle()
             
+            FavoriteMapIcons(viewModel: viewModel)
+        }
+    }
+}
+
+struct FavoriteMapIcons: View {
+    @ObservedObject var viewModel: ShopDetailViewModel
+    
+    var body: some View {
+        VStack(spacing: 0) {
             Button(action: {
                 viewModel.switchFavorite()
             }) {
@@ -95,27 +108,42 @@ struct EvaluationFavorite: View {
                                       back: .superWhitePasteGreen)
                 }
             }
-            .sidePadding(size: 20)
+            .sidePadding(size: 10)
+            Spacer().frame(height: 20)
+            if let shop = viewModel.shop {
+                NavigationLink(destination: MapFromShop(targetShop: shop)) {
+                    Image(systemName: "mappin.and.ellipse")
+                        .circleSymbol(font: .title3,
+                                      fore: .viridianGreen,
+                                      back: .superWhitePasteGreen)
+                }
+                
+                .sidePadding(size: 10)
+            }
         }
     }
 }
 
 struct LatestReviews: View {
     let latestReviews: [Review]
-    let shop: Shop
+    let shop: Shop?
     
     var body: some View {
-        if latestReviews.count > 0 {
-            Text("latest reviews")
-                .foregroundColor(.white)
-                .shadow(color: .black, radius: 1, x: 1, y: 1)
-        } else {
+        Text("latest reviews")
+            .foregroundColor(.white)
+            .wideStyle()
+            .upDownPadding(size: 3)
+            .background(Color.gray)
+            .shadow(color: .black, radius: 1)
+        if latestReviews.count == 0 {
+            Spacer().frame(height: 10)
             Text("there is no review")
-                .foregroundColor(.white)
-                .shadow(color: .black, radius: 1, x: 1, y: 1)
+                .foregroundColor(.viridianGreen)
+                .shadow(color: .black, radius: 0.5, x: 0.5, y: 0.5)
         }
         
         if latestReviews.count > 0 {
+            Spacer().frame(height: 10)
             ReviewHeadline(viewModel: .init(review: latestReviews[0]))
                 .padding(.init(top: 0,
                                leading: 0,
@@ -123,6 +151,7 @@ struct LatestReviews: View {
                                trailing: 15))
         }
         if latestReviews.count > 1 {
+            Spacer().frame(height: 10)
             ReviewHeadline(viewModel: .init(review: latestReviews[1]))
                 .padding(.init(top: 10,
                                leading: 0,
@@ -130,13 +159,16 @@ struct LatestReviews: View {
                                trailing: 15))
         }
         if latestReviews.count > 0 {
+            Spacer().frame(height: 20)
             HStack {
                 Spacer()
-                NavigationLink(destination: AllReviewView(viewModel: .init(shop: shop))) {
-                    Text("all review...")
-                        .foregroundColor(.seaBlue)
-                        .underline()
-                        .sidePadding(size: 15)
+                if let _shop = shop {
+                    NavigationLink(destination: AllReviewView(viewModel: .init(shop: _shop))) {
+                        Text("all review...")
+                            .foregroundColor(.seaBlue)
+                            .underline()
+                            .sidePadding(size: 15)
+                    }
                 }
             }
         }
@@ -197,11 +229,15 @@ struct Pictures: View {
     let shopID: String?
     
     var body: some View {
+        Text("uploaded pictures")
+            .foregroundColor(.white)
+            .wideStyle()
+            .upDownPadding(size: 3)
+            .background(Color.gray)
+            .shadow(color: .black, radius: 1)
+        Spacer().frame(height: 10)
         if pictures.count > 0 {
-            VStack {
-                Text("uploaded pictures")
-                    .foregroundColor(.white)
-                    .shadow(color: .black, radius: 1, x: 1, y: 1)
+            VStack(spacing: 0) {
                 HStack {
                     Spacer()
                     ForEach(0...2, id: \.self) { index in
@@ -224,7 +260,9 @@ struct Pictures: View {
                 .upDownPadding(size: 10)
                 .background(Color.white)
                 .cornerRadius(10)
+                .sidePadding(size: 10)
                 
+                Spacer().frame(height: 20)
                 HStack {
                     Spacer()
                     NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
@@ -232,12 +270,13 @@ struct Pictures: View {
                             .foregroundColor(.seaBlue)
                             .underline()
                     }
+                    .sidePadding(size: 10)
                 }
             }
         } else {
             Text("there is no picture")
-                .foregroundColor(.white)
-                .shadow(color: .black, radius: 1, x: 1, y: 1)
+                .foregroundColor(.viridianGreen)
+                .shadow(color: .black, radius: 0.5, x: 0.5, y: 0.5)
         }
     }
 }

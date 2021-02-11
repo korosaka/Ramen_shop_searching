@@ -21,15 +21,17 @@ class ReviewingViewModel: ObservableObject {
     var previousEvaluation: Int?
     var userID: String?
     var createdDate: Date?
+    var sourceType = UIImagePickerController.SourceType.photoLibrary
     @Published var evaluation: Int
     @Published var comment: String
     @Published var pictures: [UIImage]?
-    @Published var isShowPhotoLibrary = false
-    @Published var isShowPhotoPermissionDenied = false
+    @Published var isShowSheet = false
+    @Published var isShowMediaPermissionDenied = false
     @Published var isShowAlert = false
     @Published var activeAlert: ActiveAlert = .confirmation
     @Published var isEditingComment = false
     @Published var isShowingProgress = false
+    var sheetType = ReviewingSheetType.selectingMedia
     private let placeHoler = "enter comment"
     var updateReviewPicsState = (uploaded: false, deleted: false)
     var updateReviewState = (review: false, pictures: false, shopEva: false)
@@ -99,19 +101,57 @@ class ReviewingViewModel: ObservableObject {
         }
     }
     
+    func showMediaSelection() {
+        sheetType = .selectingMedia
+        isShowSheet = true
+    }
+    
+    func utilizePhotoLibrary() {
+        isShowSheet = false
+        sourceType = .photoLibrary
+        isShowMediaPermissionDenied = false
+        checkPhotoPermission()
+    }
+    
     func checkPhotoPermission() {
         let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
         if status == .authorized || status == .limited {
-            isShowPhotoLibrary = true
+            sheetType = .utilizingMedia
+            isShowSheet = true
         } else {
             PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
                 DispatchQueue.main.async {
                     if status == .authorized || status == .limited {
-                        self.isShowPhotoLibrary = true
+                        self.sheetType = .utilizingMedia
+                        self.isShowSheet = true
                     } else if status == .denied {
-                        self.isShowPhotoPermissionDenied = true
+                        //MARK: without delay, alert doesn't work well sometime
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            self.isShowMediaPermissionDenied = true
+                        }
                     }
                 }
+            }
+        }
+    }
+    
+    func utilizeCamera() {
+        isShowSheet = false
+        sourceType = .camera
+        isShowMediaPermissionDenied = false
+        checkCameraPermission()
+    }
+    
+    func checkCameraPermission() {
+        isShowMediaPermissionDenied = false
+        let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+        if status == .authorized || status == .notDetermined {
+            sheetType = .utilizingMedia
+            isShowSheet = true
+        } else {
+            //MARK: without delay, alert doesn't work well sometime
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.isShowMediaPermissionDenied = true
             }
         }
     }
