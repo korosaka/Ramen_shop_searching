@@ -20,14 +20,14 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app will use camera so that you can upload pictures to your review</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app will use your location information so that you can easily find a shop more precisely</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app will use your location information so that you can easily find a shop more precisely</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app will use your picture data so that you can attach pictures to your review</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This app will use camera so that you can upload pictures to your review</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
