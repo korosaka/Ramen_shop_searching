@@ -148,7 +148,7 @@ struct UploadingPicture: View {
             HStack {
                 Spacer()
                 Button(action: {
-                    viewModel.checkPhotoPermission()
+                    viewModel.showMediaSelection()
                 }) {
                     HStack {
                         Image(systemName: "square.and.arrow.up")
@@ -160,8 +160,13 @@ struct UploadingPicture: View {
                             defaultColor: .green,
                             padding: 12,
                             radius: 10)
-                .sheet(isPresented: $viewModel.isShowPhotoLibrary,
-                       content: { ImagePicker(reviewImages: $viewModel.pictures) })
+                .sheet(isPresented: $viewModel.isShowSheet) {
+                    if viewModel.sheetType == .selection {
+                        MediaSelection()
+                    } else {
+                        ImagePicker(reviewImages: $viewModel.pictures)
+                    }
+                }
                 .alert(isPresented: $viewModel.isShowPhotoPermissionDenied) {
                     Alert(title: Text("This app has no permission"),
                           message: Text("You need to change setting"),
@@ -249,4 +254,40 @@ struct DoneButton: View {
         }
     }
     
+}
+
+struct MediaSelection: View {
+    @EnvironmentObject var viewModel: ReviewingViewModel
+    @Environment(\.presentationMode) var presentationMode
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Cancel")
+                }
+                .padding(10)
+                Spacer()
+            }
+            .background(Color.superWhitePasteGreen)
+            Spacer()
+            Button(action: {
+                viewModel.isShowSheet = false
+                viewModel.checkPhotoPermission()
+            }) {
+                Text("Photo Library")
+            }
+            Spacer().frame(height: 50)
+            Button(action: {}) {
+                Text("Camera")
+            }
+            Spacer()
+        }
+    }
+}
+
+enum ReviewingSheetType {
+    case selection, photoLibrary
 }
