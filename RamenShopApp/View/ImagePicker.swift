@@ -11,8 +11,10 @@ import SwiftUI
 
 struct ImagePicker: UIViewControllerRepresentable {
     
-    init(reviewImages: Binding<[UIImage]?>) {
+    init(reviewImages: Binding<[UIImage]?>,
+         sourceType: UIImagePickerController.SourceType) {
         self._reviewImages = reviewImages
+        self.sourceType = sourceType
         role = .reviewPicture
     }
     
