@@ -161,13 +161,14 @@ struct UploadingPicture: View {
                             padding: 12,
                             radius: 10)
                 .sheet(isPresented: $viewModel.isShowSheet) {
-                    if viewModel.sheetType == .selection {
+                    if viewModel.sheetType == .selectingMedia {
                         MediaSelection()
                     } else {
-                        ImagePicker(reviewImages: $viewModel.pictures)
+                        ImagePicker(reviewImages: $viewModel.pictures,
+                                    sourceType: viewModel.sourceType)
                     }
                 }
-                .alert(isPresented: $viewModel.isShowPhotoPermissionDenied) {
+                .alert(isPresented: $viewModel.isShowMediaPermissionDenied) {
                     Alert(title: Text("This app has no permission"),
                           message: Text("You need to change setting"),
                           primaryButton: .default(Text("go to setting")) {
@@ -274,13 +275,14 @@ struct MediaSelection: View {
             .background(Color.superWhitePasteGreen)
             Spacer()
             Button(action: {
-                viewModel.isShowSheet = false
-                viewModel.checkPhotoPermission()
+                viewModel.utilizePhotoLibrary()
             }) {
                 Text("Photo Library")
             }
             Spacer().frame(height: 50)
-            Button(action: {}) {
+            Button(action: {
+                viewModel.utilizeCamera()
+            }) {
                 Text("Camera")
             }
             Spacer()
@@ -289,5 +291,5 @@ struct MediaSelection: View {
 }
 
 enum ReviewingSheetType {
-    case selection, photoLibrary
+    case selectingMedia, utilizingMedia
 }
