@@ -8,7 +8,6 @@ One of my hobbies is going to Ramen shops where I have never visit. Moreover I w
 
 # UI Design
 ![UI Design](https://github.com/korosaka/source_image/blob/main/ramen_map/all_ui_design.png)
-# Demo Movie
 # Language and Libraries
 - Swift
 - SwiftUI
