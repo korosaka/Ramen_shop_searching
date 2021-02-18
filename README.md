@@ -19,7 +19,7 @@ One of my hobbies is going to Ramen shops where I have never visit. Moreover I w
 - QGrid
 
 # Architecture
-
+![Architecture_Design](https://github.com/korosaka/source_image/blob/main/ramen_map/Architecture_design.png)
 ## Front End
 
 ## Database & Storage
