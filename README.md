@@ -28,12 +28,13 @@ This app is utilizing Firebase services to authenticate users and store data and
 Because of it, I could easily create core functions such as Login, Reviewing a shop and store pictures.
 ## Push Notification
 To send notifications to users, this app is utilizing Firebase Cloud Messaging. When a particular event is happened, this app send API request to FCM server and some users will receive the Push Notification.
-# Current Functions
-
-### Fundamental Functions
-
-### Review Functions
-
-### Request Functions
-
-# Upcoming Features
+# Current Features
+- Sing In/Sign Out/Sign Up
+- Set profile name, icon
+- Show shops' locations on map
+- Show a shop info(Evaluation/Reviews/Images)
+- Review a shop
+- Bookmark a shop
+- Send a request to add new shop
+- Cancel a request
+- Review users' requests (admin only)
