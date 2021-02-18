@@ -21,11 +21,13 @@ One of my hobbies is going to Ramen shops where I have never visit. Moreover I w
 # Architecture
 ![Architecture_Design](https://github.com/korosaka/source_image/blob/main/ramen_map/Architecture_design.png)
 ## Front End
-
+This app is utilizing MVVM pattern because this pattern can be suitable for SwiftUI which doesn't need ViewController. 
+Moreover,since this pattern is getting more popular, this experience will help me in future. 
 ## Database & Storage
-
-## Back End
-
+This app is utilizing Firebase services to authenticate users and store data and pictures. 
+Because of it, I could easily create core functions such as Login, Reviewing a shop and store pictures.
+## Push Notification
+To send notifications to users, this app is utilizing Firebase Cloud Messaging. When a particular event is happened, this app send API request to FCM server and some users will receive the Push Notification.
 # Current Functions
 
 ### Fundamental Functions
