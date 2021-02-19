@@ -7,6 +7,8 @@ Worldwide Ramen Map is a mobile iOS application to search Ramen shops with the m
 One of my hobbies is going to Ramen shops where I have never visit. Moreover I wanted to create a iOS app with GoogleMap and Firebase. This is why I decided to create this app. I'm glad if this app is useful for Ramen-Manias all over the world!
 
 # UI Design
+![demo_movie](https://github.com/korosaka/source_image/blob/main/ramen_map/demo_movie1.gif)
+![demo_movie](https://github.com/korosaka/source_image/blob/main/ramen_map/demo_movie2.gif)
 ![UI Design](https://github.com/korosaka/source_image/blob/main/ramen_map/all_ui_design.png)
 # Language and Libraries
 - Swift
