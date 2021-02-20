@@ -80,7 +80,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
         guard let locationInfo = mapView.myLocation?.coordinate else { return }
         centerUserLocation(mapView, locationInfo)
         guard let userID = Authentication().getUserUID() else { return }
-        FirebaseHelper().updateUserLocation(userID: userID, location: locationInfo)
+        DatabaseHelper().updateUserLocation(userID: userID, location: locationInfo)
     }
     
     func centerUserLocation(_ mapView: GMSMapView, _ location: CLLocationCoordinate2D) {

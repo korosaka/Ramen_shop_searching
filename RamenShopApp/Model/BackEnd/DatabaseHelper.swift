@@ -8,11 +8,10 @@
 
 import Firebase
 import FirebaseFirestore
-import SwiftUI
 import GoogleMaps
 import CoreLocation
 
-struct FirebaseHelper {
+struct DatabaseHelper {
     let firestore: Firestore
     let storage: Storage
     
@@ -54,7 +53,7 @@ struct FirebaseHelper {
                     totalReview: totalPoint,
                     reviewCount: count,
                     uploadUser: userID,
-                    inspectionStatus: ReviewingStatus(rawValue: inspectionStatus)!)
+                    reviewingStatus: ReviewingStatus(rawValue: inspectionStatus)!)
     }
     
     func createShopsRef(_ target: ReviewingStatus) -> Query {
@@ -749,108 +748,4 @@ extension FirebaseHelperDelegate {
     func completedFetchingUserFavorites(favoriteIDs: [String]) {
         print("default implemented completedFetchingUserFavorites")
     }
-}
-
-//MARK: TODO separete file
-struct Shop {
-    let shopID: String
-    let name: String
-    let location: GeoPoint
-    let totalReview: Int
-    let reviewCount: Int
-    let uploadUser: String
-    var aveEvaluation: Float {
-        return calcAveEvaluation(totalReview, reviewCount)
-    }
-    let inspectionStatus: ReviewingStatus
-    
-    func roundEvaluatione() -> String {
-        if aveEvaluation == Float(0.0) {
-            return "---"
-        }
-        return String(format: "%.1f", aveEvaluation)
-    }
-    
-    func calcAveEvaluation(_ totalPoint: Int, _ reviewCount: Int) -> Float {
-        if totalPoint == 0 || reviewCount == 0 {
-            return Float(0.0)
-        }
-        return Float(totalPoint) / Float(reviewCount)
-    }
-}
-
-enum ReviewingStatus: Int {
-    case inProcess = 0
-    case approved = 1
-    case rejected = -1
-    func getStatus() -> String {
-        switch self {
-        case .inProcess:
-            return "In process"
-        case .approved:
-            return "Approved!"
-        default:
-            return "Rejected!"
-        }
-    }
-    
-    func getStatusColor() -> Color {
-        switch self {
-        case .inProcess:
-            return .gold
-        case .approved:
-            return .seaBlue
-        default:
-            return .strongRed
-        }
-    }
-    
-    func getSubMessage() -> String {
-        switch self {
-        case .inProcess:
-            return "This will be done within a few days."
-        case .approved:
-            return "This shop has been added to this app!"
-        default:
-            return "Your request has been rejected."
-        }
-    }
-    
-    func getButtonMessage() -> String {
-        switch self {
-        case .inProcess:
-            return "cancel this request"
-        default:
-            return "I've checked it"
-        }
-    }
-    
-    func getConfirmationMessage() -> String {
-        switch self {
-        case .inProcess:
-            return "Are you sure to cancel this request?"
-        default:
-            return "Have you really checked this info?"
-        }
-    }
-}
-
-struct Review {
-    let reviewID: String
-    let userID: String
-    let evaluation: Int
-    let comment: String
-    let imageCount: Int
-    let createdDate: Date
-    
-    func displayDate() -> String {
-        let dateFormater = DateFormatter()
-        dateFormater.dateFormat = "yyyy/MM/dd"
-        return dateFormater.string(from: createdDate)
-    }
-}
-
-struct Profile {
-    var userName: String
-    var icon: UIImage?
 }

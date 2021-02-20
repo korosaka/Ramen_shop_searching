@@ -15,7 +15,7 @@ class RegisteringToken {
                 print("Error fetching FCM registration token: \(error)")
             } else if let _token = token {
                 print("FCM registration token: \(_token)")
-                FirebaseHelper().registerTokenToUser(token: _token, to: userID)
+                DatabaseHelper().registerTokenToUser(token: _token, to: userID)
             }
         }
     }

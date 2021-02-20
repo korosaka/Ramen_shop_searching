@@ -114,6 +114,6 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         guard let userID = Authentication().getUserUID() else { return }
-        FirebaseHelper().registerTokenToUser(token: fcmToken, to: userID)
+        DatabaseHelper().registerTokenToUser(token: fcmToken, to: userID)
     }
 }

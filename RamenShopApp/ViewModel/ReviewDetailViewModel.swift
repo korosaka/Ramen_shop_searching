@@ -10,7 +10,7 @@ import SwiftUI
 class ReviewDetailViewModel: ObservableObject {
     
     var review: Review
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     @Published var reviewImages: [RamenImage]
     @Published var userProfile: Profile
     

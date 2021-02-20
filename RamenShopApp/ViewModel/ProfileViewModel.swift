@@ -19,7 +19,7 @@ class ProfileViewModel: ObservableObject {
     @Published var isShowingProgress = false
     @Published var isShowingMenu = false
     @Published var userFavorites: [FavoriteShopInfo]
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     var authentication: Authentication
     var userID: String?
     @Published var isShowingAlert = false

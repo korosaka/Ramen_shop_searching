@@ -13,7 +13,7 @@ class AllReviewViewModel: ObservableObject {
     @Published var showDetailDic: [String: Bool]
     @Published var isShowingProgress = false
     var currentDetail: String?
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     var shop: Shop
     
     init(shop: Shop) {

@@ -9,7 +9,7 @@
 import Foundation
 class ReviewHeadlineViewModel: ObservableObject {
     let review: Review
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     @Published var userProfile: Profile
     
     init(review: Review) {

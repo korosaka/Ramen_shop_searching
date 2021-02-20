@@ -11,7 +11,7 @@ import Firebase
 import FirebaseFirestore
 import SwiftUI
 class RegisteringShopViewModel: ObservableObject {
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     var authentication: Authentication
     @Published var shopName = ""
     @Published var isShowAlert = false

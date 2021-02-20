@@ -8,7 +8,7 @@
 
 import Foundation
 class RequestStatusViewModel: ObservableObject {
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     var authentication: Authentication
     var userID: String
     var requestedShopID: String
@@ -88,7 +88,7 @@ extension RequestStatusViewModel: FirebaseHelperDelegate {
     func completedFetchingShop(fetchedShopData: Shop) {
         isShowingProgress = false
         shopName = fetchedShopData.name
-        inspectionStatus = fetchedShopData.inspectionStatus
+        inspectionStatus = fetchedShopData.reviewingStatus
         
         if inspectionStatus == .rejected {
             db.fetchRejectReason(shopID: fetchedShopData.shopID)

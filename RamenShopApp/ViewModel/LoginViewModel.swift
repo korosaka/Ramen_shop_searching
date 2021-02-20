@@ -12,7 +12,7 @@ import Firebase
 // MARK: TODO separate extention AuthenticationDelegate
 class LoginViewModel: ObservableObject {
     var authentication: Authentication
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     
     @Published var email = ""
     @Published var password = ""

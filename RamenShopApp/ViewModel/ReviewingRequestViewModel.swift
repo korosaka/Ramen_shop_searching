@@ -13,7 +13,7 @@ class ReviewingRequestViewModel: ObservableObject {
     @Published var rejectReason = ""
     @Published var isShowingAlert = false
     var activeAlert: ActiveAlert = .confirmation
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     var delegate: InspectingRequestVMDelegate?
     
     init(request: Shop, delegate: InspectingRequestVMDelegate?) {

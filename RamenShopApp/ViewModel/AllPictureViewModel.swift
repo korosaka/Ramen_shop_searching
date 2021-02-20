@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 class AllPictureViewModel: ObservableObject {
     
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     var shopID: String?
     @Published var allImages: [RamenImage]
     @Published var isShowingProgress = false

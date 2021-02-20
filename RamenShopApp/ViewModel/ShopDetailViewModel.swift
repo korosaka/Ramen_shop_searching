@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 class ShopDetailViewModel: ObservableObject {
     
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     @Published var latestReviews: [Review]
     @Published var pictures: [UIImage]
     @Published var favorite = false

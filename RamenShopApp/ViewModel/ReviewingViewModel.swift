@@ -12,7 +12,7 @@ import Photos
 import Firebase
 class ReviewingViewModel: ObservableObject {
     //MARK: TODO too messy
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     var authentication: Authentication
     var shop: Shop?
     var reviewID: String?

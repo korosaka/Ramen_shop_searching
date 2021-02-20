@@ -42,26 +42,3 @@ class PushNotificationSender {
         task.resume()
     }
 }
-
-enum NotificationReceiver: String {
-    case requester = "requester"
-    case allUser = "all_user"
-    
-    var title: String {
-        switch self {
-        case .requester:
-            return "Reviewing has been done!"
-        default:
-            return "New shop has been registered near you!"
-        }
-    }
-    
-    var body: String {
-        switch self {
-        case .requester:
-            return "Your adding shop request has been reviewed. Please check it in app."
-        default:
-            return "Let's check it!"
-        }
-    }
-}

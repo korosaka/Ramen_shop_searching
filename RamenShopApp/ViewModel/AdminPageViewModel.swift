@@ -9,7 +9,7 @@
 import Foundation
 class AdminPageViewModel: ObservableObject {
     @Published var requestedShops: [Shop]
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     @Published var isShowingProgress = false
     
     init() {

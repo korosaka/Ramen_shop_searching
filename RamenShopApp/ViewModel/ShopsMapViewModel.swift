@@ -8,7 +8,7 @@
 
 import Foundation
 class ShopsMapViewModel: ObservableObject {
-    var shopDB: FirebaseHelper
+    var shopDB: DatabaseHelper
     @Published var shops: [Shop]
     @Published var isShopSelected = false
     @Published var isShowingProgress = false

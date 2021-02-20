@@ -8,7 +8,7 @@
 
 import Foundation
 class RequestingTopViewModel: ObservableObject {
-    var db: FirebaseHelper
+    var db: DatabaseHelper
     var authentication: Authentication
     var userID: String?
     @Published var requestedShopID: String?
