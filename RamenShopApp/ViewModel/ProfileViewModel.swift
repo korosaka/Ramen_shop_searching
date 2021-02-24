@@ -31,8 +31,7 @@ class ProfileViewModel: ObservableObject {
         db = .init()
         authentication = .init()
         userFavorites = .init()
-        //MARK: TODO refactoring (profile init)
-        userProfile = Profile(userName: "unnamed")
+        userProfile = Profile()
         db.delegate = self
         fetchData()
     }

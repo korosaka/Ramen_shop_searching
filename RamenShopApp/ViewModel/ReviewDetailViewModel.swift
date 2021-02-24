@@ -19,8 +19,7 @@ class ReviewDetailViewModel: ObservableObject {
         self.review = review
         reviewImages = .init()
         db = .init()
-        //MARK: TODO refactoring (profile init)
-        userProfile = Profile(userName: "unnamed")
+        userProfile = Profile()
         db.delegate = self
         fetchImages()
         fetchProfile()

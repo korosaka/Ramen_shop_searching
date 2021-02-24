@@ -144,8 +144,8 @@ struct DatabaseHelper {
                 return print("error happened in fetchUserProfile !!")
             }
             if let data = document?.data() {
-                let userName = data["user_name"] as? String ?? "unnamed"
-                let profile = Profile(userName: userName, icon: nil)
+                let userName = data["user_name"] as? String ?? Constants.NO_NAME
+                let profile = Profile(userName: userName)
                 if data["has_icon"] as? Bool ?? false {
                     fetchUserIcon(userID, profile)
                 } else {
@@ -177,7 +177,7 @@ struct DatabaseHelper {
             .collection("user")
             .document(userID)
         userRef.setData([
-            "user_name": "unnamed",
+            "user_name": Constants.NO_NAME,
             "has_icon" : false
         ]) { err in
             delegate?.completedUpdatingUserProfile(isSuccess: err == nil)
@@ -210,7 +210,7 @@ struct DatabaseHelper {
             }
         } else {
             userRef.setData([
-                "user_name": "unnamed",
+                "user_name": Constants.NO_NAME,
                 "has_icon" : true
             ]) { err in
                 delegate?.completedUpdatingUserProfile(isSuccess: err == nil)

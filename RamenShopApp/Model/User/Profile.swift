@@ -12,4 +12,19 @@ import Firebase
 struct Profile {
     var userName: String
     var icon: UIImage?
+    
+    init() {
+        userName = Constants.NO_NAME
+        icon = nil
+    }
+    
+    init(userName: String) {
+        self.userName = userName
+        icon = nil
+    }
+    
+    init(userName: String, icon: UIImage?) {
+        self.userName = userName
+        self.icon = icon
+    }
 }

@@ -14,7 +14,7 @@ class ReviewHeadlineViewModel: ObservableObject {
     
     init(review: Review) {
         self.review = review
-        userProfile = Profile(userName: "unnamed")
+        userProfile = Profile()
         db = .init()
         db.delegate = self
         fetchProfile()

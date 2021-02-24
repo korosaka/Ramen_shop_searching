@@ -10,4 +10,6 @@ import Foundation
 class Constants {
     static let ADMIN_EMAIL = "korokorokoro.nn99@gmail.com"
     static let EMPTY = ""
+    
+    static let NO_NAME = "no name"
 }
