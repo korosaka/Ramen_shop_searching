@@ -8,69 +8,6 @@
 
 import SwiftUI
 
-struct SignupView: View {
-    
-    @ObservedObject var viewModel: LoginViewModel
-    @Environment(\.presentationMode) var presentationMode
-    
-    var body: some View {
-        ZStack {
-            BackGroundView()
-            VStack(spacing: 0) {
-                CustomNavigationBar(additionalAction: nil)
-                Spacer().frame(height: UIScreen.main.bounds.height / 5)
-                Text("Sign Up")
-                    .foregroundColor(.viridianGreen)
-                    .font(.largeTitle)
-                    .bold()
-                    .shadow(color: .black, radius: 2, x: 2, y: 2)
-                Spacer().frame(height: 70)
-                TextField("email", text: $viewModel.email)
-                    .basicStyle()
-                Spacer().frame(height: 30)
-                TextField("passsword", text: $viewModel.password)
-                    .basicStyle()
-                Spacer().frame(height: 50)
-                Button(action: {
-                    self.viewModel.createAccount()
-                }) {
-                    Text("sign up")
-                        .containingSymbol(symbol: "person.badge.plus",
-                                          color: .viridianGreen,
-                                          textFont: .title,
-                                          symbolFont: .title3)
-                }
-                .alert(isPresented: $viewModel.isShowSignUpAlert) {
-                    if viewModel.sentEmail {
-                        return Alert(title: Text("Sent Email!"),
-                                     message: Text("We sent Email to your adress, so please check it."),
-                                     dismissButton: .default(Text("OK"),
-                                                             action: {
-                                                                self.viewModel.reset()
-                                                                presentationMode.wrappedValue.dismiss()
-                                                             }
-                                     )
-                        )
-                    } else {
-                        return Alert(title: Text("Signup Error"),
-                                     message: Text(viewModel.errorMesaage),
-                                     dismissButton: .default(Text("OK"),
-                                                             action: { self.viewModel.reset() }))
-                    }
-                    
-                }
-                Spacer()
-            }
-            if viewModel.isShowingProgress {
-                CustomedProgress()
-            }
-        }
-        .navigationBarHidden(true)
-    }
-}
-
-
-//MARK: TODO separate View
 struct LoginView: View {
     
     @ObservedObject var viewModel: LoginViewModel
@@ -178,26 +115,5 @@ struct LoginView: View {
             .navigationBarHidden(true)
         }
         .navigationViewStyle(StackNavigationViewStyle())
-    }
-}
-
-struct CustomedProgress: View {
-    var body: some View {
-        ProgressView("in process")
-            .foregroundColor(.viridianGreen)
-            .upDownPadding(size: 15)
-            .wideStyle()
-            .background(Color.superWhitePasteGreen)
-            .cornerRadius(20)
-            .sidePadding(size: 30)
-    }
-}
-
-struct BackGroundView: View {
-    var body: some View {
-        LinearGradient(gradient: Gradient(colors: [Color.green,
-                                                   Color.pastelGreen]),
-                       startPoint: .top,
-                       endPoint: .bottom)
     }
 }
