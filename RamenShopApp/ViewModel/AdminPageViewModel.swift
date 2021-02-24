@@ -9,8 +9,8 @@
 import Foundation
 class AdminPageViewModel: ObservableObject {
     @Published var requestedShops: [Shop]
-    var db: DatabaseHelper
     @Published var isShowingProgress = false
+    var db: DatabaseHelper
     
     init() {
         requestedShops = .init()

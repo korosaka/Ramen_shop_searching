@@ -8,16 +8,16 @@
 
 import Foundation
 class RequestStatusViewModel: ObservableObject {
-    var db: DatabaseHelper
-    var authentication: Authentication
-    var userID: String
-    var requestedShopID: String
-    var activeAlert: ActiveAlert = .confirmation
     @Published var shopName: String?
     @Published var inspectionStatus: ReviewingStatus?
     @Published var isShowAlert = false
     @Published var rejectReason = Constants.EMPTY
     @Published var isShowingProgress = false
+    var db: DatabaseHelper
+    var authentication: Authentication
+    var userID: String
+    var requestedShopID: String
+    var activeAlert: ActiveAlert = .confirmation
     var hasRequest: Bool {
         return (shopName != nil) && (inspectionStatus != nil)
     }
@@ -29,9 +29,9 @@ class RequestStatusViewModel: ObservableObject {
         guard let _status = inspectionStatus else { return Constants.EMPTY }
         switch _status {
         case .inProcess:
-            return "※You cannot create another request until reviewing this request would be done or canceled."
+            return Constants.REQUEST_STATUS_MESSAGE_IN_PROCESS
         default:
-            return "※If you wanna create new request, you need to click the above button."
+            return Constants.REQUEST_STATUS_MESSAGE_OTHER
         }
     }
     

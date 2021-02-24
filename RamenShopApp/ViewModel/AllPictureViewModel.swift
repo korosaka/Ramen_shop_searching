@@ -10,10 +10,10 @@ import Foundation
 import SwiftUI
 class AllPictureViewModel: ObservableObject {
     
-    var db: DatabaseHelper
-    var shopID: String?
     @Published var allImages: [RamenImage]
     @Published var isShowingProgress = false
+    var db: DatabaseHelper
+    var shopID: String?
     
     init(shopID: String?) {
         db = .init()

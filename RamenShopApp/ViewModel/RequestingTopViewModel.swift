@@ -8,10 +8,10 @@
 
 import Foundation
 class RequestingTopViewModel: ObservableObject {
+    @Published var requestedShopID: String?
     var db: DatabaseHelper
     var authentication: Authentication
     var userID: String?
-    @Published var requestedShopID: String?
     var hasRequest: Bool {
         return requestedShopID != nil
     }

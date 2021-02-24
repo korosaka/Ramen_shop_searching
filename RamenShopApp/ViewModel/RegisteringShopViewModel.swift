@@ -11,11 +11,11 @@ import Firebase
 import FirebaseFirestore
 import SwiftUI
 class RegisteringShopViewModel: ObservableObject {
-    var db: DatabaseHelper
-    var authentication: Authentication
     @Published var shopName = Constants.EMPTY
     @Published var isShowAlert = false
     @Published var isShowingProgress = false
+    var db: DatabaseHelper
+    var authentication: Authentication
     var userID: String?
     var activeAlertForName = ActiveAlert.confirmation
     var isNameSet: Bool {
@@ -25,7 +25,7 @@ class RegisteringShopViewModel: ObservableObject {
     var zoom: Float?
     var isZoomedEnough: Bool {
         guard let _zoom = zoom else { return false }
-        return _zoom > 19.0
+        return _zoom > Float(Constants.REQUIRED_ZOOM_LIMIT)
     }
     
     var delegate: RegisteringShopVMDelegate?

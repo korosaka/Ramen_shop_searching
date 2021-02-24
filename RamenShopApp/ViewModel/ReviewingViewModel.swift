@@ -11,7 +11,15 @@ import SwiftUI
 import Photos
 import Firebase
 class ReviewingViewModel: ObservableObject {
-    //MARK: TODO too messy
+    @Published var evaluation: Int
+    @Published var comment: String
+    @Published var pictures: [UIImage]?
+    @Published var isShowSheet = false
+    @Published var isShowMediaPermissionDenied = false
+    @Published var isShowAlert = false
+    @Published var activeAlert: ActiveAlert = .confirmation
+    @Published var isEditingComment = false
+    @Published var isShowingProgress = false
     var db: DatabaseHelper
     var authentication: Authentication
     var shop: Shop?
@@ -22,17 +30,8 @@ class ReviewingViewModel: ObservableObject {
     var userID: String?
     var createdDate: Date?
     var sourceType = UIImagePickerController.SourceType.photoLibrary
-    @Published var evaluation: Int
-    @Published var comment: String
-    @Published var pictures: [UIImage]?
-    @Published var isShowSheet = false
-    @Published var isShowMediaPermissionDenied = false
-    @Published var isShowAlert = false
-    @Published var activeAlert: ActiveAlert = .confirmation
-    @Published var isEditingComment = false
-    @Published var isShowingProgress = false
     var sheetType = ReviewingSheetType.selectingMedia
-    private let placeHoler = "enter comment"
+    private let placeHoler = Constants.REQUIRE_COMMENT
     var updateReviewPicsState = (uploaded: false, deleted: false)
     var updateReviewState = (review: false, pictures: false, shopEva: false)
     var isPicUploadEnabled: Bool { pictures!.count < 3 }

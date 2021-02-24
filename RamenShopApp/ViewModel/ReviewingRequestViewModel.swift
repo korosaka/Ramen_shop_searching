@@ -8,10 +8,10 @@
 
 import Foundation
 class ReviewingRequestViewModel: ObservableObject {
-    let requestedShop: Shop
     @Published var currentShops: [Shop]
     @Published var rejectReason = Constants.EMPTY
     @Published var isShowingAlert = false
+    let requestedShop: Shop
     var activeAlert: ActiveAlert = .confirmation
     var db: DatabaseHelper
     var delegate: InspectingRequestVMDelegate?

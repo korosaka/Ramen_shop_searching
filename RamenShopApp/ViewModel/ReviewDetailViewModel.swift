@@ -9,10 +9,10 @@
 import SwiftUI
 class ReviewDetailViewModel: ObservableObject {
     
-    var review: Review
-    var db: DatabaseHelper
     @Published var reviewImages: [RamenImage]
     @Published var userProfile: Profile
+    var review: Review
+    var db: DatabaseHelper
     
     
     init(review: Review) {

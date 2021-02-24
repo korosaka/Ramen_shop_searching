@@ -10,14 +10,14 @@ import Foundation
 import SwiftUI
 class ShopDetailViewModel: ObservableObject {
     
-    var db: DatabaseHelper
     @Published var latestReviews: [Review]
     @Published var pictures: [UIImage]
     @Published var favorite = false
     @Published var shop: Shop?
+    @Published var isShowingProgress = false
+    var db: DatabaseHelper
     var isLoading = (review: false, picture: false, favorite: false)
     var isFromProfile = false
-    @Published var isShowingProgress = false
     
     init(mapVM: ShopsMapViewModel) {
         if mapVM.isShopSelected {

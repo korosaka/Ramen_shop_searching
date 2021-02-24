@@ -10,9 +10,6 @@ import Foundation
 import Firebase
 
 class LoginViewModel: ObservableObject {
-    var authentication: Authentication
-    var db: DatabaseHelper
-    
     @Published var email = Constants.EMPTY
     @Published var password = Constants.EMPTY
     @Published var logined = false
@@ -20,6 +17,8 @@ class LoginViewModel: ObservableObject {
     @Published var isShowSignUpAlert = false
     @Published var logoutError = false
     @Published var isShowingProgress = false
+    var authentication: Authentication
+    var db: DatabaseHelper
     var isEmailNotVerified = false
     var sentEmail = false
     var errorMesaage = Constants.EMPTY

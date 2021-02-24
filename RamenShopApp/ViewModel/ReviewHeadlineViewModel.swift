@@ -8,9 +8,9 @@
 
 import Foundation
 class ReviewHeadlineViewModel: ObservableObject {
+    @Published var userProfile: Profile
     let review: Review
     var db: DatabaseHelper
-    @Published var userProfile: Profile
     
     init(review: Review) {
         self.review = review
