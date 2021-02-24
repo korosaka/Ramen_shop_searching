@@ -42,17 +42,3 @@ struct AdminPageView: View {
     }
 }
 
-struct ReloadRequestsButton: View {
-    @ObservedObject var viewModel: AdminPageViewModel
-    var body: some View {
-        Button(action: {
-            viewModel.fetchRequests()
-        }) {
-            Text("reload")
-                .containingSymbol(symbol: "arrow.triangle.2.circlepath",
-                                  color: .strongPink,
-                                  textFont: .title3,
-                                  symbolFont: .title3)
-        }
-    }
-}

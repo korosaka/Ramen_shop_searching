@@ -141,6 +141,3 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
     }
 }
 
-enum MapType {
-    case searching, registering, admin, fromShop
-}

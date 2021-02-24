@@ -82,6 +82,3 @@ extension ImagePickerDelegate {
     }
 }
 
-enum PickerRole {
-    case reviewPicture, userIcon
-}

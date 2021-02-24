@@ -11,6 +11,32 @@
 		88006DB325E670AA004BCEDF /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006DB225E670AA004BCEDF /* SignupView.swift */; };
 		88006DB825E67281004BCEDF /* CustomedProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006DB725E67281004BCEDF /* CustomedProgress.swift */; };
 		88006DBC25E672DD004BCEDF /* BackGroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006DBB25E672DD004BCEDF /* BackGroundView.swift */; };
+		88006DEA25E699DA004BCEDF /* EvaluationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006DE925E699DA004BCEDF /* EvaluationFilter.swift */; };
+		88006E0A25E6AFC3004BCEDF /* ShopName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E0925E6AFC3004BCEDF /* ShopName.swift */; };
+		88006E0D25E6B011004BCEDF /* EvaluationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E0C25E6B011004BCEDF /* EvaluationLabel.swift */; };
+		88006E1025E6CC56004BCEDF /* OptionIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E0F25E6CC56004BCEDF /* OptionIcons.swift */; };
+		88006E1325E6CCAA004BCEDF /* LatestReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E1225E6CCAA004BCEDF /* LatestReviews.swift */; };
+		88006E1625E6CCFE004BCEDF /* ReviewHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E1525E6CCFE004BCEDF /* ReviewHeadline.swift */; };
+		88006E1925E6CD3F004BCEDF /* Pictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E1825E6CD3F004BCEDF /* Pictures.swift */; };
+		88006E1C25E6CDA4004BCEDF /* RejectModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E1B25E6CDA4004BCEDF /* RejectModal.swift */; };
+		88006E1F25E6D228004BCEDF /* ReloadRequestsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E1E25E6D228004BCEDF /* ReloadRequestsButton.swift */; };
+		88006E2225E6D28B004BCEDF /* IconProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E2125E6D28B004BCEDF /* IconProfile.swift */; };
+		88006E2525E6D2B6004BCEDF /* NameProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E2425E6D2B6004BCEDF /* NameProfile.swift */; };
+		88006E2825E6D3CA004BCEDF /* ReloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E2725E6D3CA004BCEDF /* ReloadButton.swift */; };
+		88006E2B25E6D3F9004BCEDF /* ProfileSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E2A25E6D3F9004BCEDF /* ProfileSetting.swift */; };
+		88006E2E25E6D436004BCEDF /* ProfileSettingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E2D25E6D436004BCEDF /* ProfileSettingMenu.swift */; };
+		88006E3125E6D47C004BCEDF /* FavoriteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E3025E6D47C004BCEDF /* FavoriteHeader.swift */; };
+		88006E3425E6D49A004BCEDF /* FavoriteCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E3325E6D49A004BCEDF /* FavoriteCollectionView.swift */; };
+		88006E3725E6D4E3004BCEDF /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E3625E6D4E3004BCEDF /* FavoriteCell.swift */; };
+		88006E3A25E6D507004BCEDF /* FavoriteShopInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E3925E6D507004BCEDF /* FavoriteShopInfo.swift */; };
+		88006E3D25E6D7AB004BCEDF /* RequestInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E3C25E6D7AB004BCEDF /* RequestInfo.swift */; };
+		88006E4025E6D7F4004BCEDF /* RequestedShopName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E3F25E6D7F4004BCEDF /* RequestedShopName.swift */; };
+		88006E4325E6D812004BCEDF /* ReviewStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E4225E6D812004BCEDF /* ReviewStatus.swift */; };
+		88006E4625E6D834004BCEDF /* RemoveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E4525E6D834004BCEDF /* RemoveButton.swift */; };
+		88006E4925E6D85C004BCEDF /* RejectReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E4825E6D85C004BCEDF /* RejectReason.swift */; };
+		88006E4C25E6D879004BCEDF /* ReloadStatusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E4B25E6D879004BCEDF /* ReloadStatusButton.swift */; };
+		88006E4F25E6D8C3004BCEDF /* MapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E4E25E6D8C3004BCEDF /* MapType.swift */; };
+		88006E5225E6D8FF004BCEDF /* PickerRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E5125E6D8FE004BCEDF /* PickerRole.swift */; };
 		88009D4525A831C400B4F813 /* RequestingTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88009D4425A831C400B4F813 /* RequestingTopView.swift */; };
 		88009D4825A831E100B4F813 /* RequestingTopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */; };
 		882103F625E13C91009CFAA3 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882103F525E13C91009CFAA3 /* Shop.swift */; };
@@ -74,6 +100,32 @@
 		88006DB225E670AA004BCEDF /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		88006DB725E67281004BCEDF /* CustomedProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomedProgress.swift; sourceTree = "<group>"; };
 		88006DBB25E672DD004BCEDF /* BackGroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackGroundView.swift; sourceTree = "<group>"; };
+		88006DE925E699DA004BCEDF /* EvaluationFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationFilter.swift; sourceTree = "<group>"; };
+		88006E0925E6AFC3004BCEDF /* ShopName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopName.swift; sourceTree = "<group>"; };
+		88006E0C25E6B011004BCEDF /* EvaluationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationLabel.swift; sourceTree = "<group>"; };
+		88006E0F25E6CC56004BCEDF /* OptionIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionIcons.swift; sourceTree = "<group>"; };
+		88006E1225E6CCAA004BCEDF /* LatestReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestReviews.swift; sourceTree = "<group>"; };
+		88006E1525E6CCFE004BCEDF /* ReviewHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewHeadline.swift; sourceTree = "<group>"; };
+		88006E1825E6CD3F004BCEDF /* Pictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pictures.swift; sourceTree = "<group>"; };
+		88006E1B25E6CDA4004BCEDF /* RejectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RejectModal.swift; sourceTree = "<group>"; };
+		88006E1E25E6D228004BCEDF /* ReloadRequestsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadRequestsButton.swift; sourceTree = "<group>"; };
+		88006E2125E6D28B004BCEDF /* IconProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconProfile.swift; sourceTree = "<group>"; };
+		88006E2425E6D2B6004BCEDF /* NameProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameProfile.swift; sourceTree = "<group>"; };
+		88006E2725E6D3CA004BCEDF /* ReloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadButton.swift; sourceTree = "<group>"; };
+		88006E2A25E6D3F9004BCEDF /* ProfileSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetting.swift; sourceTree = "<group>"; };
+		88006E2D25E6D436004BCEDF /* ProfileSettingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingMenu.swift; sourceTree = "<group>"; };
+		88006E3025E6D47C004BCEDF /* FavoriteHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHeader.swift; sourceTree = "<group>"; };
+		88006E3325E6D49A004BCEDF /* FavoriteCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionView.swift; sourceTree = "<group>"; };
+		88006E3625E6D4E3004BCEDF /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
+		88006E3925E6D507004BCEDF /* FavoriteShopInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopInfo.swift; sourceTree = "<group>"; };
+		88006E3C25E6D7AB004BCEDF /* RequestInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInfo.swift; sourceTree = "<group>"; };
+		88006E3F25E6D7F4004BCEDF /* RequestedShopName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestedShopName.swift; sourceTree = "<group>"; };
+		88006E4225E6D812004BCEDF /* ReviewStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStatus.swift; sourceTree = "<group>"; };
+		88006E4525E6D834004BCEDF /* RemoveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveButton.swift; sourceTree = "<group>"; };
+		88006E4825E6D85C004BCEDF /* RejectReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RejectReason.swift; sourceTree = "<group>"; };
+		88006E4B25E6D879004BCEDF /* ReloadStatusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadStatusButton.swift; sourceTree = "<group>"; };
+		88006E4E25E6D8C3004BCEDF /* MapType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapType.swift; sourceTree = "<group>"; };
+		88006E5125E6D8FE004BCEDF /* PickerRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerRole.swift; sourceTree = "<group>"; };
 		88009D4425A831C400B4F813 /* RequestingTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestingTopView.swift; sourceTree = "<group>"; };
 		88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestingTopViewModel.swift; sourceTree = "<group>"; };
 		882103F525E13C91009CFAA3 /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
@@ -170,6 +222,7 @@
 				88006DB725E67281004BCEDF /* CustomedProgress.swift */,
 				88006DBB25E672DD004BCEDF /* BackGroundView.swift */,
 				886036FF255DF18100C5ED1C /* Modifiers.swift */,
+				88006E5125E6D8FE004BCEDF /* PickerRole.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -180,6 +233,7 @@
 				8866043225995CD900FF2D98 /* CustomNavigationBar.swift */,
 				884CEB97256F66A70020C932 /* GoogleMap.swift */,
 				883AA0DA256649C7002AC14A /* GoogleMapView.swift */,
+				88006E4E25E6D8C3004BCEDF /* MapType.swift */,
 			);
 			path = GoogleMap;
 			sourceTree = "<group>";
@@ -189,6 +243,7 @@
 			children = (
 				88AFA79F2559B9C1001D151C /* MapTopView.swift */,
 				8866049425A156BE00FF2D98 /* ShopsMapView.swift */,
+				88006DE925E699DA004BCEDF /* EvaluationFilter.swift */,
 				88006DDD25E673E4004BCEDF /* Shop */,
 			);
 			path = ShopSearch;
@@ -203,6 +258,12 @@
 				887DA0002580FC06003E237E /* ReviewDetailView.swift */,
 				88FFE9C7258C239800F4E892 /* AllPictureView.swift */,
 				88327BCE25903F4100733326 /* ReviewingView.swift */,
+				88006E0925E6AFC3004BCEDF /* ShopName.swift */,
+				88006E0C25E6B011004BCEDF /* EvaluationLabel.swift */,
+				88006E0F25E6CC56004BCEDF /* OptionIcons.swift */,
+				88006E1225E6CCAA004BCEDF /* LatestReviews.swift */,
+				88006E1525E6CCFE004BCEDF /* ReviewHeadline.swift */,
+				88006E1825E6CD3F004BCEDF /* Pictures.swift */,
 			);
 			path = Shop;
 			sourceTree = "<group>";
@@ -214,6 +275,12 @@
 				8866049925A2F4E700FF2D98 /* RequestStatusView.swift */,
 				8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */,
 				8866048B25A131CD00FF2D98 /* RegisteringShopNameView.swift */,
+				88006E3C25E6D7AB004BCEDF /* RequestInfo.swift */,
+				88006E3F25E6D7F4004BCEDF /* RequestedShopName.swift */,
+				88006E4225E6D812004BCEDF /* ReviewStatus.swift */,
+				88006E4525E6D834004BCEDF /* RemoveButton.swift */,
+				88006E4825E6D85C004BCEDF /* RejectReason.swift */,
+				88006E4B25E6D879004BCEDF /* ReloadStatusButton.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -222,6 +289,15 @@
 			isa = PBXGroup;
 			children = (
 				88660438259BCA3500FF2D98 /* ProfileView.swift */,
+				88006E2125E6D28B004BCEDF /* IconProfile.swift */,
+				88006E2425E6D2B6004BCEDF /* NameProfile.swift */,
+				88006E2725E6D3CA004BCEDF /* ReloadButton.swift */,
+				88006E2A25E6D3F9004BCEDF /* ProfileSetting.swift */,
+				88006E2D25E6D436004BCEDF /* ProfileSettingMenu.swift */,
+				88006E3025E6D47C004BCEDF /* FavoriteHeader.swift */,
+				88006E3325E6D49A004BCEDF /* FavoriteCollectionView.swift */,
+				88006E3625E6D4E3004BCEDF /* FavoriteCell.swift */,
+				88006E3925E6D507004BCEDF /* FavoriteShopInfo.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -231,6 +307,8 @@
 			children = (
 				888FCCF925AF05BC00622DD9 /* ReviewingRequestView.swift */,
 				888FCCF325AED40D00622DD9 /* AdminPageView.swift */,
+				88006E1B25E6CDA4004BCEDF /* RejectModal.swift */,
+				88006E1E25E6D228004BCEDF /* ReloadRequestsButton.swift */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -569,36 +647,57 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88006E2825E6D3CA004BCEDF /* ReloadButton.swift in Sources */,
 				882103FA25E13D3F009CFAA3 /* ReviewingStatus.swift in Sources */,
+				88006E4F25E6D8C3004BCEDF /* MapType.swift in Sources */,
 				888FCCFD25AF063700622DD9 /* ReviewingRequestViewModel.swift in Sources */,
+				88006E1C25E6CDA4004BCEDF /* RejectModal.swift in Sources */,
 				883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */,
+				88006E2E25E6D436004BCEDF /* ProfileSettingMenu.swift in Sources */,
 				8866048C25A131CE00FF2D98 /* RegisteringShopNameView.swift in Sources */,
 				882103F625E13C91009CFAA3 /* Shop.swift in Sources */,
+				88006E2B25E6D3F9004BCEDF /* ProfileSetting.swift in Sources */,
 				8835815825BE4E18009AB89B /* SettingsView.swift in Sources */,
+				88006E3425E6D49A004BCEDF /* FavoriteCollectionView.swift in Sources */,
 				88006DBC25E672DD004BCEDF /* BackGroundView.swift in Sources */,
 				887DA0012580FC06003E237E /* ReviewDetailView.swift in Sources */,
+				88006E0A25E6AFC3004BCEDF /* ShopName.swift in Sources */,
 				882103FE25E146C2009CFAA3 /* Review.swift in Sources */,
 				8821040125E146ED009CFAA3 /* Profile.swift in Sources */,
 				884CEB98256F66A70020C932 /* GoogleMap.swift in Sources */,
 				8866048F25A1348D00FF2D98 /* RegisteringShopViewModel.swift in Sources */,
+				88006E2225E6D28B004BCEDF /* IconProfile.swift in Sources */,
 				886B34FF255026550056AB86 /* AppDelegate.swift in Sources */,
+				88006E4925E6D85C004BCEDF /* RejectReason.swift in Sources */,
+				88006E3125E6D47C004BCEDF /* FavoriteHeader.swift in Sources */,
+				88006E3725E6D4E3004BCEDF /* FavoriteCell.swift in Sources */,
 				882E43852577B6FC00E941D7 /* ShopDetailViewModel.swift in Sources */,
+				88006E5225E6D8FF004BCEDF /* PickerRole.swift in Sources */,
+				88006E1F25E6D228004BCEDF /* ReloadRequestsButton.swift in Sources */,
+				88006E1625E6CCFE004BCEDF /* ReviewHeadline.swift in Sources */,
+				88006E3A25E6D507004BCEDF /* FavoriteShopInfo.swift in Sources */,
 				8866042D25917BF400FF2D98 /* ReviewingViewModel.swift in Sources */,
 				886B3501255026550056AB86 /* SceneDelegate.swift in Sources */,
 				88A42235257A001C003CC75D /* AllReviewView.swift in Sources */,
 				886B353A2556A11C0056AB86 /* LoginView.swift in Sources */,
 				8821042125E14B9D009CFAA3 /* NotificationReceiver.swift in Sources */,
+				88006E4625E6D834004BCEDF /* RemoveButton.swift in Sources */,
 				8866043325995CD900FF2D98 /* CustomNavigationBar.swift in Sources */,
+				88006DEA25E699DA004BCEDF /* EvaluationFilter.swift in Sources */,
 				886B353D2557B70B0056AB86 /* LoginViewModel.swift in Sources */,
 				88C8D22A258C44B500E43583 /* AllPictureViewModel.swift in Sources */,
 				884CEB9B256FBE1F0020C932 /* ShopDetailView.swift in Sources */,
 				8866043C259BE17B00FF2D98 /* ProfileViewModel.swift in Sources */,
 				88327BCF25903F4100733326 /* ReviewingView.swift in Sources */,
+				88006E2525E6D2B6004BCEDF /* NameProfile.swift in Sources */,
 				88C8D22F258ECC2000E43583 /* ReviewHeadlineViewModel.swift in Sources */,
+				88006E1325E6CCAA004BCEDF /* LatestReviews.swift in Sources */,
 				88009D4825A831E100B4F813 /* RequestingTopViewModel.swift in Sources */,
 				888FCCF425AED40D00622DD9 /* AdminPageView.swift in Sources */,
+				88006E0D25E6B011004BCEDF /* EvaluationLabel.swift in Sources */,
 				8866049525A156BE00FF2D98 /* ShopsMapView.swift in Sources */,
 				88603700255DF18100C5ED1C /* Modifiers.swift in Sources */,
+				88006E1025E6CC56004BCEDF /* OptionIcons.swift in Sources */,
 				88006DB825E67281004BCEDF /* CustomedProgress.swift in Sources */,
 				887D9FFE257FAD48003E237E /* AllReviewViewModel.swift in Sources */,
 				88009D4525A831C400B4F813 /* RequestingTopView.swift in Sources */,
@@ -607,7 +706,11 @@
 				886B3503255026550056AB86 /* ContentView.swift in Sources */,
 				88006DB325E670AA004BCEDF /* SignupView.swift in Sources */,
 				8866049D25A2F70500FF2D98 /* RequestStatusViewModel.swift in Sources */,
+				88006E4025E6D7F4004BCEDF /* RequestedShopName.swift in Sources */,
+				88006E4C25E6D879004BCEDF /* ReloadStatusButton.swift in Sources */,
+				88006E1925E6CD3F004BCEDF /* Pictures.swift in Sources */,
 				88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */,
+				88006E3D25E6D7AB004BCEDF /* RequestInfo.swift in Sources */,
 				888FCCFA25AF05BC00622DD9 /* ReviewingRequestView.swift in Sources */,
 				88660439259BCA3500FF2D98 /* ProfileView.swift in Sources */,
 				884CEB95256CDCD40020C932 /* ShopsMapViewModel.swift in Sources */,
@@ -617,6 +720,7 @@
 				886B35402557CAD30056AB86 /* Authentication.swift in Sources */,
 				884CEB92256CD8960020C932 /* DatabaseHelper.swift in Sources */,
 				882F84CA25D4A13F008256F4 /* MapFromShop.swift in Sources */,
+				88006E4325E6D812004BCEDF /* ReviewStatus.swift in Sources */,
 				886604302592C8A300FF2D98 /* ImagePicker.swift in Sources */,
 				88006DB025E65820004BCEDF /* Constants.swift in Sources */,
 				88FFE9C8258C239800F4E892 /* AllPictureView.swift in Sources */,
