@@ -58,7 +58,7 @@ struct RequestInfo: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer().frame(height: 10).wideStyle()
-            RequestedShopName(name: viewModel.shopName ?? "")
+            RequestedShopName(name: viewModel.shopName ?? Constants.EMPTY)
             Spacer().frame(height: 30)
             ReviewStatus()
             Spacer().frame(height: 10)
@@ -90,9 +90,9 @@ struct ReviewStatus: View {
                 .foregroundColor(.black)
                 .underline()
             Spacer().frame(height: 5)
-            Text(viewModel.inspectionStatus?.getStatus() ?? "").largestTitleStyleWithColor(color: viewModel.inspectionStatus?.getStatusColor() ?? .black)
+            Text(viewModel.inspectionStatus?.getStatus() ?? Constants.EMPTY).largestTitleStyleWithColor(color: viewModel.inspectionStatus?.getStatusColor() ?? .black)
             Spacer().frame(height: 5)
-            Text(viewModel.inspectionStatus?.getSubMessage() ?? "").foregroundColor(.gray)
+            Text(viewModel.inspectionStatus?.getSubMessage() ?? Constants.EMPTY).foregroundColor(.gray)
             Spacer().frame(height: 30)
             if viewModel.isRejected {
                 RejectReason()
@@ -109,7 +109,7 @@ struct RemoveButton: View {
         Button(action: {
             viewModel.isShowAlert = true
         }) {
-            Text(viewModel.inspectionStatus?.getButtonMessage() ?? "")
+            Text(viewModel.inspectionStatus?.getButtonMessage() ?? Constants.EMPTY)
                 .containingSymbolWide(symbol: "trash",
                                       color: .strongRed,
                                       textFont: .title,
@@ -119,7 +119,7 @@ struct RemoveButton: View {
             switch viewModel.activeAlert {
             case .confirmation:
                 return Alert(title: Text("Confirmation"),
-                             message: Text(viewModel.inspectionStatus?.getConfirmationMessage() ?? ""),
+                             message: Text(viewModel.inspectionStatus?.getConfirmationMessage() ?? Constants.EMPTY),
                              primaryButton: .default(Text("Yes")) {
                                 viewModel.onClickConfirmation()
                              },

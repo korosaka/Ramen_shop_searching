@@ -13,7 +13,7 @@ import Photos
 class ProfileViewModel: ObservableObject {
     @Published var userProfile: Profile
     @Published var isEditingName = false
-    @Published var newName = ""
+    @Published var newName = Constants.EMPTY
     @Published var isShowPhotoLibrary = false
     @Published var isShowPhotoPermissionDenied = false
     @Published var isShowingProgress = false
@@ -24,7 +24,7 @@ class ProfileViewModel: ObservableObject {
     var userID: String?
     @Published var isShowingAlert = false
     var activeAlertForName: ActiveAlert = .confirmation
-    var isNameEdited: Bool { isEditingName && newName != "" }
+    var isNameEdited: Bool { isEditingName && newName != Constants.EMPTY }
     var hasProfileAlready = false
     
     init() {
@@ -60,7 +60,7 @@ class ProfileViewModel: ObservableObject {
         guard let _userID = userID else { return }
         isShowingProgress = true
         db.updateUserName(userID: _userID, name: newName, hasProfileAlready)
-        newName = ""
+        newName = Constants.EMPTY
         isEditingName = false
     }
     
@@ -93,7 +93,7 @@ class ProfileViewModel: ObservableObject {
     
     func onClickChangeName() {
         isEditingName.toggle()
-        newName = ""
+        newName = Constants.EMPTY
     }
     
     func showUserFavorites() {

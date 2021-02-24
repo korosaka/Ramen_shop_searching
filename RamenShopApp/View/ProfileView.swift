@@ -300,7 +300,7 @@ struct FavoriteCell: View {
                         .foregroundColor(.black)
                         .clipShape(Circle())
                 }
-                Text(shopInfo.shopName ?? "")
+                Text(shopInfo.shopName ?? Constants.EMPTY)
                     .bold()
                     .sidePadding(size: 10)
             }

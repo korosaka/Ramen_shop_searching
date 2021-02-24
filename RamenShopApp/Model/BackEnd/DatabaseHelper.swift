@@ -39,12 +39,12 @@ struct DatabaseHelper {
     }
     
     func extractShop(shopID: String, shopData: [String : Any]) -> Shop {
-        let name = shopData["name"] as? String ?? ""
+        let name = shopData["name"] as? String ?? Constants.EMPTY
         let location = shopData["location"] as! GeoPoint
         let reviewInfo = shopData["review_info"] as! [String: Any]
         let totalPoint = reviewInfo["total_point"] as? Int ?? 0
         let count = reviewInfo["count"] as? Int ?? 0
-        let userID = shopData["upload_user"] as? String ?? ""
+        let userID = shopData["upload_user"] as? String ?? Constants.EMPTY
         let inspectionStatus = shopData["inspection_status"] as? Int ?? -1
         
         return Shop(shopID: shopID,
@@ -125,9 +125,9 @@ struct DatabaseHelper {
             let data = document.data()
             let createdTimestamp = data["created_at"] as? Timestamp
             let review = Review(reviewID: document.documentID,
-                                userID: data["user_id"] as? String ?? "",
+                                userID: data["user_id"] as? String ?? Constants.EMPTY,
                                 evaluation: data["evaluation"] as? Int ?? 0,
-                                comment: data["comment"] as? String ?? "",
+                                comment: data["comment"] as? String ?? Constants.EMPTY,
                                 imageCount: data["image_number"] as? Int ?? 0,
                                 createdDate: createdTimestamp!.dateValue())
             reviews.append(review)
@@ -514,7 +514,7 @@ struct DatabaseHelper {
             "review_info": [ "total_point": 0,
                              "count": 0 ],
             "inspection_status": 0,
-            "reject_reason": "",
+            "reject_reason": Constants.EMPTY,
             "upload_user": userID
         ]) { err in
             if err != nil {

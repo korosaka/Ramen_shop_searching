@@ -16,7 +16,7 @@ class RequestStatusViewModel: ObservableObject {
     @Published var shopName: String?
     @Published var inspectionStatus: ReviewingStatus?
     @Published var isShowAlert = false
-    @Published var rejectReason = ""
+    @Published var rejectReason = Constants.EMPTY
     @Published var isShowingProgress = false
     var hasRequest: Bool {
         return (shopName != nil) && (inspectionStatus != nil)
@@ -26,7 +26,7 @@ class RequestStatusViewModel: ObservableObject {
         return _status == .rejected
     }
     var annotation: String {
-        guard let _status = inspectionStatus else { return "" }
+        guard let _status = inspectionStatus else { return Constants.EMPTY }
         switch _status {
         case .inProcess:
             return "※You cannot create another request until reviewing this request would be done or canceled."

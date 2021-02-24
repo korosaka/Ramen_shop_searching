@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		88006DB025E65820004BCEDF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006DAF25E65820004BCEDF /* Constants.swift */; };
 		88009D4525A831C400B4F813 /* RequestingTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88009D4425A831C400B4F813 /* RequestingTopView.swift */; };
 		88009D4825A831E100B4F813 /* RequestingTopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */; };
 		882103F625E13C91009CFAA3 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882103F525E13C91009CFAA3 /* Shop.swift */; };
@@ -66,6 +67,7 @@
 /* Begin PBXFileReference section */
 		1088270E322016859E4E4F7E /* Pods-RamenShopApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RamenShopApp.release.xcconfig"; path = "Target Support Files/Pods-RamenShopApp/Pods-RamenShopApp.release.xcconfig"; sourceTree = "<group>"; };
 		257556D638399B742D1568DC /* Pods_RamenShopApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RamenShopApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		88006DAF25E65820004BCEDF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		88009D4425A831C400B4F813 /* RequestingTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestingTopView.swift; sourceTree = "<group>"; };
 		88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestingTopViewModel.swift; sourceTree = "<group>"; };
 		882103F525E13C91009CFAA3 /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				888FCCF925AF05BC00622DD9 /* ReviewingRequestView.swift */,
 				8835815725BE4E18009AB89B /* SettingsView.swift */,
 				882F84C925D4A13F008256F4 /* MapFromShop.swift */,
+				88006DAF25E65820004BCEDF /* Constants.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				884CEB92256CD8960020C932 /* DatabaseHelper.swift in Sources */,
 				882F84CA25D4A13F008256F4 /* MapFromShop.swift in Sources */,
 				886604302592C8A300FF2D98 /* ImagePicker.swift in Sources */,
+				88006DB025E65820004BCEDF /* Constants.swift in Sources */,
 				88FFE9C8258C239800F4E892 /* AllPictureView.swift in Sources */,
 				887DA00625817426003E237E /* ReviewDetailViewModel.swift in Sources */,
 			);

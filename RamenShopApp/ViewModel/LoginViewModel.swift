@@ -9,13 +9,12 @@
 import Foundation
 import Firebase
 
-// MARK: TODO separate extention AuthenticationDelegate
 class LoginViewModel: ObservableObject {
     var authentication: Authentication
     var db: DatabaseHelper
     
-    @Published var email = ""
-    @Published var password = ""
+    @Published var email = Constants.EMPTY
+    @Published var password = Constants.EMPTY
     @Published var logined = false
     @Published var isShowLoginAlert = false
     @Published var isShowSignUpAlert = false
@@ -23,10 +22,9 @@ class LoginViewModel: ObservableObject {
     @Published var isShowingProgress = false
     var isEmailNotVerified = false
     var sentEmail = false
-    var errorMesaage = ""
+    var errorMesaage = Constants.EMPTY
     var isAdmin: Bool {
-        //MARK: TODO create admin account
-        return email == "korokorokoro.nn99@gmail.com"
+        return email == Constants.ADMIN_EMAIL
     }
     
     init() {
@@ -60,12 +58,12 @@ class LoginViewModel: ObservableObject {
     }
     
     func reset() {
-        email = ""
-        password = ""
+        email = Constants.EMPTY
+        password = Constants.EMPTY
         isShowLoginAlert = false
         isShowSignUpAlert = false
         logoutError = false
-        errorMesaage = ""
+        errorMesaage = Constants.EMPTY
         isEmailNotVerified = false
         sentEmail = false
     }

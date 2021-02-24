@@ -76,7 +76,7 @@ struct EvaluationLabel: View {
                     .foregroundColor(.gold)
                     .font(.title)
                     .shadow(color: .black, radius: 1)
-                Text(viewModel.shop?.roundEvaluatione() ?? String(""))
+                Text(viewModel.shop?.roundEvaluatione() ?? String(Constants.EMPTY))
                     .foregroundColor(.gold).bold()
                     .font(.largeTitle)
                     .shadow(color: .black, radius: 1)

@@ -39,7 +39,7 @@ class ReviewingViewModel: ObservableObject {
     var isPicCancelEnabled: Bool { pictures!.count > 0 }
     var isEnoughInfo: Bool {
         evaluation > 0
-            && comment != ""
+            && comment != Constants.EMPTY
             && comment != placeHoler
     }
     
@@ -81,13 +81,13 @@ class ReviewingViewModel: ObservableObject {
     
     func onTapComment() {
         if comment == placeHoler {
-            comment = ""
+            comment = Constants.EMPTY
         }
         isEditingComment = true
     }
     
     func stopEditingComment() {
-        if comment == "" {
+        if comment == Constants.EMPTY {
             comment = placeHoler
         }
         isEditingComment = false
@@ -162,7 +162,7 @@ class ReviewingViewModel: ObservableObject {
     
     func sendReview() {
         review = Review(reviewID: reviewID ?? UUID().uuidString,
-                        userID: userID ?? "",
+                        userID: userID ?? Constants.EMPTY,
                         evaluation: evaluation,
                         comment: comment,
                         imageCount: pictures!.count,

@@ -13,13 +13,13 @@ import SwiftUI
 class RegisteringShopViewModel: ObservableObject {
     var db: DatabaseHelper
     var authentication: Authentication
-    @Published var shopName = ""
+    @Published var shopName = Constants.EMPTY
     @Published var isShowAlert = false
     @Published var isShowingProgress = false
     var userID: String?
     var activeAlertForName = ActiveAlert.confirmation
     var isNameSet: Bool {
-        return shopName != ""
+        return shopName != Constants.EMPTY
     }
     var location: GeoPoint?
     var zoom: Float?
@@ -44,7 +44,7 @@ class RegisteringShopViewModel: ObservableObject {
     }
     
     func resetData() {
-        shopName = ""
+        shopName = Constants.EMPTY
         activeAlertForName = .confirmation
         location = nil
         zoom = nil
