@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CustomedProgress: View {
     var body: some View {
-        ProgressView("in process")
+        ProgressView(Constants.PROCESSING)
             .foregroundColor(.viridianGreen)
             .upDownPadding(size: 15)
             .wideStyle()

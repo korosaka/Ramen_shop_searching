@@ -18,7 +18,7 @@ struct MediaSelection: View {
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
                 }) {
-                    Text("Cancel")
+                    Text(Constants.CANCEL)
                 }
                 .padding(10)
                 Spacer()
@@ -28,13 +28,13 @@ struct MediaSelection: View {
             Button(action: {
                 viewModel.utilizePhotoLibrary()
             }) {
-                Text("Photo Library")
+                Text(Constants.LIBRARY)
             }
             Spacer().frame(height: 50)
             Button(action: {
                 viewModel.utilizeCamera()
             }) {
-                Text("Camera")
+                Text(Constants.CAMERA)
             }
             Spacer()
         }

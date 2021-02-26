@@ -1,5 +1,5 @@
 //
-//  RejectReason.swift
+//  RequestedShopName.swift
 //  RamenShopApp
 //
 //  Created by Koro Saka on 2021-02-24.
@@ -8,18 +8,16 @@
 
 import SwiftUI
 
-struct RejectReason: View {
-    @EnvironmentObject var viewModel: RequestStatusViewModel
+struct RequestedShopName: View {
+    let name: String
     var body: some View {
         VStack {
-            Text("reason for reject")
+            Text(Constants.SHOP_NAME)
                 .foregroundColor(.black)
                 .underline()
-                .wideStyle()
             Spacer().frame(height: 5)
-            Text(viewModel.rejectReason)
-                .foregroundColor(.navy)
-                .bold()
+            Text(name)
+                .largestTitleStyleWithColor(color: .viridianGreen)
         }
     }
 }

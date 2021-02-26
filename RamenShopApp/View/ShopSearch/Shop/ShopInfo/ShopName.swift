@@ -11,6 +11,6 @@ import SwiftUI
 struct ShopName: View {
     let shopName: String?
     var body: some View {
-        Text(shopName ?? "no-name").largestTitleStyle()
+        Text(shopName ?? Constants.NO_NAME).largestTitleStyle()
     }
 }

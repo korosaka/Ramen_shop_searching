@@ -15,7 +15,7 @@ struct UploadingPicture: View {
         VStack {
             HStack {
                 Spacer()
-                Text("You can upload by 3 pictures")
+                Text(Constants.UP_IMAGE_HEADER)
                     .foregroundColor(.navy)
                 Spacer()
             }
@@ -43,7 +43,7 @@ struct UploadingPicture: View {
                     HStack {
                         Image(systemName: "square.and.arrow.up")
                         Spacer().frame(width: 5)
-                        Text("upload picture").bold()
+                        Text(Constants.UP_IMAGE).bold()
                     }
                 }
                 .setEnabled(enabled: viewModel.isPicUploadEnabled,
@@ -59,12 +59,12 @@ struct UploadingPicture: View {
                     }
                 }
                 .alert(isPresented: $viewModel.isShowMediaPermissionDenied) {
-                    Alert(title: Text("This app has no permission"),
-                          message: Text("You need to change setting"),
-                          primaryButton: .default(Text("go to setting")) {
+                    Alert(title: Text(Constants.NO_PERMISSION_TITLE),
+                          message: Text(Constants.NO_PERMISSION_MESSAGE),
+                          primaryButton: .default(Text(Constants.GO_SETTING)) {
                             goToSetting()
                           },
-                          secondaryButton: .cancel(Text("cancel")))
+                          secondaryButton: .cancel(Text(Constants.CANCEL)))
                 }
                 Spacer()
                 Button(action: {
@@ -73,7 +73,7 @@ struct UploadingPicture: View {
                     HStack {
                         Image(systemName: "trash.fill")
                         Spacer().frame(width: 5)
-                        Text("cancel upload").bold()
+                        Text(Constants.CANCEL_UPLOAD).bold()
                     }
                 }
                 .setEnabled(enabled: viewModel.isPicCancelEnabled,
@@ -81,12 +81,12 @@ struct UploadingPicture: View {
                             padding: 12,
                             radius: 10)
                 .alert(isPresented: $isShowCancelConfirmation) {
-                    Alert(title: Text("Cencel uploading"),
-                          message: Text("Do you remove pictures?"),
-                          primaryButton: .default(Text("Yes")) {
+                    Alert(title: Text(Constants.CANCEL_UPLOAD_TITLE),
+                          message: Text(Constants.CANCEL_UPLOAD_MESSAGE),
+                          primaryButton: .default(Text(Constants.YES)) {
                             viewModel.removePictures()
                           },
-                          secondaryButton: .cancel(Text("No")))
+                          secondaryButton: .cancel(Text(Constants.NO)))
                 }
                 Spacer()
             }

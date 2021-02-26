@@ -18,7 +18,7 @@ struct AdminPageView: View {
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
                 Spacer().frame(height: 15)
-                Text("Shop Requests").middleTitleStyle()
+                Text(Constants.REQUESTS_HEADER).middleTitleStyle()
                 Spacer().frame(height: 15)
                 List {
                     ForEach(viewModel.requestedShops, id: \.shopID) { request in

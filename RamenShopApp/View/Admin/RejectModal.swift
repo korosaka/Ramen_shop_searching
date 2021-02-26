@@ -14,7 +14,7 @@ struct RejectModal: View {
     @State var isShowRejectConfirmation = false
     var body: some View {
         VStack {
-            Text("Reason")
+            Text(Constants.REASON)
                 .middleTitleStyle()
                 .upDownPadding(size: 10)
             TextEditor(text: $viewModel.rejectReason)
@@ -25,7 +25,7 @@ struct RejectModal: View {
             HStack {
                 Spacer()
                 Button(action: { isShowRejectConfirmation.toggle() }) {
-                    Text("Done")
+                    Text(Constants.DONE)
                         .font(.title)
                         .bold()
                         .shadow(color: .black, radius: 2, x: 2, y: 2)
@@ -35,19 +35,19 @@ struct RejectModal: View {
                             padding: 10,
                             radius: 10)
                 .alert(isPresented: $isShowRejectConfirmation) {
-                    Alert(title: Text("Final confirmation"),
-                          message: Text("Are you sure to reject it?"),
-                          primaryButton: .default(Text("Yes")) {
+                    Alert(title: Text(Constants.CONFIRM_TITLE),
+                          message: Text(Constants.ASKING_REJECT),
+                          primaryButton: .default(Text(Constants.YES)) {
                             viewModel.reject()
                             presentationMode.wrappedValue.dismiss()
                           },
-                          secondaryButton: .cancel(Text("cancel")))
+                          secondaryButton: .cancel(Text(Constants.CANCEL)))
                 }
                 Spacer()
                 Button(action: {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 }) {
-                    Text("Stop")
+                    Text(Constants.STOP)
                         .font(.title)
                         .bold()
                         .shadow(color: .black, radius: 2, x: 2, y: 2)

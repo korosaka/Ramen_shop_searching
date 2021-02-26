@@ -18,7 +18,7 @@ struct AllReviewView: View {
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
                 Spacer().frame(height: 15)
-                Text("All Review").middleTitleStyle()
+                Text(Constants.ALL_REVIEW_HEADER).middleTitleStyle()
                 List {
                     ForEach(viewModel.reviews, id: \.reviewID) { review in
                         Button(action: {

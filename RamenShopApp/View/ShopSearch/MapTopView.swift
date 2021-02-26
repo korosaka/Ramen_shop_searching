@@ -18,7 +18,7 @@ struct MapTopView: View {
                     .tabItem {
                         VStack {
                             Image(systemName: "magnifyingglass")
-                            Text("Search")
+                            Text(Constants.SEARCH)
                         }
                     }
                     .navigationBarHidden(true)
@@ -27,7 +27,7 @@ struct MapTopView: View {
                     .tabItem {
                         VStack {
                             Image(systemName: "plus")
-                            Text("Add")
+                            Text(Constants.ADD)
                         }
                     }
                     .navigationBarHidden(true)
@@ -36,7 +36,7 @@ struct MapTopView: View {
                     .tabItem {
                         VStack {
                             Image(systemName: "person.fill")
-                            Text("Profile")
+                            Text(Constants.PROFILE)
                         }
                     }
                     .navigationBarHidden(true)
@@ -44,7 +44,7 @@ struct MapTopView: View {
                     .tabItem {
                         VStack {
                             Image(systemName: "list.bullet")
-                            Text("Settings")
+                            Text(Constants.SETTINGS)
                         }
                     }
                     .navigationBarHidden(true)

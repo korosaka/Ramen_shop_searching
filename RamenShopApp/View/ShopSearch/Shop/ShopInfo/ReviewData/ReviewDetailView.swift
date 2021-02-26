@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import QGrid
 
 struct ReviewDetailView: View {
     @ObservedObject var viewModel: ReviewDetailViewModel
@@ -47,66 +46,4 @@ struct ReviewDetailView: View {
                                   ramenImages: viewModel.reviewImages)
         }
     }
-}
-
-struct PictureCollectionView: View {
-    let scrollable: Bool
-    let ramenImages: [RamenImage]
-    let pictureSize: CGFloat = UIScreen.main.bounds.size.width / 2.4
-    let space: CGFloat = 5.0
-    let padding: CGFloat = 5.0
-    var row: Int {
-        return (ramenImages.count + 1) / 2
-    }
-    var frameHieght: CGFloat? {
-        if scrollable {
-            return .none
-        } else {
-            return pictureSize * CGFloat(row)
-                + space * CGFloat(row - 1)
-                + padding * 2
-        }
-    }
-    
-    var body: some View {
-        if ramenImages.count == 0 {
-            VStack {
-                Text("No Picture")
-            }
-        } else {
-            QGrid(self.ramenImages,
-                  columns: 2,
-                  vSpacing: space,
-                  hSpacing: space,
-                  vPadding: padding,
-                  hPadding: padding,
-                  isScrollable: scrollable,
-                  showScrollIndicators: scrollable
-            ) { ramenImage in
-                PictureCell(ramenImage: ramenImage, size: pictureSize)
-            }
-            .frame(height: frameHieght)
-        }
-        
-    }
-    
-}
-
-struct PictureCell: View {
-    let ramenImage: RamenImage
-    let size: CGFloat
-    
-    var body: some View {
-        ramenImage.picture
-            .resizable()
-            .scaledToFit()
-            .frame(width: size, height: size)
-            .background(Color.white)
-            .border(Color.green)
-    }
-}
-
-struct RamenImage: Identifiable {
-    let id = UUID()
-    let picture: Image
 }

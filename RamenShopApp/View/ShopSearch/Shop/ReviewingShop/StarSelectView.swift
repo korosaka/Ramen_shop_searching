@@ -11,7 +11,7 @@ import SwiftUI
 struct StarSelectView: View {
     var body: some View {
         VStack {
-            Text("your evaluation")
+            Text(Constants.EVA_HEADER)
                 .font(.headline)
                 .foregroundColor(.white)
                 .shadow(color: .black, radius: 2, x: 2, y: 2)

@@ -18,7 +18,7 @@ struct AllPictureView: View {
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
                 Spacer().frame(height: 15)
-                Text("All picture").middleTitleStyle()
+                Text(Constants.ALL_PICTURE_HEADER).middleTitleStyle()
                 Spacer()
                 PictureCollectionView(scrollable: true,
                                       ramenImages: viewModel.allImages)

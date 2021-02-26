@@ -27,7 +27,7 @@ struct ReviewingRequestView: View {
                 HStack {
                     Spacer()
                     Button(action: { viewModel.isShowingAlert.toggle() }) {
-                        Text("Approve")
+                        Text(Constants.APPROVE)
                             .containingSymbol(symbol: "hand.thumbsup.fill",
                                               color: .seaBlue,
                                               textFont: .title2,
@@ -35,7 +35,7 @@ struct ReviewingRequestView: View {
                     }
                     Spacer()
                     Button(action: { isShowRejectModal.toggle() }) {
-                        Text("Reject")
+                        Text(Constants.REJECT)
                             .containingSymbol(symbol: "hand.thumbsdown.fill",
                                               color: .strongRed,
                                               textFont: .title2,
@@ -52,23 +52,23 @@ struct ReviewingRequestView: View {
             .alert(isPresented: $viewModel.isShowingAlert) {
                 switch viewModel.activeAlert {
                 case .confirmation:
-                    return Alert(title: Text("Final confirmation"),
-                                 message: Text("Are you sure to approve it?"),
-                                 primaryButton: .default(Text("Yes")) {
+                    return Alert(title: Text(Constants.CONFIRM_TITLE),
+                                 message: Text(Constants.ASKING_APPROVE),
+                                 primaryButton: .default(Text(Constants.YES)) {
                                     viewModel.approve()
                                  },
-                                 secondaryButton: .cancel(Text("cancel")))
+                                 secondaryButton: .cancel(Text(Constants.CANCEL)))
                 case .completion:
-                    return Alert(title: Text("Success!"),
-                                 message: Text("Updating has been done."),
-                                 dismissButton: .default(Text("OK")) {
+                    return Alert(title: Text(Constants.SUCCESS),
+                                 message: Text(Constants.SUCCESS_UPDATE),
+                                 dismissButton: .default(Text(Constants.OK)) {
                                     presentationMode.wrappedValue.dismiss()
                                     viewModel.completedInspection()
                                  })
                 case .error:
-                    return Alert(title: Text("Fail"),
-                                 message: Text("Updating was failed"),
-                                 dismissButton: .default(Text("OK")) {
+                    return Alert(title: Text(Constants.FAILED),
+                                 message: Text(Constants.FAILED_UPDATE),
+                                 dismissButton: .default(Text(Constants.OK)) {
                                     presentationMode.wrappedValue.dismiss()
                                     viewModel.completedInspection()
                                  })

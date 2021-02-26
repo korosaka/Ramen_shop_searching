@@ -17,7 +17,7 @@
 		88006E1025E6CC56004BCEDF /* OptionIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E0F25E6CC56004BCEDF /* OptionIcons.swift */; };
 		88006E1325E6CCAA004BCEDF /* LatestReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E1225E6CCAA004BCEDF /* LatestReviews.swift */; };
 		88006E1625E6CCFE004BCEDF /* ReviewHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E1525E6CCFE004BCEDF /* ReviewHeadline.swift */; };
-		88006E1925E6CD3F004BCEDF /* Pictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E1825E6CD3F004BCEDF /* Pictures.swift */; };
+		88006E1925E6CD3F004BCEDF /* TopPictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E1825E6CD3F004BCEDF /* TopPictures.swift */; };
 		88006E1C25E6CDA4004BCEDF /* RejectModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E1B25E6CDA4004BCEDF /* RejectModal.swift */; };
 		88006E1F25E6D228004BCEDF /* ReloadRequestsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E1E25E6D228004BCEDF /* ReloadRequestsButton.swift */; };
 		88006E2225E6D28B004BCEDF /* IconProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E2125E6D28B004BCEDF /* IconProfile.swift */; };
@@ -44,6 +44,9 @@
 		88006E6525E7A249004BCEDF /* DoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E6425E7A249004BCEDF /* DoneButton.swift */; };
 		88006E6825E7A279004BCEDF /* MediaSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E6725E7A279004BCEDF /* MediaSelection.swift */; };
 		88006E6B25E7A2AF004BCEDF /* ReviewingSheetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E6A25E7A2AF004BCEDF /* ReviewingSheetType.swift */; };
+		88006E8B25E8DA89004BCEDF /* PictureCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E8A25E8DA89004BCEDF /* PictureCollectionView.swift */; };
+		88006E8F25E8DAEC004BCEDF /* PictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E8E25E8DAEC004BCEDF /* PictureCell.swift */; };
+		88006E9225E8DB13004BCEDF /* RamenImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88006E9125E8DB13004BCEDF /* RamenImage.swift */; };
 		88009D4525A831C400B4F813 /* RequestingTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88009D4425A831C400B4F813 /* RequestingTopView.swift */; };
 		88009D4825A831E100B4F813 /* RequestingTopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */; };
 		882103F625E13C91009CFAA3 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882103F525E13C91009CFAA3 /* Shop.swift */; };
@@ -75,7 +78,6 @@
 		8866049D25A2F70500FF2D98 /* RequestStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8866049C25A2F70500FF2D98 /* RequestStatusViewModel.swift */; };
 		886B34FF255026550056AB86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B34FE255026550056AB86 /* AppDelegate.swift */; };
 		886B3501255026550056AB86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B3500255026550056AB86 /* SceneDelegate.swift */; };
-		886B3503255026550056AB86 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B3502255026550056AB86 /* ContentView.swift */; };
 		886B3505255026560056AB86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 886B3504255026560056AB86 /* Assets.xcassets */; };
 		886B3508255026560056AB86 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 886B3507255026560056AB86 /* Preview Assets.xcassets */; };
 		886B350B255026560056AB86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 886B3509255026560056AB86 /* LaunchScreen.storyboard */; };
@@ -94,6 +96,13 @@
 		888FCD2D25B1DA1F00622DD9 /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FCD2C25B1DA1F00622DD9 /* PushNotificationSender.swift */; };
 		88A42235257A001C003CC75D /* AllReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A42234257A001C003CC75D /* AllReviewView.swift */; };
 		88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AFA79F2559B9C1001D151C /* MapTopView.swift */; };
+		88B2101425E91FD30090844E /* RequestExplanation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B2101325E91FD30090844E /* RequestExplanation.swift */; };
+		88B2101825E91FF70090844E /* EnteringShopName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B2101725E91FF70090844E /* EnteringShopName.swift */; };
+		88B2101B25E9201B0090844E /* NavigationToMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B2101A25E9201B0090844E /* NavigationToMap.swift */; };
+		88B2102025E920940090844E /* LocationExplanation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B2101F25E920940090844E /* LocationExplanation.swift */; };
+		88B2102425E920B60090844E /* SelectingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B2102325E920B60090844E /* SelectingLocation.swift */; };
+		88B2102725E920D70090844E /* CenterMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B2102625E920D70090844E /* CenterMarker.swift */; };
+		88B2102A25E920FF0090844E /* SendingRequestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B2102925E920FF0090844E /* SendingRequestButton.swift */; };
 		88C8D22A258C44B500E43583 /* AllPictureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C8D229258C44B500E43583 /* AllPictureViewModel.swift */; };
 		88C8D22F258ECC2000E43583 /* ReviewHeadlineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C8D22E258ECC2000E43583 /* ReviewHeadlineViewModel.swift */; };
 		88FFE9C8258C239800F4E892 /* AllPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FFE9C7258C239800F4E892 /* AllPictureView.swift */; };
@@ -113,7 +122,7 @@
 		88006E0F25E6CC56004BCEDF /* OptionIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionIcons.swift; sourceTree = "<group>"; };
 		88006E1225E6CCAA004BCEDF /* LatestReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestReviews.swift; sourceTree = "<group>"; };
 		88006E1525E6CCFE004BCEDF /* ReviewHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewHeadline.swift; sourceTree = "<group>"; };
-		88006E1825E6CD3F004BCEDF /* Pictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pictures.swift; sourceTree = "<group>"; };
+		88006E1825E6CD3F004BCEDF /* TopPictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPictures.swift; sourceTree = "<group>"; };
 		88006E1B25E6CDA4004BCEDF /* RejectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RejectModal.swift; sourceTree = "<group>"; };
 		88006E1E25E6D228004BCEDF /* ReloadRequestsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadRequestsButton.swift; sourceTree = "<group>"; };
 		88006E2125E6D28B004BCEDF /* IconProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconProfile.swift; sourceTree = "<group>"; };
@@ -140,6 +149,9 @@
 		88006E6425E7A249004BCEDF /* DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButton.swift; sourceTree = "<group>"; };
 		88006E6725E7A279004BCEDF /* MediaSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaSelection.swift; sourceTree = "<group>"; };
 		88006E6A25E7A2AF004BCEDF /* ReviewingSheetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewingSheetType.swift; sourceTree = "<group>"; };
+		88006E8A25E8DA89004BCEDF /* PictureCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureCollectionView.swift; sourceTree = "<group>"; };
+		88006E8E25E8DAEC004BCEDF /* PictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureCell.swift; sourceTree = "<group>"; };
+		88006E9125E8DB13004BCEDF /* RamenImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RamenImage.swift; sourceTree = "<group>"; };
 		88009D4425A831C400B4F813 /* RequestingTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestingTopView.swift; sourceTree = "<group>"; };
 		88009D4725A831E100B4F813 /* RequestingTopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestingTopViewModel.swift; sourceTree = "<group>"; };
 		882103F525E13C91009CFAA3 /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
@@ -172,7 +184,6 @@
 		886B34FB255026550056AB86 /* RamenShopApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RamenShopApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		886B34FE255026550056AB86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		886B3500255026550056AB86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		886B3502255026550056AB86 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		886B3504255026560056AB86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		886B3507255026560056AB86 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		886B350A255026560056AB86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -192,6 +203,13 @@
 		888FCD2C25B1DA1F00622DD9 /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 		88A42234257A001C003CC75D /* AllReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewView.swift; sourceTree = "<group>"; };
 		88AFA79F2559B9C1001D151C /* MapTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTopView.swift; sourceTree = "<group>"; };
+		88B2101325E91FD30090844E /* RequestExplanation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestExplanation.swift; sourceTree = "<group>"; };
+		88B2101725E91FF70090844E /* EnteringShopName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnteringShopName.swift; sourceTree = "<group>"; };
+		88B2101A25E9201B0090844E /* NavigationToMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationToMap.swift; sourceTree = "<group>"; };
+		88B2101F25E920940090844E /* LocationExplanation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationExplanation.swift; sourceTree = "<group>"; };
+		88B2102325E920B60090844E /* SelectingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectingLocation.swift; sourceTree = "<group>"; };
+		88B2102625E920D70090844E /* CenterMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterMarker.swift; sourceTree = "<group>"; };
+		88B2102925E920FF0090844E /* SendingRequestButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingRequestButton.swift; sourceTree = "<group>"; };
 		88C8D229258C44B500E43583 /* AllPictureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPictureViewModel.swift; sourceTree = "<group>"; };
 		88C8D22E258ECC2000E43583 /* ReviewHeadlineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewHeadlineViewModel.swift; sourceTree = "<group>"; };
 		88FFE9C7258C239800F4E892 /* AllPictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPictureView.swift; sourceTree = "<group>"; };
@@ -231,6 +249,7 @@
 		88006DB625E67236004BCEDF /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				8866043225995CD900FF2D98 /* CustomNavigationBar.swift */,
 				88006DAF25E65820004BCEDF /* Constants.swift */,
 				8866042F2592C8A300FF2D98 /* ImagePicker.swift */,
 				88006DB725E67281004BCEDF /* CustomedProgress.swift */,
@@ -244,7 +263,6 @@
 		88006DBF25E6737A004BCEDF /* GoogleMap */ = {
 			isa = PBXGroup;
 			children = (
-				8866043225995CD900FF2D98 /* CustomNavigationBar.swift */,
 				884CEB97256F66A70020C932 /* GoogleMap.swift */,
 				883AA0DA256649C7002AC14A /* GoogleMapView.swift */,
 				88006E4E25E6D8C3004BCEDF /* MapType.swift */,
@@ -276,15 +294,8 @@
 			isa = PBXGroup;
 			children = (
 				88009D4425A831C400B4F813 /* RequestingTopView.swift */,
-				8866049925A2F4E700FF2D98 /* RequestStatusView.swift */,
-				8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */,
-				8866048B25A131CD00FF2D98 /* RegisteringShopNameView.swift */,
-				88006E3C25E6D7AB004BCEDF /* RequestInfo.swift */,
-				88006E3F25E6D7F4004BCEDF /* RequestedShopName.swift */,
-				88006E4225E6D812004BCEDF /* ReviewStatus.swift */,
-				88006E4525E6D834004BCEDF /* RemoveButton.swift */,
-				88006E4825E6D85C004BCEDF /* RejectReason.swift */,
-				88006E4B25E6D879004BCEDF /* ReloadStatusButton.swift */,
+				88B2101225E905DA0090844E /* CreateRequest */,
+				88B2101125E905A50090844E /* RequestStatus */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -385,17 +396,14 @@
 		88006E5625E79C19004BCEDF /* ShopInfo */ = {
 			isa = PBXGroup;
 			children = (
+				88006E8925E8DA04004BCEDF /* ReviewData */,
 				884CEB9A256FBE1F0020C932 /* ShopDetailView.swift */,
 				882F84C925D4A13F008256F4 /* MapFromShop.swift */,
-				88A42234257A001C003CC75D /* AllReviewView.swift */,
-				887DA0002580FC06003E237E /* ReviewDetailView.swift */,
 				88FFE9C7258C239800F4E892 /* AllPictureView.swift */,
 				88006E0925E6AFC3004BCEDF /* ShopName.swift */,
 				88006E0C25E6B011004BCEDF /* EvaluationLabel.swift */,
-				88006E1225E6CCAA004BCEDF /* LatestReviews.swift */,
 				88006E0F25E6CC56004BCEDF /* OptionIcons.swift */,
-				88006E1525E6CCFE004BCEDF /* ReviewHeadline.swift */,
-				88006E1825E6CD3F004BCEDF /* Pictures.swift */,
+				88006E1825E6CD3F004BCEDF /* TopPictures.swift */,
 			);
 			path = ShopInfo;
 			sourceTree = "<group>";
@@ -413,6 +421,20 @@
 				88006E6A25E7A2AF004BCEDF /* ReviewingSheetType.swift */,
 			);
 			path = ReviewingShop;
+			sourceTree = "<group>";
+		};
+		88006E8925E8DA04004BCEDF /* ReviewData */ = {
+			isa = PBXGroup;
+			children = (
+				88006E1525E6CCFE004BCEDF /* ReviewHeadline.swift */,
+				88006E1225E6CCAA004BCEDF /* LatestReviews.swift */,
+				88A42234257A001C003CC75D /* AllReviewView.swift */,
+				887DA0002580FC06003E237E /* ReviewDetailView.swift */,
+				88006E8A25E8DA89004BCEDF /* PictureCollectionView.swift */,
+				88006E8E25E8DAEC004BCEDF /* PictureCell.swift */,
+				88006E9125E8DB13004BCEDF /* RamenImage.swift */,
+			);
+			path = ReviewData;
 			sourceTree = "<group>";
 		};
 		8821044025E14CFB009CFAA3 /* Notification */ = {
@@ -480,7 +502,6 @@
 				886B35382556A0C40056AB86 /* View */,
 				886B34FE255026550056AB86 /* AppDelegate.swift */,
 				886B3500255026550056AB86 /* SceneDelegate.swift */,
-				886B3502255026550056AB86 /* ContentView.swift */,
 				886B3504255026560056AB86 /* Assets.xcassets */,
 				886B3509255026560056AB86 /* LaunchScreen.storyboard */,
 				886B350C255026560056AB86 /* Info.plist */,
@@ -533,6 +554,52 @@
 				8821044125E14D46009CFAA3 /* Shop */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		88B2101125E905A50090844E /* RequestStatus */ = {
+			isa = PBXGroup;
+			children = (
+				88006E3C25E6D7AB004BCEDF /* RequestInfo.swift */,
+				8866049925A2F4E700FF2D98 /* RequestStatusView.swift */,
+				88006E3F25E6D7F4004BCEDF /* RequestedShopName.swift */,
+				88006E4525E6D834004BCEDF /* RemoveButton.swift */,
+				88006E4225E6D812004BCEDF /* ReviewStatus.swift */,
+				88006E4825E6D85C004BCEDF /* RejectReason.swift */,
+				88006E4B25E6D879004BCEDF /* ReloadStatusButton.swift */,
+			);
+			path = RequestStatus;
+			sourceTree = "<group>";
+		};
+		88B2101225E905DA0090844E /* CreateRequest */ = {
+			isa = PBXGroup;
+			children = (
+				88B2101D25E920430090844E /* Name */,
+				88B2101E25E9205D0090844E /* Place */,
+			);
+			path = CreateRequest;
+			sourceTree = "<group>";
+		};
+		88B2101D25E920430090844E /* Name */ = {
+			isa = PBXGroup;
+			children = (
+				8866048B25A131CD00FF2D98 /* RegisteringShopNameView.swift */,
+				88B2101325E91FD30090844E /* RequestExplanation.swift */,
+				88B2101725E91FF70090844E /* EnteringShopName.swift */,
+				88B2101A25E9201B0090844E /* NavigationToMap.swift */,
+			);
+			path = Name;
+			sourceTree = "<group>";
+		};
+		88B2101E25E9205D0090844E /* Place */ = {
+			isa = PBXGroup;
+			children = (
+				8866049125A13B3E00FF2D98 /* RegisteringShopPlaceView.swift */,
+				88B2101F25E920940090844E /* LocationExplanation.swift */,
+				88B2102325E920B60090844E /* SelectingLocation.swift */,
+				88B2102625E920D70090844E /* CenterMarker.swift */,
+				88B2102925E920FF0090844E /* SendingRequestButton.swift */,
+			);
+			path = Place;
 			sourceTree = "<group>";
 		};
 		E2A6500A9AB1936EE94C2293 /* Pods */ = {
@@ -686,6 +753,7 @@
 			files = (
 				88006E2825E6D3CA004BCEDF /* ReloadButton.swift in Sources */,
 				88006E6B25E7A2AF004BCEDF /* ReviewingSheetType.swift in Sources */,
+				88006E8F25E8DAEC004BCEDF /* PictureCell.swift in Sources */,
 				88006E6825E7A279004BCEDF /* MediaSelection.swift in Sources */,
 				882103FA25E13D3F009CFAA3 /* ReviewingStatus.swift in Sources */,
 				88006E4F25E6D8C3004BCEDF /* MapType.swift in Sources */,
@@ -694,6 +762,7 @@
 				883AA0DB256649C7002AC14A /* GoogleMapView.swift in Sources */,
 				88006E2E25E6D436004BCEDF /* ProfileSettingMenu.swift in Sources */,
 				8866048C25A131CE00FF2D98 /* RegisteringShopNameView.swift in Sources */,
+				88B2102A25E920FF0090844E /* SendingRequestButton.swift in Sources */,
 				882103F625E13C91009CFAA3 /* Shop.swift in Sources */,
 				88006E2B25E6D3F9004BCEDF /* ProfileSetting.swift in Sources */,
 				8835815825BE4E18009AB89B /* SettingsView.swift in Sources */,
@@ -712,6 +781,7 @@
 				88006E3725E6D4E3004BCEDF /* FavoriteCell.swift in Sources */,
 				882E43852577B6FC00E941D7 /* ShopDetailViewModel.swift in Sources */,
 				88006E5225E6D8FF004BCEDF /* PickerRole.swift in Sources */,
+				88B2101B25E9201B0090844E /* NavigationToMap.swift in Sources */,
 				88006E1F25E6D228004BCEDF /* ReloadRequestsButton.swift in Sources */,
 				88006E1625E6CCFE004BCEDF /* ReviewHeadline.swift in Sources */,
 				88006E3A25E6D507004BCEDF /* FavoriteShopInfo.swift in Sources */,
@@ -724,6 +794,7 @@
 				88006E5F25E7A1F6004BCEDF /* EditingCommentView.swift in Sources */,
 				88006E4625E6D834004BCEDF /* RemoveButton.swift in Sources */,
 				8866043325995CD900FF2D98 /* CustomNavigationBar.swift in Sources */,
+				88B2102725E920D70090844E /* CenterMarker.swift in Sources */,
 				88006DEA25E699DA004BCEDF /* EvaluationFilter.swift in Sources */,
 				886B353D2557B70B0056AB86 /* LoginViewModel.swift in Sources */,
 				88C8D22A258C44B500E43583 /* AllPictureViewModel.swift in Sources */,
@@ -738,19 +809,21 @@
 				88006E0D25E6B011004BCEDF /* EvaluationLabel.swift in Sources */,
 				8866049525A156BE00FF2D98 /* ShopsMapView.swift in Sources */,
 				88603700255DF18100C5ED1C /* Modifiers.swift in Sources */,
+				88B2102025E920940090844E /* LocationExplanation.swift in Sources */,
 				88006E6525E7A249004BCEDF /* DoneButton.swift in Sources */,
+				88B2101825E91FF70090844E /* EnteringShopName.swift in Sources */,
 				88006E1025E6CC56004BCEDF /* OptionIcons.swift in Sources */,
+				88006E9225E8DB13004BCEDF /* RamenImage.swift in Sources */,
 				88006DB825E67281004BCEDF /* CustomedProgress.swift in Sources */,
 				887D9FFE257FAD48003E237E /* AllReviewViewModel.swift in Sources */,
 				88009D4525A831C400B4F813 /* RequestingTopView.swift in Sources */,
 				88242E0425B2A33F0051A2C7 /* RegisteringToken.swift in Sources */,
 				8866049225A13B3E00FF2D98 /* RegisteringShopPlaceView.swift in Sources */,
-				886B3503255026550056AB86 /* ContentView.swift in Sources */,
 				88006DB325E670AA004BCEDF /* SignupView.swift in Sources */,
 				8866049D25A2F70500FF2D98 /* RequestStatusViewModel.swift in Sources */,
 				88006E4025E6D7F4004BCEDF /* RequestedShopName.swift in Sources */,
 				88006E4C25E6D879004BCEDF /* ReloadStatusButton.swift in Sources */,
-				88006E1925E6CD3F004BCEDF /* Pictures.swift in Sources */,
+				88006E1925E6CD3F004BCEDF /* TopPictures.swift in Sources */,
 				88AFA7A02559B9C1001D151C /* MapTopView.swift in Sources */,
 				88006E3D25E6D7AB004BCEDF /* RequestInfo.swift in Sources */,
 				888FCCFA25AF05BC00622DD9 /* ReviewingRequestView.swift in Sources */,
@@ -759,14 +832,17 @@
 				884CEB95256CDCD40020C932 /* ShopsMapViewModel.swift in Sources */,
 				888FCCF725AEDB5000622DD9 /* AdminPageViewModel.swift in Sources */,
 				888FCD2D25B1DA1F00622DD9 /* PushNotificationSender.swift in Sources */,
+				88006E8B25E8DA89004BCEDF /* PictureCollectionView.swift in Sources */,
 				8866049A25A2F4E700FF2D98 /* RequestStatusView.swift in Sources */,
 				88006E5925E7A1AF004BCEDF /* StarSelectView.swift in Sources */,
 				886B35402557CAD30056AB86 /* Authentication.swift in Sources */,
+				88B2102425E920B60090844E /* SelectingLocation.swift in Sources */,
 				884CEB92256CD8960020C932 /* DatabaseHelper.swift in Sources */,
 				882F84CA25D4A13F008256F4 /* MapFromShop.swift in Sources */,
 				88006E4325E6D812004BCEDF /* ReviewStatus.swift in Sources */,
 				886604302592C8A300FF2D98 /* ImagePicker.swift in Sources */,
 				88006DB025E65820004BCEDF /* Constants.swift in Sources */,
+				88B2101425E91FD30090844E /* RequestExplanation.swift in Sources */,
 				88FFE9C8258C239800F4E892 /* AllPictureView.swift in Sources */,
 				887DA00625817426003E237E /* ReviewDetailViewModel.swift in Sources */,
 			);

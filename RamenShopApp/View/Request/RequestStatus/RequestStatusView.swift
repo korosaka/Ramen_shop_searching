@@ -17,7 +17,7 @@ struct RequestStatusView: View {
                 ZStack(alignment: .topTrailing) {
                     VStack(spacing: 0) {
                         Spacer().frame(height: 15)
-                        Text("Request Status")
+                        Text(Constants.STATUS_HEADER)
                             .middleTitleStyle()
                         if viewModel.hasRequest {
                             Spacer().frame(height: 30)
@@ -35,7 +35,7 @@ struct RequestStatusView: View {
                             Spacer().frame(height: 50)
                         } else {
                             Spacer()
-                            Text("You have no request now")
+                            Text(Constants.NO_REQUEST)
                                 .foregroundColor(.white)
                             Spacer()
                         }

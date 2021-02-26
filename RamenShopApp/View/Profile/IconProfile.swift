@@ -19,12 +19,12 @@ struct IconProfile: View {
         .sheet(isPresented: $viewModel.isShowPhotoLibrary,
                content: { ImagePicker(delegate: viewModel) })
         .alert(isPresented: $viewModel.isShowPhotoPermissionDenied) {
-            Alert(title: Text("This app has no permission"),
-                  message: Text("You need to change setting"),
-                  primaryButton: .default(Text("go to setting")) {
+            Alert(title: Text(Constants.NO_PERMISSION_TITLE),
+                  message: Text(Constants.NO_PERMISSION_MESSAGE),
+                  primaryButton: .default(Text(Constants.GO_SETTING)) {
                     goToSetting()
                   },
-                  secondaryButton: .cancel(Text("cancel")))
+                  secondaryButton: .cancel(Text(Constants.CANCEL)))
         }
     }
 }

@@ -23,22 +23,22 @@ struct RemoveButton: View {
         .alert(isPresented: $viewModel.isShowAlert) {
             switch viewModel.activeAlert {
             case .confirmation:
-                return Alert(title: Text("Confirmation"),
+                return Alert(title: Text(Constants.CONFIRM_TITLE),
                              message: Text(viewModel.inspectionStatus?.getConfirmationMessage() ?? Constants.EMPTY),
-                             primaryButton: .default(Text("Yes")) {
+                             primaryButton: .default(Text(Constants.YES)) {
                                 viewModel.onClickConfirmation()
                              },
-                             secondaryButton: .cancel(Text("cancel")))
+                             secondaryButton: .cancel(Text(Constants.CANCEL)))
             case .completion:
-                return Alert(title: Text("Success"),
-                             message: Text("Updating data was succeeded"),
-                             dismissButton: .default(Text("Close")) {
+                return Alert(title: Text(Constants.SUCCESS),
+                             message: Text(Constants.SUCCESS_UPDATE),
+                             dismissButton: .default(Text(Constants.CLOSE)) {
                                 viewModel.resetData()
                              })
             case .error:
-                return Alert(title: Text("Fail"),
-                             message: Text("Updating data was failed"),
-                             dismissButton: .default(Text("Close")) {
+                return Alert(title: Text(Constants.FAILED),
+                             message: Text(Constants.FAILED_UPDATE),
+                             dismissButton: .default(Text(Constants.CLOSE)) {
                                 viewModel.resetData()
                              })
             }

@@ -22,7 +22,7 @@ struct DoneButton: View {
                 Image(systemName: "paperplane.fill")
                     .font(.largeTitle)
                 Spacer().frame(width: 20)
-                Text("send review")
+                Text(Constants.SEND_REVIEW)
                     .font(.largeTitle)
                     .bold()
                 Spacer()
@@ -36,22 +36,22 @@ struct DoneButton: View {
         .alert(isPresented: $viewModel.isShowAlert) {
             switch viewModel.activeAlert {
             case .confirmation:
-                return Alert(title: Text("Final confirmation"),
-                             message: Text("Will you send this review?"),
-                             primaryButton: .default(Text("Yes")) {
+                return Alert(title: Text(Constants.CONFIRM_TITLE),
+                             message: Text(Constants.ASKING_SENDING_REVIEW),
+                             primaryButton: .default(Text(Constants.YES)) {
                                 viewModel.sendReview()
                              },
-                             secondaryButton: .cancel(Text("cancel")))
+                             secondaryButton: .cancel(Text(Constants.CANCEL)))
             case .completion:
-                return Alert(title: Text("Success"),
-                             message: Text("Your review has been done"),
-                             dismissButton: .default(Text("OK")) {
+                return Alert(title: Text(Constants.SUCCESS),
+                             message: Text(Constants.DONE_REVIEW),
+                             dismissButton: .default(Text(Constants.OK)) {
                                 presentationMode.wrappedValue.dismiss()
                              })
             case .error:
-                return Alert(title: Text("Failed"),
-                             message: Text("Uploading this review was failed"),
-                             dismissButton: .default(Text("OK")) {
+                return Alert(title: Text(Constants.FAILED),
+                             message: Text(Constants.FAILED_REVIEW),
+                             dismissButton: .default(Text(Constants.OK)) {
                                 presentationMode.wrappedValue.dismiss()
                              })
             }

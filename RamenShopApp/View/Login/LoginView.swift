@@ -19,12 +19,12 @@ struct LoginView: View {
                     .edgesIgnoringSafeArea(.all)
                 VStack {
                     Spacer().frame(height: UIScreen.main.bounds.height / 4)
-                    Text("RAMEN SHOP MAP").largestTitleStyle()
+                    Text(Constants.SHOP_MAP).largestTitleStyle()
                     Spacer().frame(height: 70)
                     if(viewModel.logined) {
                         if viewModel.isAdmin {
                             NavigationLink(destination: AdminPageView(viewModel: .init())) {
-                                Text("admin")
+                                Text(Constants.ADMIN)
                                     .containingSymbol(symbol: "person.3",
                                                       color: .purple,
                                                       textFont: .title,
@@ -32,7 +32,7 @@ struct LoginView: View {
                             }
                         } else {
                             NavigationLink(destination: MapTopView()) {
-                                Text("start")
+                                Text(Constants.START)
                                     .containingSymbol(symbol: "play.circle.fill",
                                                       color: .strongPink,
                                                       textFont: .title,
@@ -43,30 +43,30 @@ struct LoginView: View {
                         Button(action: {
                             self.viewModel.logout()
                         }) {
-                            Text("logout")
+                            Text(Constants.LOGOUT)
                                 .foregroundColor(.darkGray)
                                 .underline()
                                 .font(.title2)
                         }
                         .alert(isPresented: $viewModel.logoutError) {
-                            Alert(title: Text("Logout Error"),
+                            Alert(title: Text(Constants.LOGOUT_ERROR),
                                   message: Text(viewModel.errorMesaage),
-                                  dismissButton: .default(Text("OK"),
+                                  dismissButton: .default(Text(Constants.OK),
                                                           action: { self.viewModel.reset() }))
                         }
                         Spacer()
                     } else {
                         VStack {
-                            TextField("email", text: $viewModel.email)
+                            TextField(Constants.EMAIL, text: $viewModel.email)
                                 .basicStyle()
                             Spacer().frame(height: 30)
-                            TextField("passsword", text: $viewModel.password)
+                            TextField(Constants.PASSWORD, text: $viewModel.password)
                                 .basicStyle()
                             Spacer().frame(height: 40)
                             Button(action: {
                                 self.viewModel.login()
                             }) {
-                                Text("login")
+                                Text(Constants.LOGIN)
                                     .containingSymbol(symbol: "key.fill",
                                                       color: .seaBlue,
                                                       textFont: .title,
@@ -74,17 +74,17 @@ struct LoginView: View {
                             }
                             .alert(isPresented: $viewModel.isShowLoginAlert) {
                                 if viewModel.isEmailNotVerified {
-                                    return Alert(title: Text("Your Email has not been verified."),
-                                                 message: Text("We have sent a Email, so please check it."),
-                                                 dismissButton: .default(Text("OK"),
+                                    return Alert(title: Text(Constants.NOT_VERIFIED_TITLE),
+                                                 message: Text(Constants.NOT_VERIFIED_MESSAGE),
+                                                 dismissButton: .default(Text(Constants.OK),
                                                                          action: { self.viewModel.reset()
                                                                          }
                                                  )
                                     )
                                 } else {
-                                    return Alert(title: Text("Login Error"),
+                                    return Alert(title: Text(Constants.LOGIN_ERROR),
                                                  message: Text(viewModel.errorMesaage),
-                                                 dismissButton: .default(Text("OK"),
+                                                 dismissButton: .default(Text(Constants.OK),
                                                                          action: { self.viewModel.reset()
                                                                          }
                                                  )
@@ -95,7 +95,7 @@ struct LoginView: View {
                         .onAppear() { self.viewModel.reset() }
                         Spacer()
                         NavigationLink(destination: SignupView(viewModel: viewModel)) {
-                            Text("sign up")
+                            Text(Constants.SIGNUP)
                                 .containingSymbolWide(symbol: "chevron.right",
                                                       color: .viridianGreen,
                                                       textFont: .title,

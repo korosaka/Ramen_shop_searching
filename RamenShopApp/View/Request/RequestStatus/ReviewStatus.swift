@@ -12,7 +12,7 @@ struct ReviewStatus: View {
     @EnvironmentObject var viewModel: RequestStatusViewModel
     var body: some View {
         VStack {
-            Text("review status")
+            Text(Constants.REVIEW_STATUS)
                 .foregroundColor(.black)
                 .underline()
             Spacer().frame(height: 5)

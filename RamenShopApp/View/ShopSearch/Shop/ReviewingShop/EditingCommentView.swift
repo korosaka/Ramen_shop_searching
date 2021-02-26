@@ -31,7 +31,7 @@ struct EditingCommentView: View {
                     HStack {
                         Image(systemName: "pencil.slash")
                         Spacer().frame(width: 5)
-                        Text("stop editing").bold()
+                        Text(Constants.STOP_EDIT).bold()
                     }
                     .sidePadding(size: 10)
                 }

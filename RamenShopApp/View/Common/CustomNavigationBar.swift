@@ -19,7 +19,7 @@ struct CustomNavigationBar: View {
             }) {
                 HStack(spacing: 0) {
                     Image(systemName: "chevron.backward").sidePadding(size: 3).font(.headline)
-                    Text("Back").font(.headline)
+                    Text(Constants.BACK).font(.headline)
                 }.upDownPadding(size: 12)
             }
             Spacer()

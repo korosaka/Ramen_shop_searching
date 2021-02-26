@@ -18,20 +18,20 @@ struct ProfileSettingMenu: View {
                 viewModel.checkPhotoPermission()
                 viewModel.isShowingMenu = false
             }) {
-                Text("change icon")
+                Text(Constants.CHANGE_ICON)
             }
             Spacer().frame(height: 25)
             Button(action: {
                 viewModel.onClickChangeName()
                 viewModel.isShowingMenu = false
             }) {
-                Text("change name")
+                Text(Constants.CHANGE_NAME)
             }
             Spacer().frame(height: 25)
             Button(action: {
                 viewModel.isShowingMenu = false
             }) {
-                Text("close")
+                Text(Constants.CLOSE)
             }
             Spacer().frame(height: 15)
         }

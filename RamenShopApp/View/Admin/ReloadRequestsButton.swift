@@ -14,7 +14,7 @@ struct ReloadRequestsButton: View {
         Button(action: {
             viewModel.fetchRequests()
         }) {
-            Text("reload")
+            Text(Constants.RELOAD)
                 .containingSymbol(symbol: "arrow.triangle.2.circlepath",
                                   color: .strongPink,
                                   textFont: .title3,

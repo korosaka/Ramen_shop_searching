@@ -14,10 +14,10 @@ struct SettingsView: View {
             BackGroundView()
             VStack {
                 Spacer().frame(height: 15)
-                if let url = URL(string: "https://korosaka.github.io/privacy_policy_for_RamenMap/") {
+                if let url = URL(string: Constants.POLICY_URL) {
                     HStack {
                         Spacer()
-                        Link("Privacy Policy", destination: url)
+                        Link(Constants.POLICY, destination: url)
                         Spacer()
                     }
                     .upDownPadding(size: 10)
@@ -28,5 +28,12 @@ struct SettingsView: View {
                 Spacer()
             }
         }
+    }
+}
+
+//MARK: TODO It looks like the bug(#15) has been fixed,,,,
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
     }
 }

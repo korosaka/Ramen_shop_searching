@@ -20,7 +20,7 @@ struct NameProfile: View {
                 .shadow(color: .black, radius: 2, x: 2, y: 2)
             if viewModel.isEditingName {
                 Spacer().frame(height: 15)
-                TextField("user name", text: $viewModel.newName)
+                TextField(Constants.USER_NAME, text: $viewModel.newName)
                     .basicStyle()
                 Spacer().frame(height: 15)
                 HStack {
@@ -28,7 +28,7 @@ struct NameProfile: View {
                     Button(action: {
                         viewModel.onClickChangeName()
                     }) {
-                        Text("cancel")
+                        Text(Constants.CANCEL)
                             .containingSymbol(symbol: "trash.fill",
                                               color: .strongRed,
                                               textFont: .title2,
@@ -40,7 +40,7 @@ struct NameProfile: View {
                         viewModel.isShowingAlert = true
                     }) {
                         Spacer().frame(width: 15)
-                        Text("done").font(.title2).bold()
+                        Text(Constants.DONE).font(.title2).bold()
                         Spacer().frame(width: 5)
                         Image(systemName: "paperplane.fill").font(.title3)
                         Spacer().frame(width: 15)
@@ -56,22 +56,22 @@ struct NameProfile: View {
         .alert(isPresented: $viewModel.isShowingAlert) {
             switch viewModel.activeAlertForName {
             case .confirmation:
-                return Alert(title: Text("Confirmation"),
-                             message: Text("Change name?"),
-                             primaryButton: .default(Text("Yes")) {
+                return Alert(title: Text(Constants.CONFIRM_TITLE),
+                             message: Text(Constants.ASKING_CHANGE_NAME),
+                             primaryButton: .default(Text(Constants.YES)) {
                                 viewModel.updateUserName()
                              },
-                             secondaryButton: .cancel(Text("cancel")))
+                             secondaryButton: .cancel(Text(Constants.CANCEL)))
             case .completion:
-                return Alert(title: Text("Success"),
-                             message: Text("Profile has been updated!"),
-                             dismissButton: .default(Text("OK")) {
+                return Alert(title: Text(Constants.SUCCESS),
+                             message: Text(Constants.SUCCESS_UPDATE),
+                             dismissButton: .default(Text(Constants.OK)) {
                                 viewModel.resetAlertData()
                              })
             case .error:
-                return Alert(title: Text("Failed"),
-                             message: Text("Updating profile was failed"),
-                             dismissButton: .default(Text("OK")){
+                return Alert(title: Text(Constants.FAILED),
+                             message: Text(Constants.FAILED_UPDATE),
+                             dismissButton: .default(Text(Constants.OK)){
                                 viewModel.resetAlertData()
                              })
             }

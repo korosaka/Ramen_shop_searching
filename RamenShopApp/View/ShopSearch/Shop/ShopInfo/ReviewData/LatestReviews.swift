@@ -13,7 +13,7 @@ struct LatestReviews: View {
     let shop: Shop?
     
     var body: some View {
-        Text("latest reviews")
+        Text(Constants.LATEST_REVIEWS)
             .foregroundColor(.white)
             .wideStyle()
             .upDownPadding(size: 3)
@@ -21,7 +21,7 @@ struct LatestReviews: View {
             .shadow(color: .black, radius: 1)
         if latestReviews.count == 0 {
             Spacer().frame(height: 10)
-            Text("there is no review")
+            Text(Constants.NO_REVIEW)
                 .foregroundColor(.viridianGreen)
                 .shadow(color: .black, radius: 0.5, x: 0.5, y: 0.5)
         }
@@ -48,7 +48,7 @@ struct LatestReviews: View {
                 Spacer()
                 if let _shop = shop {
                     NavigationLink(destination: AllReviewView(viewModel: .init(shop: _shop))) {
-                        Text("all review...")
+                        Text(Constants.ALL_REVIEW_LINK)
                             .foregroundColor(.seaBlue)
                             .underline()
                             .sidePadding(size: 15)

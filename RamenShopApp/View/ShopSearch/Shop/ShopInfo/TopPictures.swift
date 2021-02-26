@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct Pictures: View {
+struct TopPictures: View {
     let pictures: [UIImage]
     let shopID: String?
     
     var body: some View {
-        Text("uploaded pictures")
+        Text(Constants.TOP_PICTURES_HEADER)
             .foregroundColor(.white)
             .wideStyle()
             .upDownPadding(size: 3)
@@ -50,7 +50,7 @@ struct Pictures: View {
                 HStack {
                     Spacer()
                     NavigationLink(destination: AllPictureView(viewModel: .init(shopID: shopID))) {
-                        Text("all picture...")
+                        Text(Constants.ALL_PICTURE_LINK)
                             .foregroundColor(.seaBlue)
                             .underline()
                     }
@@ -58,7 +58,7 @@ struct Pictures: View {
                 }
             }
         } else {
-            Text("there is no picture")
+            Text(Constants.NO_PICTURE)
                 .foregroundColor(.viridianGreen)
                 .shadow(color: .black, radius: 0.5, x: 0.5, y: 0.5)
         }

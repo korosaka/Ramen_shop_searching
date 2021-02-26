@@ -30,7 +30,7 @@ struct ShopDetailView: View {
                         LatestReviews(latestReviews: viewModel.latestReviews,
                                       shop: viewModel.shop)
                         Spacer().frame(height: 40)
-                        Pictures(pictures: viewModel.pictures,
+                        TopPictures(pictures: viewModel.pictures,
                                  shopID: viewModel.shop?.shopID)
                         Spacer().frame(height: 50)
                         Spacer()
@@ -41,7 +41,7 @@ struct ShopDetailView: View {
                     Spacer()
                     NavigationLink(destination: ReviewingView()
                                     .environmentObject(ReviewingViewModel(shop: viewModel.shop, delegate: viewModel))) {
-                        Text("review")
+                        Text(Constants.REVIEW)
                             .containingSymbolWide(symbol: "bubble.left.fill",
                                                   color: .strongPink,
                                                   textFont: .largeTitle,
