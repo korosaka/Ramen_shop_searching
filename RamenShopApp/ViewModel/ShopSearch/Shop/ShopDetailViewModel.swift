@@ -41,7 +41,7 @@ class ShopDetailViewModel: ObservableObject {
     }
     
     func fetchDataFromDB() {
-        guard let shopID = shop?.shopID,
+        guard let shopID = shop?.getShopID(),
               let userID = Authentication().getUserUID()
         else { return }
         isLoading = (true, true, true)
@@ -53,7 +53,7 @@ class ShopDetailViewModel: ObservableObject {
     }
     
     func reloadShop() {
-        guard let shopID = shop?.shopID else { return }
+        guard let shopID = shop?.getShopID() else { return }
         db.fetchShop(shopID: shopID)
     }
     
@@ -64,7 +64,7 @@ class ShopDetailViewModel: ObservableObject {
     }
     
     func switchFavorite() {
-        guard let shopID = shop?.shopID,
+        guard let shopID = shop?.getShopID(),
               let userID = Authentication().getUserUID()
         else { return }
         favorite.toggle()

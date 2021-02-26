@@ -19,7 +19,7 @@ struct ReviewingView: View {
                 }
                 ScrollView(.vertical) {
                     Spacer().frame(height: 10)
-                    ShopName(shopName: viewModel.shop?.name)
+                    ShopName(shopName: viewModel.shop?.getName())
                     Spacer().frame(height: 20)
                     StarSelectView()
                         .sidePadding(size: 20)

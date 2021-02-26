@@ -18,7 +18,7 @@ struct ReviewingRequestView: View {
             VStack(spacing: 0) {
                 CustomNavigationBar(additionalAction: nil)
                 Spacer().frame(height: 10)
-                Text(viewModel.requestedShop.name)
+                Text(viewModel.requestedShop.getName())
                     .largestTitleStyle()
                 Spacer().frame(height: 10)
                 GoogleMapView(inspectingRequestVM: viewModel)

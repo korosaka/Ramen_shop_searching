@@ -20,11 +20,11 @@ struct AllReviewView: View {
                 Spacer().frame(height: 15)
                 Text(Constants.ALL_REVIEW_HEADER).middleTitleStyle()
                 List {
-                    ForEach(viewModel.reviews, id: \.reviewID) { review in
+                    ForEach(viewModel.reviews, id: \.id) { review in
                         Button(action: {
-                            viewModel.switchShowDetail(reviewID: review.reviewID)
+                            viewModel.switchShowDetail(reviewID: review.getReviewID())
                         }) {
-                            if viewModel.showDetailDic[review.reviewID] ?? false {
+                            if viewModel.showDetailDic[review.getReviewID()] ?? false {
                                 ReviewDetailView(viewModel: .init(review: review))
                             } else {
                                 ReviewHeadline(viewModel: .init(review: review))

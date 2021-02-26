@@ -26,7 +26,7 @@ class AllReviewViewModel: ObservableObject {
     
     func fetchAllReview() {
         isShowingProgress = true
-        db.fetchAllReview(shopID: shop.shopID)
+        db.fetchAllReview(shopID: shop.getShopID())
     }
     
     func switchShowDetail(reviewID selctedReview: String) {
@@ -49,7 +49,7 @@ extension AllReviewViewModel: FirebaseHelperDelegate {
     func completedFetchingReviews(reviews: [Review]) {
         isShowingProgress = false
         reviews.forEach {
-            showDetailDic[$0.reviewID] = false
+            showDetailDic[$0.getReviewID()] = false
         }
         self.reviews = reviews
     }

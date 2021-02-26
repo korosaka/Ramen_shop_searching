@@ -92,7 +92,7 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
     func showTargetShop(_ targetShop: Shop?, _ mapView: GMSMapView) {
         guard let shop = targetShop else { return }
         let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: shop.location.latitude, longitude: shop.location.longitude)
+        marker.position = CLLocationCoordinate2D(latitude: shop.getLocation().latitude, longitude: shop.getLocation().longitude)
         marker.map = mapView
     }
     
@@ -106,11 +106,11 @@ class GoogleMap: NSObject, GMSMapViewDelegate {
                 continue
             }
             let marker = GMSMarker()
-            let location = shop.location
+            let location = shop.getLocation()
             marker.icon = UIImage(named: "shop_icon")!.resized(withPercentage: 0.1)
             marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            marker.title = shop.name
-            marker.userData = shop.shopID
+            marker.title = shop.getName()
+            marker.userData = shop.getShopID()
             marker.snippet = Constants.STAR + shop.roundEvaluatione()
             
             marker.map = mapView

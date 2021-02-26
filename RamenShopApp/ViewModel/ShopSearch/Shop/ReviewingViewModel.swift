@@ -167,16 +167,16 @@ class ReviewingViewModel: ObservableObject {
                         imageCount: pictures!.count,
                         createdDate: Date())
         isShowingProgress = true
-        db.fetchShop(shopID: shop!.shopID) //MARK: to update shop evaluation
+        db.fetchShop(shopID: shop!.getShopID()) //MARK: to update shop evaluation
         db.updateReviewPics(pics: pictures!,
-                            reviewID: review!.reviewID,
+                            reviewID: review!.getReviewID(),
                             prePicCount: previousImageCount)
-        db.updateReview(shopID: shop!.shopID,
+        db.updateReview(shopID: shop!.getShopID(),
                         review: review!)
     }
     
     func checkAlreadySentReview() {
-        guard let shopID = shop?.shopID,
+        guard let shopID = shop?.getShopID(),
               let _userID = userID
         else { return }
         db.fetchUserReview(shopID: shopID, userID: _userID)
@@ -230,11 +230,11 @@ extension ReviewingViewModel: FirebaseHelperDelegate {
     
     func completedFetchingShop(fetchedShopData: Shop) {
         shop = fetchedShopData
-        db.updateShopEvaluation(shopID: shop!.shopID,
-                                newEva: review!.evaluation,
+        db.updateShopEvaluation(shopID: shop!.getShopID(),
+                                newEva: review!.getEvaluation(),
                                 preEva: previousEvaluation,
-                                totalPoint: shop!.totalReview,
-                                reviewCount: shop!.reviewCount)
+                                totalPoint: shop!.getTotalPoint(),
+                                reviewCount: shop!.getReviewCount())
     }
     
     func completedUpdatingShopEvaluation() {

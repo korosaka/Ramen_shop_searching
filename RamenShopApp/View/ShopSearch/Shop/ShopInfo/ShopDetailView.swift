@@ -20,7 +20,7 @@ struct ShopDetailView: View {
                 VStack(spacing: 0) {
                     VStack(spacing: 0) {
                         Spacer().frame(height: 10)
-                        ShopName(shopName: viewModel.shop?.name)
+                        ShopName(shopName: viewModel.shop?.getName())
                         Spacer().frame(height: 10)
                         EvaluationLabel(viewModel: viewModel)
                         Spacer().frame(height: 5)
@@ -31,7 +31,7 @@ struct ShopDetailView: View {
                                       shop: viewModel.shop)
                         Spacer().frame(height: 40)
                         TopPictures(pictures: viewModel.pictures,
-                                 shopID: viewModel.shop?.shopID)
+                                 shopID: viewModel.shop?.getShopID())
                         Spacer().frame(height: 50)
                         Spacer()
                     }

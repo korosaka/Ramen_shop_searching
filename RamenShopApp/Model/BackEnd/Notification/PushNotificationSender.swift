@@ -9,7 +9,7 @@
 import Foundation
 class PushNotificationSender {
     
-    let serverKey = "AAAAwJtiVfE:APA91bExhvGYkWtphDlOFS7HweSsR8fkCf0RvelGstM33jsmGkxPfwh6JEUVjyG-jLvQUHGjuhzW1-YO3oF2Vc4Z-p73O1i_-JmTaS96JWiaeITZSWgK8_JUYjt6VXVaDoaP_h4O09-T"
+    private let serverKey = "AAAAwJtiVfE:APA91bExhvGYkWtphDlOFS7HweSsR8fkCf0RvelGstM33jsmGkxPfwh6JEUVjyG-jLvQUHGjuhzW1-YO3oF2Vc4Z-p73O1i_-JmTaS96JWiaeITZSWgK8_JUYjt6VXVaDoaP_h4O09-T"
     
     func sendPushNotification(to token: String,
                               receiver: NotificationReceiver) {

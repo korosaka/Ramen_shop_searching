@@ -12,8 +12,8 @@ import GoogleMaps
 import CoreLocation
 
 struct DatabaseHelper {
-    let firestore: Firestore
-    let storage: Storage
+    private let firestore: Firestore
+    private let storage: Storage
     
     weak var delegate: FirebaseHelperDelegate?
     
@@ -50,13 +50,13 @@ struct DatabaseHelper {
         return Shop(shopID: shopID,
                     name: name,
                     location: location,
-                    totalReview: totalPoint,
+                    totalPoint: totalPoint,
                     reviewCount: count,
                     uploadUser: userID,
                     reviewingStatus: ReviewingStatus(rawValue: inspectionStatus)!)
     }
     
-    func createShopsRef(_ target: ReviewingStatus) -> Query {
+    private func createShopsRef(_ target: ReviewingStatus) -> Query {
         firestore
             .collection("shop")
             .whereField("inspection_status", isEqualTo: target.rawValue)
@@ -113,7 +113,7 @@ struct DatabaseHelper {
         }
     }
     
-    func createReviewRef(shopID: String) -> CollectionReference {
+    private func createReviewRef(shopID: String) -> CollectionReference {
         return firestore.collection("shop")
             .document(shopID)
             .collection("review")
@@ -158,14 +158,14 @@ struct DatabaseHelper {
         }
     }
     
-    fileprivate func fetchUserIcon(_ userID: String, _ profile: Profile) {
+    private func fetchUserIcon(_ userID: String, _ profile: Profile) {
         createUserIconRef(userID).getData(maxSize: 1 * 1024 * 1024) { data, error in
             // MARK: asynchronous
             if let error = error {
                 print("Error getting data: \(error)")
                 delegate?.completedFetchingProfile(profile: profile)
             } else {
-                let iconProfile = Profile(userName: profile.userName,
+                let iconProfile = Profile(userName: profile.getUserName(),
                                           icon: UIImage(data: data!))
                 delegate?.completedFetchingProfile(profile: iconProfile)
             }
@@ -290,7 +290,7 @@ struct DatabaseHelper {
             self.delegate?.completedFetchingPictures(pictures: pictures,
                                                      shopID: nil)
         }
-        fetchReviewImage(id: review.reviewID, completion: completionHandler)
+        fetchReviewImage(id: review.getReviewID(), completion: completionHandler)
     }
     
     private func fetchReviewImage(id reviewID: String, completion: @escaping ([UIImage]) -> Void) {
@@ -333,7 +333,7 @@ struct DatabaseHelper {
         deletePreviousReviewPics(pics.count, prePicCount, reviewID)
     }
     
-    fileprivate func uploadReviewPics(_ pics: [UIImage],
+    private func uploadReviewPics(_ pics: [UIImage],
                                       _ reviewID: String) {
         if pics.count == 0 {
             delegate?.completedUploadingReviewPics()
@@ -356,7 +356,7 @@ struct DatabaseHelper {
         }
     }
     
-    fileprivate func deletePreviousReviewPics(_ newPicCount: Int,
+    private func deletePreviousReviewPics(_ newPicCount: Int,
                                               _ prePicCount: Int,
                                               _ reviewID: String) {
         if newPicCount >= prePicCount {
@@ -380,7 +380,7 @@ struct DatabaseHelper {
         }
     }
     
-    fileprivate func createReviewPicRef(_ reviewID: String, _ index: Int) -> StorageReference {
+    private func createReviewPicRef(_ reviewID: String, _ index: Int) -> StorageReference {
         return storage.reference().child("review_picture/\(reviewID)/review_image_\(index).jpeg")
     }
     
@@ -389,18 +389,18 @@ struct DatabaseHelper {
      when it doesn't, it will create a new document
      */
     func updateReview(shopID: String, review: Review) {
-        let timeStamp: Timestamp = .init(date: review.createdDate)
+        let timeStamp: Timestamp = .init(date: review.getCreatedDate())
         // MARK: TODO use createReviewRef(shopID: String)?
         let reviewRef = firestore
             .collection("shop")
             .document(shopID)
             .collection("review")
-            .document(review.reviewID)
+            .document(review.getReviewID())
         reviewRef.setData([
-            "user_id": review.userID,
-            "evaluation": review.evaluation,
-            "comment": review.comment,
-            "image_number": review.imageCount,
+            "user_id": review.getUserID(),
+            "evaluation": review.getEvaluation(),
+            "comment": review.getComment(),
+            "image_number": review.getImageCount(),
             "created_at": timeStamp
         ]) { err in
             //MARK: without network, this call back never happen, but data is changed only on local db,,,,,,,

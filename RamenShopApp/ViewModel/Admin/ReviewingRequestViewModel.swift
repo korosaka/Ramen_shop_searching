@@ -26,19 +26,19 @@ class ReviewingRequestViewModel: ObservableObject {
     }
     
     func getTargetLatitude() -> Double {
-        return requestedShop.location.latitude
+        return requestedShop.getLocation().latitude
     }
     
     func getTargetLongitude() -> Double {
-        return requestedShop.location.longitude
+        return requestedShop.getLocation().longitude
     }
     
     func approve() {
-        db.approveRequest(requestedShop.shopID)
+        db.approveRequest(requestedShop.getShopID())
     }
     
     func reject() {
-        db.rejectRequest(requestedShop.shopID, reason: rejectReason)
+        db.rejectRequest(requestedShop.getShopID(), reason: rejectReason)
     }
     
     func completedInspection() {
@@ -46,13 +46,13 @@ class ReviewingRequestViewModel: ObservableObject {
     }
     
     func informRequester() {
-        let userID = requestedShop.uploadUser
+        let userID = requestedShop.getUploadUser()
         db.fetchUserToken(of: userID)
     }
     
     func informNearUsers() {
-        db.fetchNearUsers(shopLocation: requestedShop.location,
-                          requesterID: requestedShop.uploadUser)
+        db.fetchNearUsers(shopLocation: requestedShop.getLocation(),
+                          requesterID: requestedShop.getUploadUser())
     }
     
     func sendPush(to token: String, receiver: NotificationReceiver) {

@@ -14,12 +14,12 @@ struct ReviewHeadline: View {
     
     var body: some View {
         HStack() {
-            if viewModel.userProfile.icon == nil {
+            if viewModel.userProfile.getIcon() == nil {
                 Image(systemName: "person.crop.circle.fill")
                     .iconSmallStyle()
                     .sidePadding(size: 5)
             } else {
-                Image(uiImage: viewModel.userProfile.icon!)
+                Image(uiImage: viewModel.userProfile.getIcon()!)
                     .iconSmallStyle()
                     .sidePadding(size: 5)
             }
@@ -29,12 +29,12 @@ struct ReviewHeadline: View {
                     Image(systemName: "star.fill")
                         .foregroundColor(.yellow)
                         .font(.subheadline)
-                    Text(String(viewModel.review.evaluation))
+                    Text(String(viewModel.review.getEvaluation()))
                         .foregroundColor(.black)
                     Spacer()
                     Text(viewModel.review.displayDate())
                         .foregroundColor(.gray)
-                    if viewModel.review.imageCount > 0 {
+                    if viewModel.review.getImageCount() > 0 {
                         Image(systemName: "camera.fill")
                             .foregroundColor(.purple)
                     } else {
@@ -46,7 +46,7 @@ struct ReviewHeadline: View {
                                leading: 0,
                                bottom: 2,
                                trailing: 0))
-                Text(viewModel.review.comment)
+                Text(viewModel.review.getComment())
                     .foregroundColor(.black)
                     .lineLimit(1)
             }

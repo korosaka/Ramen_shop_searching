@@ -13,16 +13,16 @@ struct ReviewDetailView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                if viewModel.userProfile.icon == nil {
+                if viewModel.userProfile.getIcon() == nil {
                     Image(systemName: "person.crop.circle.fill")
                         .iconSmallStyle()
                         .sidePadding(size: 5)
                 } else {
-                    Image(uiImage: viewModel.userProfile.icon!)
+                    Image(uiImage: viewModel.userProfile.getIcon()!)
                         .iconSmallStyle()
                         .sidePadding(size: 5)
                 }
-                Text(viewModel.userProfile.userName)
+                Text(viewModel.userProfile.getUserName())
                     .foregroundColor(.black)
                 Spacer()
             }
@@ -30,7 +30,7 @@ struct ReviewDetailView: View {
                 Image(systemName: "star.fill")
                     .foregroundColor(.yellow)
                     .font(.headline)
-                Text(String(viewModel.review.evaluation))
+                Text(String(viewModel.review.getEvaluation()))
                     .foregroundColor(.black)
                     .font(.headline)
                 Spacer()
@@ -39,7 +39,7 @@ struct ReviewDetailView: View {
                     .foregroundColor(.black)
             }
             .upDownPadding(size: 5)
-            Text(viewModel.review.comment)
+            Text(viewModel.review.getComment())
                 .padding(.bottom)
                 .foregroundColor(.black)
             PictureCollectionView(scrollable: false,

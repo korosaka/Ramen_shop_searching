@@ -10,8 +10,8 @@ import Foundation
 import Firebase
 
 struct Profile {
-    var userName: String
-    var icon: UIImage?
+    private var userName: String
+    private var icon: UIImage?
     
     init() {
         userName = Constants.NO_NAME
@@ -26,5 +26,13 @@ struct Profile {
     init(userName: String, icon: UIImage?) {
         self.userName = userName
         self.icon = icon
+    }
+    
+    func getUserName() -> String {
+        return userName
+    }
+    
+    func getIcon() -> UIImage? {
+        return icon
     }
 }

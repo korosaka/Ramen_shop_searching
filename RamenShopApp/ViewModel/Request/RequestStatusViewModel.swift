@@ -87,11 +87,11 @@ extension RequestStatusViewModel: FirebaseHelperDelegate {
     
     func completedFetchingShop(fetchedShopData: Shop) {
         isShowingProgress = false
-        shopName = fetchedShopData.name
-        inspectionStatus = fetchedShopData.reviewingStatus
+        shopName = fetchedShopData.getName()
+        inspectionStatus = fetchedShopData.getReviewingStatus()
         
         if inspectionStatus == .rejected {
-            db.fetchRejectReason(shopID: fetchedShopData.shopID)
+            db.fetchRejectReason(shopID: fetchedShopData.getShopID())
         }
     }
     

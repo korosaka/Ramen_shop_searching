@@ -8,12 +8,51 @@
 
 import Foundation
 struct Review {
-    let reviewID: String
-    let userID: String
-    let evaluation: Int
-    let comment: String
-    let imageCount: Int
-    let createdDate: Date
+    let id = UUID()
+    private let reviewID: String
+    private let userID: String
+    private let evaluation: Int
+    private let comment: String
+    private let imageCount: Int
+    private let createdDate: Date
+    
+    init(reviewID: String,
+         userID: String,
+         evaluation: Int,
+         comment: String,
+         imageCount: Int,
+         createdDate: Date) {
+        self.reviewID = reviewID
+        self.userID = userID
+        self.evaluation = evaluation
+        self.comment = comment
+        self.imageCount = imageCount
+        self.createdDate = createdDate
+    }
+    
+    func getReviewID() -> String {
+        return reviewID
+    }
+    
+    func getUserID() -> String {
+        return userID
+    }
+    
+    func getEvaluation() -> Int {
+        return evaluation
+    }
+    
+    func getComment() -> String {
+        return comment
+    }
+    
+    func getImageCount() -> Int {
+        return imageCount
+    }
+    
+    func getCreatedDate() -> Date {
+        return createdDate
+    }
     
     func displayDate() -> String {
         let dateFormater = DateFormatter()

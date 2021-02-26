@@ -35,7 +35,7 @@ class ShopsMapViewModel: ObservableObject {
      */
     func selectShop(id: String, name: String) {
         for shop in shops {
-            if shop.shopID == id {
+            if shop.getShopID() == id {
                 selectedShop = shop
                 // MARK: this Bool will be false when back to MapSearchingView by NavigationLink
                 isShopSelected = true

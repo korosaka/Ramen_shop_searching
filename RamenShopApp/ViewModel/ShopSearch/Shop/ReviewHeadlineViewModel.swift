@@ -21,7 +21,7 @@ class ReviewHeadlineViewModel: ObservableObject {
     }
     
     func fetchProfile() {
-        db.fetchUserProfile(userID: review.userID)
+        db.fetchUserProfile(userID: review.getUserID())
     }
 }
 

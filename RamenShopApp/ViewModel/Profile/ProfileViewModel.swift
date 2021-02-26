@@ -45,14 +45,14 @@ class ProfileViewModel: ObservableObject {
     
     //MARK: TODO is it right to return SwiftUI View to View from VM???
     func getIconImage() -> Image {
-        guard let iconImage = userProfile.icon else {
+        guard let iconImage = userProfile.getIcon() else {
             return Image(systemName: "person.crop.circle.fill")
         }
         return Image(uiImage: iconImage)
     }
     
     func getUserName() -> String {
-        return userProfile.userName
+        return userProfile.getUserName()
     }
     
     func updateUserName() {
@@ -155,9 +155,9 @@ extension ProfileViewModel: FirebaseHelperDelegate {
     func completedFetchingShop(fetchedShopData: Shop) {
         for index in 0..<userFavorites.count {
             let shopInfo = userFavorites[index]
-            if shopInfo.id == fetchedShopData.shopID {
+            if shopInfo.id == fetchedShopData.getShopID() {
                 let newInfo = FavoriteShopInfo(id: shopInfo.id,
-                                               shopName: fetchedShopData.name,
+                                               shopName: fetchedShopData.getName(),
                                                shopTopImage: shopInfo.shopTopImage)
                 userFavorites[index] = newInfo
             }
