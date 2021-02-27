@@ -39,13 +39,13 @@ struct DatabaseHelper {
     }
     
     func extractShop(shopID: String, shopData: [String : Any]) -> Shop {
-        let name = shopData["name"] as? String ?? Constants.EMPTY
-        let location = shopData["location"] as! GeoPoint
-        let reviewInfo = shopData["review_info"] as! [String: Any]
-        let totalPoint = reviewInfo["total_point"] as? Int ?? 0
-        let count = reviewInfo["count"] as? Int ?? 0
-        let userID = shopData["upload_user"] as? String ?? Constants.EMPTY
-        let inspectionStatus = shopData["inspection_status"] as? Int ?? -1
+        let name = shopData[Constants.FIELD_SHOP_NAME] as? String ?? Constants.EMPTY
+        let location = shopData[Constants.FIELD_LOCATION] as! GeoPoint
+        let reviewInfo = shopData[Constants.FIELD_REVIEW_INFO] as! [String: Any]
+        let totalPoint = reviewInfo[Constants.FIELD_TOTAL_POINT] as? Int ?? 0
+        let count = reviewInfo[Constants.FIELD_REVIEW_COUNT] as? Int ?? 0
+        let userID = shopData[Constants.FIELD_UPLOAD_USER] as? String ?? Constants.EMPTY
+        let inspectionStatus = shopData[Constants.FIELD_STATUS] as? Int ?? ReviewingStatus.rejected.rawValue
         
         return Shop(shopID: shopID,
                     name: name,
@@ -58,8 +58,8 @@ struct DatabaseHelper {
     
     private func createShopsRef(_ target: ReviewingStatus) -> Query {
         firestore
-            .collection("shop")
-            .whereField("inspection_status", isEqualTo: target.rawValue)
+            .collection(Constants.COLLECTION_SHOP)
+            .whereField(Constants.FIELD_STATUS, isEqualTo: target.rawValue)
     }
     
     func fetchLatestReviews(shopID: String) {
@@ -86,19 +86,19 @@ struct DatabaseHelper {
         
         if limitNum != nil {
             reviewRef
-                .order(by: "created_at", descending: true)
+                .order(by: Constants.FIELD_CREATED_AT, descending: true)
                 .limit(to: limitNum!)
                 .getDocuments(completion: completionHandler)
         } else {
             reviewRef
-                .order(by: "created_at", descending: true)
+                .order(by: Constants.FIELD_CREATED_AT, descending: true)
                 .getDocuments(completion: completionHandler)
         }
     }
     
     func fetchUserReview(shopID: String, userID: String) {
         let userReviewRef = createReviewRef(shopID: shopID)
-            .whereField("user_id", isEqualTo: userID)
+            .whereField(Constants.FIELD_USER_ID, isEqualTo: userID)
         
         userReviewRef.getDocuments { (querySnapshot, error) in
             if error != nil {
@@ -106,29 +106,29 @@ struct DatabaseHelper {
             }
             for doc in querySnapshot!.documents {
                 delegate?.completedFetchingUserReview(reviewID: doc.documentID,
-                                                      imageCount: doc.data()["image_number"] as? Int ?? 0,
-                                                      evaluation: doc.data()["evaluation"] as? Int ?? nil)
+                                                      imageCount: doc.data()[Constants.FIELD_IMAGE_COUNT] as? Int ?? 0,
+                                                      evaluation: doc.data()[Constants.FIELD_EVALUATION] as? Int ?? nil)
                 return
             }
         }
     }
     
     private func createReviewRef(shopID: String) -> CollectionReference {
-        return firestore.collection("shop")
+        return firestore.collection(Constants.COLLECTION_SHOP)
             .document(shopID)
-            .collection("review")
+            .collection(Constants.COLLECTION_REVIEW)
     }
     
     func extractReviews(reviewQuery: QuerySnapshot) -> [Review] {
         var reviews = [Review]()
         for document in reviewQuery.documents {
             let data = document.data()
-            let createdTimestamp = data["created_at"] as? Timestamp
+            let createdTimestamp = data[Constants.FIELD_CREATED_AT] as? Timestamp
             let review = Review(reviewID: document.documentID,
-                                userID: data["user_id"] as? String ?? Constants.EMPTY,
-                                evaluation: data["evaluation"] as? Int ?? 0,
-                                comment: data["comment"] as? String ?? Constants.EMPTY,
-                                imageCount: data["image_number"] as? Int ?? 0,
+                                userID: data[Constants.FIELD_USER_ID] as? String ?? Constants.EMPTY,
+                                evaluation: data[Constants.FIELD_EVALUATION] as? Int ?? 0,
+                                comment: data[Constants.FIELD_COMMENT] as? String ?? Constants.EMPTY,
+                                imageCount: data[Constants.FIELD_IMAGE_COUNT] as? Int ?? 0,
                                 createdDate: createdTimestamp!.dateValue())
             reviews.append(review)
         }
@@ -136,7 +136,7 @@ struct DatabaseHelper {
     }
     
     func fetchUserProfile(userID: String) {
-        let userRef = firestore.collection("user")
+        let userRef = firestore.collection(Constants.COLLECTION_USER)
             .document(userID)
         
         userRef.getDocument { (document, error) in
@@ -144,9 +144,9 @@ struct DatabaseHelper {
                 return print("error happened in fetchUserProfile !!")
             }
             if let data = document?.data() {
-                let userName = data["user_name"] as? String ?? Constants.NO_NAME
+                let userName = data[Constants.FIELD_USER_NAME] as? String ?? Constants.NO_NAME
                 let profile = Profile(userName: userName)
-                if data["has_icon"] as? Bool ?? false {
+                if data[Constants.FIELD_HAS_ICON] as? Bool ?? false {
                     fetchUserIcon(userID, profile)
                 } else {
                     delegate?.completedFetchingProfile(profile: profile)
@@ -174,11 +174,11 @@ struct DatabaseHelper {
     
     func uploadUserProfile(_ userID: String) {
         let userRef = firestore
-            .collection("user")
+            .collection(Constants.COLLECTION_USER)
             .document(userID)
         userRef.setData([
-            "user_name": Constants.NO_NAME,
-            "has_icon" : false
+            Constants.FIELD_USER_NAME: Constants.NO_NAME,
+            Constants.FIELD_HAS_ICON : false
         ]) { err in
             delegate?.completedUpdatingUserProfile(isSuccess: err == nil)
         }
@@ -196,22 +196,22 @@ struct DatabaseHelper {
     }
     
     func createUserIconRef(_ userID: String) -> StorageReference {
-        return storage.reference().child("user_icon/\(userID)/icon_image.jpeg")
+        return storage.reference().child("\(Constants.USER_ICON)/\(userID)/\(Constants.ICON_FILE_NAME)")
     }
     
     func updateUserIconInfo(_ userID: String, _ hasProfileAlready: Bool) {
-        let userRef = firestore.collection("user")
+        let userRef = firestore.collection(Constants.COLLECTION_USER)
             .document(userID)
         if hasProfileAlready {
             userRef.updateData([
-                "has_icon": true
+                Constants.FIELD_HAS_ICON: true
             ]) { err in
                 delegate?.completedUpdatingUserProfile(isSuccess: err == nil)
             }
         } else {
             userRef.setData([
-                "user_name": Constants.NO_NAME,
-                "has_icon" : true
+                Constants.FIELD_USER_NAME: Constants.NO_NAME,
+                Constants.FIELD_HAS_ICON : true
             ]) { err in
                 delegate?.completedUpdatingUserProfile(isSuccess: err == nil)
             }
@@ -219,19 +219,19 @@ struct DatabaseHelper {
     }
     
     func updateUserName(userID: String, name: String, _ hasProfileAlready: Bool) {
-        let userRef = firestore.collection("user")
+        let userRef = firestore.collection(Constants.COLLECTION_USER)
             .document(userID)
         
         if hasProfileAlready {
             userRef.updateData([
-                "user_name": name
+                Constants.FIELD_USER_NAME: name
             ]) { err in
                 delegate?.completedUpdatingUserProfile(isSuccess: (err == nil))
             }
         } else {
             userRef.setData([
-                "user_name": name,
-                "has_icon" : false
+                Constants.FIELD_USER_NAME: name,
+                Constants.FIELD_HAS_ICON : false
             ]) { err in
                 delegate?.completedUpdatingUserProfile(isSuccess: (err == nil))
             }
@@ -241,12 +241,12 @@ struct DatabaseHelper {
     func fetchPictureReviews(shopID: String, limit: Int?) {
         // MARK: TODO use createReviewRef(shopID: String)
         let reviewStoreRef =
-            firestore.collection("shop")
+            firestore.collection(Constants.COLLECTION_SHOP)
             .document(shopID)
-            .collection("review")
-        var pictureReviewRef = reviewStoreRef.whereField("image_number", isGreaterThan: 0)
-        // MARK: TODO .order(by: "created_at", descending: true)
-        // let test = pictureReviewRef.order(by: "created_at", descending: true)
+            .collection(Constants.COLLECTION_REVIEW)
+        var pictureReviewRef = reviewStoreRef.whereField(Constants.FIELD_IMAGE_COUNT, isGreaterThan: 0)
+        // MARK: TODO .order(by: Constants.CREATED_AT, descending: true)
+        // let test = pictureReviewRef.order(by: Constants.CREATED_AT, descending: true)
         if let _limit = limit {
             pictureReviewRef = pictureReviewRef.limit(to: _limit)
         }
@@ -295,7 +295,7 @@ struct DatabaseHelper {
     
     private func fetchReviewImage(id reviewID: String, completion: @escaping ([UIImage]) -> Void) {
         var reviewImages = [UIImage]()
-        let reviewStorageRef = storage.reference().child("review_picture/\(reviewID)")
+        let reviewStorageRef = storage.reference().child("\(Constants.REVIEW_PICTURE)/\(reviewID)")
         reviewStorageRef.listAll { (result, error) in
             // MARK: asynchronous
             if let error = error {
@@ -381,7 +381,7 @@ struct DatabaseHelper {
     }
     
     private func createReviewPicRef(_ reviewID: String, _ index: Int) -> StorageReference {
-        return storage.reference().child("review_picture/\(reviewID)/review_image_\(index).jpeg")
+        return storage.reference().child("\(Constants.REVIEW_PICTURE)/\(reviewID)/review_image_\(index).jpeg")
     }
     
     /**
@@ -392,16 +392,16 @@ struct DatabaseHelper {
         let timeStamp: Timestamp = .init(date: review.getCreatedDate())
         // MARK: TODO use createReviewRef(shopID: String)?
         let reviewRef = firestore
-            .collection("shop")
+            .collection(Constants.COLLECTION_SHOP)
             .document(shopID)
-            .collection("review")
+            .collection(Constants.COLLECTION_REVIEW)
             .document(review.getReviewID())
         reviewRef.setData([
-            "user_id": review.getUserID(),
-            "evaluation": review.getEvaluation(),
-            "comment": review.getComment(),
-            "image_number": review.getImageCount(),
-            "created_at": timeStamp
+            Constants.FIELD_USER_ID: review.getUserID(),
+            Constants.FIELD_EVALUATION: review.getEvaluation(),
+            Constants.FIELD_COMMENT: review.getComment(),
+            Constants.FIELD_IMAGE_COUNT: review.getImageCount(),
+            Constants.FIELD_CREATED_AT: timeStamp
         ]) { err in
             //MARK: without network, this call back never happen, but data is changed only on local db,,,,,,,
             delegate?.completedUpdatingReview(isSuccess: (err == nil))
@@ -414,10 +414,10 @@ struct DatabaseHelper {
         let newTotalPoint = totalPoint + pulsEvaForTotal
         let newReviewCount = isFirstReview ? (reviewCount + 1) : reviewCount
         
-        let shopRef = firestore.collection("shop").document(shopID)
+        let shopRef = firestore.collection(Constants.COLLECTION_SHOP).document(shopID)
         shopRef.updateData([
-            "review_info": [ "total_point": newTotalPoint,
-                             "count": newReviewCount ]
+            Constants.FIELD_REVIEW_INFO: [ Constants.FIELD_TOTAL_POINT: newTotalPoint,
+                                     Constants.FIELD_REVIEW_COUNT: newReviewCount ]
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -427,12 +427,12 @@ struct DatabaseHelper {
     }
     
     func updateUserLocation(userID: String, location: CLLocationCoordinate2D) {
-        let userRef = firestore.collection("user").document(userID)
+        let userRef = firestore.collection(Constants.COLLECTION_USER).document(userID)
         let geoPoint = GeoPoint(latitude: location.latitude,
                                 longitude: location.longitude)
         
         userRef.updateData([
-            "last_location": geoPoint
+            Constants.FIELD_LAST_LOCATION: geoPoint
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -442,16 +442,16 @@ struct DatabaseHelper {
     
     func fetchNearUsers(shopLocation: GeoPoint, requesterID: String) {
         var tokens = [String]()
-        firestore.collection("user").getDocuments() { (querySnapshot, err) in
+        firestore.collection(Constants.COLLECTION_USER).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
                 for doc in querySnapshot!.documents {
                     if doc.documentID == requesterID { continue }
-                    guard let userLocation = doc.data()["last_location"] as? GeoPoint else { continue }
+                    guard let userLocation = doc.data()[Constants.FIELD_LAST_LOCATION] as? GeoPoint else { continue }
                     
                     if isNearUser(shopLocation, userLocation) {
-                        guard let token = doc.data()["fcm_token"] as? String else { continue }
+                        guard let token = doc.data()[Constants.FILED_FCM_TOKEN] as? String else { continue }
                         tokens.append(token)
                     }
                 }
@@ -472,7 +472,7 @@ struct DatabaseHelper {
     }
     
     func fetchShop(shopID: String) {
-        let shopRef = firestore.collection("shop").document(shopID)
+        let shopRef = firestore.collection(Constants.COLLECTION_SHOP).document(shopID)
         shopRef.getDocument { (document, error) in
             if let _error = error {
                 print("Error happen :\(_error)")
@@ -485,21 +485,21 @@ struct DatabaseHelper {
     }
     
     func fetchRejectReason(shopID: String) {
-        let shopRef = firestore.collection("shop").document(shopID)
+        let shopRef = firestore.collection(Constants.COLLECTION_SHOP).document(shopID)
         shopRef.getDocument { (document, error) in
             if let _error = error {
                 print("Error happen :\(_error)")
                 return
             }
             guard let shopData = document?.data(),
-                  let rejectReason = shopData["reject_reason"] as? String
+                  let rejectReason = shopData[Constants.FIELD_REJECT_REASON] as? String
             else { return }
             delegate?.completedFetchingRejectReason(reason: rejectReason)
         }
     }
     
     func deleteShopRequest(shopID: String) {
-        let shopRef = firestore.collection("shop").document(shopID)
+        let shopRef = firestore.collection(Constants.COLLECTION_SHOP).document(shopID)
         shopRef.delete() { err in
             delegate?.completedDeletingingShopRequest(isSuccess: err == nil)
         }
@@ -507,15 +507,15 @@ struct DatabaseHelper {
     
     func uploadShopRequest(shopName: String, location: GeoPoint, userID: String) {
         let shopID = UUID().uuidString
-        let shopRef = firestore.collection("shop").document(shopID)
+        let shopRef = firestore.collection(Constants.COLLECTION_SHOP).document(shopID)
         shopRef.setData([
-            "name": shopName,
-            "location": location,
-            "review_info": [ "total_point": 0,
-                             "count": 0 ],
-            "inspection_status": 0,
-            "reject_reason": Constants.EMPTY,
-            "upload_user": userID
+            Constants.FIELD_SHOP_NAME: shopName,
+            Constants.FIELD_LOCATION: location,
+            Constants.FIELD_REVIEW_INFO: [ Constants.FIELD_TOTAL_POINT: 0,
+                                     Constants.FIELD_REVIEW_COUNT: 0 ],
+            Constants.FIELD_STATUS: ReviewingStatus.inProcess.rawValue,
+            Constants.FIELD_REJECT_REASON: Constants.EMPTY,
+            Constants.FIELD_UPLOAD_USER: userID
         ]) { err in
             if err != nil {
                 delegate?.completedUplodingShopRequest(isSuccess: false)
@@ -527,44 +527,44 @@ struct DatabaseHelper {
     }
     
     func approveRequest(_ shopID: String) {
-        let shopRef = firestore.collection("shop").document(shopID)
+        let shopRef = firestore.collection(Constants.COLLECTION_SHOP).document(shopID)
         shopRef.updateData([
-            "inspection_status": ReviewingStatus.approved.rawValue
+            Constants.FIELD_STATUS: ReviewingStatus.approved.rawValue
         ]) { err in
             delegate?.completedUpdatingRequestStatus(isSuccess: err == nil, status: .approved)
         }
     }
     
     func rejectRequest(_ shopID: String, reason: String) {
-        let shopRef = firestore.collection("shop").document(shopID)
+        let shopRef = firestore.collection(Constants.COLLECTION_SHOP).document(shopID)
         shopRef.updateData([
-            "inspection_status": ReviewingStatus.rejected.rawValue,
-            "reject_reason": reason
+            Constants.FIELD_STATUS: ReviewingStatus.rejected.rawValue,
+            Constants.FIELD_REJECT_REASON: reason
         ]) { err in
             delegate?.completedUpdatingRequestStatus(isSuccess: err == nil, status: .rejected)
         }
     }
     
     func uploadRequestUserInfo(_ shopID: String, _ userID: String) {
-        let userRef = firestore.collection("user").document(userID)
+        let userRef = firestore.collection(Constants.COLLECTION_USER).document(userID)
         userRef.updateData([
-            "request_shop": shopID
+            Constants.FIELD_REQUEST_SHOP: shopID
         ]) { err in
             delegate?.completedUplodingShopRequest(isSuccess: err == nil)
         }
     }
     
     func deleteRequestUserInfo(userID: String) {
-        let userRef = firestore.collection("user").document(userID)
+        let userRef = firestore.collection(Constants.COLLECTION_USER).document(userID)
         userRef.updateData([
-            "request_shop": FieldValue.delete(),
+            Constants.FIELD_REQUEST_SHOP: FieldValue.delete(),
         ]) { err in
             delegate?.completedDeletingRequestUserInfo(isSuccess: err == nil)
         }
     }
     
     func fetchRequestedShopID(userID: String) {
-        let userRef = firestore.collection("user").document(userID)
+        let userRef = firestore.collection(Constants.COLLECTION_USER).document(userID)
         userRef.getDocument { (document, error) in
             if let _error = error {
                 print("Error happen :\(_error)")
@@ -572,7 +572,7 @@ struct DatabaseHelper {
                 return
             }
             guard let userData = document?.data(),
-                  let requestedShopID = userData["request_shop"] as? String
+                  let requestedShopID = userData[Constants.FIELD_REQUEST_SHOP] as? String
             else {
                 delegate?.completedFetchingRequestedShopID(shopID: nil)
                 return
@@ -582,23 +582,23 @@ struct DatabaseHelper {
     }
     
     func registerTokenToUser(token: String, to userID: String) {
-        let userRef = firestore.collection("user").document(userID)
+        let userRef = firestore.collection(Constants.COLLECTION_USER).document(userID)
         userRef.updateData([
-            "fcm_token": token
+            Constants.FILED_FCM_TOKEN: token
         ]) { err in
             delegate?.completedRegisteringToken(isSuccess: err == nil)
         }
     }
     
     func fetchUserToken(of userID: String) {
-        let userRef = firestore.collection("user").document(userID)
+        let userRef = firestore.collection(Constants.COLLECTION_USER).document(userID)
         userRef.getDocument { (document, error) in
             if let _error = error {
                 print("Error happen :\(_error)")
                 return
             }
             guard let userData = document?.data(),
-                  let token = userData["fcm_token"] as? String
+                  let token = userData[Constants.FILED_FCM_TOKEN] as? String
             else { return }
             
             delegate?.completedFetchingToken(token: token)
@@ -606,7 +606,7 @@ struct DatabaseHelper {
     }
     
     func fetchFavoriteFlag(_ userID: String, _ shopID: String) {
-        let userRef = firestore.collection("user").document(userID)
+        let userRef = firestore.collection(Constants.COLLECTION_USER).document(userID)
         userRef.getDocument { (document, error) in
             if let _error = error {
                 print("Error happen :\(_error)")
@@ -614,7 +614,7 @@ struct DatabaseHelper {
                 return
             }
             guard let userData = document?.data(),
-                  let favorites = userData["favorite_shops"] as? [String]
+                  let favorites = userData[Constants.FIELD_FAVO_SHOPS] as? [String]
             else {
                 delegate?.completedFetchingFavoFlag(flag: false)
                 return
@@ -624,28 +624,28 @@ struct DatabaseHelper {
     }
     
     func updateFavoriteFlag(_ userID: String, _ shopID: String, favoFlag: Bool) {
-        let userRef = firestore.collection("user").document(userID)
+        let userRef = firestore.collection(Constants.COLLECTION_USER).document(userID)
         if favoFlag {
             //MARK: arrayUnion https://firebase.google.com/docs/firestore/manage-data/add-data
             userRef.updateData([
-                "favorite_shops": FieldValue.arrayUnion([shopID])
+                Constants.FIELD_FAVO_SHOPS: FieldValue.arrayUnion([shopID])
             ])
         } else {
             userRef.updateData([
-                "favorite_shops": FieldValue.arrayRemove([shopID])
+                Constants.FIELD_FAVO_SHOPS: FieldValue.arrayRemove([shopID])
             ])
         }
     }
     
     func fetchUserFavorites(of userID: String) {
-        let userRef = firestore.collection("user").document(userID)
+        let userRef = firestore.collection(Constants.COLLECTION_USER).document(userID)
         userRef.getDocument { (document, error) in
             if let _error = error {
                 print("Error happen :\(_error)")
                 return
             }
             guard let userData = document?.data(),
-                  let favorites = userData["favorite_shops"] as? [String]
+                  let favorites = userData[Constants.FIELD_FAVO_SHOPS] as? [String]
             else {
                 return
             }

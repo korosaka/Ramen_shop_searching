@@ -12,7 +12,7 @@ struct RejectReason: View {
     @EnvironmentObject var viewModel: RequestStatusViewModel
     var body: some View {
         VStack {
-            Text(Constants.REJECT_REASON)
+            Text(Constants.REASON_FOR_REJECT)
                 .foregroundColor(.black)
                 .underline()
                 .wideStyle()

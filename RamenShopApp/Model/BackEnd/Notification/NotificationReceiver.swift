@@ -14,18 +14,18 @@ enum NotificationReceiver: String {
     var title: String {
         switch self {
         case .requester:
-            return "Reviewing has been done!"
+            return Constants.DONE_REVIEWING_REQUEST
         default:
-            return "New shop has been registered near you!"
+            return Constants.NEW_SHOP_INFO
         }
     }
     
     var body: String {
         switch self {
         case .requester:
-            return "Your adding shop request has been reviewed. Please check it in app."
+            return Constants.DONE_REVIEWING_REQUEST_MESSAGE
         default:
-            return "Let's check it!"
+            return Constants.CHECK_IT
         }
     }
 }

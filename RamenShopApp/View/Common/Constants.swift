@@ -9,9 +9,11 @@
 import Foundation
 class Constants {
     
+    
+    //MARK: VIEW
+    
     static let GOOGLE_MAP_KEY = "AIzaSyD0DImV_u_GQ4fRwLT8pVDM_IZWWgdB9R4"
     static let ADMIN_EMAIL = "korokorokoro.nn99@gmail.com"
-    
     
     static let EMPTY = ""
     static let OK = "OK"
@@ -71,7 +73,7 @@ class Constants {
     static let DONE_REQUEST = "Your request has been sent!"
     static let FAILED_REQUEST = "Sending request was failed."
     static let REVIEW_STATUS = "review status"
-    static let REJECT_REASON = "reason for reject"
+    static let REASON_FOR_REJECT = "reason for reject"
     
     static let SIGNUP_UPPERCASE = "Sign Up"
     static let SIGNUP = "sign up"
@@ -90,7 +92,7 @@ class Constants {
     static let SIGNUP_ERROR_TITLE = "Signup Error"
     
     
-    
+    static let INVALID_EMAIL_MESSAGE = "Your Email adress may be invalid. Please use valid Email adress."
     static let NOT_VERIFIED_TITLE = "Your Email has not been verified."
     static let NOT_VERIFIED_MESSAGE = "We have sent a Email, so please check it."
     
@@ -134,4 +136,51 @@ class Constants {
     
     static let STAR = "★"
     static let PROCESSING = "in process"
+    
+    
+    
+    
+    
+    
+    //MARK: MODEL
+    static let DONE_REVIEWING_REQUEST = "Reviewing has been done!"
+    static let NEW_SHOP_INFO = "New shop has been registered near you!"
+    static let DONE_REVIEWING_REQUEST_MESSAGE = "Your adding shop request has been reviewed. Please check it in app."
+    static let CHECK_IT = "Let's check it!"
+    
+    //MARK: DATABASE(Firestore)
+    //MARK: Collection
+    static let COLLECTION_SHOP = "shop"
+    static let COLLECTION_USER = "user"
+    static let COLLECTION_REVIEW = "review"
+    
+    //MARK: USER
+    static let FIELD_USER_NAME = "user_name"
+    static let FIELD_HAS_ICON = "has_icon"
+    static let FIELD_LAST_LOCATION = "last_location"
+    static let FIELD_FAVO_SHOPS = "favorite_shops"
+    static let FILED_FCM_TOKEN = "fcm_token"
+    static let FIELD_REQUEST_SHOP = "request_shop"
+    
+    //MARK: SHOP
+    static let FIELD_SHOP_NAME = "name"
+    static let FIELD_LOCATION = "location"
+    static let FIELD_REVIEW_INFO = "review_info"
+    static let FIELD_TOTAL_POINT = "total_point"
+    static let FIELD_REVIEW_COUNT = "count"
+    static let FIELD_UPLOAD_USER = "upload_user"
+    static let FIELD_STATUS = "inspection_status"
+    static let FIELD_REJECT_REASON = "reject_reason"
+    
+    //MARK: REVIEW
+    static let FIELD_USER_ID = "user_id"
+    static let FIELD_EVALUATION = "evaluation"
+    static let FIELD_COMMENT = "comment"
+    static let FIELD_IMAGE_COUNT = "image_number"
+    static let FIELD_CREATED_AT = "created_at"
+    
+    //MARK: STORAGE
+    static let USER_ICON = "user_icon"
+    static let ICON_FILE_NAME = "icon_image.jpeg"
+    static let REVIEW_PICTURE = "review_picture"
 }

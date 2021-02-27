@@ -126,7 +126,7 @@ extension LoginViewModel: AuthenticationDelegate {
         isShowingProgress = false
         if isSuccess {
             self.isShowSignUpAlert = true
-            errorMesaage = "Your Email adress may be invalid. Please use valid Email adress."
+            errorMesaage = Constants.INVALID_EMAIL_MESSAGE
         }
     }
 }
