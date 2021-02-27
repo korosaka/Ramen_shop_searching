@@ -16,8 +16,6 @@ import GooglePlaces
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    let cGoogleMapsAPIKey = "AIzaSyD0DImV_u_GQ4fRwLT8pVDM_IZWWgdB9R4"
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
@@ -37,8 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         application.registerForRemoteNotifications()
         
-        GMSServices.provideAPIKey(cGoogleMapsAPIKey)
-        GMSPlacesClient.provideAPIKey(cGoogleMapsAPIKey)
+        GMSServices.provideAPIKey(Constants.GOOGLE_MAP_KEY)
+        GMSPlacesClient.provideAPIKey(Constants.GOOGLE_MAP_KEY)
         return true
     }
     
@@ -114,6 +112,6 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         guard let userID = Authentication().getUserUID() else { return }
-        FirebaseHelper().registerTokenToUser(token: fcmToken, to: userID)
+        DatabaseHelper().registerTokenToUser(token: fcmToken, to: userID)
     }
 }
